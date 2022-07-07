@@ -5,7 +5,7 @@ import com.suda.federate.config.DriverConfig;
 import java.sql.*;
 
 public abstract class FederateDBDriver {
-    public ThreadLocal<Connection> connectionThreadLocal = new ThreadLocal<>();
+
 
     public ResultSet executeSql(Connection conn, String sql) throws SQLException {
         Statement stmt = conn.createStatement();

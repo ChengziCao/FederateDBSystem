@@ -23,8 +23,8 @@ public class Main {
             FederateDBDriver postgresqlDriver = new PostgresqlDriver();
             // TODO 读取配置文件
             String jsonString = new String(Files.readAllBytes(Paths.get(FederateUtils.resourcePath("dataSource.json"))));
-
             JSONArray jsonArray = JSON.parseArray(jsonString);
+
             List<Connection> connectionList = new ArrayList<>();
             for (Object x : jsonArray) {
                 connectionList.add(postgresqlDriver.getConnection(DriverConfig.json2DriverConfig((JSONObject) (x))));
@@ -37,14 +37,17 @@ public class Main {
             // TODO SQL 优化、分解
 
             // TODO SQL 执行
-            String[] optimizedSql = new String[]{rawSql, rawSql};
+            String optimizedSql = rawSql;
 
-            ResultSet resultSet1 = postgresqlDriver.executeSql(connectionList.get(0), optimizedSql[0]);
-            ResultSet resultSet2 = postgresqlDriver.executeSql(connectionList.get(1), optimizedSql[1]);
+            List<ResultSet> resultSets = new ArrayList<>();
+            for (Connection conn : connectionList) {
+                resultSets.add(postgresqlDriver.executeSql(conn, optimizedSql));
+            }
 
             // TODO 结果聚合
-            Map<String, Object> res1 = FederateUtils.printResultSet(resultSet1);
-            Map<String, Object> res2 = FederateUtils.printResultSet(resultSet2);
+            for (ResultSet rs : resultSets) {
+                FederateUtils.printResultSet(rs);
+            }
 
         } catch (Exception e) {
             e.printStackTrace();

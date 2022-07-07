@@ -3,16 +3,8 @@
     "name":"db1",
     "driver":"org.postgresql.Driver",
     "user":"postgres",
-    "password":"123456",
-    "url":"jdbc:postgresql://192.168.31.121:5432/gis",
-    "type":"POSTGRESQL"
-  },
-  {
-    "name":"db2",
-    "driver":"org.postgresql.Driver",
-    "user":"postgres",
-    "password":"123456",
-    "url":"jdbc:postgresql://192.168.31.121:5433/gis",
+    "password":"123",
+    "url":"jdbc:postgresql://101.35.252.126:54321/gis",
     "type":"POSTGRESQL"
   }
 ]
