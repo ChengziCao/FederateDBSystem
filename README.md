@@ -3,7 +3,7 @@
 ## Program entry
 
 ```
-com.suda.federate.application
+com.suda.federate.application.Main.main()
 ```
 
 ## Requirement
@@ -22,22 +22,102 @@ com.suda.federate.application
 ## release
 
 1. edit `config.json` and `query.json` in DataFederateSystem/release
-2.  `package.sh`  or  `package.bat`
-3.  `run.sh` or `run.bat`
+2. `package.sh`  or  `package.bat`
+3. `run.sh` or `run.bat`
 
-General process
+## Design
 
+### class diagram
+
+```mermaid
+classDiagram
+
+class SQLTranslator{
+    +translate(string originalSql)
+}
+
+SQLTranslator ..> FD_Variable
+SQLTranslator ..> FD_Function
+    class FD_Variable{
+        +string name
+        +obejct value
+        +variable_replace()
+    }
+    class FD_Function{
+        +function_replace()
+    }
+    FD_Variable <|.. FD_INT
+    FD_Variable <|.. FD_POINT
+
+    FD_Function <|.. FD_DISTANCE
+    FD_Function <|.. FD_KNN    
 ```
-user --> query.json -> original sql -> SQL translator --> SQL optimator -> SQL Executor -> driver -> datasource
 
-user <- secure merger <- results <- datasource
+### workflow
+
+```mermaid
+graph TD
+    start([开始])
+    start-->d1_input1
+    start-->d1_input2
+    start-->d2_input1
+    start-->d2_input2
+
+subgraph datasource1
+    d1_input1[/config.json/]
+    d1_input2[/query.json/]
+    d1_input1-->|获取数据源配置|d1_conn[建立连接]
+    d1_input2-->|获取原始SQL|d1_translator[SQL Translator]
+    d1_translator-->|"翻译后的SQL"|d1_optimizer[SQL Optimizer]
+    d1_optimizer-->|优化后的SQL|d1_executor[SQL Executor]
+    d1_conn-->|数据源连接|d1_executor
+end
+
+subgraph datasource2
+    d2_input1[/config.json/]
+    d2_input2[/query.json/]
+    d2_input1-->|获取数据源配置|d2_conn[建立连接]
+    d2_input2-->|获取原始SQL|d2_translator[SQL Translator]
+    d2_translator-->|"翻译后的SQL"|d2_optimizer[SQL Optimizer]
+    d2_optimizer-->|优化后的SQL|d2_executor[SQL Executor]
+    d2_conn-->|数据源连接|d2_executor
+end
+memger[Result Memger]
+d1_executor-->memger
+d2_executor-->memger
+memger-->final_resulat[/Final Result/]
+final_resulat-->end_([结束])
 ```
 
-## Federate Type
+## Federate Variable
 
+- 从 query.json 中读取 original sql （我们定义的SQL）和 variables
 
+- 解析 variables 生成 FD_Variable 对象
+- 将 original sql 和 FD_Variable 送给 SQLTranslator，生成翻译后的 SQL（能够被对应database直接执行的SQL）
 
-## Federate Funtion
+```json
+{
+  "query": "select F.id, FD_distance($P,F.location) as dis from nyc_homicides_copy where FD_distance($P F.location) < $K order by dis;",
+  "variables": [
+    {
+      "name": "P",
+      "type": "point",
+      "value": "583571,4506714"
+    },
+    {
+      "name": "K",
+      "type": "int",
+      "value": 100
+    }
+  ]
+}
+```
 
-- DF_distance (Point p1, Point p2) : return the distance between p1 and p2.
+## Federate Function
+
+规定几种允许执行的 function
+
+- `FD_Distance (Point p1, Point p2) `: return the distance between p1 and p2.
+- `FD_Knn (Point p, F.loaction, k) `: return the K- Nearest Neighbor of p in F.
 

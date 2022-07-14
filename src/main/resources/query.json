@@ -1,5 +1,5 @@
 {
-  "query": "select F.id, DF_distance($P, F.location) as dis from nyc_homicides_copy where DF_distance($P, F.location) < 1000 order by dis;",
+  "query": "select F.id, FD_distance($P, F.location) as dis from nyc_homicides_copy where FD_distance($P, F.location) < 1000 order by dis;",
   "variables": [
     {
       "name": "P",
