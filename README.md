@@ -29,6 +29,8 @@ com.suda.federate.application.Main.main()
 
 ### class diagram
 
+未完成
+
 ```mermaid
 classDiagram
 
@@ -54,6 +56,14 @@ SQLTranslator ..> FD_Function
 ```
 
 ### workflow
+
+- 从 query.json 中读取 original sql （我们定义的SQL）和 variables
+
+- 解析 variables 生成 FD_Variable 对象
+- 将 original sql 和 FD_Variable 传递给 SQLTranslator，生成翻译后的 SQL（能够被对应database直接执行的SQL）
+- SQL Optimizer
+- SQL Executor
+- Result Memger
 
 ```mermaid
 graph TD
@@ -83,18 +93,24 @@ subgraph datasource2
     d2_conn-->|数据源连接|d2_executor
 end
 memger[Result Memger]
-d1_executor-->memger
-d2_executor-->memger
-memger-->final_resulat[/Final Result/]
+d1_executor-->|datasource1查询结果|memger
+d2_executor-->|datasource2查询结果|memger
+memger-->|最终结果|final_resulat[/Final Result/]
 final_resulat-->end_([结束])
 ```
 
-## Federate Variable
+## Federate Variable & Function
 
-- 从 query.json 中读取 original sql （我们定义的SQL）和 variables
+定义几种需要的 variable Type，比如
 
-- 解析 variables 生成 FD_Variable 对象
-- 将 original sql 和 FD_Variable 送给 SQLTranslator，生成翻译后的 SQL（能够被对应database直接执行的SQL）
+- `FD_Point`：二维空间上的一个坐标
+
+定义几种允许执行的 function，比如
+
+- `FD_Distance (Point p1, Point p2) `: 返回 p1 和 p2 的距离
+- `FD_Knn (Point p, F.loaction, k) `: 返回在 F 中 p 的 k 近邻点
+
+query.json 示例
 
 ```json
 {
@@ -113,11 +129,4 @@ final_resulat-->end_([结束])
   ]
 }
 ```
-
-## Federate Function
-
-规定几种允许执行的 function
-
-- `FD_Distance (Point p1, Point p2) `: return the distance between p1 and p2.
-- `FD_Knn (Point p, F.loaction, k) `: return the K- Nearest Neighbor of p in F.
 
