@@ -1,28 +1,19 @@
 package com.suda.federate.driver;
 
-import com.suda.federate.config.DriverConfig;
+import com.alibaba.fastjson.JSONObject;
+import com.suda.federate.utils.ConfiguratorUtils;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
-public abstract class FederateDBDriver {
+public interface FederateDBDriver {
 
+    Connection getConnection(JSONObject json) throws SQLException;
 
-    public ResultSet executeSql(Connection conn, String sql) throws SQLException {
-        Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery(sql);
-        return rs;
-    }
+    ResultSet executeSql(Connection conn, String sql) throws SQLException;
 
-    public ResultSet executeSql(Connection conn, String sql, String[] args) throws SQLException {
-        PreparedStatement pstmt = conn.prepareStatement(sql);
-        // pstmt
-        for (int i = 0; i < args.length; i++) {
-            pstmt.setString(i, args[i]);
-        }
-        ResultSet rs = pstmt.executeQuery();
-        return rs;
-    }
+    ResultSet executeSql(Connection conn, String sql, String[] args) throws SQLException;
 
-    public abstract Connection getConnection(DriverConfig config) throws SQLException;
-
+    void closeConnection() throws SQLException;
 }

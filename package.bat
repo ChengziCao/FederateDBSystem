@@ -1,0 +1,1 @@
+mvn clean package -Dmaven.test.skip=true && copy /y target\FederateDB-jar-with-dependencies.jar release\FederateDB.jar

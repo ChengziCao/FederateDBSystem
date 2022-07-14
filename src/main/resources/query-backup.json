@@ -1,0 +1,13 @@
+[
+  {
+    "metrics": [
+      "F.id",
+      "DF_distance($P, F.location) as dis"
+    ],
+    "table": "nyc_homicides",
+    "filter": "DF_distance($P, F.location) < 10",
+    "order": [
+      "dis"
+    ]
+  }
+]

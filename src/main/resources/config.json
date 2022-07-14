@@ -1,0 +1,10 @@
+[
+  {
+    "name": "db1",
+    "driver": "org.postgresql.Driver",
+    "user": "postgres",
+    "password": "123",
+    "url": "jdbc:postgresql://101.35.252.126:54321/gis",
+    "type": "POSTGRESQL"
+  }
+]

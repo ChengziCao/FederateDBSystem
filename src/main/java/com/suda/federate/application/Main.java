@@ -1,49 +1,61 @@
 package com.suda.federate.application;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
-import com.suda.federate.config.DriverConfig;
+import com.suda.federate.sql.executor.PostgresqlExecutor;
+import com.suda.federate.sql.executor.SQLExecutor;
+import com.suda.federate.sql.translator.PostgresqlTranslator;
+import com.suda.federate.sql.translator.SQLTranslator;
+import com.suda.federate.sql.type.FD_Variable;
 import com.suda.federate.driver.FederateDBDriver;
-import com.suda.federate.driver.PostgresqlDriver;
 import com.suda.federate.utils.FederateUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.sql.SQLException;
+import java.util.*;
 
 public class Main {
+    public static final Logger LOGGER = LoggerFactory.getLogger(Main.class);
+    private static List<FederateDBDriver> driverList = new ArrayList<>();
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
         try {
-            FederateDBDriver postgresqlDriver = new PostgresqlDriver();
             // TODO 读取配置文件
-            String jsonString = new String(Files.readAllBytes(Paths.get(FederateUtils.resourcePath("dataSource.json"))));
-            JSONArray jsonArray = JSON.parseArray(jsonString);
-
-            List<Connection> connectionList = new ArrayList<>();
-            for (Object x : jsonArray) {
-                connectionList.add(postgresqlDriver.getConnection(DriverConfig.json2DriverConfig((JSONObject) (x))));
+            String configPath = null, queryPath = null;
+            String env = Objects.requireNonNull(Main.class.getResource("")).getProtocol();
+            if (env.equals("file")) {
+                // IDE 中运行
+                configPath = FederateUtils.getResourcePath("config.json");
+                queryPath = FederateUtils.getResourcePath("query.json");
+            } else if (env.equals("jar")) {
+                // jar 包运行
+                configPath = FederateUtils.getJarPath("config.json");
+                queryPath = FederateUtils.getJarPath("query.json");
+            } else {
+                LOGGER.error("unknown environment.");
+                System.exit(-1);
             }
+//            System.out.println(configPath);
+//            System.out.println(queryPath);
+            // TODO 解析 config.json，连接数据库
+            Map<String, List<Connection>> connectionMap = FederateUtils.parseConfigJson(configPath);
+            // TODO 解析 query.json，获取原始 SQL
+            Object[] tempObjs = FederateUtils.parseQueryJson(queryPath);
+            String originalSql = (String) tempObjs[0];
+//            LOGGER.info("originalSQL: " + originalSql);
+            System.out.println("originalSQL: " + originalSql);
+            List<FD_Variable> variables = (List<FD_Variable>) tempObjs[1];
+            // TODO SQL Translator
+            SQLTranslator sqlTranslator = new PostgresqlTranslator();
+            String unoptimizedSql = sqlTranslator.translate(originalSql, variables);
+            System.out.println("translatedSQL: " + unoptimizedSql);
 
-            // TODO 接收用户从 CLI 输入的 SQL 查询
-
-            // https://www.cnblogs.com/iken/articles/4461146.html
-            String rawSql = "SELECT count(*) FROM nyc_homicides WHERE ST_DWithin( geom, ST_GeomFromText('POINT(583571 4506714)',26918), 1000);";
-            // TODO SQL 优化、分解
-
-            // TODO SQL 执行
-            String optimizedSql = rawSql;
-
-            List<ResultSet> resultSets = new ArrayList<>();
-            for (Connection conn : connectionList) {
-                resultSets.add(postgresqlDriver.executeSql(conn, optimizedSql));
-            }
-
+            // TODO SQL Optimizer
+            String optimizedSql = unoptimizedSql;
+            // TODO SQL Executor
+            SQLExecutor<ResultSet> sqlExecutor = new PostgresqlExecutor();
+            List<ResultSet> resultSets = sqlExecutor.executeSql(connectionMap, optimizedSql);
             // TODO 结果聚合
             for (ResultSet rs : resultSets) {
                 FederateUtils.printResultSet(rs);
@@ -51,6 +63,11 @@ public class Main {
 
         } catch (Exception e) {
             e.printStackTrace();
+            // LOGGER.error(String.valueOf(e));
+        } finally {
+            for (FederateDBDriver driver : driverList) {
+                driver.closeConnection();
+            }
         }
     }
 }
