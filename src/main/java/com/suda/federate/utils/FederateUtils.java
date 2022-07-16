@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.suda.federate.driver.FederateDBDriver;
 import com.suda.federate.driver.FederateDBFactory;
+import com.suda.federate.sql.type.FD_Double;
 import com.suda.federate.sql.type.FD_Int;
 import com.suda.federate.sql.type.FD_Point;
 import com.suda.federate.sql.type.FD_Variable;
@@ -131,5 +132,22 @@ public class FederateUtils {
         // File.separator 是/（斜杠）与\（反斜杠），Windows下是\（反斜杠），Linux下是/（斜杠）。
         int lastIndex = decodedPath.lastIndexOf(File.separator) + 1;
         return decodedPath.substring(0, lastIndex) + fileName;
+    }
+
+
+    public static List<FD_Variable> results2FDType(List<ResultSet> resultSets, Class<?> clazz) throws SQLException {
+        // List<T> variables = new ArrayList<>();
+        List<FD_Variable> variables = new ArrayList<>();
+
+        for (ResultSet rs : resultSets) {
+            // 首个元素不会跳过，可理解为带头指针的链表
+            while (rs.next()) {
+                // System.out.println(rs.getObject(1) + " " + rs.getObject(2));
+                if (clazz == FD_Double.class) {
+                    variables.add(new FD_Double(rs.getObject("id", Integer.class).toString(), rs.getObject("dis", Double.class)));
+                }
+            }
+        }
+        return variables;
     }
 }

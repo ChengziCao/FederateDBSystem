@@ -3,7 +3,7 @@ package com.suda.federate.utils;
 public class ENUM {
     public enum FD_DATABASE {MYSQL, POSTGRESQL}
 
-    public enum FD_DATA_TYPE {POINT,INT,FLOAT,STRING}
+    public enum FD_DATA_TYPE {POINT,INT,DOUBLE,STRING}
 
     public enum FD_FUNCTION {KNN, DISTANCE}
 

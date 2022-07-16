@@ -1,7 +1,6 @@
 package com.suda.federate.driver;
 
 import com.alibaba.fastjson.JSONObject;
-import com.suda.federate.utils.ConfiguratorUtils;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

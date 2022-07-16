@@ -2,8 +2,10 @@ package com.suda.federate.application;
 
 import com.suda.federate.sql.executor.PostgresqlExecutor;
 import com.suda.federate.sql.executor.SQLExecutor;
+import com.suda.federate.sql.merger.SQLMerger;
 import com.suda.federate.sql.translator.PostgresqlTranslator;
 import com.suda.federate.sql.translator.SQLTranslator;
+import com.suda.federate.sql.type.FD_Double;
 import com.suda.federate.sql.type.FD_Variable;
 import com.suda.federate.driver.FederateDBDriver;
 import com.suda.federate.utils.FederateUtils;
@@ -46,6 +48,7 @@ public class Main {
 //            LOGGER.info("originalSQL: " + originalSql);
             System.out.println("originalSQL: " + originalSql);
             List<FD_Variable> variables = (List<FD_Variable>) tempObjs[1];
+
             // TODO SQL Translator
             SQLTranslator sqlTranslator = new PostgresqlTranslator();
             String unoptimizedSql = sqlTranslator.translate(originalSql, variables);
@@ -53,17 +56,22 @@ public class Main {
 
             // TODO SQL Optimizer
             String optimizedSql = unoptimizedSql;
+
             // TODO SQL Executor
             SQLExecutor<ResultSet> sqlExecutor = new PostgresqlExecutor();
             List<ResultSet> resultSets = sqlExecutor.executeSql(connectionMap, optimizedSql);
-            // TODO 结果聚合
-            for (ResultSet rs : resultSets) {
-                FederateUtils.printResultSet(rs);
-            }
+
+            // TODO Results Merger
+            SQLMerger sqlMerger = new SQLMerger();
+            List<FD_Variable> results = FederateUtils.results2FDType(resultSets, FD_Double.class);
+            System.out.println(results);
+            FD_Double ans = (FD_Double) sqlMerger.sum(results, FD_Double.class);
+            System.out.println(ans);
+
 
         } catch (Exception e) {
             e.printStackTrace();
-            // LOGGER.error(String.valueOf(e));
+            LOGGER.error(String.valueOf(e));
         } finally {
             for (FederateDBDriver driver : driverList) {
                 driver.closeConnection();
