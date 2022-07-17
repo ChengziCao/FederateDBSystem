@@ -1,0 +1,40 @@
+{
+    "query": "select id, location from nyc_homicides_copy where FD_distance($P, location) < 1000 order by dis;",
+    "variables": [
+      {
+        "name": "P",
+        "type": "point",
+        "value": "583571 4506714"
+      },
+      {
+        "name": "K",
+        "type": "int",
+        "value": 100
+      }
+    ]
+}
+{
+    "query": "select id, location from nyc_homicides_copy where FD_Contains(ST_GeomFromText(LINESTRING (poly_point_set)), location);",
+    "variables": [
+      {
+        "name": "poly_point_set",
+        "type": "pointSet",
+        "value": "588881 4506445, 590946 4521077, 5941796 4503794, 600689 4506179, 578274 4499580"
+      }
+    ]
+}  
+{
+    "query": "select id, loaction from nyc_homicides_copy where k  > (select count(*)  from nyc_homicides_copy where FD_DWithin($P, location, FD_Distance($P, location))",
+    "variables": [
+        {
+            "name": "P",
+            "type": "point",
+            "value": "583571 4506714"
+          },
+          {
+            "name": "K",
+            "type": "int",
+            "value": 100
+          }
+      ]
+}
