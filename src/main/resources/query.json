@@ -1,24 +1,19 @@
 {
-  "columns":[
+  "columns": [
     "id",
     "FD_Distance($P, location) as dis"
   ],
-  "table":"nyc_data",
-  "filter":[
+  "table": "nyc_data",
+  "filter": [
     "FD_Distance($P, location) < 1000"
   ],
-  "order":"dis",
-  "limit":10,
-  "variables":[
+  "order": "dis",
+  "limit": 10,
+  "variables": [
     {
-      "name":"P",
-      "type":"point",
-      "value":"583571 4506714"
-    },
-    {
-      "name":"K",
-      "type":"int",
-      "value":100
+      "name": "P",
+      "type": "point",
+      "value": "583571 4506714"
     }
   ]
 }

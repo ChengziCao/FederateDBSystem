@@ -44,16 +44,19 @@ classDiagram
 class FD_Type{
     <<interface>>
     +string translate2PostgresqlFormat()
+    +getInstance(Class clazz)
+    +string2Clazz(string type)
 }
 
 class FD_Variable{
     <<abstract>>
     +string name
     +obejct value
+    +FD_Variable results2FDVariable()
 }
 class FD_Function{
     <<abstract>>
-    +List~FD_Variable~ params
+    +string functionName
 }
 
 FD_Variable <|-- FD_INT
@@ -67,6 +70,7 @@ FD_Function <|-- FD_RKNN
 
 FD_Type <|.. FD_Variable 
 FD_Type <|.. FD_Function
+
 ```
 
 ### workflow
@@ -136,7 +140,7 @@ final_resulat-->end_([结束])
 - ~~FD_RangeCount~~
 - ~~FD_RangeSearch~~
 
-## 查询示例
+## 查询规范
 
 相关说明
 
@@ -144,7 +148,7 @@ final_resulat-->end_([结束])
 
 - query 字段中使用 $var_name 表示一个变量
 
-- variables 字段中支持的 type 为 ENUM.FD_DATA_TYPE 中所定义的枚举类型。（与Federate Variable一一对应）
+- variables 字段中支持的 type 为 ENUM.FD_DATA_TYPE 中所定义的枚举类型（与Federate Variable一一对应），不要写成`FD_Int`这样，以为准ENUM.FD_DATA_TYPE中的字符串为准，大小写不敏感。
 
 测试表（共3982条数据）：
 
@@ -163,47 +167,31 @@ final_resulat-->end_([结束])
 | 2    | POINT(588654.951612275 4517855.38265668) |
 | 3    | POINT(605800.81502458 4505730.60839577)  |
 
-
-
-
-
 FD_Distance
 
 ```json
 {
-  "query": "select F.id, FD_distance($P,F.location) as dis from nyc_homicides_copy where FD_distance($P F.location) < $K order by dis;",
-  "variables": [
+  "注": "origin和target，程序中不会使用到，为了方便测试，留在了这里，json没有注释的语法",
+    "origin": "select id, FD_Distance($P, location) as dis from nyc_data where FD_Distance($P, location) < 1000 order by dis;",
+    "target": "select id,ST_distance(ST_GeomFromText('POINT(583571.0 4506714.0)',st_srid(location)), location) as dis from nyc_data where ST_distance(ST_GeomFromText('POINT(583571.0 4506714.0)',st_srid(location)), location) < 1000 order by dis limit 10",
+  "columns":[
+    "id",
+    "FD_Distance($P, location) as dis"
+  ],
+  "table":"nyc_data",
+  "filter":[
+    "FD_Distance($P, location) < 1000"
+  ],
+  "order":"dis",
+  "limit":10,
+  "variables":[
     {
-      "name": "P",
-      "type": "point",
-      "value": "583571,4506714"
-    },
-    {
-      "name": "K",
-      "type": "int",
-      "value": 100
+      "name":"P",
+      "type":"point",
+      "value":"583571 4506714"
     }
   ]
 }
-```
-
-
-
-
-
-
-
-```json
-{
-    "query":"select id, location from nyc_homicides_copy where FD_Contains(ST_GeomFromText(LINESTRING (poly_point_set)), location);",
-    "variables":[
-      {
-        "name":"poly_point_set",
-        "type":"lineString",
-        "value":"588881 4506445, 590946 4521077, 5941796 4503794, 600689 4506179, 578274 4499580"
-      }
-    ]
-  }
 ```
 
 

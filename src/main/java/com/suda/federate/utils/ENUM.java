@@ -5,7 +5,6 @@ public class ENUM {
 
     public enum DATA_TYPE {POINT, LINESTRING, INT, DOUBLE, STRING}
 
-
     public enum FUNCTION {KNN, DISTANCE, RKNN}
 
     /**
