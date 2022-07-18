@@ -1,13 +1,40 @@
 [
   {
+    "注": "origin和target，程序中不会使用到，为了方便测试，留在了这里，json没有注释的语法",
+    "origin": "select id, FD_Distance($P, location) as dis from nyc_data where FD_Distance($P, location) < 1000 order by dis;",
+    "target": "select id,ST_distance(ST_GeomFromText('POINT(583571.0 4506714.0)',st_srid(location)), location) as dis from nyc_data where ST_distance(ST_GeomFromText('POINT(583571.0 4506714.0)',st_srid(location)), location) < 1000 order by dis limit 10",
     "metrics": [
-      "F.id",
-      "DF_distance($P, F.location) as dis"
+      "id",
+      "FD_distance($P, location) as dis"
     ],
-    "table": "nyc_homicides",
-    "filter": "DF_distance($P, F.location) < 10",
-    "order": [
-      "dis"
+    "table": "nyc_data",
+    "filter": [
+      "FD_distance($P, location) < 1000"
+    ],
+    "order": "dis",
+    "limit": 10,
+    "variables": [
+      {
+        "name": "P",
+        "type": "point",
+        "value": "583571 4506714"
+      },
+      {
+        "name": "K",
+        "type": "int",
+        "value": 100
+      }
+    ]
+  },
+  {
+    "origin": "select id, location from nyc_data where FD_Contains($poly_point_set), location);",
+    "target": "select id, location from nyc_data where st_contains(st_geomfromtext('LINESTRING(588881 4506445, 590946 4521077, 5941796 4503794, 600689 4506179, 578274 4499580)', st_srid(location)), location)",
+    "variables": [
+      {
+        "name": "poly_point_set",
+        "type": "lineString",
+        "value": "588881 4506445, 590946 4521077, 5941796 4503794, 600689 4506179, 578274 4499580"
+      }
     ]
   }
 ]

@@ -1,7 +1,7 @@
 package com.suda.federate.driver;
 
 
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson2.JSONObject;
 
 import java.sql.*;
 

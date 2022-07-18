@@ -1,16 +1,20 @@
 package com.suda.federate.utils;
 
 public class ENUM {
-    public enum FD_DATABASE {MYSQL, POSTGRESQL}
+    public enum DATABASE {MYSQL, POSTGRESQL}
 
-    public enum FD_DATA_TYPE {POINT,INT,DOUBLE,STRING}
+    public enum DATA_TYPE {POINT, LINESTRING, INT, DOUBLE, STRING}
 
-    public enum FD_FUNCTION {KNN, DISTANCE}
+
+    public enum FUNCTION {KNN, DISTANCE, RKNN}
 
     /**
      * check string equal with enum object. Insensitive to upper case or lower case.
      */
     public static <T> boolean equals(String string, T object) {
-        return string.equalsIgnoreCase(object.toString());
+        String objString = object.toString();
+        if (string.toLowerCase().startsWith("fd_"))
+            objString = "fd_" + objString;
+        return string.equalsIgnoreCase(objString);
     }
 }

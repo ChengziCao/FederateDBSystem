@@ -1,15 +1,24 @@
 {
-  "query": "select F.id, FD_distance($P, F.location) as dis from nyc_homicides_copy where FD_distance($P, F.location) < 1000 order by dis;",
-  "variables": [
+  "columns":[
+    "id",
+    "FD_Distance($P, location) as dis"
+  ],
+  "table":"nyc_data",
+  "filter":[
+    "FD_Distance($P, location) < 1000"
+  ],
+  "order":"dis",
+  "limit":10,
+  "variables":[
     {
-      "name": "P",
-      "type": "point",
-      "value": "583571,4506714"
+      "name":"P",
+      "type":"point",
+      "value":"583571 4506714"
     },
     {
-      "name": "K",
-      "type": "int",
-      "value": 100
+      "name":"K",
+      "type":"int",
+      "value":100
     }
   ]
 }

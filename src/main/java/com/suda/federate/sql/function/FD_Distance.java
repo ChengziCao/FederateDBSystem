@@ -1,14 +1,15 @@
 package com.suda.federate.sql.function;
 
-import com.alibaba.fastjson.JSONArray;
-import com.suda.federate.utils.ENUM;
+public class FD_Distance extends FD_Function {
 
-import java.util.List;
+    public FD_Distance() {
+        super("FD_Distance");
+    }
 
-public class FD_Distance implements FD_Function {
-
+    // from: DF_distance(x,x)
+    // to: ST_distance(x,x)
     @Override
-    public String translation(JSONArray functionParams, ENUM.FD_DATABASE database) {
-        return null;
+    public String translate2PostgresqlFormat() {
+        return "ST_distance";
     }
 }
