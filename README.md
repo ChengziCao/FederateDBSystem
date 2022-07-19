@@ -158,14 +158,6 @@ final_resulat-->end_([结束])
   - nyc_data
   - `DELETE from nyc_data where id <= 2000`
 
-测试表格式
-
-| id   | location                                 |
-| ---- | ---------------------------------------- |
-| 1    | POINT(592158.665764157 4502210.89236731) |
-| 2    | POINT(588654.951612275 4517855.38265668) |
-| 3    | POINT(605800.81502458 4505730.60839577)  |
-
 FD_Distance
 
 ```json
@@ -193,7 +185,21 @@ FD_Distance
 }
 ```
 
+# 测试表格式
 
+```sql
+CREATE TABLE "public"."osm_sh" (
+  "id" int8 NOT NULL,
+  "location" geometry(GEOMETRY, 4326),
+  "user" varchar(255) COLLATE "pg_catalog"."default",
+  "timestamp" timestamp(6)
+)
+;
+```
 
-
+| id        | location                      | user       | timestamp           |
+| --------- | ----------------------------- | ---------- | ------------------- |
+| 172817255 | POINT(31.2030452 121.3360092) | XD346      | 2021-03-30 17:00:23 |
+| 172817276 | POINT(31.1820961 121.337143)  | Austin Zhu | 2017-01-20 08:48:04 |
+| 172817294 | POINT(31.1992382 121.3362152) | XD346      | 2021-03-30 17:00:23 |
 
