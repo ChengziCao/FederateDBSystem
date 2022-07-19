@@ -4,18 +4,16 @@ import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
 import com.suda.federate.sql.function.FD_Function;
 import com.suda.federate.sql.type.FD_Variable;
-import com.suda.federate.utils.ENUM;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class SQLExpression {
     // select metrics from table_name where filter order by _ limit _;
-
+    public String type;
     public List<String> columns;
     public List<String> filters;
     public String tableName;
@@ -29,12 +27,13 @@ public class SQLExpression {
     public String build() {
         StringBuilder sb = new StringBuilder();
 
-        sb.append("select ")
-                .append(String.join(",", columns))
+        sb.append(type).append(" ")
+                .append(String.join(", ", columns))
                 .append(" from ")
-                .append(tableName)
-                .append(" where ")
-                .append(String.join(",", filters));
+                .append(tableName);
+        if (filters.size() > 0)
+            sb.append(" where ")
+                    .append(String.join(", ", filters));
         if (order != null) {
             sb.append(" order by ").append(order);
         }
@@ -44,7 +43,8 @@ public class SQLExpression {
         return sb.toString();
     }
 
-    public SQLExpression(List<String> columns, List<String> filters, List<FD_Variable> variables, List<FD_Function> functions, String tableName, String order, Integer limit) throws Exception {
+    public SQLExpression(String type, List<String> columns, List<String> filters, List<FD_Variable> variables, List<FD_Function> functions, String tableName, String order, Integer limit) throws Exception {
+        this.type = type;
         this.columns = columns;
         this.filters = filters;
         this.tableName = tableName;
@@ -103,6 +103,7 @@ public class SQLExpression {
             }
 
             SQLExpression expression = new SQLExpression(
+                    (String) queryJson.getOrDefault("type", "select"),
                     columnArray.toList(String.class),
                     filterArray.toList(String.class),
                     variableList,

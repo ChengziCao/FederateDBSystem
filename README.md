@@ -145,10 +145,9 @@ final_resulat-->end_([结束])
 相关说明
 
 - 支持单个查询（json格式），多个查询（json_array格式）[JSON在线解析及格式化验证 - JSON.cn](https://www.json.cn/#)
-
-- query 字段中使用 $var_name 表示一个变量
-
 - variables 字段中支持的 type 为 ENUM.FD_DATA_TYPE 中所定义的枚举类型（与Federate Variable一一对应），不要写成`FD_Int`这样，以为准ENUM.FD_DATA_TYPE中的字符串为准，大小写不敏感。
+- variables 的 name，用 $var_name 表示一个变量， 大小写敏感。
+- 函数名称，大小写敏感。
 
 测试表（共3982条数据）：
 

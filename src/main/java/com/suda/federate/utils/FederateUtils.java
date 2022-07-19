@@ -4,10 +4,7 @@ import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
 import com.suda.federate.driver.FederateDBDriver;
-import com.suda.federate.driver.FederateDBFactory;
-import com.suda.federate.sql.expression.SQLExpression;
-import com.suda.federate.sql.type.FD_Double;
-import com.suda.federate.sql.type.FD_Variable;
+import com.suda.federate.driver.PostgresqlDriver;
 
 import java.io.File;
 import java.io.IOException;
@@ -23,27 +20,36 @@ import java.util.regex.Matcher;
 
 public class FederateUtils {
 
-    public static Map<String, List<Connection>> parseConfigJson(String configPath) throws IOException, SQLException, ClassNotFoundException {
-        Map<String, List<Connection>> connectionMap = new HashMap<>();
+    public static Map<String, Connection> parseConfigJson(String configPath) throws IOException, SQLException, ClassNotFoundException {
+        Map<String, Connection> connectionMap = new HashMap<>();
         String jsonString = new String(Files.readAllBytes(Paths.get(configPath)));
         // 可能有多个数据源，写成 json array 格式
         JSONArray jsonArray = JSON.parseArray(jsonString);
 
         for (Object x : jsonArray) {
             JSONObject json = (JSONObject) (x);
-            String dbName = (String) json.get("type");
+            String dbName = json.getString("name");
+            String dbType = json.getString("type");
+
             // 动态加载 driver，不加载 jar 包无法正常运行
             Class.forName(json.getString("driver"));
             // 获取 driver 实例
-            FederateDBDriver driver = FederateDBFactory.getDriverInstance(dbName);
-            if (connectionMap.containsKey(dbName)) {
-                // 获取连接
-                connectionMap.get(dbName).add(driver.getConnection(json));
-            } else {
-                List<Connection> temp = new ArrayList<>();
-                temp.add(driver.getConnection(json));
-                connectionMap.put(dbName, temp);
-            }
+            FederateDBDriver driver;
+            if (dbType.equalsIgnoreCase("postgresql"))
+                driver = PostgresqlDriver.getInstance();
+            else
+                // pass
+                driver = PostgresqlDriver.getInstance();
+
+            connectionMap.put(dbType + ":" + dbName, driver.getConnection(json));
+            // if (connectionMap.containsKey(dbType)) {
+            //     // 获取连接
+            //     connectionMap.get(dbType).add(driver.getConnection(json));
+            // } else {
+            //     List<Connection> temp = new ArrayList<>();
+            //     temp.add(driver.getConnection(json));
+            //     connectionMap.put(dbType, temp);
+            // }
         }
         return connectionMap;
     }

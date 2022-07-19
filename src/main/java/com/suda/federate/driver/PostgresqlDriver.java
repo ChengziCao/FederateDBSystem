@@ -9,7 +9,14 @@ public class PostgresqlDriver implements FederateDBDriver {
     // connection 不需要每次都建立连接
     protected ThreadLocal<Connection> threadLocal = new ThreadLocal<>();
 
+    // 单例模式，一种数据库 全局只需要一个 driver 即可
+    private static PostgresqlDriver postgresqlDriver = null;
+
     PostgresqlDriver() {
+    }
+
+    public static PostgresqlDriver getInstance() {
+        return postgresqlDriver == null ? postgresqlDriver = new PostgresqlDriver() : postgresqlDriver;
     }
 
     @Override

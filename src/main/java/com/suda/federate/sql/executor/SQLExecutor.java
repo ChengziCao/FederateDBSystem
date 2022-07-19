@@ -1,21 +1,26 @@
 package com.suda.federate.sql.executor;
 
-import com.suda.federate.driver.FederateDBFactory;
-
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 public interface SQLExecutor<resultType> {
     /***
      * sql executor
-     * @param connectionMap key: db_type, value: all connection of this db
+     * @param connection connection
      * @param sql sql waiting for execution
      * @return
      * @throws SQLException
      */
-    List<resultType> executeSql(Map<String, List<Connection>> connectionMap, String sql) throws SQLException;
+    resultType executeSql(Connection connection, String sql) throws SQLException;
+
+
+    /***
+     * batch sql executor
+     * @param connectionMap key: db_type:db_name, value: all connection of this db
+     * @param sql sql waiting for execution
+     * @return
+     * @throws SQLException
+     */
+    Map<String, resultType> executeSqlBatch(Map<String, Connection> connectionMap, String sql) throws SQLException;
 }

@@ -71,19 +71,16 @@ public abstract class FD_Variable<valueType> implements FD_Type {
         }
     }
 
-    public static List<FD_Variable> results2FDVariable(List<ResultSet> resultSets, Class<?> clazz) throws Exception {
+    public static List<FD_Variable> results2FDVariable(ResultSet resultSet, Class<?> clazz) throws Exception {
         // List<T> variables = new ArrayList<>();
         List<FD_Variable> variables = new ArrayList<>();
-
-        for (ResultSet rs : resultSets) {
-            // 首个元素不会跳过，可理解为带头指针的链表
-            while (rs.next()) {
-                variables.add(FD_Variable.getInstance(
-                        rs.getObject("id", Integer.class).toString(),
-                        rs.getObject("dis", Double.class).toString(),
-                        FD_Double.class
-                ));
-            }
+        // 首个元素不会跳过，可理解为带头指针的链表
+        while (resultSet.next()) {
+            variables.add(FD_Variable.getInstance(
+                    resultSet.getObject("id", Integer.class).toString(),
+                    resultSet.getObject("dis", Double.class).toString(),
+                    FD_Double.class
+            ));
         }
         return variables;
     }

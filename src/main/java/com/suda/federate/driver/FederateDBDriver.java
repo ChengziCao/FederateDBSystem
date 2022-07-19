@@ -15,4 +15,5 @@ public interface FederateDBDriver {
     ResultSet executeSql(Connection conn, String sql, String[] args) throws SQLException;
 
     void closeConnection() throws SQLException;
+
 }
