@@ -176,6 +176,68 @@ FD_Distance
 }
 ```
 
+FD_Knn
+
+查询流程示范
+
+> 需将查询 如sselect id from osm_sh where FD_KNN ($P, location, $K) limit 100转为各silo的SQL
+
+```python
+l=0
+u=infinity
+k=3
+p='POINT(101.75882888992 36.62314533104)' #i.e.$P
+ds=[]
+for conn in connections:
+	di=select ST_distance(ST_GeomFromText('POINT(121.45611 31.253359)',st_srid(location)), location) as d from osm_sh order by d limit 1 offset k-1
+ # from [conn].[table]
+	ds.append(di)
+u=min(ds)
+e=1e-5
+while u-l>=e:
+	thres=(l+u)/2
+	betai=select count(*) from osm_sh where ST_distance(ST_GeomFromText('POINT(121.45611 31.253359)',st_srid(location)), location) <= thres limit 1
+# from [conn].[table]
+	sgn=secureComparision(beta1,beat2...,k)
+	if sgn==-1 then l=thres
+	elif sgn=1 then u=thres
+	else break;
+si=select * from nyc_subway_stations where ST_Distance(ST_GeographyFromText(p),ST_GeographyFromText(ST_AsText(geom)))<thres;# from [conn].[table]
+query answer=secureSetUnion(s1,s2,...)
+return query answer
+```
+
+查询示范
+
+```json
+{
+    "type": "select",
+    "columns": [
+      "id"
+    ],
+
+    "table": "osm_sh",
+    "filter": [
+      "FD_KNN ($P, location, $K)"
+    ],
+    "variables": [
+      {
+        "name": "P",
+        "type": "point",
+        "value": "121.456107 31.253359"
+      },
+      {
+        "name": "K",
+        "type": "int",
+        "value": "3"
+      }
+
+    ]
+  }
+```
+
+
+
 # 测试表格式
 
 测试表（共4w条数据）：

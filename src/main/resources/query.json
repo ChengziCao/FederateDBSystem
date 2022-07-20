@@ -2,6 +2,30 @@
   {
     "type": "select",
     "columns": [
+      "id"
+    ],
+
+    "table": "osm_sh",
+    "filter": [
+      "FD_KNN ($P, location, $K)"
+    ],
+    "variables": [
+      {
+        "name": "P",
+        "type": "point",
+        "value": "121.456107 31.253359"
+      },
+      {
+        "name": "K",
+        "type": "int",
+        "value": "3"
+      }
+
+    ]
+  },
+  {
+    "type": "select",
+    "columns": [
       "id",
       "FD_Distance($P, location) as dis"
     ],
@@ -11,7 +35,8 @@
       "FD_Distance($P, location) < 5000"
     ],
     "order": "dis",
-    "limit": 10,
+    "limit": 1,
+    "offset": 2,
     "variables": [
       {
         "name": "P",

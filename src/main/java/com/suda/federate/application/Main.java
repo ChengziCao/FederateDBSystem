@@ -1,20 +1,13 @@
 package com.suda.federate.application;
 
 import com.suda.federate.driver.FederateDBDriver;
-import com.suda.federate.sql.executor.PostgresqlExecutor;
-import com.suda.federate.sql.executor.SQLExecutor;
+import com.suda.federate.sql.common.FederateQuery;
 import com.suda.federate.sql.expression.SQLExpression;
-import com.suda.federate.sql.merger.SQLMerger;
-import com.suda.federate.sql.translator.PostgresqlTranslator;
-import com.suda.federate.sql.translator.SQLTranslator;
-import com.suda.federate.sql.type.FD_Double;
-import com.suda.federate.sql.type.FD_Variable;
 import com.suda.federate.utils.FederateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -56,27 +49,30 @@ public class Main {
                 print("Original SQL:");
                 print(expression.build());
                 // TODO SQL Translator
-                SQLTranslator sqlTranslator = new PostgresqlTranslator();
-                String translatedSql = sqlTranslator.translate(expression);
-                print("Target SQL: ");
-                print(translatedSql);
-                // TODO SQL Optimizer
-                // translatedSql = translatedSql;
-                // TODO SQL Executor
-                SQLExecutor<ResultSet> sqlExecutor = new PostgresqlExecutor();
+                FederateQuery federateQuery = new FederateQuery();
+                federateQuery.query(connectionMap,expression);
 
-                Map<String, ResultSet> resultSetMap = sqlExecutor.executeSqlBatch(connectionMap, translatedSql);
-
-                // TODO Results Merger
-                SQLMerger sqlMerger = new SQLMerger();
-                // List<FD_Variable> results = FD_Variable.results2FDVariable(resultSets, FD_Double.class);
-                print("Query Result: ");
-                for (String siloName : resultSetMap.keySet()) {
-                    ResultSet rs = resultSetMap.get(siloName);
-                    print(siloName);
-                    FederateUtils.printResultSet(rs);
-                    // print(FD_Variable.resultSet2FDVariable(rs, FD_Double.class).toString());
-                }
+//                SQLTranslator sqlTranslator = new PostgresqlTranslator();
+//                String translatedSql = sqlTranslator.translate(expression);
+//                print("Target SQL: ");
+//                print(translatedSql);
+//                // TODO SQL Optimizer
+//                // translatedSql = translatedSql;
+//                // TODO SQL Executor
+//                SQLExecutor<ResultSet> sqlExecutor = new PostgresqlExecutor();
+//
+//                Map<String, ResultSet> resultSetMap = sqlExecutor.executeSqlBatch(connectionMap, translatedSql);
+//
+//                // TODO Results Merger
+//                SQLMerger sqlMerger = new SQLMerger();
+//                // List<FD_Variable> results = FD_Variable.results2FDVariable(resultSets, FD_Double.class);
+//                print("Query Result: ");
+//                for (String siloName : resultSetMap.keySet()) {
+//                    ResultSet rs = resultSetMap.get(siloName);
+//                    print(siloName);
+//                    FederateUtils.printResultSet(rs);
+//                    // print(FD_Variable.resultSet2FDVariable(rs, FD_Double.class).toString());
+//                }
 
                 // FD_Double ans = (FD_Double) sqlMerger.sum(results, FD_Double.class);
                 // System.out.println(ans);

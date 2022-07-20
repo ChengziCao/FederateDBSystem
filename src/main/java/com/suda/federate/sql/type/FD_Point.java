@@ -13,8 +13,8 @@ public class FD_Point extends FD_Variable<FD_Point.Location> {
         return String.format("ST_GeographyFromText('POINT(%s %s)')", value.x.toString(), value.y.toString());
     }
 
-    static class Location {
-        Float x, y;
+    public static class Location {
+        public Float x, y;
 
         public Location(Float x, Float y) {
             this.x = x;
