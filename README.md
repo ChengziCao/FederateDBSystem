@@ -117,7 +117,7 @@ memger-->|最终结果|final_resulat[/Final Result/]
 final_resulat-->end_([结束])
 ```
 
-## Federate Variable & Function
+## Federate Variable
 
 定义几种需要的 variable Type，比如
 
@@ -127,56 +127,52 @@ final_resulat-->end_([结束])
   - `FD_Double`
 
 - 空间数据类型
-  - `FD_Point`：二维空间上的一个坐标，使用空格隔开： `"value":"583571 4506714"`
-  - `FD_Line`：多个 FD_Point 构成的集合，使用逗号隔开：`"value":"588881 4506445, 590946 4521077, 5941796 4503794, 600689 4506179, 578274 4499580"`
+  - `FD_Point`：二维空间上的一个坐标，使用空格隔开： `"value":"121.456107 31.253359"`
+  - `FD_LineString`：多个 FD_Point 构成的集合，使用逗号隔开：`"value":"121.43 31.20, 121.46 31.20, 121.46 31.23, 121.43 31.20"`
+  - `FD_Polygon`：多个 FD_Point 构成的集合，使用逗号隔开：`"value":"121.43 31.20, 121.46 31.20, 121.46 31.23, 121.43 31.20"`
 
+## Federate Function
 
 定义几种允许执行的 function，比如
 
 - `FD_Distance (Point p1, Point p2) `: 返回 p1 和 p2 的距离
 
-- `FD_KNN (Point p, F.loaction, k) `: 返回在 F 中 p 的 k 近邻点
-- `FD_RKNN`
+```json
+{
+    "type":"select",
+    "columns":[
+        "id",
+        "FD_Distance($P, location) as dis"
+    ],
+    "table":"osm_sh",
+    "filter":[
+        "FD_Distance($P, location) < 5000"
+    ],
+    "order":"dis",
+    "limit":10,
+    "variables":[
+        {
+            "name":"P",
+            "type":"point",
+            "value":"121.456107 31.253359"
+        }
+    ]
+}
+```
+
+- `FD_Knn (Point p, F.loaction, k) `: 返回在 F 中 p 的 k 近邻点
+- `FD_RKnn`
 - ~~FD_RangeCount~~
 - ~~FD_RangeSearch~~
 
-## 查询规范
-
-相关说明
+## 相关规范说明
 
 - 支持单个查询（json格式），多个查询（json_array格式）[JSON在线解析及格式化验证 - JSON.cn](https://www.json.cn/#)
 - variables 字段中支持的 type 为 ENUM.FD_DATA_TYPE 中所定义的枚举类型（与Federate Variable一一对应），不要写成`FD_Int`这样，以为准ENUM.FD_DATA_TYPE中的字符串为准，大小写不敏感。
 - variables 的 name，用 $var_name 表示一个变量， 大小写敏感。
 - 函数名称，大小写敏感。
 
-FD_Distance
-
-```json
-{
-  "注": "origin和target，程序中不会使用到，为了方便测试，留在了这里，json没有注释的语法",
-    "origin": "select id, FD_Distance($P, location) as dis from nyc_data where FD_Distance($P, location) < 1000 order by dis;",
-    "target": "select id,ST_distance(ST_GeomFromText('POINT(583571.0 4506714.0)',st_srid(location)), location) as dis from nyc_data where ST_distance(ST_GeomFromText('POINT(583571.0 4506714.0)',st_srid(location)), location) < 1000 order by dis limit 10",
-  "columns":[
-    "id",
-    "FD_Distance($P, location) as dis"
-  ],
-  "table":"nyc_data",
-  "filter":[
-    "FD_Distance($P, location) < 1000"
-  ],
-  "order":"dis",
-  "limit":10,
-  "variables":[
-    {
-      "name":"P",
-      "type":"point",
-      "value":"583571 4506714"
-    }
-  ]
-}
-```
-
-# 测试表格式
+## 测试表格式
 
 测试表（共4w条数据）：
 
