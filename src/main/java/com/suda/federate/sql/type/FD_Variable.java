@@ -5,7 +5,6 @@ import com.suda.federate.utils.ENUM;
 import javafx.util.Pair;
 
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -38,7 +37,7 @@ public abstract class FD_Variable<valueType> implements FD_Type {
         } else if (clazz == FD_Point.class) {
             String[] strArray = value.split(" ");
             return clazz.getConstructor(String.class, Float.class, Float.class).newInstance(name, Float.parseFloat(strArray[0]), Float.parseFloat(strArray[1]));
-        } else if (clazz == FD_LineString.class) {
+        } else if (clazz == FD_LineString.class || clazz == FD_Polygon.class) {
             List<FD_Point> points = Arrays.stream((value.split(",")))
                     .map(x -> x.trim().split(" "))
                     .map(x -> new Pair<>(Float.valueOf(x[0]), Float.valueOf(x[1])))
@@ -66,18 +65,21 @@ public abstract class FD_Variable<valueType> implements FD_Type {
             return FD_LineString.class;
         } else if (ENUM.equals(type, ENUM.DATA_TYPE.DOUBLE)) {
             return FD_Double.class;
+        } else if (ENUM.equals(type, ENUM.DATA_TYPE.POLYGON)) {
+            return FD_Polygon.class;
         } else {
             throw new Exception("type not support.");
         }
     }
 
-    public static List<FD_Variable> results2FDVariable(ResultSet resultSet, Class<?> clazz) throws Exception {
+    public static List<FD_Variable> resultSet2FDVariable(ResultSet resultSet, Class<?> clazz) throws Exception {
         // List<T> variables = new ArrayList<>();
         List<FD_Variable> variables = new ArrayList<>();
         // 首个元素不会跳过，可理解为带头指针的链表
         while (resultSet.next()) {
             variables.add(FD_Variable.getInstance(
-                    resultSet.getObject("id", Integer.class).toString(),
+                    resultSet.getObject(0, Long.class).toString(),
+
                     resultSet.getObject("dis", Double.class).toString(),
                     FD_Double.class
             ));

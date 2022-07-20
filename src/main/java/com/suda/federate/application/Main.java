@@ -74,7 +74,8 @@ public class Main {
                 for (String siloName : resultSetMap.keySet()) {
                     ResultSet rs = resultSetMap.get(siloName);
                     print(siloName);
-                    print(FD_Variable.results2FDVariable(rs, FD_Double.class).toString());
+                    FederateUtils.printResultSet(rs);
+                    // print(FD_Variable.resultSet2FDVariable(rs, FD_Double.class).toString());
                 }
 
                 // FD_Double ans = (FD_Double) sqlMerger.sum(results, FD_Double.class);

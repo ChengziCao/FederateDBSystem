@@ -1,41 +1,41 @@
 [
   {
-    "type":"select",
-    "columns":[
+    "type": "select",
+    "columns": [
       "id",
       "FD_Distance($P, location) as dis"
     ],
-    "table":"nyc_data",
-    "filter":[
-      "FD_Distance($P, location) < 1000"
+
+    "table": "osm_sh",
+    "filter": [
+      "FD_Distance($P, location) < 5000"
     ],
-    "order":"dis",
-    "limit":10,
-    "variables":[
+    "order": "dis",
+    "limit": 10,
+    "variables": [
       {
-        "name":"P",
-        "type":"point",
-        "value":"583571 4506714"
+        "name": "P",
+        "type": "point",
+        "value": "121.456107 31.253359"
       }
     ]
   },
   {
-    "type":"select",
-    "columns":[
+    "type": "select",
+    "columns": [
       "id",
-      "FD_Distance($P, location) as dis"
+      "location"
     ],
-    "table":"nyc_data",
-    "filter":[
-      "FD_Distance($P, location) < 500"
+    "table": "osm_sh",
+    "filter": [
+      "FD_Contains($P, location)"
     ],
-    "order":"dis",
-    "limit":10,
-    "variables":[
+    "limit": 20,
+    "variables": [
       {
-        "name":"P",
-        "type":"point",
-        "value":"583571 4506714"
+        "name": "P",
+        "type": "polygon",
+        "value": "121.43 31.20, 121.46 31.20, 121.46 31.23, 121.43 31.20"
       }
     ]
   }

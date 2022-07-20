@@ -8,7 +8,7 @@ import java.util.List;
 
 public abstract class FD_Function implements FD_Type {
 
-    public static List<String> supportFunctionList = Arrays.asList("FD_Distance", "FD_Knn", "FD_Rknn");
+    public static List<String> supportFunctionList = Arrays.asList("FD_Distance", "FD_Knn", "FD_Rknn","FD_Contains");
 
     public String name;
 
@@ -22,6 +22,8 @@ public abstract class FD_Function implements FD_Type {
         } else if (clazz == FD_Knn.class) {
             return clazz.newInstance();
         } else if (clazz == FD_Rknn.class) {
+            return clazz.newInstance();
+        } else if (clazz == FD_Contains.class) {
             return clazz.newInstance();
         } else {
             throw new Exception("type not support.");
@@ -37,6 +39,8 @@ public abstract class FD_Function implements FD_Type {
             return FD_Knn.class;
         } else if (ENUM.equals(type, ENUM.FUNCTION.RKNN)) {
             return FD_Rknn.class;
+        } else if (ENUM.equals(type, ENUM.FUNCTION.CONTAINS)) {
+            return FD_Contains.class;
         } else {
             throw new Exception("type not support.");
         }

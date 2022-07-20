@@ -149,15 +149,6 @@ final_resulat-->end_([结束])
 - variables 的 name，用 $var_name 表示一个变量， 大小写敏感。
 - 函数名称，大小写敏感。
 
-测试表（共3982条数据）：
-
-- 10.10.64.117:54321/gis
-  - nyc_data
-  - `DELETE from nyc_data where id > 2000`
-- 10.10.64.117:54322/gis
-  - nyc_data
-  - `DELETE from nyc_data where id <= 2000`
-
 FD_Distance
 
 ```json
@@ -187,15 +178,14 @@ FD_Distance
 
 # 测试表格式
 
-```sql
-CREATE TABLE "public"."osm_sh" (
-  "id" int8 NOT NULL,
-  "location" geometry(GEOMETRY, 4326),
-  "user" varchar(255) COLLATE "pg_catalog"."default",
-  "timestamp" timestamp(6)
-)
-;
-```
+测试表（共4w条数据）：
+
+- 10.10.64.117:54321/gis
+  - osm_sh
+  - `DELETE from osm_sh where id <= 4963651393;`
+- 10.10.64.117:54322/gis
+  - osm_sh
+  - `DELETE from osm_sh where id > 4963651393;`
 
 | id        | location                      | user       | timestamp           |
 | --------- | ----------------------------- | ---------- | ------------------- |

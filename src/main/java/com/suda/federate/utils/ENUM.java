@@ -3,9 +3,10 @@ package com.suda.federate.utils;
 public class ENUM {
     public enum DATABASE {MYSQL, POSTGRESQL}
 
-    public enum DATA_TYPE {POINT, LINESTRING, INT, DOUBLE, STRING}
+    public enum DATA_TYPE {POINT, LINESTRING, INT, DOUBLE, STRING, POLYGON}
 
-    public enum FUNCTION {KNN, DISTANCE, RKNN}
+    public enum FUNCTION {KNN, DISTANCE, RKNN, CONTAINS}
+
 
     /**
      * check string equal with enum object. Insensitive to upper case or lower case.

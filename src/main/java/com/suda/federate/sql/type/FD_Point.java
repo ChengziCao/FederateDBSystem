@@ -10,7 +10,7 @@ public class FD_Point extends FD_Variable<FD_Point.Location> {
 
     @Override
     public String translate2PostgresqlFormat() {
-        return String.format("ST_GeomFromText('POINT(%s %s)',st_srid(location))", value.x.toString(), value.y.toString());
+        return String.format("ST_GeographyFromText('POINT(%s %s)')", value.x.toString(), value.y.toString());
     }
 
     static class Location {

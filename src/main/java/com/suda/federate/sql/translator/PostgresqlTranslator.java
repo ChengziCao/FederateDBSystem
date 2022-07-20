@@ -27,6 +27,7 @@ public class PostgresqlTranslator implements SQLTranslator {
         }
         // TODO 函数替换
         for (FD_Function function : expression.functions) {
+
             expression.columns = expression.columns.stream().
                     map(x -> x.replaceAll(function.name, function.translate2PostgresqlFormat()))
                     .collect(Collectors.toList());

@@ -10,6 +10,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class SQLExpression {
     // select metrics from table_name where filter order by _ limit _;
@@ -27,19 +28,17 @@ public class SQLExpression {
     public String build() {
         StringBuilder sb = new StringBuilder();
 
-        sb.append(type).append(" ")
-                .append(String.join(", ", columns))
-                .append(" from ")
-                .append(tableName);
+        sb.append(type).append(" ").append(String.join(", ", columns)).append(" from ").append(tableName);
         if (filters.size() > 0)
-            sb.append(" where ")
-                    .append(String.join(", ", filters));
+            sb.append(" where ").append(String.join(", ", filters));
         if (order != null) {
             sb.append(" order by ").append(order);
         }
-        if (limit != null) {
-            sb.append(" limit ").append(limit);
+        if (limit == null) {
+            // 默认 limit 100
+            limit = 100;
         }
+        sb.append(" limit ").append(limit);
         return sb.toString();
     }
 
@@ -67,8 +66,7 @@ public class SQLExpression {
 
         String jsonString = new String(Files.readAllBytes(Paths.get(queryPath)));
         // 处理query.json多个查询
-        if (jsonString.charAt(0) == '{')
-            jsonString = '[' + jsonString + ']';
+        if (jsonString.charAt(0) == '{') jsonString = '[' + jsonString + ']';
         JSONArray queryJsonArray = JSONArray.parseArray(jsonString);
         // 处理一条SQL语句
         for (int i = 0; i < queryJsonArray.size(); i++) {
@@ -81,10 +79,7 @@ public class SQLExpression {
             JSONArray variablesJsonArray = queryJson.getJSONArray("variables");
             for (Object varObj : variablesJsonArray) {
                 JSONObject var = (JSONObject) varObj;
-                variableList.add(FD_Variable.getInstance(
-                        var.getString("name"),
-                        var.getString("value"),
-                        FD_Variable.string2Clazz(var.getString("type"))));
+                variableList.add(FD_Variable.getInstance(var.getString("name"), var.getString("value"), FD_Variable.string2Clazz(var.getString("type"))));
             }
             JSONArray columnArray = queryJson.getJSONArray("columns");
             JSONArray filterArray = queryJson.getJSONArray("filter");
@@ -95,23 +90,12 @@ public class SQLExpression {
             for (String col : collections) {
                 for (String var : FD_Function.supportFunctionList) {
                     if (col.toLowerCase().contains(var.toLowerCase())) {
-                        functionList.add(
-                                FD_Function.getInstance(FD_Function.string2Clazz(var))
-                        );
+                        functionList.add(FD_Function.getInstance(FD_Function.string2Clazz(var)));
                     }
                 }
             }
 
-            SQLExpression expression = new SQLExpression(
-                    (String) queryJson.getOrDefault("type", "select"),
-                    columnArray.toList(String.class),
-                    filterArray.toList(String.class),
-                    variableList,
-                    functionList,
-                    queryJson.getString("table"),
-                    (String) queryJson.getOrDefault("order", null),
-                    (Integer) queryJson.getOrDefault("limit", null)
-            );
+            SQLExpression expression = new SQLExpression((String) queryJson.getOrDefault("type", "select"), columnArray.toList(String.class), filterArray.toList(String.class), variableList, functionList, queryJson.getString("table"), (String) queryJson.getOrDefault("order", null), (Integer) queryJson.getOrDefault("limit", null));
             sqlExpressionList.add(expression);
         }
         return sqlExpressionList;
