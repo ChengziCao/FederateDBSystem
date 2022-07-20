@@ -4,7 +4,7 @@
     "driver": "org.postgresql.Driver",
     "user": "postgres",
     "password": "123",
-    "url": "jdbc:postgresql://10.10.64.117:54321/gis",
+    "url": "jdbc:postgresql://10.10.64.117:54323/gis",
     "type": "POSTGRESQL"
   },
   {

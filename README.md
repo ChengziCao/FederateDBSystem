@@ -180,12 +180,12 @@ FD_Distance
 
 测试表（共4w条数据）：
 
-- 10.10.64.117:54321/gis
+- 10.10.64.117:54323/gis
   - osm_sh
-  - `DELETE from osm_sh where id <= 4963651393;`
+  - DELETE from osm_sh where id <= 4963651393;
 - 10.10.64.117:54322/gis
   - osm_sh
-  - `DELETE from osm_sh where id > 4963651393;`
+  - DELETE from osm_sh where id > 4963651393;
 
 | id        | location                      | user       | timestamp           |
 | --------- | ----------------------------- | ---------- | ------------------- |
