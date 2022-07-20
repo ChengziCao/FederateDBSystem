@@ -2,8 +2,8 @@ package com.suda.federate.sql.type;
 
 import com.suda.federate.sql.expression.FD_Type;
 import com.suda.federate.utils.ENUM;
-import javafx.util.Pair;
-
+//import javafx.util.Pair;
+import org.apache.calcite.util.Pair;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -54,7 +54,18 @@ public class FederateUtils {
         return connectionMap;
     }
 
+    public static String  getOneResult(ResultSet rs) throws SQLException {
+        int count = rs.getMetaData().getColumnCount();
+        rs.next();
+        String  res=null;
 
+        Object val = rs.getObject(1);
+        if (val != null){
+            res = val.toString();
+        }
+
+        return res;
+    }
     public static Map<String, Object> printResultSet(ResultSet rs) throws SQLException {
         int count = rs.getMetaData().getColumnCount();
         Map<String, Object> hm = new HashMap<>();
