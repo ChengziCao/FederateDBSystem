@@ -186,7 +186,8 @@ while u-l>=e:
 	if sgn==-1 then l=thres
 	elif sgn=1 then u=thres
 	else break;
-si=select * from nyc_subway_stations where ST_Distance(ST_GeographyFromText(p),ST_GeographyFromText(ST_AsText(geom)))<thres;# from [conn].[table]
+si=select id from osm_sh where ST_distance(ST_GeomFromText('POINT(121.45611 z31.253359)',st_srid(location)), location) <= thres limit k
+# from [conn].[table]
 query answer=secureSetUnion(s1,s2,...)
 return query answer
 ```
