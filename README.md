@@ -86,34 +86,38 @@ FD_Type <|.. FD_Function
 ```mermaid
 graph TD
     start([开始])
-    start-->d1_input1
     start-->d1_input2
-    start-->d2_input1
-    start-->d2_input2
 
-subgraph datasource1
-    d1_input1[/config.json/]
-    d1_input2[/query.json/]
-    d1_input1-->|获取数据源配置|d1_conn[建立连接]
-    d1_input2-->|获取原始SQL|d1_expresssion[SQL Expression]
-    d1_expresssion-->|"内部SQL表达式"|d1_translator[SQL Translator]
-    d1_translator-->|翻译后可执行的SQL|d1_executor[SQL Executor]
-    d1_conn-->|数据源连接|d1_executor
+d1_input2[/query.json/]    
+d1_input2-->|获取原始SQL|d1_expresssion[SQL Expression]
+d1_expresssion-->|"内部SQL表达式"|d1_translator[SQL Translator]
+
+d1_translator-->|翻译后可执行的SQL|d1_executor["SQL Executor (Driver)"]
+d1_translator-->|翻译后可执行的SQL|d2_executor["SQL Executor (Driver)"]
+d1_translator-->|翻译后可执行的SQL|d3_executor["SQL Executor (Driver)"]
+
+
+subgraph node1
+    d1_executor
+    d1_executor --> DB_A[(Database A)]
 end
 
-subgraph datasource2
-    d2_input1[/config.json/]
-    d2_input2[/query.json/]
-    d2_input1-->|获取数据源配置|d2_conn[建立连接]
-    d2_input2-->|获取原始SQL|d2_expresssion[SQL Expression]
-    d2_expresssion-->|"内部SQL表达式"|d2_translator[SQL Translator]
-    d2_translator-->|翻译后可执行的SQL|d2_executor[SQL Executor]
-    d2_conn-->|数据源连接|d2_executor
+subgraph node2
+    d2_executor
+    d2_executor --> DB_B[(Database B)]
 end
+
+subgraph node3
+    d3_executor
+    d3_executor --> DB_C[(Database C)]
+end
+
 memger[Result Memger]
-d1_executor-->|datasource1查询结果|memger
-d2_executor-->|datasource2查询结果|memger
-memger-->|最终结果|final_resulat[/Final Result/]
+DB_A-->|local result|memger
+DB_B-->|local result|memger
+DB_C-->|local result|memger
+
+memger-->final_resulat[/Final Result/]
 final_resulat-->end_([结束])
 ```
 
