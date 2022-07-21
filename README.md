@@ -83,6 +83,8 @@ FD_Type <|.. FD_Function
 - SQL Executor
 - Result Memger
 
+当前架构
+
 ```mermaid
 graph TD
     start([开始])
@@ -93,23 +95,22 @@ d1_input2-->|获取原始SQL|d1_expresssion[SQL Expression]
 d1_expresssion-->|"内部SQL表达式"|d1_translator[SQL Translator]
 
 d1_translator-->|翻译后可执行的SQL|d1_executor["SQL Executor (Driver)"]
-d1_translator-->|翻译后可执行的SQL|d2_executor["SQL Executor (Driver)"]
-d1_translator-->|翻译后可执行的SQL|d3_executor["SQL Executor (Driver)"]
-
+%% d1_translator-->|翻译后可执行的SQL|d2_executor["SQL Executor (Driver)"]
+%% d1_translator-->|翻译后可执行的SQL|d3_executor["SQL Executor (Driver)"]
+d1_executor --> DB_A[(Database A)]
+d1_executor --> DB_B[(Database A)]
+d1_executor --> DB_C[(Database A)]
 
 subgraph node1
-    d1_executor
-    d1_executor --> DB_A[(Database A)]
+    DB_A[(Database A)]
 end
 
 subgraph node2
-    d2_executor
-    d2_executor --> DB_B[(Database B)]
+    DB_B[(Database B)]
 end
 
 subgraph node3
-    d3_executor
-    d3_executor --> DB_C[(Database C)]
+    DB_C[(Database C)]
 end
 
 memger[Result Memger]
@@ -120,6 +121,58 @@ DB_C-->|local result|memger
 memger-->final_resulat[/Final Result/]
 final_resulat-->end_([结束])
 ```
+
+目标架构（未完成）
+
+```mermaid
+graph TD
+    start([开始])
+    start-->input
+
+
+subgraph master
+    input[/query.json/]    
+    input-->|获取原始查询|expresssion[SQL Expression]
+    expresssion-->|"内部查询表达式"|translator[SQL Translator]
+end
+
+translator-->|分发待执行查询|executor1["DB_A Driver"]
+translator-->|分发待执行查询|executor2["DB_B Driver"]
+translator-->|分发待执行查询|executor3["DB_C Driver"]
+
+%% subgraph driver
+%% executor1
+%% executor2
+%% executor3
+%% end
+
+subgraph node1
+    executor1
+    executor1 --> DB_A[(Database A)]
+    DB_A-->|局部结果|merge1[Result Merger]
+end
+
+subgraph node2
+    executor2
+    executor2 --> DB_B[(Database B)]
+    DB_B-->|局部结果|merge2[Result Merger]
+end
+
+subgraph node3
+    executor3
+    executor3 --> DB_C[(Database C)]
+    DB_C-->|局部结果|merge3[Result Merger]
+end
+
+
+
+%% merge1-->merge2-->merge3
+
+%% memger-->final_resulat[/Final Result/]
+%% final_resulat-->end_([结束])
+```
+
+
 
 ## Federate Variable
 
