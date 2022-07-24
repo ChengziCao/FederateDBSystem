@@ -27,63 +27,16 @@ com.suda.federate.application.Main.main()
 
 ## Design
 
-### class diagram
-
-未完成
-
-```mermaid
-classDiagram
-
-%% class SQLTranslator{
-%%     +translate(string originalSql)
-%% }
-
-%% SQLTranslator ..> FD_Variable
-%% SQLTranslator ..> FD_Function
-
-class FD_Type{
-    <<interface>>
-    +string translate2PostgresqlFormat()
-    +getInstance(Class clazz)
-    +string2Clazz(string type)
-}
-
-class FD_Variable{
-    <<abstract>>
-    +string name
-    +obejct value
-    +FD_Variable results2FDVariable()
-}
-class FD_Function{
-    <<abstract>>
-    +string functionName
-}
-
-FD_Variable <|-- FD_INT
-FD_Variable <|-- FD_POINT
-FD_Variable <|-- FD_LINESTRING
-
-FD_Function <|-- FD_DISTANCE
-FD_Function <|-- FD_KNN
-FD_Function <|-- FD_RKNN
-
-
-FD_Type <|.. FD_Variable 
-FD_Type <|.. FD_Function
-
-```
-
 ### workflow
 
-- 从 query.json 中读取 original sql （我们定义的SQL）和 variables
+简单流程如下（较为复杂的 KNN 查询过程，存在多次生成目标SQL语句并执行的过程）
 
-- 解析 variables 生成 FD_Variable 对象
-- 将 original sql 和 FD_Variable 传递给 SQLTranslator，生成翻译后的 SQL（能够被对应database直接执行的SQL）
-- SQL Optimizer
-- SQL Executor
-- Result Memger
+- 从 query.json 中读取查询方法 function 和参数 params，生成 SQLExperssion
+- SQLExpression --> FD_Function --> SQLGenerator，生成目标数据库查询 SQL
 
-当前架构
+- 遍历所有 data silos，执行查询
+
+- 查询结果做 summation、union 等。
 
 ```mermaid
 graph TD
@@ -91,15 +44,12 @@ graph TD
     start-->d1_input2
 
 d1_input2[/query.json/]    
-d1_input2-->|获取原始SQL|d1_expresssion[SQL Expression]
-d1_expresssion-->|"内部SQL表达式"|d1_translator[SQL Translator]
+d1_input2-->|json string|d1_expresssion[SQL Expression]
+d1_expresssion-->|"Function and Variables"|d1_generator[SQL Generator]
 
-d1_translator-->|翻译后可执行的SQL|d1_executor["SQL Executor (Driver)"]
-%% d1_translator-->|翻译后可执行的SQL|d2_executor["SQL Executor (Driver)"]
-%% d1_translator-->|翻译后可执行的SQL|d3_executor["SQL Executor (Driver)"]
-d1_executor --> DB_A[(Database A)]
-d1_executor --> DB_B[(Database A)]
-d1_executor --> DB_C[(Database A)]
+d1_generator-->|target sql|DB_A[(Database A)]
+d1_generator-->|target sql|DB_B[(Database A)]
+d1_generator-->|target sql|DB_C[(Database A)]
 
 subgraph node1
     DB_A[(Database A)]
@@ -113,7 +63,7 @@ subgraph node3
     DB_C[(Database C)]
 end
 
-memger[Result Memger]
+memger[SetUnion or Summation]
 DB_A-->|local result|memger
 DB_B-->|local result|memger
 DB_C-->|local result|memger
@@ -122,173 +72,124 @@ memger-->final_resulat[/Final Result/]
 final_resulat-->end_([结束])
 ```
 
-目标架构（未完成）
+### Type
 
-```mermaid
-graph TD
-    start([开始])
-    start-->input
+- `FD_Point`：二维空间上的一个坐标，使用空格隔开： `"value":"121.456107 31.253359"`
+- `FD_LineString`：多个 FD_Point 构成的集合，使用逗号隔开：`"value":"121.43 31.20, 121.46 31.20, 121.46 31.23, 121.43 31.20"`
+- `FD_Polygon`：多个 FD_Point 构成的集合，使用逗号隔开：`"value":"121.43 31.20, 121.46 31.20, 121.46 31.23, 121.43 31.20"`
 
+## Function
 
-subgraph master
-    input[/query.json/]    
-    input-->|获取原始查询|expresssion[SQL Expression]
-    expresssion-->|"内部查询表达式"|translator[SQL Translator]
-end
+当前支持三种查询，RangeCount，RangeQuery，KNN
 
-translator-->|分发待执行查询|executor1["DB_A Driver"]
-translator-->|分发待执行查询|executor2["DB_B Driver"]
-translator-->|分发待执行查询|executor3["DB_C Driver"]
+### RangCount
 
-%% subgraph driver
-%% executor1
-%% executor2
-%% executor3
-%% end
+函数原型
 
-subgraph node1
-    executor1
-    executor1 --> DB_A[(Database A)]
-    DB_A-->|局部结果|merge1[Result Merger]
-end
-
-subgraph node2
-    executor2
-    executor2 --> DB_B[(Database B)]
-    DB_B-->|局部结果|merge2[Result Merger]
-end
-
-subgraph node3
-    executor3
-    executor3 --> DB_C[(Database C)]
-    DB_C-->|局部结果|merge3[Result Merger]
-end
-
-
-
-%% merge1-->merge2-->merge3
-
-%% memger-->final_resulat[/Final Result/]
-%% final_resulat-->end_([结束])
+```java
+/**
+ * query: select RangeCounting (P, radius) from table_name;
+ * result: Integer，The number of points whose distance from P < radius in. table_name.
+ *
+ * @param point  query location
+ * @param radius range count radius
+ */
+Integer RangeCount(FD_Point point, Double radius)l
 ```
 
-
-
-## Federate Variable
-
-定义几种需要的 variable Type，比如
-
-- 基础数据类型
-  - `FD_Int`
-  - `FD_String`
-  - `FD_Double`
-
-- 空间数据类型
-  - `FD_Point`：二维空间上的一个坐标，使用空格隔开： `"value":"121.456107 31.253359"`
-  - `FD_LineString`：多个 FD_Point 构成的集合，使用逗号隔开：`"value":"121.43 31.20, 121.46 31.20, 121.46 31.23, 121.43 31.20"`
-  - `FD_Polygon`：多个 FD_Point 构成的集合，使用逗号隔开：`"value":"121.43 31.20, 121.46 31.20, 121.46 31.23, 121.43 31.20"`
-
-## Federate Function
-
-定义几种允许执行的 function，比如
-
-- `FD_Distance (Point p1, Point p2) `: 返回 p1 和 p2 的距离
+query.json
 
 ```json
 {
-    "type":"select",
-    "columns":[
-        "id",
-        "FD_Distance($P, location) as dis"
-    ],
-    "table":"osm_sh",
-    "filter":[
-        "FD_Distance($P, location) < 5000"
-    ],
-    "order":"dis",
-    "limit":10,
-    "variables":[
+    "function":"RangeCount",
+    "params":[
         {
-            "name":"P",
             "type":"point",
             "value":"121.456107 31.253359"
+        },
+        {
+            "type":"Double",
+            "value":5000
         }
     ]
 }
 ```
 
-- `FD_Knn (Point p, F.loaction, k) `: 返回在 F 中 p 的 k 近邻点
+### RangeQuery
 
-查询流程示范
+函数原型
 
-> 需将查询 如sselect id from osm_sh where FD_KNN ($P, location, $K) limit 100转为各silo的SQL
-
-```python
-l=0
-u=infinity
-k=3
-p='POINT(101.75882888992 36.62314533104)' #i.e.$P
-ds=[]
-for conn in connections:
-	di=select ST_distance(ST_GeomFromText('POINT(121.45611 31.253359)',st_srid(location)), location) as d from osm_sh order by d limit 1 offset k-1
- # from [conn].[table]
-	ds.append(di)
-u=min(ds)
-e=1e-5
-while u-l>=e:
-	thres=(l+u)/2
-	betai=select count(*) from osm_sh where ST_distance(ST_GeomFromText('POINT(121.45611 31.253359)',st_srid(location)), location) <= thres limit 1
-# from [conn].[table]
-	sgn=secureComparision(beta1,beat2...,k)
-	if sgn==-1 then l=thres
-	elif sgn=1 then u=thres
-	else break;
-si=select id from osm_sh where ST_distance(ST_GeomFromText('POINT(121.45611 z31.253359)',st_srid(location)), location) <= thres limit k
-# from [conn].[table]
-query answer=secureSetUnion(s1,s2,...)
-return query answer
+```java
+/**
+ * query: select RangeQuery (P, radius) from table_name;
+ * result: List<Point>，points whose distance from P < radius in table_name.
+ *
+ * @param point  query location
+ * @param radius range count radius
+ */
+List<FD_Point> RangeQuery(FD_Point point, Double radius);
 ```
 
-查询示范
+query.json
 
 ```json
 {
-    "type": "select",
-    "columns": [
-      "id"
-    ],
-
-    "table": "osm_sh",
-    "filter": [
-      "FD_KNN ($P, location, $K)"
-    ],
-    "variables": [
-      {
-        "name": "P",
-        "type": "point",
-        "value": "121.456107 31.253359"
-      },
-      {
-        "name": "K",
-        "type": "int",
-        "value": "3"
-      }
-
+    "function":"RangeQuery",
+    "params":[
+        {
+            "type":"point",
+            "value":"121.456107 31.253359"
+        },
+        {
+            "type":"Double",
+            "value":5000
+        }
     ]
-  }
+}
 ```
 
+### Knn
 
-- `FD_RKnn`
-- ~~FD_RangeCount~~
-- ~~FD_RangeSearch~~
+函数原型
+
+```java
+/**
+ * query: select Knn (P, K) from table_name;
+ * result: List<Point>，The K nearest neighbors of point P in table_name.
+ *
+ * @param point query location
+ * @param k "K" nearest neighbors
+ */
+List<FD_Point> Knn (FD_Point point, Integer K);
+```
+
+query.json
+
+```json
+{
+    "function":"Knn",
+    "params":[
+        {
+            "type":"point",
+            "value":"121.456107 31.253359"
+        },
+        {
+            "type":"int",
+            "value":10
+        }
+    ]
+}
+```
+
+### RKnn
+
+
 
 ## 相关规范说明
 
-- 支持单个查询（json格式），多个查询（json_array格式）[JSON在线解析及格式化验证 - JSON.cn](https://www.json.cn/#)
-- variables 字段中支持的 type 为 ENUM.FD_DATA_TYPE 中所定义的枚举类型（与Federate Variable一一对应），不要写成`FD_Int`这样，以为准ENUM.FD_DATA_TYPE中的字符串为准，大小写不敏感。
-- variables 的 name，用 $var_name 表示一个变量， 大小写敏感。
-- 函数名称，大小写敏感。
+- 支持单个查询（json格式），多个查询（jsonArray格式）[JSON在线解析及格式化验证 - JSON.cn](https://www.json.cn/#)
+- 函数名称，大小写不敏感，RangeCount 或者 FD_RangeCount 均可。
+- 参数类型，大小写不敏感，int 或 FD_int 均可。
 
 
 测试表（共4w条数据）：
