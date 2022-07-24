@@ -1,4 +1,4 @@
-package com.suda.federate.sql.expression;
+package com.suda.federate.sql.common;
 
 import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
@@ -18,9 +18,8 @@ import java.util.List;
 
 public class SQLExpression {
 
-    // select metrics from table_name where filter order by _ limit _;
     public FUNCTION function;
-    public List<FD_Variable> variables = new ArrayList<>();
+    public List<Object> variables = new ArrayList<>();
 
     public SQLExpression() {
 
@@ -52,7 +51,6 @@ public class SQLExpression {
             for (Object varObj : queryJson.getJSONArray("params")) {
                 JSONObject var = (JSONObject) varObj;
                 expression.variables.add(FD_Variable.getInstance(
-                        "_",
                         var.getString("value"),
                         FD_Variable.string2Clazz(var.getString("type"))));
             }
@@ -61,50 +59,4 @@ public class SQLExpression {
         return sqlExpressionList;
     }
 
-
-    /**
-     * queryL select RangeQuery (point, radius) from table;
-     *
-     * @param point
-     * @param radius
-     * @param dbType
-     * @return
-     */
-    public static String generateRangeQuerySQL(FD_Point point, Double radius, DATABASE dbType) {
-        String template;
-        if (DATABASE.POSTGRESQL == dbType) {
-            template = "select st_astext(location) as loc from osm_sh where st_distance( st_geographyfromtext('POINT(%f %f)'), location ) < %f order by st_distance( st_geographyfromtext('POINT(%f %f)'), location) limit 10000;";
-        } else {
-            template = "";
-        }
-        return String.format(template, point.value.x, point.value.y, radius, point.value.x, point.value.y);
-    }
-
-    /**
-     * select RangeCounting (point, radius) from table;
-     *
-     * @param point
-     * @param radius
-     * @param dbType
-     * @return
-     */
-    public static String generateRangeCountingSQL(FD_Point point, Double radius, DATABASE dbType) {
-        String template;
-        if (dbType == DATABASE.POSTGRESQL) {
-            template = "select count(1) from osm_sh where st_distance( st_geographyfromtext('POINT(%f %f)'), location) < %f;";
-        } else {
-            template = "";
-        }
-        return String.format(template, point.value.x, point.value.y, radius);
-    }
-
-    public static String generateKnnRadiusQuerySQL(FD_Point point, Integer k, DATABASE dbType) {
-        String template;
-        if (dbType == DATABASE.POSTGRESQL) {
-            template = "select ST_Distance(ST_GeographyFromText('POINT(%f %f)'), ST_GeographyFromText(ST_AsText(location))) as dis from osm_sh order by dis limit 1 offset %d;";
-        } else {
-            template = "";
-        }
-        return String.format(template, point.value.x, point.value.y, k - 1);
-    }
 }

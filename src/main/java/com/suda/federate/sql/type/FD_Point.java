@@ -4,11 +4,9 @@ import com.suda.federate.utils.ENUM;
 
 public class FD_Point extends FD_Variable<FD_Point.Location> {
 
-    public FD_Point(String name, Float x, Float y) {
-        super(ENUM.DATA_TYPE.POINT, name, new Location(x, y));
+    public FD_Point(Float x, Float y) {
+        super(ENUM.DATA_TYPE.POINT, new Location(x, y));
     }
-
-
 
     @Override
     public String toString() {

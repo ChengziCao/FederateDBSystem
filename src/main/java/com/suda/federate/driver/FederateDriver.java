@@ -27,9 +27,10 @@ public abstract class FederateDriver {
 
     /**
      * sql executor
-     * @param sql sql for execution
+     *
+     * @param sql         sql for execution
      * @param resultClass
-     * @param ListFlag 无实际作用，占位，重载
+     * @param ListFlag    无实际作用，占位，重载
      * @return resultClass
      */
     public abstract <T> T executeSql(String sql, Class<T> resultClass, Boolean ListFlag) throws SQLException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException;
@@ -61,7 +62,7 @@ public abstract class FederateDriver {
         } else if (clazz == FD_Point.class) {
             String content = resultSet.getObject(1).toString();
             List<Float> temp = FederateUtils.parseNumFromString(content, Float.class);
-            return clazz.getConstructor(String.class, Float.class, Float.class).newInstance("_", temp.get(0), temp.get(1));
+            return clazz.getConstructor(Float.class, Float.class).newInstance(temp.get(0), temp.get(1));
         } else if (clazz == HashMap.class) {
             Map<String, Object> mmap = new HashMap<>();
             int count = resultSet.getMetaData().getColumnCount();
@@ -73,8 +74,6 @@ public abstract class FederateDriver {
             return null;
         }
     }
-
-
 
 
 //    /***

@@ -10,8 +10,7 @@
         "type": "Double",
         "value": 5000
       }
-    ],
-    "annotation": "RangeQuery (point: Point, radius: Double)"
+    ]
   },
   {
     "function": "RangeCount",
@@ -24,8 +23,7 @@
         "type": "Double",
         "value": 5000
       }
-    ],
-    "annotation": "RangeCount (point: Point, radius: Double)"
+    ]
   },
   {
   "function": "Knn",
@@ -38,7 +36,6 @@
       "type": "int",
       "value": 10
     }
-  ],
-  "annotation": "knn (point: Point, k: int)"
+  ]
 }
 ]

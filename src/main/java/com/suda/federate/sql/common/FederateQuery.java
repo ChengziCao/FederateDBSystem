@@ -2,7 +2,6 @@ package com.suda.federate.sql.common;
 
 import com.suda.federate.config.DbConfig;
 import com.suda.federate.driver.FederateDriver;
-import com.suda.federate.sql.expression.SQLExpression;
 import com.suda.federate.sql.function.FD_Knn;
 import com.suda.federate.sql.function.FD_RangeCount;
 import com.suda.federate.sql.function.FD_RangeQuery;
@@ -33,13 +32,20 @@ public class FederateQuery {
         }
     }
 
+    /**
+     * query: select Knn (P, K) from table_name;
+     * result: List<Point>，The K nearest neighbors of point P in table_name.
+     *
+     * @param point query location
+     * @param k "K" nearest neighbors
+     */
     private List<FD_Point> knnQuery(FD_Point point, Integer k) throws SQLException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {//knn主函数
         Double minRadius = Double.MAX_VALUE;
         // 初始化查询半径
         for (String dbName : connections.keySet()) {
             FederateDriver driver = connections.get(dbName);
             // 生成目标 SQL
-            String sql = SQLExpression.generateKnnRadiusQuerySQL(point, k, driver.databaseType);
+            String sql = SQLGenerator.generateKnnRadiusQuerySQL(point, k, driver.databaseType);
             Double ans = driver.executeSql(sql, Double.class, false);
             minRadius = ans < minRadius ? ans : minRadius;
         }
@@ -60,26 +66,14 @@ public class FederateQuery {
         }
         List<FD_Point> pointList = rangeQuery(point, threshold);
         return pointList;
-        /**
-         *Original SQL: select id from osm_sh where FD_KNN ($P, location, $K) limit 100
-         *P=POINT(121.45611 31.253359), k=3
-         * out of loop, with approximate result:
-         * rangeCount Target SQL:
-         * select id from osm_sh where ST_distance(ST_GeomFromText('POINT(121.45611 31.253359)',st_srid(location)), location) <= 0.02105044940185353 limit 100
-         * Query Result:
-         * POSTGRESQL:db1
-         * POSTGRESQL:db2
-         * id:3731182030
-         * id:4077014854
-         * id:4077014855
-         *
-         */
-
     }
 
     /**
-     * query: select RangeCounting (point, radius) from table;
-     * result: Integer
+     * query: select RangeCounting (P, radius) from table_name;
+     * result: Integer，The number of points whose distance from P < radius in table_name.
+     *
+     * @param point  query location
+     * @param radius range count radius
      */
     private Integer rangeCount(FD_Point point, Double radius) throws SQLException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
         List<Integer> ansList = new ArrayList<>();
@@ -88,20 +82,24 @@ public class FederateQuery {
         for (String dbName : connections.keySet()) {
             FederateDriver driver = connections.get(dbName);
             // 生成目标 SQL
-            String sql = SQLExpression.generateRangeCountingSQL(point, radius, driver.databaseType);
-//            LOGGER.info(String.format("\n%s Target SQL: ", dbName) + sql);
+            String sql = SQLGenerator.generateRangeCountingSQL(point, radius, driver.databaseType);
+            LOGGER.info(String.format("\n%s Target SQL: ", dbName) + sql);
             // 执行 SQL
             Integer ans = driver.executeSql(sql, Integer.class, false);
             ansList.add(ans);
-//            LOGGER.info(String.format("\n%s RangeCount Result: ", dbName) + ans);
+            LOGGER.info(String.format("\n%s RangeCount Result: ", dbName) + ans);
         }
         // TODO: secure summation
         return setSummation(ansList, Integer.class);
     }
 
+
     /**
-     * query: select RangeQuery (point, radius) from table;
-     * result: List<point>
+     * query: select RangeQuery (P, radius) from table_name;
+     * result: List<point>，points whose distance from P < radius in table_name.
+     *
+     * @param point  query location
+     * @param radius range count radius
      */
     private List<FD_Point> rangeQuery(FD_Point point, Double radius) throws SQLException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {//select * 获取knn结果
         Map<String, List<FD_Point>> pointMapList = new HashMap<>();
@@ -110,7 +108,7 @@ public class FederateQuery {
         for (String dbName : connections.keySet()) {
             FederateDriver driver = connections.get(dbName);
             // 生成 SQL
-            String sql = SQLExpression.generateRangeQuerySQL(point, radius, driver.databaseType);
+            String sql = SQLGenerator.generateRangeQuerySQL(point, radius, driver.databaseType);
             LOGGER.info(String.format("\n%s Target SQL: ", dbName) + sql);
             // 执行 SQL
             List<FD_Point> pointList = driver.executeSql(sql, FD_Point.class);

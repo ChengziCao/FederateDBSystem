@@ -20,12 +20,12 @@ public abstract class FD_Function {
 
 
     public static Class<? extends FD_Function> string2Clazz(String type) throws Exception {
-
-        if (ENUM.equals(type, ENUM.FUNCTION.RANGE_QUERY)) {
+        ENUM.FUNCTION function = ENUM.str2FUNCTION(type);
+        if (function == ENUM.FUNCTION.RANGE_QUERY) {
             return FD_RangeQuery.class;
-        } else if (ENUM.equals(type, ENUM.FUNCTION.RANGE_COUNT)) {
+        } else if (function == ENUM.FUNCTION.RANGE_COUNT) {
             return FD_Knn.class;
-        } else if (ENUM.equals(type, ENUM.FUNCTION.KNN)) {
+        } else if (function == ENUM.FUNCTION.KNN) {
             return FD_RangeCount.class;
         } else {
             throw new Exception("type not support.");

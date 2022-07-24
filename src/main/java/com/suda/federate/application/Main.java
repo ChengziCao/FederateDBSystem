@@ -3,7 +3,7 @@ package com.suda.federate.application;
 import com.suda.federate.config.DbConfig;
 import com.suda.federate.driver.FederateDriver;
 import com.suda.federate.sql.common.FederateQuery;
-import com.suda.federate.sql.expression.SQLExpression;
+import com.suda.federate.sql.common.SQLExpression;
 import com.suda.federate.utils.FederateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

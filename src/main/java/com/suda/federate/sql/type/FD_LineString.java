@@ -6,9 +6,8 @@ import java.util.List;
 
 public class FD_LineString extends FD_Variable<List<FD_Point>> {
 
-    public FD_LineString(String name, List<FD_Point> value) {
-        super(ENUM.DATA_TYPE.LINESTRING, name, value);
+    public FD_LineString(List<FD_Point> value) {
+        super(ENUM.DATA_TYPE.LINESTRING, value);
     }
-
 
 }

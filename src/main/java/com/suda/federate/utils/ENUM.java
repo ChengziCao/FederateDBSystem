@@ -16,17 +16,16 @@ public class ENUM {
             return FUNCTION.KNN;
         else
             return null;
-//        FUNCTION.valueOf()
     }
 
-
-    /**
-     * check string equal with enum object. Insensitive to upper case or lower case.
-     */
-    public static <T> boolean equals(String string, T object) {
-        String objString = object.toString();
-        if (string.toLowerCase().startsWith("fd_"))
-            objString = "fd_" + objString;
-        return string.equalsIgnoreCase(objString);
+    public static DATA_TYPE str2DATATYPE(String str) {
+        if (str.equalsIgnoreCase("int") || str.equalsIgnoreCase("fd_int"))
+            return DATA_TYPE.INT;
+        else if (str.equalsIgnoreCase("double") || str.equalsIgnoreCase("fd_double"))
+            return DATA_TYPE.DOUBLE;
+        else if (str.equalsIgnoreCase("point") || str.equalsIgnoreCase("fd_point"))
+            return DATA_TYPE.POINT;
+        else
+            return null;
     }
 }
