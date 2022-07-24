@@ -1,167 +1,65 @@
 package com.suda.federate.sql.common;
 
-import com.suda.federate.sql.executor.PostgresqlExecutor;
-import com.suda.federate.sql.executor.SQLExecutor;
+import com.suda.federate.config.DbConfig;
+import com.suda.federate.driver.FederateDriver;
 import com.suda.federate.sql.expression.SQLExpression;
-import com.suda.federate.sql.merger.SQLMerger;
-import com.suda.federate.sql.translator.PostgresqlTranslator;
+import com.suda.federate.sql.function.FD_Knn;
+import com.suda.federate.sql.function.FD_RangeCount;
+import com.suda.federate.sql.function.FD_RangeQuery;
 import com.suda.federate.sql.type.FD_Point;
-import com.suda.federate.sql.type.FD_Variable;
-import com.suda.federate.utils.ENUM;
-import com.suda.federate.utils.FederateUtils;
+import com.suda.federate.utils.ENUM.FUNCTION;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
+import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
-import static com.suda.federate.application.Main.print;
+import static com.suda.federate.application.Main.LOGGER;
 
 public class FederateQuery {
-    private Map<String, Connection> connectionMap;
-    private FD_Point.Location point;
-    private Integer k;
-    private double knnRadiusQuery(String translatedSql) {//初始化查询半径
-//        select ST_Distance(ST_GeographyFromText(p), ST_GeographyFromText(ST_AsText(geom)) ) as d from nyc_subway_stations order by d limit 1 offset k-1
-//        int k = expres.getVariables();
 
-        // TODO SQL Executor
-        print("knnRadiusQuery Target SQL: ");
-        print(translatedSql);
-        SQLExecutor<ResultSet> sqlExecutor = new PostgresqlExecutor();
-        Map<String, ResultSet> resultSetMap = null;
-        try {
-            resultSetMap = sqlExecutor.executeSqlBatch(connectionMap, translatedSql);
-        } catch (SQLException e) {
-            e.printStackTrace();
+    /**
+     * key: db name; value: db driver
+     */
+    public Map<String, FederateDriver> connections = new HashMap<>();
+
+    public FederateQuery(List<DbConfig> configList) throws SQLException, ClassNotFoundException {
+        for (DbConfig config : configList) {
+            Class.forName(config.getDriver());
+            connections.put(config.getName(), FederateDriver.getInstance(config));
         }
-        // TODO Results Merger
-        SQLMerger sqlMerger = new SQLMerger();
-        // List<FD_Variable> results = FD_Variable.results2FDVariable(resultSets, FD_Double.class);
-        print("Query Result: ");
-        Double radius=Double.MAX_VALUE;
-        for (String siloName : resultSetMap.keySet()) {
-            ResultSet rs = resultSetMap.get(siloName);
-            print(siloName);
-            try {
-                String d=FederateUtils.getOneResult(rs);
-                print("d="+d);
-                radius=Math.min(radius,new Double(d));
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            // print(FD_Variable.resultSet2FDVariable(rs, FD_Double.class).toString());
-        }
-        print("init radius= "+radius);
-//        select ST_Distance(ST_GeographyFromText(p), ST_GeographyFromText(ST_AsText(geom)) ) as d from nyc_subway_stations order by d limit 1 offset k-1
-        return radius;
     }
 
-    private Integer rangeCount(String translatedSql){//TODO select count(*) 获取数据条数 ,可参考hufu dPRangeCount
+    private List<FD_Point> knnQuery(FD_Point point, Integer k) throws SQLException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {//knn主函数
+        Double minRadius = Double.MAX_VALUE;
+        // 初始化查询半径
+        for (String dbName : connections.keySet()) {
+            FederateDriver driver = connections.get(dbName);
+            // 生成目标 SQL
+            String sql = SQLExpression.generateKnnRadiusQuerySQL(point, k, driver.databaseType);
+            Double ans = driver.executeSql(sql, Double.class, false);
+            minRadius = ans < minRadius ? ans : minRadius;
+        }
 
-        print("rangeCount Target SQL: ");
-        print(translatedSql);
-        // TODO SQL Optimizer
-        SQLExecutor<ResultSet> sqlExecutor = new PostgresqlExecutor();
-        Map<String, ResultSet> resultSetMap = null;
-        try {
-            resultSetMap = sqlExecutor.executeSqlBatch(connectionMap, translatedSql);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        // TODO Results Merger
-        //TODO 代码复用
-        SQLMerger sqlMerger = new SQLMerger();
-        // List<FD_Variable> results = FD_Variable.results2FDVariable(resultSets, FD_Double.class);
-        print("Query Result: ");
-        int count=0;
-        for (String siloName : resultSetMap.keySet()) {
-            ResultSet rs = resultSetMap.get(siloName);
-            print(siloName);
-            try {
-                String d=FederateUtils.getOneResult(rs);
-                print("d="+d);
-                count= Integer.parseInt(d) +count;
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            // print(FD_Variable.resultSet2FDVariable(rs, FD_Double.class).toString());
-        }
-        return count;
-    }
-
-    private Object rangeQuery(String translatedSql){//select * 获取knn结果
-        print("rangeCount Target SQL: ");
-        print(translatedSql);
-        // TODO SQL Optimizer
-        SQLExecutor<ResultSet> sqlExecutor = new PostgresqlExecutor();
-        Map<String, ResultSet> resultSetMap = null;
-        try {
-            resultSetMap = sqlExecutor.executeSqlBatch(connectionMap, translatedSql);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        // TODO Results Merger
-        //TODO 代码复用
-        SQLMerger sqlMerger = new SQLMerger();
-        // List<FD_Variable> results = FD_Variable.results2FDVariable(resultSets, FD_Double.class);
-        print("Query Result: ");
-        for (String siloName : resultSetMap.keySet()) {
-            ResultSet rs = resultSetMap.get(siloName);
-            print(siloName);
-            try {
-                FederateUtils.printResultSet(rs);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            // print(FD_Variable.resultSet2FDVariable(rs, FD_Double.class).toString());
-        }
-        return null;
-    }
-    private Object knnQuery(SQLExpression expression){//knn主函数
-        double l=0;
-        double u= knnRadiusQuery(expression.clone()
-                .setColumns(new ArrayList<String>(){{add("ST_distance(ST_GeomFromText('POINT(" +String.valueOf(point.x)+" "+String.valueOf(point.y) +")',st_srid(location)), location) as d");}})
-                .setOrder("d")
-                .setFilters(new ArrayList<>())
-                .setLimit(1)
-                .setOffset(k-1)
-                .build());
-        double e=1e-5;// TODO hufu 1e-6
-        int loop=0;
-        while(l+e<=u){
-            double thres=(l+u)/2;
-
-            int count = rangeCount(expression.clone()
-                    .setColumns(new ArrayList<String>(){{add("count(*)");}})
-                    .setFilters(new ArrayList<String>(){{add("ST_distance(ST_GeomFromText('POINT(" +String.valueOf(point.x)+" "+String.valueOf(point.y) +")',st_srid(location)), location) <= "+ thres);}})
-                    .setLimit(1)
-                    .build());
-            loop++;
-            //TODO hufu有个        if (Math.abs(res.getKey() - k) < res.getValue()) { 提前终止，什么意思
+        double l = 0.0, u = minRadius, e = 1e-5;
+        double threshold = minRadius;
+        while (u - l >= e) {
+            threshold = (l + u) / 2;
+            int count = rangeCount(point, threshold);
+            //hufu有个        if (Math.abs(res.getKey() - k) < res.getValue()) { 提前终止，什么意思
             if (count > k) {
-                u = thres;
+                u = threshold;
             } else if (count < k) {
-                l = thres;
-            }else{
-                print("loop ="+loop+", "+thres);
-                return rangeQuery(expression.clone()
-                        .setColumns(new ArrayList<String>(){{add("count(*)");}})
-                        .setFilters(new ArrayList<String>(){{add("ST_distance(ST_GeomFromText('POINT(" +String.valueOf(point.x)+" "+String.valueOf(point.y) +")',st_srid(location)), location) <= "+ thres);}})
-                        .build());
+                l = threshold;
+            } else {
+                break;
             }
         }
-        print("loop ="+loop);
-        print("out of loop, with approximate result: ");
-        double approx_r=u;
-        rangeQuery(expression.clone()
-                .setColumns(new ArrayList<String>(){{add("id");}})
-                .setFilters(new ArrayList<String>(){{add("ST_distance(ST_GeomFromText('POINT(" +String.valueOf(point.x)+" "+String.valueOf(point.y) +")',st_srid(location)), location) <= "+ approx_r);}})
-                .setLimit(k)
-                .build());
-        return null;
+        List<FD_Point> pointList = rangeQuery(point, threshold);
+        return pointList;
         /**
          *Original SQL: select id from osm_sh where FD_KNN ($P, location, $K) limit 100
          *P=POINT(121.45611 31.253359), k=3
@@ -178,60 +76,92 @@ public class FederateQuery {
          */
 
     }
-    private void setUnion(String  translatedSql){
-        // TODO SQL Executor
-        SQLExecutor<ResultSet> sqlExecutor = new PostgresqlExecutor();
-        Map<String, ResultSet> resultSetMap = null;
-        try {
-            resultSetMap = sqlExecutor.executeSqlBatch(connectionMap, translatedSql);
-        } catch (SQLException e) {
-            e.printStackTrace();
+
+    /**
+     * query: select RangeCounting (point, radius) from table;
+     * result: Integer
+     */
+    private Integer rangeCount(FD_Point point, Double radius) throws SQLException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+        List<Integer> ansList = new ArrayList<>();
+        // 读取参数
+        // TODO: plaintext query
+        for (String dbName : connections.keySet()) {
+            FederateDriver driver = connections.get(dbName);
+            // 生成目标 SQL
+            String sql = SQLExpression.generateRangeCountingSQL(point, radius, driver.databaseType);
+//            LOGGER.info(String.format("\n%s Target SQL: ", dbName) + sql);
+            // 执行 SQL
+            Integer ans = driver.executeSql(sql, Integer.class, false);
+            ansList.add(ans);
+//            LOGGER.info(String.format("\n%s RangeCount Result: ", dbName) + ans);
         }
-        // TODO Results Merger
-        SQLMerger sqlMerger = new SQLMerger();
-        // List<FD_Variable> results = FD_Variable.results2FDVariable(resultSets, FD_Double.class);
-        print("Query Result: ");
-        for (String siloName : resultSetMap.keySet()) {
-            ResultSet rs = resultSetMap.get(siloName);
-            print(siloName);
-            try {
-                FederateUtils.printResultSet(rs);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            // print(FD_Variable.resultSet2FDVariable(rs, FD_Double.class).toString());
+        // TODO: secure summation
+        return setSummation(ansList, Integer.class);
+    }
+
+    /**
+     * query: select RangeQuery (point, radius) from table;
+     * result: List<point>
+     */
+    private List<FD_Point> rangeQuery(FD_Point point, Double radius) throws SQLException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {//select * 获取knn结果
+        Map<String, List<FD_Point>> pointMapList = new HashMap<>();
+        // 读取参数
+        // TODO: plaintext query
+        for (String dbName : connections.keySet()) {
+            FederateDriver driver = connections.get(dbName);
+            // 生成 SQL
+            String sql = SQLExpression.generateRangeQuerySQL(point, radius, driver.databaseType);
+            LOGGER.info(String.format("\n%s Target SQL: ", dbName) + sql);
+            // 执行 SQL
+            List<FD_Point> pointList = driver.executeSql(sql, FD_Point.class);
+            pointMapList.put(dbName, pointList);
+            LOGGER.info(String.format("\n%s RangeQuery Result:", dbName) + pointList.toString());
+        }
+        // TODO: secure union
+        return setUnion(pointMapList);
+    }
+
+
+    /**
+     * don't mind, just for test
+     */
+    private <T> List<T> setUnion(Map<String, List<T>> listMap) {
+        List<T> list = new ArrayList<>();
+        for (String name : listMap.keySet()) {
+            list.addAll(listMap.get(name));
+        }
+        return list.stream().distinct().collect(Collectors.toList());
+    }
+
+    private boolean setCompare(List<Float> list, Float k) {
+        return true;
+    }
+
+    private <T extends Number> T setSummation(List<T> list, Class<T> clazz) throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
+        Double ans = list.stream().mapToDouble(Number::doubleValue).sum();
+        if (clazz == Integer.class || clazz == Long.class) {
+            long intPart = ans.longValue();
+            return clazz.getConstructor(String.class).newInstance(Long.toString(intPart));
+        } else {
+            return clazz.getConstructor(String.class).newInstance(Double.toString(ans));
         }
     }
-    public Object query(Map<String, Connection> connectionMap, SQLExpression expression) throws Exception {
-        this.connectionMap = connectionMap;
-        List<FD_Variable> variables = expression.getVariables();
-        for(FD_Variable variable : variables){
-            if("K".equals(variable.name)){
-                k= (Integer) variable.value;
-            }else if ("P".equals(variable.name)) {
-                try{
-                    point= (FD_Point.Location) variable.value;
-                }catch (Exception e) {
-                    print("get p warning" +expression.getQueryType());
-                }
-            }
-        }
-        if (ENUM.equals(expression.queryType, ENUM.FUNCTION.DISTANCE)) {
-            // TODO
-            rangeQuery((new PostgresqlTranslator()).translate(expression));
-        } else if (ENUM.equals(expression.queryType, ENUM.FUNCTION.KNN)) {
-            knnQuery(expression);
-        } else if (ENUM.equals(expression.queryType, ENUM.FUNCTION.RKNN)) {
-            return null;
-        } else if (ENUM.equals(expression.queryType, ENUM.FUNCTION.CONTAINS)) {
-            rangeQuery((new PostgresqlTranslator()).translate(expression));;// TODO
+
+    public void query(SQLExpression expression) throws Exception {
+        if (expression.function == FUNCTION.RANGE_COUNT) {
+            FD_RangeCount rangeCounting = new FD_RangeCount(expression);
+            Integer result = rangeCount(rangeCounting.point, rangeCounting.radius);
+            LOGGER.info("\nAggregation Result:" + result);
+        } else if (expression.function == FUNCTION.RANGE_QUERY) {
+            FD_RangeQuery rangeQuery = new FD_RangeQuery(expression);
+            List<FD_Point> pointList = rangeQuery(rangeQuery.point, rangeQuery.radius);
+            LOGGER.info("\nAggregation Result: " + pointList.toString());
+        } else if (expression.function == FUNCTION.KNN) {
+            FD_Knn knnQuery = new FD_Knn(expression);
+            List<FD_Point> pointList = knnQuery(knnQuery.point, knnQuery.k);
+            LOGGER.info("\nAggregation Result: " + pointList.toString());
         } else {
             throw new Exception("type not support.");
         }
-        return null;
-
-
-
     }
-
 }

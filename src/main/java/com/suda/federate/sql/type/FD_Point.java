@@ -8,9 +8,11 @@ public class FD_Point extends FD_Variable<FD_Point.Location> {
         super(ENUM.DATA_TYPE.POINT, name, new Location(x, y));
     }
 
+
+
     @Override
-    public String translate2PostgresqlFormat() {
-        return String.format("ST_GeographyFromText('POINT(%s %s)')", value.x.toString(), value.y.toString());
+    public String toString() {
+        return "Point" + value;
     }
 
     public static class Location {

@@ -21,7 +21,7 @@ Configuration后面的status，这个用于设置log4j2自身内部的信息输�
         %logger{36} 表示 Logger 名字最长36个字符
         -->
         <property name="CONSOLE_PATTERN"
-                  value="%d{yyyy-MM-dd HH:mm:ss.SSS} %highlight{%-5level}(%F:%L) : %msg%n"/>
+                  value="%highlight{%-5level} [%logger](%F:%L) : %msg%n"/>
 
         <property name="FILE_PATTERN"
                   value="%d{yyyy-MM-dd HH:mm:ss.SSS} %level [%t] [%logger](%F:%L) : %msg%n"/>

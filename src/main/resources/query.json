@@ -1,67 +1,44 @@
 [
   {
-    "type": "select",
-    "columns": [
-      "id"
-    ],
-
-    "table": "osm_sh",
-    "filter": [
-      "FD_KNN ($P, location, $K)"
-    ],
-    "variables": [
+    "function": "RangeQuery",
+    "params": [
       {
-        "name": "P",
         "type": "point",
         "value": "121.456107 31.253359"
       },
       {
-        "name": "K",
-        "type": "int",
-        "value": "3"
+        "type": "Double",
+        "value": 5000
       }
-
-    ]
+    ],
+    "annotation": "RangeQuery (point: Point, radius: Double)"
   },
   {
-    "type": "select",
-    "columns": [
-      "id",
-      "FD_Distance($P, location) as dis"
-    ],
-
-    "table": "osm_sh",
-    "filter": [
-      "FD_Distance($P, location) < 5000"
-    ],
-    "order": "dis",
-    "limit": 1,
-    "offset": 2,
-    "variables": [
+    "function": "RangeCount",
+    "params": [
       {
-        "name": "P",
         "type": "point",
         "value": "121.456107 31.253359"
+      },
+      {
+        "type": "Double",
+        "value": 5000
       }
-    ]
+    ],
+    "annotation": "RangeCount (point: Point, radius: Double)"
   },
   {
-    "type": "select",
-    "columns": [
-      "id",
-      "location"
-    ],
-    "table": "osm_sh",
-    "filter": [
-      "FD_Contains($P, location)"
-    ],
-    "limit": 20,
-    "variables": [
-      {
-        "name": "P",
-        "type": "polygon",
-        "value": "121.43 31.20, 121.46 31.20, 121.46 31.23, 121.43 31.20"
-      }
-    ]
-  }
+  "function": "Knn",
+  "params": [
+    {
+      "type": "point",
+      "value": "121.456107 31.253359"
+    },
+    {
+      "type": "int",
+      "value": 10
+    }
+  ],
+  "annotation": "knn (point: Point, k: int)"
+}
 ]

@@ -1,62 +1,72 @@
 package com.suda.federate.driver;
 
 
-import com.alibaba.fastjson2.JSONObject;
+import com.suda.federate.config.DbConfig;
+import com.suda.federate.utils.ENUM;
 
+import java.lang.reflect.InvocationTargetException;
 import java.sql.*;
+import java.util.List;
 
-public class PostgresqlDriver implements FederateDBDriver {
-    // connection 不需要每次都建立连接
-    protected ThreadLocal<Connection> threadLocal = new ThreadLocal<>();
+public class PostgresqlDriver extends FederateDriver {
 
-    // 单例模式，一种数据库 全局只需要一个 driver 即可
-    private static PostgresqlDriver postgresqlDriver = null;
+    protected Connection conn;
 
-    PostgresqlDriver() {
-    }
-
-    public static PostgresqlDriver getInstance() {
-        return postgresqlDriver == null ? postgresqlDriver = new PostgresqlDriver() : postgresqlDriver;
+    public PostgresqlDriver(DbConfig config) throws SQLException {
+        databaseType = ENUM.DATABASE.POSTGRESQL;
+        conn = DriverManager.getConnection(config.getUrl(), config.getUser(), config.getPassword());
     }
 
     @Override
-    public ResultSet executeSql(Connection conn, String sql) throws SQLException {
-        Statement stmt;
-        stmt = conn.createStatement();
-        return stmt.executeQuery(sql);
+    public <T> List<T> executeSql(String sql, Class<T> resultClass) throws SQLException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+        Statement stmt = conn.createStatement();
+        ResultSet resultSet = stmt.executeQuery(sql);
+        return resultSet2List(resultSet, resultClass);
     }
 
     @Override
-    public ResultSet executeSql(Connection conn, String sql, String[] args) throws SQLException {
-        PreparedStatement pstmt;
-        pstmt = conn.prepareStatement(sql);
-        // pstmt
-        for (int i = 0; i < args.length; i++) {
-            pstmt.setString(i, args[i]);
-        }
-        return pstmt.executeQuery();
-    }
-
-    @Override
-    public Connection getConnection(JSONObject json) throws SQLException {
-        if (threadLocal.get() != null) {
-            return threadLocal.get();
+    public <T> T executeSql(String sql, Class<T> resultClass, Boolean listFlag) throws SQLException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+        if (listFlag) {
+            // to do something
+            return null;
         } else {
-            Connection connection;
-            String name = json.getString("name");
-            String driver = json.getString("driver");
-            String user = json.getString("user");
-            String password = json.getString("password");
-            String url = json.getString("url");
-            connection = DriverManager.getConnection(url, user, password);
-            return connection;
+            Statement stmt = conn.createStatement();
+            ResultSet resultSet = stmt.executeQuery(sql);
+            return resultSet2Object(resultSet, resultClass);
         }
     }
 
-    @Override
-    public void closeConnection() throws SQLException {
-        if (threadLocal.get() != null) {
-            threadLocal.get().close();
+
+//    @Override
+//    public Map<String,ResultSet> executeSqlBatch(String sql) throws SQLException {
+//        Map<String, ResultSet> resultSetMap = new HashMap<>();
+//
+//        for (Map.Entry<String, Connection> entry : connectionMap.entrySet()) {
+//            String soilName = entry.getKey();
+//            Connection conn = entry.getValue();
+//            ResultSet rs = PostgresqlDriver.getInstance().executeSql(conn, sql);
+//            resultSetMap.put(soilName, rs);
+//        }
+//        return resultSetMap;
+//    }
+
+//    @Override
+//    public ResultSet executeSql(String sql, String[] args) throws SQLException {
+//        PreparedStatement pstmt;
+//        pstmt = conn.prepareStatement(sql);
+//        // pstmt
+//        for (int i = 0; i < args.length; i++) {
+//            pstmt.setString(i, args[i]);
+//        }
+//        return pstmt.executeQuery();
+//    }
+
+
+    protected void finalize() throws SQLException {
+        if (conn != null) {
+            conn.close();
         }
     }
+
+
 }

@@ -10,10 +10,5 @@ public class FD_LineString extends FD_Variable<List<FD_Point>> {
         super(ENUM.DATA_TYPE.LINESTRING, name, value);
     }
 
-    @Override
-    public String translate2PostgresqlFormat() {
-        return "ST_GeomFromText('LINESTRING" + "(" + value.stream()
-                .map(x -> x.value.x + " " + x.value.y)
-                .reduce((x, y) -> x + ", " + y).orElse("") + ")',st_srid(location))";
-    }
+
 }

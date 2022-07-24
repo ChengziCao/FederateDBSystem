@@ -1,29 +1,17 @@
 package com.suda.federate.sql.function;
 
-import com.suda.federate.sql.expression.FD_Type;
 import com.suda.federate.utils.ENUM;
 
-import java.util.Arrays;
-import java.util.List;
+public abstract class FD_Function {
 
-public abstract class FD_Function implements FD_Type {
-
-    public static List<String> supportFunctionList = Arrays.asList("FD_Distance", "FD_Knn", "FD_Rknn","FD_Contains");
-
-    public String name;
-
-    public FD_Function(String name) {
-        this.name = name;
-    }
+    public ENUM.FUNCTION functionName;
 
     public static <T extends FD_Function> T getInstance(Class<T> clazz) throws Exception {
-        if (clazz == FD_Distance.class) {
+        if (clazz == FD_RangeCount.class) {
             return clazz.newInstance();
         } else if (clazz == FD_Knn.class) {
             return clazz.newInstance();
-        } else if (clazz == FD_Rknn.class) {
-            return clazz.newInstance();
-        } else if (clazz == FD_Contains.class) {
+        } else if (clazz == FD_RangeQuery.class) {
             return clazz.newInstance();
         } else {
             throw new Exception("type not support.");
@@ -33,17 +21,14 @@ public abstract class FD_Function implements FD_Type {
 
     public static Class<? extends FD_Function> string2Clazz(String type) throws Exception {
 
-        if (ENUM.equals(type, ENUM.FUNCTION.DISTANCE)) {
-            return FD_Distance.class;
-        } else if (ENUM.equals(type, ENUM.FUNCTION.KNN)) {
+        if (ENUM.equals(type, ENUM.FUNCTION.RANGE_QUERY)) {
+            return FD_RangeQuery.class;
+        } else if (ENUM.equals(type, ENUM.FUNCTION.RANGE_COUNT)) {
             return FD_Knn.class;
-        } else if (ENUM.equals(type, ENUM.FUNCTION.RKNN)) {
-            return FD_Rknn.class;
-        } else if (ENUM.equals(type, ENUM.FUNCTION.CONTAINS)) {
-            return FD_Contains.class;
+        } else if (ENUM.equals(type, ENUM.FUNCTION.KNN)) {
+            return FD_RangeCount.class;
         } else {
             throw new Exception("type not support.");
         }
     }
-
 }

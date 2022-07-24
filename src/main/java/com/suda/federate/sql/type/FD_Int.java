@@ -8,8 +8,5 @@ public class FD_Int extends FD_Variable<Integer> {
         super(ENUM.DATA_TYPE.INT, name, value);
     }
 
-    @Override
-    public String translate2PostgresqlFormat() {
-        return value.toString();
-    }
+
 }

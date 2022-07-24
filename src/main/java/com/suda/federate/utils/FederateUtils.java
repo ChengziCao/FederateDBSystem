@@ -3,69 +3,51 @@ package com.suda.federate.utils;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
-import com.suda.federate.driver.FederateDBDriver;
+import com.suda.federate.application.Main;
+import com.suda.federate.config.DbConfig;
 import com.suda.federate.driver.PostgresqlDriver;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.InvocationTargetException;
 import java.net.URLDecoder;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class FederateUtils {
 
-    public static Map<String, Connection> parseConfigJson(String configPath) throws IOException, SQLException, ClassNotFoundException {
-        Map<String, Connection> connectionMap = new HashMap<>();
+    public static List<DbConfig> configInitialization(String configFile) throws IOException, SQLException, ClassNotFoundException {
+        String configPath = FederateUtils.getRealPath(configFile);
+        List<DbConfig> configList = new ArrayList<>();
         String jsonString = new String(Files.readAllBytes(Paths.get(configPath)));
         // 可能有多个数据源，写成 json array 格式
         JSONArray jsonArray = JSON.parseArray(jsonString);
-
-        for (Object x : jsonArray) {
-            JSONObject json = (JSONObject) (x);
-            String dbName = json.getString("name");
-            String dbType = json.getString("type");
-
-            // 动态加载 driver，不加载 jar 包无法正常运行
-            Class.forName(json.getString("driver"));
-            // 获取 driver 实例
-            FederateDBDriver driver;
-            if (dbType.equalsIgnoreCase("postgresql"))
-                driver = PostgresqlDriver.getInstance();
-            else
-                // pass
-                driver = PostgresqlDriver.getInstance();
-
-            connectionMap.put(dbType + ":" + dbName, driver.getConnection(json));
-            // if (connectionMap.containsKey(dbType)) {
-            //     // 获取连接
-            //     connectionMap.get(dbType).add(driver.getConnection(json));
-            // } else {
-            //     List<Connection> temp = new ArrayList<>();
-            //     temp.add(driver.getConnection(json));
-            //     connectionMap.put(dbType, temp);
-            // }
+        for (Object object : jsonArray) {
+            JSONObject jsonObject = (JSONObject) object;
+            configList.add(jsonObject.to(DbConfig.class));
         }
-        return connectionMap;
+        return configList;
     }
 
-    public static String  getOneResult(ResultSet rs) throws SQLException {
+    public static String getOneResult(ResultSet rs) throws SQLException {
         int count = rs.getMetaData().getColumnCount();
         rs.next();
-        String  res=null;
+        String res = null;
 
         Object val = rs.getObject(1);
-        if (val != null){
+        if (val != null) {
             res = val.toString();
         }
 
         return res;
     }
+
     public static Map<String, Object> printResultSet(ResultSet rs) throws SQLException {
         int count = rs.getMetaData().getColumnCount();
         Map<String, Object> hm = new HashMap<>();
@@ -85,6 +67,46 @@ public class FederateUtils {
         return hm;
     }
 
+
+    /**
+     * parse num (float or integer) from string
+     * content: "POINT(121.4593425 31.2326237)" --> List [121.4593425, 31.2326237]
+     *
+     * @param content original string
+     * @param clazz   integer or float or double
+     */
+    public static <T> List<T> parseNumFromString(String content, Class<T> clazz) throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
+        List<T> list = new ArrayList<>();
+        String pattern = "\\d*[.]\\d*";
+        Pattern r = Pattern.compile(pattern);
+        // 现在创建 matcher 对象
+        Matcher m = r.matcher(content);
+        while (m.find()) {
+            list.add(clazz.getConstructor(String.class).newInstance(m.group()));
+        }
+        return list;
+    }
+
+
+    /**
+     * According to the operating mode, get the resources path or jar path.
+     *
+     * @return
+     * @throws UnsupportedEncodingException
+     */
+    public static String getRealPath(String fileName) throws UnsupportedEncodingException {
+        String env = Objects.requireNonNull(FederateUtils.class.getResource("")).getProtocol();
+        if (env.equals("file")) {
+            // IDE 中运行
+            return FederateUtils.getResourcePath(fileName);
+        } else if (env.equals("jar")) {
+            // jar 包运行
+            return FederateUtils.getJarPath(fileName);
+        } else {
+            System.exit(-1);
+            return "";
+        }
+    }
 
     /**
      * debug mode，get the resources path.

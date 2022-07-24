@@ -1,16 +1,14 @@
 package com.suda.federate.sql.type;
 
-import com.suda.federate.sql.expression.FD_Type;
 import com.suda.federate.utils.ENUM;
 //import javafx.util.Pair;
 import org.apache.calcite.util.Pair;
-import java.sql.ResultSet;
-import java.util.ArrayList;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public abstract class FD_Variable<valueType> implements FD_Type {
+public abstract class FD_Variable<valueType> {
     public final ENUM.DATA_TYPE dataType;
     public String name;
     public valueType value;
@@ -70,21 +68,6 @@ public abstract class FD_Variable<valueType> implements FD_Type {
         } else {
             throw new Exception("type not support.");
         }
-    }
-
-    public static List<FD_Variable> resultSet2FDVariable(ResultSet resultSet, Class<?> clazz) throws Exception {
-        // List<T> variables = new ArrayList<>();
-        List<FD_Variable> variables = new ArrayList<>();
-        // 首个元素不会跳过，可理解为带头指针的链表
-        while (resultSet.next()) {
-            variables.add(FD_Variable.getInstance(
-                    resultSet.getObject(0, Long.class).toString(),
-
-                    resultSet.getObject("dis", Double.class).toString(),
-                    FD_Double.class
-            ));
-        }
-        return variables;
     }
 
     @Override
