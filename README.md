@@ -11,6 +11,7 @@ com.suda.federate.application.Main.main()
 * Apache Maven 3.6.0+
 * Java 8
 * PostgreSQL 13 + PostGIS 3.0
+* MySQL 8.0+
 
 ## Start
 
@@ -21,7 +22,7 @@ com.suda.federate.application.Main.main()
 
 - release
   1. edit `config.json` and `query.json` in DataFederateSystem/release
-  1. `package.sh`  or  `package.bat``
+  1. `package.sh`  or  `package.bat`
   1. ``run.sh` or `run.bat`
 
 
