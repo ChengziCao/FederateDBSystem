@@ -17,7 +17,7 @@ public class DbConfig {
         this.user = user;
         this.password = password;
         this.url = url;
-        this.type = DATABASE.valueOf(type);
+        this.type = ENUM.str2DATABASE(type);
     }
 
     public String getName() {

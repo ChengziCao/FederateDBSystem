@@ -7,6 +7,15 @@ public class ENUM {
 
     public enum FUNCTION {KNN, RANGE_COUNT, RANGE_QUERY}
 
+    public static DATABASE str2DATABASE(String str) {
+        if (str.equalsIgnoreCase("mysql"))
+            return DATABASE.MYSQL;
+        else if (str.equalsIgnoreCase("postgis") || str.equalsIgnoreCase("POSTGRESQL"))
+            return DATABASE.POSTGRESQL;
+        else
+            return null;
+    }
+
     public static FUNCTION str2FUNCTION(String str) {
         if (str.equalsIgnoreCase("RANGE_COUNT") || str.equalsIgnoreCase("RangeCount"))
             return FUNCTION.RANGE_COUNT;

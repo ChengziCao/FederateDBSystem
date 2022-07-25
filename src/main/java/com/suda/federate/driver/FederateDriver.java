@@ -33,17 +33,20 @@ public abstract class FederateDriver {
      * @param ListFlag    无实际作用，占位，重载
      * @return resultClass
      */
-    public abstract <T> T executeSql(String sql, Class<T> resultClass, Boolean ListFlag) throws SQLException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException;
+    public abstract <T> T executeSql(String sql, Class<T> resultClass, Boolean listFlag) throws SQLException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException;
 
-    public static FederateDriver getInstance(DbConfig config) throws SQLException {
+    public static FederateDriver getInstance(DbConfig config) throws SQLException, ClassNotFoundException {
         if (config.getType() == DATABASE.POSTGRESQL) {
             return new PostgresqlDriver(config);
+        } else if (config.getType() == DATABASE.MYSQL) {
+            return new MySQLDriver(config);
         } else {
             return null;
         }
     }
 
-    public static <T> List<T> resultSet2List(ResultSet resultSet, Class<T> clazz) throws SQLException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
+    public static <T> List<T> resultSet2List(ResultSet resultSet, Class<T> clazz) throws
+            SQLException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
         List<T> resultList = new ArrayList<>();
         while (resultSet.next()) {
             T t = resultSet2Object(resultSet, clazz);
@@ -52,7 +55,8 @@ public abstract class FederateDriver {
         return resultList;
     }
 
-    public static <T> T resultSet2Object(ResultSet resultSet, Class<T> clazz) throws SQLException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
+    public static <T> T resultSet2Object(ResultSet resultSet, Class<T> clazz) throws
+            SQLException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
         if (resultSet.isBeforeFirst()) {
             // 跳过头指针
             resultSet.next();

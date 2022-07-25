@@ -12,8 +12,9 @@ public class PostgresqlDriver extends FederateDriver {
 
     protected Connection conn;
 
-    public PostgresqlDriver(DbConfig config) throws SQLException {
+    public PostgresqlDriver(DbConfig config) throws SQLException, ClassNotFoundException {
         databaseType = ENUM.DATABASE.POSTGRESQL;
+        Class.forName(config.getDriver());
         conn = DriverManager.getConnection(config.getUrl(), config.getUser(), config.getPassword());
     }
 

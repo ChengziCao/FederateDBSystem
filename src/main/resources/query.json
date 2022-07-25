@@ -1,41 +1,41 @@
 [
   {
-    "function": "RangeQuery",
-    "params": [
+    "function":"RangeCount",
+    "params":[
       {
-        "type": "point",
-        "value": "121.456107 31.253359"
+        "type":"point",
+        "value":"121.456107 31.253359"
       },
       {
-        "type": "Double",
-        "value": 5000
+        "type":"Double",
+        "value":3000
       }
     ]
   },
   {
-    "function": "RangeCount",
-    "params": [
+    "function":"RangeQuery",
+    "params":[
       {
-        "type": "point",
-        "value": "121.456107 31.253359"
+        "type":"point",
+        "value":"121.456107 31.253359"
       },
       {
-        "type": "Double",
-        "value": 5000
+        "type":"Double",
+        "value":3000
       }
     ]
   },
   {
-  "function": "Knn",
-  "params": [
-    {
-      "type": "point",
-      "value": "121.456107 31.253359"
-    },
-    {
-      "type": "int",
-      "value": 10
-    }
-  ]
-}
+    "function":"Knn",
+    "params":[
+      {
+        "type":"point",
+        "value":"121.456107 31.253359"
+      },
+      {
+        "type":"int",
+        "value":10
+      }
+    ]
+  }
 ]

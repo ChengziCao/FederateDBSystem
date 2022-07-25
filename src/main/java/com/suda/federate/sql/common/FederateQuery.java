@@ -27,7 +27,6 @@ public class FederateQuery {
 
     public FederateQuery(List<DbConfig> configList) throws SQLException, ClassNotFoundException {
         for (DbConfig config : configList) {
-            Class.forName(config.getDriver());
             connections.put(config.getName(), FederateDriver.getInstance(config));
         }
     }
