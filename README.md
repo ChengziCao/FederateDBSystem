@@ -192,12 +192,12 @@ query.json
 - 参数类型，大小写不敏感，int 或 FD_int 均可。
 
 
-测试表（共4w条数据）：
+测试数据库（共4w条数据）：
 
-- 10.10.64.117:54323/gis
+- `jdbc:mysql://10.10.64.117:33061/gis`
   - osm_sh
   - DELETE from osm_sh where id <= 4963651393;
-- 10.10.64.117:54322/gis
+- `jdbc:postgresql://10.10.64.117:54322/gis`
   - osm_sh
   - DELETE from osm_sh where id > 4963651393;
 

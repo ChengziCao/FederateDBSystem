@@ -15,8 +15,8 @@ public class SQLGenerator {
     public static String generateRangeQuerySQL(FD_Point point, Double radius, ENUM.DATABASE dbType) {
         String template;
         if (ENUM.DATABASE.POSTGRESQL == dbType) {
-            template = "select st_astext(location) from osm_sh where st_distance( st_geographyfromtext('POINT(%f %f)'), location ) < %f order by st_distance( st_geographyfromtext('POINT(%f %f)'), location) limit 10000;";
-            return String.format(template, point.value.x, point.value.y, radius, point.value.x, point.value.y);
+            template = "select st_astext(location) from osm_sh where st_distance( st_geographyfromtext('POINT(%f %f)'), location ) < %f limit 10000;";
+            return String.format(template, point.value.x, point.value.y, radius);
         } else if (ENUM.DATABASE.MYSQL == dbType) {
             template = "select ST_AsText(location) from osm_sh where ST_Distance(ST_GeomFromText('POINT(%f %f)',4326),location) < %f limit 10000";
             return String.format(template, point.value.y, point.value.x, radius);

@@ -8,7 +8,7 @@
       },
       {
         "type":"Double",
-        "value":3000
+        "value":2500
       }
     ]
   },
@@ -21,7 +21,7 @@
       },
       {
         "type":"Double",
-        "value":3000
+        "value":2500
       }
     ]
   },
@@ -34,7 +34,7 @@
       },
       {
         "type":"int",
-        "value":10
+        "value":20
       }
     ]
   }
