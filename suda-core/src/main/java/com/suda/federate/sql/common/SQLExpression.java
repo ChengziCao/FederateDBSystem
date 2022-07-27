@@ -2,10 +2,8 @@ package com.suda.federate.sql.common;
 
 import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
-import com.suda.federate.sql.type.FD_Point;
 import com.suda.federate.sql.type.FD_Variable;
 import com.suda.federate.utils.ENUM;
-import com.suda.federate.utils.ENUM.DATABASE;
 import com.suda.federate.utils.ENUM.FUNCTION;
 import com.suda.federate.utils.FederateUtils;
 

@@ -3,9 +3,7 @@ package com.suda.federate.utils;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
-import com.suda.federate.application.Main;
 import com.suda.federate.config.DbConfig;
-import com.suda.federate.driver.PostgresqlDriver;
 
 import java.io.File;
 import java.io.IOException;

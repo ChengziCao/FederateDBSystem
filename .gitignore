@@ -1,5 +1,5 @@
-/target
-/src/test
+**/target
+/suda-core/src/test
 .idea
 /release
-/logs
+**/logs
