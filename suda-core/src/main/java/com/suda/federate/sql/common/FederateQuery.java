@@ -144,21 +144,21 @@ public class FederateQuery {
         }
     }
 
-    public void query(SQLExpression expression) throws Exception {
-        if (expression.function == FUNCTION.RANGE_COUNT) {
-            FD_RangeCount rangeCounting = new FD_RangeCount(expression);
-            Integer result = rangeCount(rangeCounting.point, rangeCounting.radius);
-            LOGGER.info("\nAggregation Result:" + result);
-        } else if (expression.function == FUNCTION.RANGE_QUERY) {
-            FD_RangeQuery rangeQuery = new FD_RangeQuery(expression);
-            List<FD_Point> pointList = rangeQuery(rangeQuery.point, rangeQuery.radius);
-            LOGGER.info("\nAggregation Result: " + pointList.toString());
-        } else if (expression.function == FUNCTION.KNN) {
-            FD_Knn knnQuery = new FD_Knn(expression);
-            List<FD_Point> pointList = knnQuery(knnQuery.point, knnQuery.k);
-            LOGGER.info("\nAggregation Result: " + pointList.toString());
-        } else {
-            throw new Exception("type not support.");
-        }
-    }
+//    public void query(SQLExpression expression) throws Exception {
+//        if (expression.function == FUNCTION.RANGE_COUNT) {
+//            FD_RangeCount rangeCounting = new FD_RangeCount(expression);
+//            Integer result = rangeCount(rangeCounting.point, rangeCounting.radius);
+//            LOGGER.info("\nAggregation Result:" + result);
+//        } else if (expression.function == FUNCTION.RANGE_QUERY) {
+//            FD_RangeQuery rangeQuery = new FD_RangeQuery(expression);
+//            List<FD_Point> pointList = rangeQuery(rangeQuery.point, rangeQuery.radius);
+//            LOGGER.info("\nAggregation Result: " + pointList.toString());
+//        } else if (expression.function == FUNCTION.KNN) {
+//            FD_Knn knnQuery = new FD_Knn(expression);
+//            List<FD_Point> pointList = knnQuery(knnQuery.point, knnQuery.k);
+//            LOGGER.info("\nAggregation Result: " + pointList.toString());
+//        } else {
+//            throw new Exception("type not support.");
+//        }
+//    }
 }

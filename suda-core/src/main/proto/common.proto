@@ -1,0 +1,87 @@
+syntax = "proto2";
+package federate;
+
+option java_package = "com.suda.federate.rpc";
+option java_outer_classname = "FederateCommon";
+//!  message字段格式：限定修饰符 |  数据类型 |  字段名称 | = |  字段编码值 | [字段默认值]
+message Point {
+  required double latitude = 1;
+  required double longitude = 2;
+}
+
+message IndexPoint {
+  required int64 id = 1;
+  required Point point = 2;
+}
+
+message FederateTableInfo {
+  required string endpoint = 1;
+  required string tableName = 2;
+}
+
+message IdMapEntry {
+  required int64 sid = 1;
+  repeated int64 ids = 2;
+}
+
+message FederateJoinDataSet {
+  required bytes dataSet = 1;
+  repeated IdMapEntry idMap = 2;
+}
+
+message FederateDataSet {
+  repeated string results = 1;
+  repeated bytes dataSet = 2;
+}
+
+message Box {
+  required double lonMin = 1;
+  required double latMin = 2;
+  required double lonMax = 3;
+  required double latMax = 4;
+}
+
+message HeaderProto {
+  repeated string name = 1;
+  repeated int32 type = 2;
+  repeated int32 level = 3;
+  required bool isPrivacyAgg = 4;
+}
+
+enum Op {
+  kAs = 1;
+  kPlus = 2;
+  kMinus = 3;
+  kTimes = 4;
+  kDivide = 5;
+  kMod = 6;
+
+  kGt = 11;
+  kGe = 12;
+  kLt = 13;
+  kLe = 14;
+  kEq = 15;
+  kNe = 16;
+
+  kAnd = 21;
+  kOr = 22;
+  kNot = 23;
+  kXOr = 24;
+
+  kScalarFunc = 101;
+  kAggFunc = 102;
+}
+
+enum Func {
+  kDWithin = 1;
+  kDistance = 2;
+  kPoint = 3;
+  kX = 4;
+  kY = 5;
+  kKNN = 6;
+  kCount = 101;
+  kSum = 102;
+  kAvg = 103;
+  kMax = 104;
+  kMin = 105;
+}

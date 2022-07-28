@@ -1,39 +1,75 @@
-syntax = "proto3";
-package helloworld;
-
-option java_multiple_files = true;
+syntax = "proto2";
+import "google/protobuf/empty.proto";
+import "common.proto";
+package federate;
+//是否运行生成多个java文件
+option java_multiple_files = false;
 //定义包名
-option java_package = "com.suda.federate.helloworld";
+option java_package = "com.suda.federate.rpc";
 //定义生成的类名称
-option java_outer_classname = "HelloWorldProto";
+option java_outer_classname = "FederateService";
 
 
-
-
+message SQLExpression{
+  required string function=1;
+  required Point point=2;
+  required double literal =3;
+  optional int32 fetch = 4 [default = 0];
+  repeated string order = 5;
+  optional string groupby=6;
+}
+//message Query {
+//  required string function = 1;//Range_count
+//  repeated string projectExp = 3;
+//  repeated Expression filterExp = 5;
+//  required int32 fetch = 6;
+//  repeated string order = 7;
+//  optional string aggUuid = 8;
+//}
 
 // The greeting service definition.
 
-service Greeter {
+service Federate {
 
   // Sends a greeting
-
-  rpc SayHello (HelloRequest) returns (HelloReply) {}
-
+  rpc AddClient(AddClientRequest) returns (GeneralResponse);
+  rpc GetResult (SQLExpression) returns (SQLReply) {}
+  rpc RangeCount (SQLExpression) returns (SQLReply) {}
+  rpc RangeQuery (SQLExpression) returns (SQLReplyList) {}
+  rpc KnnRadiusQuery (SQLExpression) returns (SQLReply) {}
+}
+enum Code {
+  kOk = 1;
+  kAddClientFailed = 2;
+  kCacheNotExist = 3;
 }
 
+message Status {
+  required Code code = 1 [default = kOk];
+  required string msg = 2 [default = "ok"];
+}
 
-// The request message containing the user's name.
+message AddClientRequest {
+  required string endpoint = 1;
+}
 
-message HelloRequest {
+message GeneralResponse {
+  required Status status = 1;
+}
 
-  string name = 1;
-
+message SQLRequest {
+  required string sql=1;
 }
 
 // The response message containing the greetings
 
-message HelloReply {
+message SQLReply {
 
-  string message = 1;
+  required string message = 1;
+
+}
+message SQLReplyList {
+
+  repeated string message = 1;
 
 }

@@ -3,6 +3,7 @@ package com.suda.federate.utils;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
+import com.alibaba.fastjson2.TypeReference;
 import com.suda.federate.config.DbConfig;
 
 import java.io.File;
@@ -32,6 +33,7 @@ public class FederateUtils {
         }
         return configList;
     }
+
 
     public static String getOneResult(ResultSet rs) throws SQLException {
         int count = rs.getMetaData().getColumnCount();
