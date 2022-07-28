@@ -11,6 +11,9 @@ option java_outer_classname = "FederateService";
 
 
 message SQLExpression{
+  optional int32 id =9;
+  repeated int32 idList=10;
+  optional int32 t=8;
   required string function=1;
   required Point point=2;
   required string table=7;
@@ -65,7 +68,7 @@ message SQLRequest {
 // The response message containing the greetings
 
 message SQLReply {
-
+  repeated int32 fakeLocalSum =2;
   required double message = 1;
 
 }

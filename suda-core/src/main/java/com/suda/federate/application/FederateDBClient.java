@@ -42,16 +42,16 @@ public final class FederateDBClient {//被edSpatialClient调用 List<String> end
     }
 
     //客户端方法
-    public Integer rangeCount(FederateService.SQLExpression expression){
+    public FederateService.SQLReply rangeCount(FederateService.SQLExpression expression){
 
         FederateService.SQLReply response;
         try{
             response = blockingStub.rangeCount(expression);
         }catch (StatusRuntimeException e){
             System.out.println("RPC调用失败："+e.getMessage());
-            return 0;
+            return null;
         }
-        return (int)response.getMessage();
+        return response;
     }
     //客户端方法
     public FederateService.SQLReplyList rangeQuery(FederateService.SQLExpression expression){

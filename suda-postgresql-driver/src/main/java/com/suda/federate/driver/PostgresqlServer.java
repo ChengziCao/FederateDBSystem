@@ -22,11 +22,11 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
+
+import static com.suda.federate.security.sha.SecretSum.localClient;
 
 public class PostgresqlServer extends FederateDBServer {
     private static final org.apache.logging.log4j.Logger LOGGER = LogManager.getLogger(PostgresqlServer.class);
@@ -57,14 +57,26 @@ public class PostgresqlServer extends FederateDBServer {
             System.out.println("收到的信息：" + request.getFunction());
             Integer result=0;
             try {
+                int id = request.getId();
+                List<Integer> idList =request.getIdListList();
+                int t = request.getT();
+                List<Integer> fakeLocalSum = new ArrayList<>();
+
                 result = localRangeCount(request.getPoint(),request.getTable(), request.getLiteral());
+                int[] ids = idList.stream().mapToInt(Integer::intValue).toArray();
+                int[]fakes=localClient(t,result,ids);
+                for(int i = 0; i < fakes.length; i++){
+                    fakeLocalSum.add(fakes[i]);
+                }
+                //构造返回
+                FederateService.SQLReply reply = FederateService.SQLReply.newBuilder().setMessage(result)
+                        .addAllFakeLocalSum(fakeLocalSum).build();
+                responseObserver.onNext(reply);
+                responseObserver.onCompleted();
             } catch (SQLException | InvocationTargetException | NoSuchMethodException | InstantiationException | IllegalAccessException e) {
                 e.printStackTrace();
             }
-            //构造返回
-            FederateService.SQLReply reply = FederateService.SQLReply.newBuilder().setMessage(result).build();
-            responseObserver.onNext(reply);
-            responseObserver.onCompleted();
+
         }
 
         @Override

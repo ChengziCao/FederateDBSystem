@@ -1,5 +1,6 @@
 package com.suda.federate.sql.enumerator;
 
+import com.suda.federate.config.FedSpatialConfig;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -51,7 +52,7 @@ public class StreamingIterator<E> implements Iterator<E> {
       // wait for productor
       try {
         synchronized (lock) {
-          lock.wait(6000);//TODO add config
+          lock.wait(FedSpatialConfig.TIME_OUT);
         }
       } catch (Exception e) {
         return false;
