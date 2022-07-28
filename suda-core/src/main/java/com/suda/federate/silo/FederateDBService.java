@@ -27,7 +27,7 @@ public class FederateDBService extends FederateGrpc.FederateImplBase{
 //                Integer result = localRangeCount(rangeCounting.point, rangeCounting.radius);
             }
             //构造返回
-            FederateService.SQLReply reply = FederateService.SQLReply.newBuilder().setMessage("Hello: ").build();
+            FederateService.SQLReply reply = FederateService.SQLReply.newBuilder().setMessage(0.0).build();
             responseObserver.onNext(reply);
             responseObserver.onCompleted();
         }

@@ -13,6 +13,7 @@ option java_outer_classname = "FederateService";
 message SQLExpression{
   required string function=1;
   required Point point=2;
+  required string table=7;
   required double literal =3;
   optional int32 fetch = 4 [default = 0];
   repeated string order = 5;
@@ -65,7 +66,7 @@ message SQLRequest {
 
 message SQLReply {
 
-  required string message = 1;
+  required double message = 1;
 
 }
 message SQLReplyList {

@@ -57,12 +57,12 @@ public class PostgresqlServer extends FederateDBServer {
             System.out.println("收到的信息：" + request.getFunction());
             Integer result=0;
             try {
-                result = localRangeCount(request.getPoint(), request.getLiteral());
+                result = localRangeCount(request.getPoint(),request.getTable(), request.getLiteral());
             } catch (SQLException | InvocationTargetException | NoSuchMethodException | InstantiationException | IllegalAccessException e) {
                 e.printStackTrace();
             }
             //构造返回
-            FederateService.SQLReply reply = FederateService.SQLReply.newBuilder().setMessage("localRangeCount: "+result).build();
+            FederateService.SQLReply reply = FederateService.SQLReply.newBuilder().setMessage(result).build();
             responseObserver.onNext(reply);
             responseObserver.onCompleted();
         }
@@ -91,12 +91,12 @@ public class PostgresqlServer extends FederateDBServer {
             try {
                 Double k =request.getLiteral();
                 int kk = k.intValue();
-                result = localKnnRadiusQuery(request.getPoint(),kk);
+                result = localKnnRadiusQuery(request.getPoint(),request.getTable(),kk);
             } catch (SQLException | InvocationTargetException | NoSuchMethodException | InstantiationException | IllegalAccessException e) {
                 e.printStackTrace();
             }
             //构造返回
-            FederateService.SQLReply reply = FederateService.SQLReply.newBuilder().setMessage("localKnnRadius: "+result).build();
+            FederateService.SQLReply reply = FederateService.SQLReply.newBuilder().setMessage(result).build();
             responseObserver.onNext(reply);
             responseObserver.onCompleted();
         }
@@ -108,13 +108,13 @@ public class PostgresqlServer extends FederateDBServer {
          * @param point  query location
          * @param radius range count radius
          */
-        public Integer localRangeCount(FederateCommon.Point point, Double radius) throws SQLException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+        public Integer localRangeCount(FederateCommon.Point point,String tableName, Double radius) throws SQLException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
             List<Integer> ansList = new ArrayList<>();
             // 读取参数
             // TODO: plaintext query
 
             // 生成目标 SQL
-            String sql = SQLGenerator.generateRangeCountingSQL(point, radius, databaseType);
+            String sql = SQLGenerator.generateRangeCountingSQL(point,tableName,radius, databaseType);
             LOGGER.info(String.format("\n%s Target SQL: ", "postgresql") + sql);
             // 执行 SQL
             Integer ans = executeSql(sql, Integer.class, false);
@@ -135,10 +135,10 @@ public class PostgresqlServer extends FederateDBServer {
             }
         }
 
-        public Double localKnnRadiusQuery(FederateCommon.Point point, Integer k) throws SQLException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {//knn主函数
+        public Double localKnnRadiusQuery(FederateCommon.Point point,String tableName, Integer k) throws SQLException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {//knn主函数
             Double minRadius = Double.MAX_VALUE;
             // 初始化查询半径
-            String sql = SQLGenerator.generateKnnRadiusQuerySQL(point, k, databaseType);
+            String sql = SQLGenerator.generateKnnRadiusQuerySQL(point,tableName, k, databaseType);
             Double ans = executeSql(sql, Double.class, false);
             return ans;
         }

@@ -33,6 +33,13 @@ public class FederateUtils {
         }
         return configList;
     }
+    public static DbConfig configInitialization2(String configFile) throws IOException, SQLException, ClassNotFoundException {
+        String configPath = FederateUtils.getRealPath(configFile);
+        String jsonString = new String(Files.readAllBytes(Paths.get(configPath)));
+        // 可能有多个数据源，写成 json array 格式
+        JSONObject jsonObject = JSONObject.parseObject(jsonString);
+        return jsonObject.to(DbConfig.class);
+    }
 
 
     public static String getOneResult(ResultSet rs) throws SQLException {

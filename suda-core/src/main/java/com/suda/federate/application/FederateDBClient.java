@@ -41,6 +41,44 @@ public final class FederateDBClient {//被edSpatialClient调用 List<String> end
         }
     }
 
+    //客户端方法
+    public Integer rangeCount(FederateService.SQLExpression expression){
+
+        FederateService.SQLReply response;
+        try{
+            response = blockingStub.rangeCount(expression);
+        }catch (StatusRuntimeException e){
+            System.out.println("RPC调用失败："+e.getMessage());
+            return 0;
+        }
+        return (int)response.getMessage();
+    }
+    //客户端方法
+    public FederateService.SQLReplyList rangeQuery(FederateService.SQLExpression expression){
+
+        FederateService.SQLReplyList response;
+        try{
+            response = blockingStub.rangeQuery(expression);
+        }catch (StatusRuntimeException e){
+            System.out.println("RPC调用失败："+e.getMessage());
+            return FederateService.SQLReplyList.newBuilder().build();
+        }
+        return response;
+    }
+    public Double knnRadiusQuery(FederateService.SQLExpression expression){
+        FederateService.SQLReply response;
+        try{
+            response = blockingStub.knnRadiusQuery(expression);
+        }catch (StatusRuntimeException e){
+            System.out.println("RPC调用失败："+e.getMessage());
+            return 0.0;
+        }
+        System.out.println("服务器返回信息："+response.getMessage());
+        return response.getMessage();
+
+    }
+
+
     public String getEndpoint() {
         return endpoint;
     }

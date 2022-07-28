@@ -7,7 +7,7 @@
       "type": "custom",
       "factory": "group.bda.federate.sql.schema.FederateSchemaFactory",
       "operand": {
-        "endpoints": ["localhost:8887"]
+        "endpoints": ["localhost:8887","localhost:8886"]
       },
       "tables": [
         {
@@ -17,6 +17,10 @@
             "feds": [
               {
                 "endpoint": "localhost:8887",
+                "name": "osm_sh"
+              },
+              {
+                "endpoint": "localhost:8886",
                 "name": "osm_sh"
               }
             ]

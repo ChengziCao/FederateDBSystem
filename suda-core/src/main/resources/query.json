@@ -1,6 +1,7 @@
 [
   {
     "function":"RangeCount",
+    "table": "osm_sh",
     "params":[
       {
         "type":"point",
@@ -14,6 +15,7 @@
   },
   {
     "function":"RangeQuery",
+    "table": "osm_sh",
     "params":[
       {
         "type":"point",
@@ -27,6 +29,7 @@
   },
   {
     "function":"Knn",
+    "table": "osm_sh",
     "params":[
       {
         "type":"point",

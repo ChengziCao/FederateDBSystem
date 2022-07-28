@@ -1,8 +1,6 @@
-package com.suda.federate.driver.utils;
+package com.suda.federate.utils;
 
 import com.suda.federate.rpc.FederateCommon;
-import com.suda.federate.sql.type.FD_Point;
-import com.suda.federate.utils.ENUM;
 
 public class SQLGenerator {
     /**
@@ -15,7 +13,6 @@ public class SQLGenerator {
      */
     public static String generateRangeQuerySQL(FederateCommon.Point point, Double radius, ENUM.DATABASE dbType) {
         String template;
-        //WARNING must set <= instead of <
         if (ENUM.DATABASE.POSTGRESQL == dbType) {
             template = "select st_astext(location) from osm_sh where st_distance( st_geographyfromtext('POINT(%f %f)'), location ) <= %f limit 10000;";
             return String.format(template,  point.getLongitude(), point.getLatitude(), radius);
