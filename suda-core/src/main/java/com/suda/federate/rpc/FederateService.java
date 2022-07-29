@@ -274,6 +274,23 @@ public final class FederateService {
      */
     com.google.protobuf.ByteString
         getGroupbyBytes();
+
+    /**
+     * <code>optional string uuid = 11;</code>
+     * @return Whether the uuid field is set.
+     */
+    boolean hasUuid();
+    /**
+     * <code>optional string uuid = 11;</code>
+     * @return The uuid.
+     */
+    java.lang.String getUuid();
+    /**
+     * <code>optional string uuid = 11;</code>
+     * @return The bytes for uuid.
+     */
+    com.google.protobuf.ByteString
+        getUuidBytes();
   }
   /**
    * Protobuf type {@code federate.SQLExpression}
@@ -293,6 +310,7 @@ public final class FederateService {
       table_ = "";
       order_ = com.google.protobuf.LazyStringArrayList.EMPTY;
       groupby_ = "";
+      uuid_ = "";
     }
 
     @java.lang.Override
@@ -405,6 +423,12 @@ public final class FederateService {
                 idList_.addInt(input.readInt32());
               }
               input.popLimit(limit);
+              break;
+            }
+            case 90: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00000100;
+              uuid_ = bs;
               break;
             }
             default: {
@@ -754,6 +778,54 @@ public final class FederateService {
       }
     }
 
+    public static final int UUID_FIELD_NUMBER = 11;
+    private volatile java.lang.Object uuid_;
+    /**
+     * <code>optional string uuid = 11;</code>
+     * @return Whether the uuid field is set.
+     */
+    @java.lang.Override
+    public boolean hasUuid() {
+      return ((bitField0_ & 0x00000100) != 0);
+    }
+    /**
+     * <code>optional string uuid = 11;</code>
+     * @return The uuid.
+     */
+    @java.lang.Override
+    public java.lang.String getUuid() {
+      java.lang.Object ref = uuid_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          uuid_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <code>optional string uuid = 11;</code>
+     * @return The bytes for uuid.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString
+        getUuidBytes() {
+      java.lang.Object ref = uuid_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        uuid_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
     private byte memoizedIsInitialized = -1;
     @java.lang.Override
     public final boolean isInitialized() {
@@ -818,6 +890,9 @@ public final class FederateService {
       for (int i = 0; i < idList_.size(); i++) {
         output.writeInt32(10, idList_.getInt(i));
       }
+      if (((bitField0_ & 0x00000100) != 0)) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 11, uuid_);
+      }
       unknownFields.writeTo(output);
     }
 
@@ -872,6 +947,9 @@ public final class FederateService {
         }
         size += dataSize;
         size += 1 * getIdListList().size();
+      }
+      if (((bitField0_ & 0x00000100) != 0)) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(11, uuid_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -933,6 +1011,11 @@ public final class FederateService {
         if (!getGroupby()
             .equals(other.getGroupby())) return false;
       }
+      if (hasUuid() != other.hasUuid()) return false;
+      if (hasUuid()) {
+        if (!getUuid()
+            .equals(other.getUuid())) return false;
+      }
       if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
     }
@@ -984,6 +1067,10 @@ public final class FederateService {
       if (hasGroupby()) {
         hash = (37 * hash) + GROUPBY_FIELD_NUMBER;
         hash = (53 * hash) + getGroupby().hashCode();
+      }
+      if (hasUuid()) {
+        hash = (37 * hash) + UUID_FIELD_NUMBER;
+        hash = (53 * hash) + getUuid().hashCode();
       }
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
@@ -1143,6 +1230,8 @@ public final class FederateService {
         bitField0_ = (bitField0_ & ~0x00000100);
         groupby_ = "";
         bitField0_ = (bitField0_ & ~0x00000200);
+        uuid_ = "";
+        bitField0_ = (bitField0_ & ~0x00000400);
         return this;
       }
 
@@ -1217,6 +1306,10 @@ public final class FederateService {
           to_bitField0_ |= 0x00000080;
         }
         result.groupby_ = groupby_;
+        if (((from_bitField0_ & 0x00000400) != 0)) {
+          to_bitField0_ |= 0x00000100;
+        }
+        result.uuid_ = uuid_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -1314,6 +1407,11 @@ public final class FederateService {
         if (other.hasGroupby()) {
           bitField0_ |= 0x00000200;
           groupby_ = other.groupby_;
+          onChanged();
+        }
+        if (other.hasUuid()) {
+          bitField0_ |= 0x00000400;
+          uuid_ = other.uuid_;
           onChanged();
         }
         this.mergeUnknownFields(other.unknownFields);
@@ -2076,6 +2174,90 @@ public final class FederateService {
         onChanged();
         return this;
       }
+
+      private java.lang.Object uuid_ = "";
+      /**
+       * <code>optional string uuid = 11;</code>
+       * @return Whether the uuid field is set.
+       */
+      public boolean hasUuid() {
+        return ((bitField0_ & 0x00000400) != 0);
+      }
+      /**
+       * <code>optional string uuid = 11;</code>
+       * @return The uuid.
+       */
+      public java.lang.String getUuid() {
+        java.lang.Object ref = uuid_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            uuid_ = s;
+          }
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>optional string uuid = 11;</code>
+       * @return The bytes for uuid.
+       */
+      public com.google.protobuf.ByteString
+          getUuidBytes() {
+        java.lang.Object ref = uuid_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          uuid_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>optional string uuid = 11;</code>
+       * @param value The uuid to set.
+       * @return This builder for chaining.
+       */
+      public Builder setUuid(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000400;
+        uuid_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string uuid = 11;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearUuid() {
+        bitField0_ = (bitField0_ & ~0x00000400);
+        uuid_ = getDefaultInstance().getUuid();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string uuid = 11;</code>
+       * @param value The bytes for uuid to set.
+       * @return This builder for chaining.
+       */
+      public Builder setUuidBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000400;
+        uuid_ = value;
+        onChanged();
+        return this;
+      }
       @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
@@ -2124,6 +2306,3118 @@ public final class FederateService {
 
     @java.lang.Override
     public com.suda.federate.rpc.FederateService.SQLExpression getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface UnionRequestOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:federate.UnionRequest)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>repeated .federate.Point point = 1;</code>
+     */
+    java.util.List<com.suda.federate.rpc.FederateCommon.Point> 
+        getPointList();
+    /**
+     * <code>repeated .federate.Point point = 1;</code>
+     */
+    com.suda.federate.rpc.FederateCommon.Point getPoint(int index);
+    /**
+     * <code>repeated .federate.Point point = 1;</code>
+     */
+    int getPointCount();
+    /**
+     * <code>repeated .federate.Point point = 1;</code>
+     */
+    java.util.List<? extends com.suda.federate.rpc.FederateCommon.PointOrBuilder> 
+        getPointOrBuilderList();
+    /**
+     * <code>repeated .federate.Point point = 1;</code>
+     */
+    com.suda.federate.rpc.FederateCommon.PointOrBuilder getPointOrBuilder(
+        int index);
+
+    /**
+     * <pre>
+     * loop=0,1 loop==1&amp;&amp; index==endpoints.length结束
+     * </pre>
+     *
+     * <code>required int32 loop = 4;</code>
+     * @return Whether the loop field is set.
+     */
+    boolean hasLoop();
+    /**
+     * <pre>
+     * loop=0,1 loop==1&amp;&amp; index==endpoints.length结束
+     * </pre>
+     *
+     * <code>required int32 loop = 4;</code>
+     * @return The loop.
+     */
+    int getLoop();
+
+    /**
+     * <pre>
+     *记录loop的顺序,且 完成的设为 negative
+     * </pre>
+     *
+     * <code>required int32 index = 2 [default = 0];</code>
+     * @return Whether the index field is set.
+     */
+    boolean hasIndex();
+    /**
+     * <pre>
+     *记录loop的顺序,且 完成的设为 negative
+     * </pre>
+     *
+     * <code>required int32 index = 2 [default = 0];</code>
+     * @return The index.
+     */
+    int getIndex();
+
+    /**
+     * <pre>
+     *RangeQuery时就把id发出去，endpoints[index]，各silo和master一样，也保存一份federateClientMap
+     * </pre>
+     *
+     * <code>repeated string endpoints = 3;</code>
+     * @return A list containing the endpoints.
+     */
+    java.util.List<java.lang.String>
+        getEndpointsList();
+    /**
+     * <pre>
+     *RangeQuery时就把id发出去，endpoints[index]，各silo和master一样，也保存一份federateClientMap
+     * </pre>
+     *
+     * <code>repeated string endpoints = 3;</code>
+     * @return The count of endpoints.
+     */
+    int getEndpointsCount();
+    /**
+     * <pre>
+     *RangeQuery时就把id发出去，endpoints[index]，各silo和master一样，也保存一份federateClientMap
+     * </pre>
+     *
+     * <code>repeated string endpoints = 3;</code>
+     * @param index The index of the element to return.
+     * @return The endpoints at the given index.
+     */
+    java.lang.String getEndpoints(int index);
+    /**
+     * <pre>
+     *RangeQuery时就把id发出去，endpoints[index]，各silo和master一样，也保存一份federateClientMap
+     * </pre>
+     *
+     * <code>repeated string endpoints = 3;</code>
+     * @param index The index of the value to return.
+     * @return The bytes of the endpoints at the given index.
+     */
+    com.google.protobuf.ByteString
+        getEndpointsBytes(int index);
+
+    /**
+     * <code>required string uuid = 5;</code>
+     * @return Whether the uuid field is set.
+     */
+    boolean hasUuid();
+    /**
+     * <code>required string uuid = 5;</code>
+     * @return The uuid.
+     */
+    java.lang.String getUuid();
+    /**
+     * <code>required string uuid = 5;</code>
+     * @return The bytes for uuid.
+     */
+    com.google.protobuf.ByteString
+        getUuidBytes();
+  }
+  /**
+   * Protobuf type {@code federate.UnionRequest}
+   */
+  public static final class UnionRequest extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:federate.UnionRequest)
+      UnionRequestOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use UnionRequest.newBuilder() to construct.
+    private UnionRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private UnionRequest() {
+      point_ = java.util.Collections.emptyList();
+      endpoints_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      uuid_ = "";
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new UnionRequest();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private UnionRequest(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 10: {
+              if (!((mutable_bitField0_ & 0x00000001) != 0)) {
+                point_ = new java.util.ArrayList<com.suda.federate.rpc.FederateCommon.Point>();
+                mutable_bitField0_ |= 0x00000001;
+              }
+              point_.add(
+                  input.readMessage(com.suda.federate.rpc.FederateCommon.Point.PARSER, extensionRegistry));
+              break;
+            }
+            case 16: {
+              bitField0_ |= 0x00000002;
+              index_ = input.readInt32();
+              break;
+            }
+            case 26: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              if (!((mutable_bitField0_ & 0x00000008) != 0)) {
+                endpoints_ = new com.google.protobuf.LazyStringArrayList();
+                mutable_bitField0_ |= 0x00000008;
+              }
+              endpoints_.add(bs);
+              break;
+            }
+            case 32: {
+              bitField0_ |= 0x00000001;
+              loop_ = input.readInt32();
+              break;
+            }
+            case 42: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00000004;
+              uuid_ = bs;
+              break;
+            }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        if (((mutable_bitField0_ & 0x00000001) != 0)) {
+          point_ = java.util.Collections.unmodifiableList(point_);
+        }
+        if (((mutable_bitField0_ & 0x00000008) != 0)) {
+          endpoints_ = endpoints_.getUnmodifiableView();
+        }
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.suda.federate.rpc.FederateService.internal_static_federate_UnionRequest_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.suda.federate.rpc.FederateService.internal_static_federate_UnionRequest_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.suda.federate.rpc.FederateService.UnionRequest.class, com.suda.federate.rpc.FederateService.UnionRequest.Builder.class);
+    }
+
+    private int bitField0_;
+    public static final int POINT_FIELD_NUMBER = 1;
+    private java.util.List<com.suda.federate.rpc.FederateCommon.Point> point_;
+    /**
+     * <code>repeated .federate.Point point = 1;</code>
+     */
+    @java.lang.Override
+    public java.util.List<com.suda.federate.rpc.FederateCommon.Point> getPointList() {
+      return point_;
+    }
+    /**
+     * <code>repeated .federate.Point point = 1;</code>
+     */
+    @java.lang.Override
+    public java.util.List<? extends com.suda.federate.rpc.FederateCommon.PointOrBuilder> 
+        getPointOrBuilderList() {
+      return point_;
+    }
+    /**
+     * <code>repeated .federate.Point point = 1;</code>
+     */
+    @java.lang.Override
+    public int getPointCount() {
+      return point_.size();
+    }
+    /**
+     * <code>repeated .federate.Point point = 1;</code>
+     */
+    @java.lang.Override
+    public com.suda.federate.rpc.FederateCommon.Point getPoint(int index) {
+      return point_.get(index);
+    }
+    /**
+     * <code>repeated .federate.Point point = 1;</code>
+     */
+    @java.lang.Override
+    public com.suda.federate.rpc.FederateCommon.PointOrBuilder getPointOrBuilder(
+        int index) {
+      return point_.get(index);
+    }
+
+    public static final int LOOP_FIELD_NUMBER = 4;
+    private int loop_;
+    /**
+     * <pre>
+     * loop=0,1 loop==1&amp;&amp; index==endpoints.length结束
+     * </pre>
+     *
+     * <code>required int32 loop = 4;</code>
+     * @return Whether the loop field is set.
+     */
+    @java.lang.Override
+    public boolean hasLoop() {
+      return ((bitField0_ & 0x00000001) != 0);
+    }
+    /**
+     * <pre>
+     * loop=0,1 loop==1&amp;&amp; index==endpoints.length结束
+     * </pre>
+     *
+     * <code>required int32 loop = 4;</code>
+     * @return The loop.
+     */
+    @java.lang.Override
+    public int getLoop() {
+      return loop_;
+    }
+
+    public static final int INDEX_FIELD_NUMBER = 2;
+    private int index_;
+    /**
+     * <pre>
+     *记录loop的顺序,且 完成的设为 negative
+     * </pre>
+     *
+     * <code>required int32 index = 2 [default = 0];</code>
+     * @return Whether the index field is set.
+     */
+    @java.lang.Override
+    public boolean hasIndex() {
+      return ((bitField0_ & 0x00000002) != 0);
+    }
+    /**
+     * <pre>
+     *记录loop的顺序,且 完成的设为 negative
+     * </pre>
+     *
+     * <code>required int32 index = 2 [default = 0];</code>
+     * @return The index.
+     */
+    @java.lang.Override
+    public int getIndex() {
+      return index_;
+    }
+
+    public static final int ENDPOINTS_FIELD_NUMBER = 3;
+    private com.google.protobuf.LazyStringList endpoints_;
+    /**
+     * <pre>
+     *RangeQuery时就把id发出去，endpoints[index]，各silo和master一样，也保存一份federateClientMap
+     * </pre>
+     *
+     * <code>repeated string endpoints = 3;</code>
+     * @return A list containing the endpoints.
+     */
+    public com.google.protobuf.ProtocolStringList
+        getEndpointsList() {
+      return endpoints_;
+    }
+    /**
+     * <pre>
+     *RangeQuery时就把id发出去，endpoints[index]，各silo和master一样，也保存一份federateClientMap
+     * </pre>
+     *
+     * <code>repeated string endpoints = 3;</code>
+     * @return The count of endpoints.
+     */
+    public int getEndpointsCount() {
+      return endpoints_.size();
+    }
+    /**
+     * <pre>
+     *RangeQuery时就把id发出去，endpoints[index]，各silo和master一样，也保存一份federateClientMap
+     * </pre>
+     *
+     * <code>repeated string endpoints = 3;</code>
+     * @param index The index of the element to return.
+     * @return The endpoints at the given index.
+     */
+    public java.lang.String getEndpoints(int index) {
+      return endpoints_.get(index);
+    }
+    /**
+     * <pre>
+     *RangeQuery时就把id发出去，endpoints[index]，各silo和master一样，也保存一份federateClientMap
+     * </pre>
+     *
+     * <code>repeated string endpoints = 3;</code>
+     * @param index The index of the value to return.
+     * @return The bytes of the endpoints at the given index.
+     */
+    public com.google.protobuf.ByteString
+        getEndpointsBytes(int index) {
+      return endpoints_.getByteString(index);
+    }
+
+    public static final int UUID_FIELD_NUMBER = 5;
+    private volatile java.lang.Object uuid_;
+    /**
+     * <code>required string uuid = 5;</code>
+     * @return Whether the uuid field is set.
+     */
+    @java.lang.Override
+    public boolean hasUuid() {
+      return ((bitField0_ & 0x00000004) != 0);
+    }
+    /**
+     * <code>required string uuid = 5;</code>
+     * @return The uuid.
+     */
+    @java.lang.Override
+    public java.lang.String getUuid() {
+      java.lang.Object ref = uuid_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          uuid_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <code>required string uuid = 5;</code>
+     * @return The bytes for uuid.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString
+        getUuidBytes() {
+      java.lang.Object ref = uuid_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        uuid_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      if (!hasLoop()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasIndex()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasUuid()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      for (int i = 0; i < getPointCount(); i++) {
+        if (!getPoint(i).isInitialized()) {
+          memoizedIsInitialized = 0;
+          return false;
+        }
+      }
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      for (int i = 0; i < point_.size(); i++) {
+        output.writeMessage(1, point_.get(i));
+      }
+      if (((bitField0_ & 0x00000002) != 0)) {
+        output.writeInt32(2, index_);
+      }
+      for (int i = 0; i < endpoints_.size(); i++) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 3, endpoints_.getRaw(i));
+      }
+      if (((bitField0_ & 0x00000001) != 0)) {
+        output.writeInt32(4, loop_);
+      }
+      if (((bitField0_ & 0x00000004) != 0)) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 5, uuid_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      for (int i = 0; i < point_.size(); i++) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(1, point_.get(i));
+      }
+      if (((bitField0_ & 0x00000002) != 0)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(2, index_);
+      }
+      {
+        int dataSize = 0;
+        for (int i = 0; i < endpoints_.size(); i++) {
+          dataSize += computeStringSizeNoTag(endpoints_.getRaw(i));
+        }
+        size += dataSize;
+        size += 1 * getEndpointsList().size();
+      }
+      if (((bitField0_ & 0x00000001) != 0)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(4, loop_);
+      }
+      if (((bitField0_ & 0x00000004) != 0)) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, uuid_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof com.suda.federate.rpc.FederateService.UnionRequest)) {
+        return super.equals(obj);
+      }
+      com.suda.federate.rpc.FederateService.UnionRequest other = (com.suda.federate.rpc.FederateService.UnionRequest) obj;
+
+      if (!getPointList()
+          .equals(other.getPointList())) return false;
+      if (hasLoop() != other.hasLoop()) return false;
+      if (hasLoop()) {
+        if (getLoop()
+            != other.getLoop()) return false;
+      }
+      if (hasIndex() != other.hasIndex()) return false;
+      if (hasIndex()) {
+        if (getIndex()
+            != other.getIndex()) return false;
+      }
+      if (!getEndpointsList()
+          .equals(other.getEndpointsList())) return false;
+      if (hasUuid() != other.hasUuid()) return false;
+      if (hasUuid()) {
+        if (!getUuid()
+            .equals(other.getUuid())) return false;
+      }
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      if (getPointCount() > 0) {
+        hash = (37 * hash) + POINT_FIELD_NUMBER;
+        hash = (53 * hash) + getPointList().hashCode();
+      }
+      if (hasLoop()) {
+        hash = (37 * hash) + LOOP_FIELD_NUMBER;
+        hash = (53 * hash) + getLoop();
+      }
+      if (hasIndex()) {
+        hash = (37 * hash) + INDEX_FIELD_NUMBER;
+        hash = (53 * hash) + getIndex();
+      }
+      if (getEndpointsCount() > 0) {
+        hash = (37 * hash) + ENDPOINTS_FIELD_NUMBER;
+        hash = (53 * hash) + getEndpointsList().hashCode();
+      }
+      if (hasUuid()) {
+        hash = (37 * hash) + UUID_FIELD_NUMBER;
+        hash = (53 * hash) + getUuid().hashCode();
+      }
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static com.suda.federate.rpc.FederateService.UnionRequest parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.suda.federate.rpc.FederateService.UnionRequest parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.suda.federate.rpc.FederateService.UnionRequest parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.suda.federate.rpc.FederateService.UnionRequest parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.suda.federate.rpc.FederateService.UnionRequest parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.suda.federate.rpc.FederateService.UnionRequest parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.suda.federate.rpc.FederateService.UnionRequest parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.suda.federate.rpc.FederateService.UnionRequest parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.suda.federate.rpc.FederateService.UnionRequest parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static com.suda.federate.rpc.FederateService.UnionRequest parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.suda.federate.rpc.FederateService.UnionRequest parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.suda.federate.rpc.FederateService.UnionRequest parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(com.suda.federate.rpc.FederateService.UnionRequest prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code federate.UnionRequest}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:federate.UnionRequest)
+        com.suda.federate.rpc.FederateService.UnionRequestOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.suda.federate.rpc.FederateService.internal_static_federate_UnionRequest_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.suda.federate.rpc.FederateService.internal_static_federate_UnionRequest_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.suda.federate.rpc.FederateService.UnionRequest.class, com.suda.federate.rpc.FederateService.UnionRequest.Builder.class);
+      }
+
+      // Construct using com.suda.federate.rpc.FederateService.UnionRequest.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+          getPointFieldBuilder();
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        if (pointBuilder_ == null) {
+          point_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000001);
+        } else {
+          pointBuilder_.clear();
+        }
+        loop_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000002);
+        index_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000004);
+        endpoints_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+        bitField0_ = (bitField0_ & ~0x00000008);
+        uuid_ = "";
+        bitField0_ = (bitField0_ & ~0x00000010);
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.suda.federate.rpc.FederateService.internal_static_federate_UnionRequest_descriptor;
+      }
+
+      @java.lang.Override
+      public com.suda.federate.rpc.FederateService.UnionRequest getDefaultInstanceForType() {
+        return com.suda.federate.rpc.FederateService.UnionRequest.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public com.suda.federate.rpc.FederateService.UnionRequest build() {
+        com.suda.federate.rpc.FederateService.UnionRequest result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public com.suda.federate.rpc.FederateService.UnionRequest buildPartial() {
+        com.suda.federate.rpc.FederateService.UnionRequest result = new com.suda.federate.rpc.FederateService.UnionRequest(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        if (pointBuilder_ == null) {
+          if (((bitField0_ & 0x00000001) != 0)) {
+            point_ = java.util.Collections.unmodifiableList(point_);
+            bitField0_ = (bitField0_ & ~0x00000001);
+          }
+          result.point_ = point_;
+        } else {
+          result.point_ = pointBuilder_.build();
+        }
+        if (((from_bitField0_ & 0x00000002) != 0)) {
+          result.loop_ = loop_;
+          to_bitField0_ |= 0x00000001;
+        }
+        if (((from_bitField0_ & 0x00000004) != 0)) {
+          result.index_ = index_;
+          to_bitField0_ |= 0x00000002;
+        }
+        if (((bitField0_ & 0x00000008) != 0)) {
+          endpoints_ = endpoints_.getUnmodifiableView();
+          bitField0_ = (bitField0_ & ~0x00000008);
+        }
+        result.endpoints_ = endpoints_;
+        if (((from_bitField0_ & 0x00000010) != 0)) {
+          to_bitField0_ |= 0x00000004;
+        }
+        result.uuid_ = uuid_;
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.suda.federate.rpc.FederateService.UnionRequest) {
+          return mergeFrom((com.suda.federate.rpc.FederateService.UnionRequest)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.suda.federate.rpc.FederateService.UnionRequest other) {
+        if (other == com.suda.federate.rpc.FederateService.UnionRequest.getDefaultInstance()) return this;
+        if (pointBuilder_ == null) {
+          if (!other.point_.isEmpty()) {
+            if (point_.isEmpty()) {
+              point_ = other.point_;
+              bitField0_ = (bitField0_ & ~0x00000001);
+            } else {
+              ensurePointIsMutable();
+              point_.addAll(other.point_);
+            }
+            onChanged();
+          }
+        } else {
+          if (!other.point_.isEmpty()) {
+            if (pointBuilder_.isEmpty()) {
+              pointBuilder_.dispose();
+              pointBuilder_ = null;
+              point_ = other.point_;
+              bitField0_ = (bitField0_ & ~0x00000001);
+              pointBuilder_ = 
+                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
+                   getPointFieldBuilder() : null;
+            } else {
+              pointBuilder_.addAllMessages(other.point_);
+            }
+          }
+        }
+        if (other.hasLoop()) {
+          setLoop(other.getLoop());
+        }
+        if (other.hasIndex()) {
+          setIndex(other.getIndex());
+        }
+        if (!other.endpoints_.isEmpty()) {
+          if (endpoints_.isEmpty()) {
+            endpoints_ = other.endpoints_;
+            bitField0_ = (bitField0_ & ~0x00000008);
+          } else {
+            ensureEndpointsIsMutable();
+            endpoints_.addAll(other.endpoints_);
+          }
+          onChanged();
+        }
+        if (other.hasUuid()) {
+          bitField0_ |= 0x00000010;
+          uuid_ = other.uuid_;
+          onChanged();
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        if (!hasLoop()) {
+          return false;
+        }
+        if (!hasIndex()) {
+          return false;
+        }
+        if (!hasUuid()) {
+          return false;
+        }
+        for (int i = 0; i < getPointCount(); i++) {
+          if (!getPoint(i).isInitialized()) {
+            return false;
+          }
+        }
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.suda.federate.rpc.FederateService.UnionRequest parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.suda.federate.rpc.FederateService.UnionRequest) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      private int bitField0_;
+
+      private java.util.List<com.suda.federate.rpc.FederateCommon.Point> point_ =
+        java.util.Collections.emptyList();
+      private void ensurePointIsMutable() {
+        if (!((bitField0_ & 0x00000001) != 0)) {
+          point_ = new java.util.ArrayList<com.suda.federate.rpc.FederateCommon.Point>(point_);
+          bitField0_ |= 0x00000001;
+         }
+      }
+
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          com.suda.federate.rpc.FederateCommon.Point, com.suda.federate.rpc.FederateCommon.Point.Builder, com.suda.federate.rpc.FederateCommon.PointOrBuilder> pointBuilder_;
+
+      /**
+       * <code>repeated .federate.Point point = 1;</code>
+       */
+      public java.util.List<com.suda.federate.rpc.FederateCommon.Point> getPointList() {
+        if (pointBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(point_);
+        } else {
+          return pointBuilder_.getMessageList();
+        }
+      }
+      /**
+       * <code>repeated .federate.Point point = 1;</code>
+       */
+      public int getPointCount() {
+        if (pointBuilder_ == null) {
+          return point_.size();
+        } else {
+          return pointBuilder_.getCount();
+        }
+      }
+      /**
+       * <code>repeated .federate.Point point = 1;</code>
+       */
+      public com.suda.federate.rpc.FederateCommon.Point getPoint(int index) {
+        if (pointBuilder_ == null) {
+          return point_.get(index);
+        } else {
+          return pointBuilder_.getMessage(index);
+        }
+      }
+      /**
+       * <code>repeated .federate.Point point = 1;</code>
+       */
+      public Builder setPoint(
+          int index, com.suda.federate.rpc.FederateCommon.Point value) {
+        if (pointBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensurePointIsMutable();
+          point_.set(index, value);
+          onChanged();
+        } else {
+          pointBuilder_.setMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .federate.Point point = 1;</code>
+       */
+      public Builder setPoint(
+          int index, com.suda.federate.rpc.FederateCommon.Point.Builder builderForValue) {
+        if (pointBuilder_ == null) {
+          ensurePointIsMutable();
+          point_.set(index, builderForValue.build());
+          onChanged();
+        } else {
+          pointBuilder_.setMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .federate.Point point = 1;</code>
+       */
+      public Builder addPoint(com.suda.federate.rpc.FederateCommon.Point value) {
+        if (pointBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensurePointIsMutable();
+          point_.add(value);
+          onChanged();
+        } else {
+          pointBuilder_.addMessage(value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .federate.Point point = 1;</code>
+       */
+      public Builder addPoint(
+          int index, com.suda.federate.rpc.FederateCommon.Point value) {
+        if (pointBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensurePointIsMutable();
+          point_.add(index, value);
+          onChanged();
+        } else {
+          pointBuilder_.addMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .federate.Point point = 1;</code>
+       */
+      public Builder addPoint(
+          com.suda.federate.rpc.FederateCommon.Point.Builder builderForValue) {
+        if (pointBuilder_ == null) {
+          ensurePointIsMutable();
+          point_.add(builderForValue.build());
+          onChanged();
+        } else {
+          pointBuilder_.addMessage(builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .federate.Point point = 1;</code>
+       */
+      public Builder addPoint(
+          int index, com.suda.federate.rpc.FederateCommon.Point.Builder builderForValue) {
+        if (pointBuilder_ == null) {
+          ensurePointIsMutable();
+          point_.add(index, builderForValue.build());
+          onChanged();
+        } else {
+          pointBuilder_.addMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .federate.Point point = 1;</code>
+       */
+      public Builder addAllPoint(
+          java.lang.Iterable<? extends com.suda.federate.rpc.FederateCommon.Point> values) {
+        if (pointBuilder_ == null) {
+          ensurePointIsMutable();
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, point_);
+          onChanged();
+        } else {
+          pointBuilder_.addAllMessages(values);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .federate.Point point = 1;</code>
+       */
+      public Builder clearPoint() {
+        if (pointBuilder_ == null) {
+          point_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000001);
+          onChanged();
+        } else {
+          pointBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .federate.Point point = 1;</code>
+       */
+      public Builder removePoint(int index) {
+        if (pointBuilder_ == null) {
+          ensurePointIsMutable();
+          point_.remove(index);
+          onChanged();
+        } else {
+          pointBuilder_.remove(index);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .federate.Point point = 1;</code>
+       */
+      public com.suda.federate.rpc.FederateCommon.Point.Builder getPointBuilder(
+          int index) {
+        return getPointFieldBuilder().getBuilder(index);
+      }
+      /**
+       * <code>repeated .federate.Point point = 1;</code>
+       */
+      public com.suda.federate.rpc.FederateCommon.PointOrBuilder getPointOrBuilder(
+          int index) {
+        if (pointBuilder_ == null) {
+          return point_.get(index);  } else {
+          return pointBuilder_.getMessageOrBuilder(index);
+        }
+      }
+      /**
+       * <code>repeated .federate.Point point = 1;</code>
+       */
+      public java.util.List<? extends com.suda.federate.rpc.FederateCommon.PointOrBuilder> 
+           getPointOrBuilderList() {
+        if (pointBuilder_ != null) {
+          return pointBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(point_);
+        }
+      }
+      /**
+       * <code>repeated .federate.Point point = 1;</code>
+       */
+      public com.suda.federate.rpc.FederateCommon.Point.Builder addPointBuilder() {
+        return getPointFieldBuilder().addBuilder(
+            com.suda.federate.rpc.FederateCommon.Point.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .federate.Point point = 1;</code>
+       */
+      public com.suda.federate.rpc.FederateCommon.Point.Builder addPointBuilder(
+          int index) {
+        return getPointFieldBuilder().addBuilder(
+            index, com.suda.federate.rpc.FederateCommon.Point.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .federate.Point point = 1;</code>
+       */
+      public java.util.List<com.suda.federate.rpc.FederateCommon.Point.Builder> 
+           getPointBuilderList() {
+        return getPointFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          com.suda.federate.rpc.FederateCommon.Point, com.suda.federate.rpc.FederateCommon.Point.Builder, com.suda.federate.rpc.FederateCommon.PointOrBuilder> 
+          getPointFieldBuilder() {
+        if (pointBuilder_ == null) {
+          pointBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+              com.suda.federate.rpc.FederateCommon.Point, com.suda.federate.rpc.FederateCommon.Point.Builder, com.suda.federate.rpc.FederateCommon.PointOrBuilder>(
+                  point_,
+                  ((bitField0_ & 0x00000001) != 0),
+                  getParentForChildren(),
+                  isClean());
+          point_ = null;
+        }
+        return pointBuilder_;
+      }
+
+      private int loop_ ;
+      /**
+       * <pre>
+       * loop=0,1 loop==1&amp;&amp; index==endpoints.length结束
+       * </pre>
+       *
+       * <code>required int32 loop = 4;</code>
+       * @return Whether the loop field is set.
+       */
+      @java.lang.Override
+      public boolean hasLoop() {
+        return ((bitField0_ & 0x00000002) != 0);
+      }
+      /**
+       * <pre>
+       * loop=0,1 loop==1&amp;&amp; index==endpoints.length结束
+       * </pre>
+       *
+       * <code>required int32 loop = 4;</code>
+       * @return The loop.
+       */
+      @java.lang.Override
+      public int getLoop() {
+        return loop_;
+      }
+      /**
+       * <pre>
+       * loop=0,1 loop==1&amp;&amp; index==endpoints.length结束
+       * </pre>
+       *
+       * <code>required int32 loop = 4;</code>
+       * @param value The loop to set.
+       * @return This builder for chaining.
+       */
+      public Builder setLoop(int value) {
+        bitField0_ |= 0x00000002;
+        loop_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * loop=0,1 loop==1&amp;&amp; index==endpoints.length结束
+       * </pre>
+       *
+       * <code>required int32 loop = 4;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearLoop() {
+        bitField0_ = (bitField0_ & ~0x00000002);
+        loop_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int index_ ;
+      /**
+       * <pre>
+       *记录loop的顺序,且 完成的设为 negative
+       * </pre>
+       *
+       * <code>required int32 index = 2 [default = 0];</code>
+       * @return Whether the index field is set.
+       */
+      @java.lang.Override
+      public boolean hasIndex() {
+        return ((bitField0_ & 0x00000004) != 0);
+      }
+      /**
+       * <pre>
+       *记录loop的顺序,且 完成的设为 negative
+       * </pre>
+       *
+       * <code>required int32 index = 2 [default = 0];</code>
+       * @return The index.
+       */
+      @java.lang.Override
+      public int getIndex() {
+        return index_;
+      }
+      /**
+       * <pre>
+       *记录loop的顺序,且 完成的设为 negative
+       * </pre>
+       *
+       * <code>required int32 index = 2 [default = 0];</code>
+       * @param value The index to set.
+       * @return This builder for chaining.
+       */
+      public Builder setIndex(int value) {
+        bitField0_ |= 0x00000004;
+        index_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *记录loop的顺序,且 完成的设为 negative
+       * </pre>
+       *
+       * <code>required int32 index = 2 [default = 0];</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearIndex() {
+        bitField0_ = (bitField0_ & ~0x00000004);
+        index_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private com.google.protobuf.LazyStringList endpoints_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      private void ensureEndpointsIsMutable() {
+        if (!((bitField0_ & 0x00000008) != 0)) {
+          endpoints_ = new com.google.protobuf.LazyStringArrayList(endpoints_);
+          bitField0_ |= 0x00000008;
+         }
+      }
+      /**
+       * <pre>
+       *RangeQuery时就把id发出去，endpoints[index]，各silo和master一样，也保存一份federateClientMap
+       * </pre>
+       *
+       * <code>repeated string endpoints = 3;</code>
+       * @return A list containing the endpoints.
+       */
+      public com.google.protobuf.ProtocolStringList
+          getEndpointsList() {
+        return endpoints_.getUnmodifiableView();
+      }
+      /**
+       * <pre>
+       *RangeQuery时就把id发出去，endpoints[index]，各silo和master一样，也保存一份federateClientMap
+       * </pre>
+       *
+       * <code>repeated string endpoints = 3;</code>
+       * @return The count of endpoints.
+       */
+      public int getEndpointsCount() {
+        return endpoints_.size();
+      }
+      /**
+       * <pre>
+       *RangeQuery时就把id发出去，endpoints[index]，各silo和master一样，也保存一份federateClientMap
+       * </pre>
+       *
+       * <code>repeated string endpoints = 3;</code>
+       * @param index The index of the element to return.
+       * @return The endpoints at the given index.
+       */
+      public java.lang.String getEndpoints(int index) {
+        return endpoints_.get(index);
+      }
+      /**
+       * <pre>
+       *RangeQuery时就把id发出去，endpoints[index]，各silo和master一样，也保存一份federateClientMap
+       * </pre>
+       *
+       * <code>repeated string endpoints = 3;</code>
+       * @param index The index of the value to return.
+       * @return The bytes of the endpoints at the given index.
+       */
+      public com.google.protobuf.ByteString
+          getEndpointsBytes(int index) {
+        return endpoints_.getByteString(index);
+      }
+      /**
+       * <pre>
+       *RangeQuery时就把id发出去，endpoints[index]，各silo和master一样，也保存一份federateClientMap
+       * </pre>
+       *
+       * <code>repeated string endpoints = 3;</code>
+       * @param index The index to set the value at.
+       * @param value The endpoints to set.
+       * @return This builder for chaining.
+       */
+      public Builder setEndpoints(
+          int index, java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  ensureEndpointsIsMutable();
+        endpoints_.set(index, value);
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *RangeQuery时就把id发出去，endpoints[index]，各silo和master一样，也保存一份federateClientMap
+       * </pre>
+       *
+       * <code>repeated string endpoints = 3;</code>
+       * @param value The endpoints to add.
+       * @return This builder for chaining.
+       */
+      public Builder addEndpoints(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  ensureEndpointsIsMutable();
+        endpoints_.add(value);
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *RangeQuery时就把id发出去，endpoints[index]，各silo和master一样，也保存一份federateClientMap
+       * </pre>
+       *
+       * <code>repeated string endpoints = 3;</code>
+       * @param values The endpoints to add.
+       * @return This builder for chaining.
+       */
+      public Builder addAllEndpoints(
+          java.lang.Iterable<java.lang.String> values) {
+        ensureEndpointsIsMutable();
+        com.google.protobuf.AbstractMessageLite.Builder.addAll(
+            values, endpoints_);
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *RangeQuery时就把id发出去，endpoints[index]，各silo和master一样，也保存一份federateClientMap
+       * </pre>
+       *
+       * <code>repeated string endpoints = 3;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearEndpoints() {
+        endpoints_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+        bitField0_ = (bitField0_ & ~0x00000008);
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *RangeQuery时就把id发出去，endpoints[index]，各silo和master一样，也保存一份federateClientMap
+       * </pre>
+       *
+       * <code>repeated string endpoints = 3;</code>
+       * @param value The bytes of the endpoints to add.
+       * @return This builder for chaining.
+       */
+      public Builder addEndpointsBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  ensureEndpointsIsMutable();
+        endpoints_.add(value);
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object uuid_ = "";
+      /**
+       * <code>required string uuid = 5;</code>
+       * @return Whether the uuid field is set.
+       */
+      public boolean hasUuid() {
+        return ((bitField0_ & 0x00000010) != 0);
+      }
+      /**
+       * <code>required string uuid = 5;</code>
+       * @return The uuid.
+       */
+      public java.lang.String getUuid() {
+        java.lang.Object ref = uuid_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            uuid_ = s;
+          }
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>required string uuid = 5;</code>
+       * @return The bytes for uuid.
+       */
+      public com.google.protobuf.ByteString
+          getUuidBytes() {
+        java.lang.Object ref = uuid_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          uuid_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>required string uuid = 5;</code>
+       * @param value The uuid to set.
+       * @return This builder for chaining.
+       */
+      public Builder setUuid(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000010;
+        uuid_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required string uuid = 5;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearUuid() {
+        bitField0_ = (bitField0_ & ~0x00000010);
+        uuid_ = getDefaultInstance().getUuid();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required string uuid = 5;</code>
+       * @param value The bytes for uuid to set.
+       * @return This builder for chaining.
+       */
+      public Builder setUuidBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000010;
+        uuid_ = value;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:federate.UnionRequest)
+    }
+
+    // @@protoc_insertion_point(class_scope:federate.UnionRequest)
+    private static final com.suda.federate.rpc.FederateService.UnionRequest DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new com.suda.federate.rpc.FederateService.UnionRequest();
+    }
+
+    public static com.suda.federate.rpc.FederateService.UnionRequest getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    @java.lang.Deprecated public static final com.google.protobuf.Parser<UnionRequest>
+        PARSER = new com.google.protobuf.AbstractParser<UnionRequest>() {
+      @java.lang.Override
+      public UnionRequest parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new UnionRequest(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<UnionRequest> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<UnionRequest> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.suda.federate.rpc.FederateService.UnionRequest getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface UnionResponseOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:federate.UnionResponse)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>repeated .federate.Point point = 1;</code>
+     */
+    java.util.List<com.suda.federate.rpc.FederateCommon.Point> 
+        getPointList();
+    /**
+     * <code>repeated .federate.Point point = 1;</code>
+     */
+    com.suda.federate.rpc.FederateCommon.Point getPoint(int index);
+    /**
+     * <code>repeated .federate.Point point = 1;</code>
+     */
+    int getPointCount();
+    /**
+     * <code>repeated .federate.Point point = 1;</code>
+     */
+    java.util.List<? extends com.suda.federate.rpc.FederateCommon.PointOrBuilder> 
+        getPointOrBuilderList();
+    /**
+     * <code>repeated .federate.Point point = 1;</code>
+     */
+    com.suda.federate.rpc.FederateCommon.PointOrBuilder getPointOrBuilder(
+        int index);
+
+    /**
+     * <pre>
+     * loop=0,1 loop==1&amp;&amp; index==endpoints.length结束
+     * </pre>
+     *
+     * <code>required int32 loop = 4;</code>
+     * @return Whether the loop field is set.
+     */
+    boolean hasLoop();
+    /**
+     * <pre>
+     * loop=0,1 loop==1&amp;&amp; index==endpoints.length结束
+     * </pre>
+     *
+     * <code>required int32 loop = 4;</code>
+     * @return The loop.
+     */
+    int getLoop();
+
+    /**
+     * <pre>
+     *记录loop的顺序,且 完成的设为 negative
+     * </pre>
+     *
+     * <code>required int32 index = 2 [default = 0];</code>
+     * @return Whether the index field is set.
+     */
+    boolean hasIndex();
+    /**
+     * <pre>
+     *记录loop的顺序,且 完成的设为 negative
+     * </pre>
+     *
+     * <code>required int32 index = 2 [default = 0];</code>
+     * @return The index.
+     */
+    int getIndex();
+
+    /**
+     * <pre>
+     *RangeQuery时就把id发出去，endpoints[index]，各silo和master一样，也保存一份federateClientMap
+     * </pre>
+     *
+     * <code>repeated string endpoints = 3;</code>
+     * @return A list containing the endpoints.
+     */
+    java.util.List<java.lang.String>
+        getEndpointsList();
+    /**
+     * <pre>
+     *RangeQuery时就把id发出去，endpoints[index]，各silo和master一样，也保存一份federateClientMap
+     * </pre>
+     *
+     * <code>repeated string endpoints = 3;</code>
+     * @return The count of endpoints.
+     */
+    int getEndpointsCount();
+    /**
+     * <pre>
+     *RangeQuery时就把id发出去，endpoints[index]，各silo和master一样，也保存一份federateClientMap
+     * </pre>
+     *
+     * <code>repeated string endpoints = 3;</code>
+     * @param index The index of the element to return.
+     * @return The endpoints at the given index.
+     */
+    java.lang.String getEndpoints(int index);
+    /**
+     * <pre>
+     *RangeQuery时就把id发出去，endpoints[index]，各silo和master一样，也保存一份federateClientMap
+     * </pre>
+     *
+     * <code>repeated string endpoints = 3;</code>
+     * @param index The index of the value to return.
+     * @return The bytes of the endpoints at the given index.
+     */
+    com.google.protobuf.ByteString
+        getEndpointsBytes(int index);
+
+    /**
+     * <code>required string uuid = 5;</code>
+     * @return Whether the uuid field is set.
+     */
+    boolean hasUuid();
+    /**
+     * <code>required string uuid = 5;</code>
+     * @return The uuid.
+     */
+    java.lang.String getUuid();
+    /**
+     * <code>required string uuid = 5;</code>
+     * @return The bytes for uuid.
+     */
+    com.google.protobuf.ByteString
+        getUuidBytes();
+  }
+  /**
+   * Protobuf type {@code federate.UnionResponse}
+   */
+  public static final class UnionResponse extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:federate.UnionResponse)
+      UnionResponseOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use UnionResponse.newBuilder() to construct.
+    private UnionResponse(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private UnionResponse() {
+      point_ = java.util.Collections.emptyList();
+      endpoints_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      uuid_ = "";
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new UnionResponse();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private UnionResponse(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 10: {
+              if (!((mutable_bitField0_ & 0x00000001) != 0)) {
+                point_ = new java.util.ArrayList<com.suda.federate.rpc.FederateCommon.Point>();
+                mutable_bitField0_ |= 0x00000001;
+              }
+              point_.add(
+                  input.readMessage(com.suda.federate.rpc.FederateCommon.Point.PARSER, extensionRegistry));
+              break;
+            }
+            case 16: {
+              bitField0_ |= 0x00000002;
+              index_ = input.readInt32();
+              break;
+            }
+            case 26: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              if (!((mutable_bitField0_ & 0x00000008) != 0)) {
+                endpoints_ = new com.google.protobuf.LazyStringArrayList();
+                mutable_bitField0_ |= 0x00000008;
+              }
+              endpoints_.add(bs);
+              break;
+            }
+            case 32: {
+              bitField0_ |= 0x00000001;
+              loop_ = input.readInt32();
+              break;
+            }
+            case 42: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00000004;
+              uuid_ = bs;
+              break;
+            }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        if (((mutable_bitField0_ & 0x00000001) != 0)) {
+          point_ = java.util.Collections.unmodifiableList(point_);
+        }
+        if (((mutable_bitField0_ & 0x00000008) != 0)) {
+          endpoints_ = endpoints_.getUnmodifiableView();
+        }
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.suda.federate.rpc.FederateService.internal_static_federate_UnionResponse_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.suda.federate.rpc.FederateService.internal_static_federate_UnionResponse_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.suda.federate.rpc.FederateService.UnionResponse.class, com.suda.federate.rpc.FederateService.UnionResponse.Builder.class);
+    }
+
+    private int bitField0_;
+    public static final int POINT_FIELD_NUMBER = 1;
+    private java.util.List<com.suda.federate.rpc.FederateCommon.Point> point_;
+    /**
+     * <code>repeated .federate.Point point = 1;</code>
+     */
+    @java.lang.Override
+    public java.util.List<com.suda.federate.rpc.FederateCommon.Point> getPointList() {
+      return point_;
+    }
+    /**
+     * <code>repeated .federate.Point point = 1;</code>
+     */
+    @java.lang.Override
+    public java.util.List<? extends com.suda.federate.rpc.FederateCommon.PointOrBuilder> 
+        getPointOrBuilderList() {
+      return point_;
+    }
+    /**
+     * <code>repeated .federate.Point point = 1;</code>
+     */
+    @java.lang.Override
+    public int getPointCount() {
+      return point_.size();
+    }
+    /**
+     * <code>repeated .federate.Point point = 1;</code>
+     */
+    @java.lang.Override
+    public com.suda.federate.rpc.FederateCommon.Point getPoint(int index) {
+      return point_.get(index);
+    }
+    /**
+     * <code>repeated .federate.Point point = 1;</code>
+     */
+    @java.lang.Override
+    public com.suda.federate.rpc.FederateCommon.PointOrBuilder getPointOrBuilder(
+        int index) {
+      return point_.get(index);
+    }
+
+    public static final int LOOP_FIELD_NUMBER = 4;
+    private int loop_;
+    /**
+     * <pre>
+     * loop=0,1 loop==1&amp;&amp; index==endpoints.length结束
+     * </pre>
+     *
+     * <code>required int32 loop = 4;</code>
+     * @return Whether the loop field is set.
+     */
+    @java.lang.Override
+    public boolean hasLoop() {
+      return ((bitField0_ & 0x00000001) != 0);
+    }
+    /**
+     * <pre>
+     * loop=0,1 loop==1&amp;&amp; index==endpoints.length结束
+     * </pre>
+     *
+     * <code>required int32 loop = 4;</code>
+     * @return The loop.
+     */
+    @java.lang.Override
+    public int getLoop() {
+      return loop_;
+    }
+
+    public static final int INDEX_FIELD_NUMBER = 2;
+    private int index_;
+    /**
+     * <pre>
+     *记录loop的顺序,且 完成的设为 negative
+     * </pre>
+     *
+     * <code>required int32 index = 2 [default = 0];</code>
+     * @return Whether the index field is set.
+     */
+    @java.lang.Override
+    public boolean hasIndex() {
+      return ((bitField0_ & 0x00000002) != 0);
+    }
+    /**
+     * <pre>
+     *记录loop的顺序,且 完成的设为 negative
+     * </pre>
+     *
+     * <code>required int32 index = 2 [default = 0];</code>
+     * @return The index.
+     */
+    @java.lang.Override
+    public int getIndex() {
+      return index_;
+    }
+
+    public static final int ENDPOINTS_FIELD_NUMBER = 3;
+    private com.google.protobuf.LazyStringList endpoints_;
+    /**
+     * <pre>
+     *RangeQuery时就把id发出去，endpoints[index]，各silo和master一样，也保存一份federateClientMap
+     * </pre>
+     *
+     * <code>repeated string endpoints = 3;</code>
+     * @return A list containing the endpoints.
+     */
+    public com.google.protobuf.ProtocolStringList
+        getEndpointsList() {
+      return endpoints_;
+    }
+    /**
+     * <pre>
+     *RangeQuery时就把id发出去，endpoints[index]，各silo和master一样，也保存一份federateClientMap
+     * </pre>
+     *
+     * <code>repeated string endpoints = 3;</code>
+     * @return The count of endpoints.
+     */
+    public int getEndpointsCount() {
+      return endpoints_.size();
+    }
+    /**
+     * <pre>
+     *RangeQuery时就把id发出去，endpoints[index]，各silo和master一样，也保存一份federateClientMap
+     * </pre>
+     *
+     * <code>repeated string endpoints = 3;</code>
+     * @param index The index of the element to return.
+     * @return The endpoints at the given index.
+     */
+    public java.lang.String getEndpoints(int index) {
+      return endpoints_.get(index);
+    }
+    /**
+     * <pre>
+     *RangeQuery时就把id发出去，endpoints[index]，各silo和master一样，也保存一份federateClientMap
+     * </pre>
+     *
+     * <code>repeated string endpoints = 3;</code>
+     * @param index The index of the value to return.
+     * @return The bytes of the endpoints at the given index.
+     */
+    public com.google.protobuf.ByteString
+        getEndpointsBytes(int index) {
+      return endpoints_.getByteString(index);
+    }
+
+    public static final int UUID_FIELD_NUMBER = 5;
+    private volatile java.lang.Object uuid_;
+    /**
+     * <code>required string uuid = 5;</code>
+     * @return Whether the uuid field is set.
+     */
+    @java.lang.Override
+    public boolean hasUuid() {
+      return ((bitField0_ & 0x00000004) != 0);
+    }
+    /**
+     * <code>required string uuid = 5;</code>
+     * @return The uuid.
+     */
+    @java.lang.Override
+    public java.lang.String getUuid() {
+      java.lang.Object ref = uuid_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          uuid_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <code>required string uuid = 5;</code>
+     * @return The bytes for uuid.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString
+        getUuidBytes() {
+      java.lang.Object ref = uuid_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        uuid_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      if (!hasLoop()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasIndex()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasUuid()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      for (int i = 0; i < getPointCount(); i++) {
+        if (!getPoint(i).isInitialized()) {
+          memoizedIsInitialized = 0;
+          return false;
+        }
+      }
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      for (int i = 0; i < point_.size(); i++) {
+        output.writeMessage(1, point_.get(i));
+      }
+      if (((bitField0_ & 0x00000002) != 0)) {
+        output.writeInt32(2, index_);
+      }
+      for (int i = 0; i < endpoints_.size(); i++) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 3, endpoints_.getRaw(i));
+      }
+      if (((bitField0_ & 0x00000001) != 0)) {
+        output.writeInt32(4, loop_);
+      }
+      if (((bitField0_ & 0x00000004) != 0)) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 5, uuid_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      for (int i = 0; i < point_.size(); i++) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(1, point_.get(i));
+      }
+      if (((bitField0_ & 0x00000002) != 0)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(2, index_);
+      }
+      {
+        int dataSize = 0;
+        for (int i = 0; i < endpoints_.size(); i++) {
+          dataSize += computeStringSizeNoTag(endpoints_.getRaw(i));
+        }
+        size += dataSize;
+        size += 1 * getEndpointsList().size();
+      }
+      if (((bitField0_ & 0x00000001) != 0)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(4, loop_);
+      }
+      if (((bitField0_ & 0x00000004) != 0)) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, uuid_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof com.suda.federate.rpc.FederateService.UnionResponse)) {
+        return super.equals(obj);
+      }
+      com.suda.federate.rpc.FederateService.UnionResponse other = (com.suda.federate.rpc.FederateService.UnionResponse) obj;
+
+      if (!getPointList()
+          .equals(other.getPointList())) return false;
+      if (hasLoop() != other.hasLoop()) return false;
+      if (hasLoop()) {
+        if (getLoop()
+            != other.getLoop()) return false;
+      }
+      if (hasIndex() != other.hasIndex()) return false;
+      if (hasIndex()) {
+        if (getIndex()
+            != other.getIndex()) return false;
+      }
+      if (!getEndpointsList()
+          .equals(other.getEndpointsList())) return false;
+      if (hasUuid() != other.hasUuid()) return false;
+      if (hasUuid()) {
+        if (!getUuid()
+            .equals(other.getUuid())) return false;
+      }
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      if (getPointCount() > 0) {
+        hash = (37 * hash) + POINT_FIELD_NUMBER;
+        hash = (53 * hash) + getPointList().hashCode();
+      }
+      if (hasLoop()) {
+        hash = (37 * hash) + LOOP_FIELD_NUMBER;
+        hash = (53 * hash) + getLoop();
+      }
+      if (hasIndex()) {
+        hash = (37 * hash) + INDEX_FIELD_NUMBER;
+        hash = (53 * hash) + getIndex();
+      }
+      if (getEndpointsCount() > 0) {
+        hash = (37 * hash) + ENDPOINTS_FIELD_NUMBER;
+        hash = (53 * hash) + getEndpointsList().hashCode();
+      }
+      if (hasUuid()) {
+        hash = (37 * hash) + UUID_FIELD_NUMBER;
+        hash = (53 * hash) + getUuid().hashCode();
+      }
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static com.suda.federate.rpc.FederateService.UnionResponse parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.suda.federate.rpc.FederateService.UnionResponse parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.suda.federate.rpc.FederateService.UnionResponse parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.suda.federate.rpc.FederateService.UnionResponse parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.suda.federate.rpc.FederateService.UnionResponse parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.suda.federate.rpc.FederateService.UnionResponse parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.suda.federate.rpc.FederateService.UnionResponse parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.suda.federate.rpc.FederateService.UnionResponse parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.suda.federate.rpc.FederateService.UnionResponse parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static com.suda.federate.rpc.FederateService.UnionResponse parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.suda.federate.rpc.FederateService.UnionResponse parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.suda.federate.rpc.FederateService.UnionResponse parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(com.suda.federate.rpc.FederateService.UnionResponse prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code federate.UnionResponse}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:federate.UnionResponse)
+        com.suda.federate.rpc.FederateService.UnionResponseOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.suda.federate.rpc.FederateService.internal_static_federate_UnionResponse_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.suda.federate.rpc.FederateService.internal_static_federate_UnionResponse_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.suda.federate.rpc.FederateService.UnionResponse.class, com.suda.federate.rpc.FederateService.UnionResponse.Builder.class);
+      }
+
+      // Construct using com.suda.federate.rpc.FederateService.UnionResponse.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+          getPointFieldBuilder();
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        if (pointBuilder_ == null) {
+          point_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000001);
+        } else {
+          pointBuilder_.clear();
+        }
+        loop_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000002);
+        index_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000004);
+        endpoints_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+        bitField0_ = (bitField0_ & ~0x00000008);
+        uuid_ = "";
+        bitField0_ = (bitField0_ & ~0x00000010);
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.suda.federate.rpc.FederateService.internal_static_federate_UnionResponse_descriptor;
+      }
+
+      @java.lang.Override
+      public com.suda.federate.rpc.FederateService.UnionResponse getDefaultInstanceForType() {
+        return com.suda.federate.rpc.FederateService.UnionResponse.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public com.suda.federate.rpc.FederateService.UnionResponse build() {
+        com.suda.federate.rpc.FederateService.UnionResponse result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public com.suda.federate.rpc.FederateService.UnionResponse buildPartial() {
+        com.suda.federate.rpc.FederateService.UnionResponse result = new com.suda.federate.rpc.FederateService.UnionResponse(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        if (pointBuilder_ == null) {
+          if (((bitField0_ & 0x00000001) != 0)) {
+            point_ = java.util.Collections.unmodifiableList(point_);
+            bitField0_ = (bitField0_ & ~0x00000001);
+          }
+          result.point_ = point_;
+        } else {
+          result.point_ = pointBuilder_.build();
+        }
+        if (((from_bitField0_ & 0x00000002) != 0)) {
+          result.loop_ = loop_;
+          to_bitField0_ |= 0x00000001;
+        }
+        if (((from_bitField0_ & 0x00000004) != 0)) {
+          result.index_ = index_;
+          to_bitField0_ |= 0x00000002;
+        }
+        if (((bitField0_ & 0x00000008) != 0)) {
+          endpoints_ = endpoints_.getUnmodifiableView();
+          bitField0_ = (bitField0_ & ~0x00000008);
+        }
+        result.endpoints_ = endpoints_;
+        if (((from_bitField0_ & 0x00000010) != 0)) {
+          to_bitField0_ |= 0x00000004;
+        }
+        result.uuid_ = uuid_;
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.suda.federate.rpc.FederateService.UnionResponse) {
+          return mergeFrom((com.suda.federate.rpc.FederateService.UnionResponse)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.suda.federate.rpc.FederateService.UnionResponse other) {
+        if (other == com.suda.federate.rpc.FederateService.UnionResponse.getDefaultInstance()) return this;
+        if (pointBuilder_ == null) {
+          if (!other.point_.isEmpty()) {
+            if (point_.isEmpty()) {
+              point_ = other.point_;
+              bitField0_ = (bitField0_ & ~0x00000001);
+            } else {
+              ensurePointIsMutable();
+              point_.addAll(other.point_);
+            }
+            onChanged();
+          }
+        } else {
+          if (!other.point_.isEmpty()) {
+            if (pointBuilder_.isEmpty()) {
+              pointBuilder_.dispose();
+              pointBuilder_ = null;
+              point_ = other.point_;
+              bitField0_ = (bitField0_ & ~0x00000001);
+              pointBuilder_ = 
+                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
+                   getPointFieldBuilder() : null;
+            } else {
+              pointBuilder_.addAllMessages(other.point_);
+            }
+          }
+        }
+        if (other.hasLoop()) {
+          setLoop(other.getLoop());
+        }
+        if (other.hasIndex()) {
+          setIndex(other.getIndex());
+        }
+        if (!other.endpoints_.isEmpty()) {
+          if (endpoints_.isEmpty()) {
+            endpoints_ = other.endpoints_;
+            bitField0_ = (bitField0_ & ~0x00000008);
+          } else {
+            ensureEndpointsIsMutable();
+            endpoints_.addAll(other.endpoints_);
+          }
+          onChanged();
+        }
+        if (other.hasUuid()) {
+          bitField0_ |= 0x00000010;
+          uuid_ = other.uuid_;
+          onChanged();
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        if (!hasLoop()) {
+          return false;
+        }
+        if (!hasIndex()) {
+          return false;
+        }
+        if (!hasUuid()) {
+          return false;
+        }
+        for (int i = 0; i < getPointCount(); i++) {
+          if (!getPoint(i).isInitialized()) {
+            return false;
+          }
+        }
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.suda.federate.rpc.FederateService.UnionResponse parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.suda.federate.rpc.FederateService.UnionResponse) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      private int bitField0_;
+
+      private java.util.List<com.suda.federate.rpc.FederateCommon.Point> point_ =
+        java.util.Collections.emptyList();
+      private void ensurePointIsMutable() {
+        if (!((bitField0_ & 0x00000001) != 0)) {
+          point_ = new java.util.ArrayList<com.suda.federate.rpc.FederateCommon.Point>(point_);
+          bitField0_ |= 0x00000001;
+         }
+      }
+
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          com.suda.federate.rpc.FederateCommon.Point, com.suda.federate.rpc.FederateCommon.Point.Builder, com.suda.federate.rpc.FederateCommon.PointOrBuilder> pointBuilder_;
+
+      /**
+       * <code>repeated .federate.Point point = 1;</code>
+       */
+      public java.util.List<com.suda.federate.rpc.FederateCommon.Point> getPointList() {
+        if (pointBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(point_);
+        } else {
+          return pointBuilder_.getMessageList();
+        }
+      }
+      /**
+       * <code>repeated .federate.Point point = 1;</code>
+       */
+      public int getPointCount() {
+        if (pointBuilder_ == null) {
+          return point_.size();
+        } else {
+          return pointBuilder_.getCount();
+        }
+      }
+      /**
+       * <code>repeated .federate.Point point = 1;</code>
+       */
+      public com.suda.federate.rpc.FederateCommon.Point getPoint(int index) {
+        if (pointBuilder_ == null) {
+          return point_.get(index);
+        } else {
+          return pointBuilder_.getMessage(index);
+        }
+      }
+      /**
+       * <code>repeated .federate.Point point = 1;</code>
+       */
+      public Builder setPoint(
+          int index, com.suda.federate.rpc.FederateCommon.Point value) {
+        if (pointBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensurePointIsMutable();
+          point_.set(index, value);
+          onChanged();
+        } else {
+          pointBuilder_.setMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .federate.Point point = 1;</code>
+       */
+      public Builder setPoint(
+          int index, com.suda.federate.rpc.FederateCommon.Point.Builder builderForValue) {
+        if (pointBuilder_ == null) {
+          ensurePointIsMutable();
+          point_.set(index, builderForValue.build());
+          onChanged();
+        } else {
+          pointBuilder_.setMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .federate.Point point = 1;</code>
+       */
+      public Builder addPoint(com.suda.federate.rpc.FederateCommon.Point value) {
+        if (pointBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensurePointIsMutable();
+          point_.add(value);
+          onChanged();
+        } else {
+          pointBuilder_.addMessage(value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .federate.Point point = 1;</code>
+       */
+      public Builder addPoint(
+          int index, com.suda.federate.rpc.FederateCommon.Point value) {
+        if (pointBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensurePointIsMutable();
+          point_.add(index, value);
+          onChanged();
+        } else {
+          pointBuilder_.addMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .federate.Point point = 1;</code>
+       */
+      public Builder addPoint(
+          com.suda.federate.rpc.FederateCommon.Point.Builder builderForValue) {
+        if (pointBuilder_ == null) {
+          ensurePointIsMutable();
+          point_.add(builderForValue.build());
+          onChanged();
+        } else {
+          pointBuilder_.addMessage(builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .federate.Point point = 1;</code>
+       */
+      public Builder addPoint(
+          int index, com.suda.federate.rpc.FederateCommon.Point.Builder builderForValue) {
+        if (pointBuilder_ == null) {
+          ensurePointIsMutable();
+          point_.add(index, builderForValue.build());
+          onChanged();
+        } else {
+          pointBuilder_.addMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .federate.Point point = 1;</code>
+       */
+      public Builder addAllPoint(
+          java.lang.Iterable<? extends com.suda.federate.rpc.FederateCommon.Point> values) {
+        if (pointBuilder_ == null) {
+          ensurePointIsMutable();
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, point_);
+          onChanged();
+        } else {
+          pointBuilder_.addAllMessages(values);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .federate.Point point = 1;</code>
+       */
+      public Builder clearPoint() {
+        if (pointBuilder_ == null) {
+          point_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000001);
+          onChanged();
+        } else {
+          pointBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .federate.Point point = 1;</code>
+       */
+      public Builder removePoint(int index) {
+        if (pointBuilder_ == null) {
+          ensurePointIsMutable();
+          point_.remove(index);
+          onChanged();
+        } else {
+          pointBuilder_.remove(index);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .federate.Point point = 1;</code>
+       */
+      public com.suda.federate.rpc.FederateCommon.Point.Builder getPointBuilder(
+          int index) {
+        return getPointFieldBuilder().getBuilder(index);
+      }
+      /**
+       * <code>repeated .federate.Point point = 1;</code>
+       */
+      public com.suda.federate.rpc.FederateCommon.PointOrBuilder getPointOrBuilder(
+          int index) {
+        if (pointBuilder_ == null) {
+          return point_.get(index);  } else {
+          return pointBuilder_.getMessageOrBuilder(index);
+        }
+      }
+      /**
+       * <code>repeated .federate.Point point = 1;</code>
+       */
+      public java.util.List<? extends com.suda.federate.rpc.FederateCommon.PointOrBuilder> 
+           getPointOrBuilderList() {
+        if (pointBuilder_ != null) {
+          return pointBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(point_);
+        }
+      }
+      /**
+       * <code>repeated .federate.Point point = 1;</code>
+       */
+      public com.suda.federate.rpc.FederateCommon.Point.Builder addPointBuilder() {
+        return getPointFieldBuilder().addBuilder(
+            com.suda.federate.rpc.FederateCommon.Point.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .federate.Point point = 1;</code>
+       */
+      public com.suda.federate.rpc.FederateCommon.Point.Builder addPointBuilder(
+          int index) {
+        return getPointFieldBuilder().addBuilder(
+            index, com.suda.federate.rpc.FederateCommon.Point.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .federate.Point point = 1;</code>
+       */
+      public java.util.List<com.suda.federate.rpc.FederateCommon.Point.Builder> 
+           getPointBuilderList() {
+        return getPointFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          com.suda.federate.rpc.FederateCommon.Point, com.suda.federate.rpc.FederateCommon.Point.Builder, com.suda.federate.rpc.FederateCommon.PointOrBuilder> 
+          getPointFieldBuilder() {
+        if (pointBuilder_ == null) {
+          pointBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+              com.suda.federate.rpc.FederateCommon.Point, com.suda.federate.rpc.FederateCommon.Point.Builder, com.suda.federate.rpc.FederateCommon.PointOrBuilder>(
+                  point_,
+                  ((bitField0_ & 0x00000001) != 0),
+                  getParentForChildren(),
+                  isClean());
+          point_ = null;
+        }
+        return pointBuilder_;
+      }
+
+      private int loop_ ;
+      /**
+       * <pre>
+       * loop=0,1 loop==1&amp;&amp; index==endpoints.length结束
+       * </pre>
+       *
+       * <code>required int32 loop = 4;</code>
+       * @return Whether the loop field is set.
+       */
+      @java.lang.Override
+      public boolean hasLoop() {
+        return ((bitField0_ & 0x00000002) != 0);
+      }
+      /**
+       * <pre>
+       * loop=0,1 loop==1&amp;&amp; index==endpoints.length结束
+       * </pre>
+       *
+       * <code>required int32 loop = 4;</code>
+       * @return The loop.
+       */
+      @java.lang.Override
+      public int getLoop() {
+        return loop_;
+      }
+      /**
+       * <pre>
+       * loop=0,1 loop==1&amp;&amp; index==endpoints.length结束
+       * </pre>
+       *
+       * <code>required int32 loop = 4;</code>
+       * @param value The loop to set.
+       * @return This builder for chaining.
+       */
+      public Builder setLoop(int value) {
+        bitField0_ |= 0x00000002;
+        loop_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * loop=0,1 loop==1&amp;&amp; index==endpoints.length结束
+       * </pre>
+       *
+       * <code>required int32 loop = 4;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearLoop() {
+        bitField0_ = (bitField0_ & ~0x00000002);
+        loop_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int index_ ;
+      /**
+       * <pre>
+       *记录loop的顺序,且 完成的设为 negative
+       * </pre>
+       *
+       * <code>required int32 index = 2 [default = 0];</code>
+       * @return Whether the index field is set.
+       */
+      @java.lang.Override
+      public boolean hasIndex() {
+        return ((bitField0_ & 0x00000004) != 0);
+      }
+      /**
+       * <pre>
+       *记录loop的顺序,且 完成的设为 negative
+       * </pre>
+       *
+       * <code>required int32 index = 2 [default = 0];</code>
+       * @return The index.
+       */
+      @java.lang.Override
+      public int getIndex() {
+        return index_;
+      }
+      /**
+       * <pre>
+       *记录loop的顺序,且 完成的设为 negative
+       * </pre>
+       *
+       * <code>required int32 index = 2 [default = 0];</code>
+       * @param value The index to set.
+       * @return This builder for chaining.
+       */
+      public Builder setIndex(int value) {
+        bitField0_ |= 0x00000004;
+        index_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *记录loop的顺序,且 完成的设为 negative
+       * </pre>
+       *
+       * <code>required int32 index = 2 [default = 0];</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearIndex() {
+        bitField0_ = (bitField0_ & ~0x00000004);
+        index_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private com.google.protobuf.LazyStringList endpoints_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      private void ensureEndpointsIsMutable() {
+        if (!((bitField0_ & 0x00000008) != 0)) {
+          endpoints_ = new com.google.protobuf.LazyStringArrayList(endpoints_);
+          bitField0_ |= 0x00000008;
+         }
+      }
+      /**
+       * <pre>
+       *RangeQuery时就把id发出去，endpoints[index]，各silo和master一样，也保存一份federateClientMap
+       * </pre>
+       *
+       * <code>repeated string endpoints = 3;</code>
+       * @return A list containing the endpoints.
+       */
+      public com.google.protobuf.ProtocolStringList
+          getEndpointsList() {
+        return endpoints_.getUnmodifiableView();
+      }
+      /**
+       * <pre>
+       *RangeQuery时就把id发出去，endpoints[index]，各silo和master一样，也保存一份federateClientMap
+       * </pre>
+       *
+       * <code>repeated string endpoints = 3;</code>
+       * @return The count of endpoints.
+       */
+      public int getEndpointsCount() {
+        return endpoints_.size();
+      }
+      /**
+       * <pre>
+       *RangeQuery时就把id发出去，endpoints[index]，各silo和master一样，也保存一份federateClientMap
+       * </pre>
+       *
+       * <code>repeated string endpoints = 3;</code>
+       * @param index The index of the element to return.
+       * @return The endpoints at the given index.
+       */
+      public java.lang.String getEndpoints(int index) {
+        return endpoints_.get(index);
+      }
+      /**
+       * <pre>
+       *RangeQuery时就把id发出去，endpoints[index]，各silo和master一样，也保存一份federateClientMap
+       * </pre>
+       *
+       * <code>repeated string endpoints = 3;</code>
+       * @param index The index of the value to return.
+       * @return The bytes of the endpoints at the given index.
+       */
+      public com.google.protobuf.ByteString
+          getEndpointsBytes(int index) {
+        return endpoints_.getByteString(index);
+      }
+      /**
+       * <pre>
+       *RangeQuery时就把id发出去，endpoints[index]，各silo和master一样，也保存一份federateClientMap
+       * </pre>
+       *
+       * <code>repeated string endpoints = 3;</code>
+       * @param index The index to set the value at.
+       * @param value The endpoints to set.
+       * @return This builder for chaining.
+       */
+      public Builder setEndpoints(
+          int index, java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  ensureEndpointsIsMutable();
+        endpoints_.set(index, value);
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *RangeQuery时就把id发出去，endpoints[index]，各silo和master一样，也保存一份federateClientMap
+       * </pre>
+       *
+       * <code>repeated string endpoints = 3;</code>
+       * @param value The endpoints to add.
+       * @return This builder for chaining.
+       */
+      public Builder addEndpoints(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  ensureEndpointsIsMutable();
+        endpoints_.add(value);
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *RangeQuery时就把id发出去，endpoints[index]，各silo和master一样，也保存一份federateClientMap
+       * </pre>
+       *
+       * <code>repeated string endpoints = 3;</code>
+       * @param values The endpoints to add.
+       * @return This builder for chaining.
+       */
+      public Builder addAllEndpoints(
+          java.lang.Iterable<java.lang.String> values) {
+        ensureEndpointsIsMutable();
+        com.google.protobuf.AbstractMessageLite.Builder.addAll(
+            values, endpoints_);
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *RangeQuery时就把id发出去，endpoints[index]，各silo和master一样，也保存一份federateClientMap
+       * </pre>
+       *
+       * <code>repeated string endpoints = 3;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearEndpoints() {
+        endpoints_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+        bitField0_ = (bitField0_ & ~0x00000008);
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *RangeQuery时就把id发出去，endpoints[index]，各silo和master一样，也保存一份federateClientMap
+       * </pre>
+       *
+       * <code>repeated string endpoints = 3;</code>
+       * @param value The bytes of the endpoints to add.
+       * @return This builder for chaining.
+       */
+      public Builder addEndpointsBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  ensureEndpointsIsMutable();
+        endpoints_.add(value);
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object uuid_ = "";
+      /**
+       * <code>required string uuid = 5;</code>
+       * @return Whether the uuid field is set.
+       */
+      public boolean hasUuid() {
+        return ((bitField0_ & 0x00000010) != 0);
+      }
+      /**
+       * <code>required string uuid = 5;</code>
+       * @return The uuid.
+       */
+      public java.lang.String getUuid() {
+        java.lang.Object ref = uuid_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            uuid_ = s;
+          }
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>required string uuid = 5;</code>
+       * @return The bytes for uuid.
+       */
+      public com.google.protobuf.ByteString
+          getUuidBytes() {
+        java.lang.Object ref = uuid_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          uuid_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>required string uuid = 5;</code>
+       * @param value The uuid to set.
+       * @return This builder for chaining.
+       */
+      public Builder setUuid(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000010;
+        uuid_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required string uuid = 5;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearUuid() {
+        bitField0_ = (bitField0_ & ~0x00000010);
+        uuid_ = getDefaultInstance().getUuid();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required string uuid = 5;</code>
+       * @param value The bytes for uuid to set.
+       * @return This builder for chaining.
+       */
+      public Builder setUuidBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000010;
+        uuid_ = value;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:federate.UnionResponse)
+    }
+
+    // @@protoc_insertion_point(class_scope:federate.UnionResponse)
+    private static final com.suda.federate.rpc.FederateService.UnionResponse DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new com.suda.federate.rpc.FederateService.UnionResponse();
+    }
+
+    public static com.suda.federate.rpc.FederateService.UnionResponse getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    @java.lang.Deprecated public static final com.google.protobuf.Parser<UnionResponse>
+        PARSER = new com.google.protobuf.AbstractParser<UnionResponse>() {
+      @java.lang.Override
+      public UnionResponse parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new UnionResponse(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<UnionResponse> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<UnionResponse> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.suda.federate.rpc.FederateService.UnionResponse getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -6089,6 +9383,16 @@ public final class FederateService {
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_federate_SQLExpression_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_federate_UnionRequest_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_federate_UnionRequest_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_federate_UnionResponse_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_federate_UnionResponse_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_federate_Status_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
@@ -6128,29 +9432,39 @@ public final class FederateService {
   static {
     java.lang.String[] descriptorData = {
       "\n\rservice.proto\022\010federate\032\033google/protob" +
-      "uf/empty.proto\032\014common.proto\"\272\001\n\rSQLExpr" +
+      "uf/empty.proto\032\014common.proto\"\310\001\n\rSQLExpr" +
       "ession\022\n\n\002id\030\t \001(\005\022\016\n\006idList\030\n \003(\005\022\t\n\001t\030" +
       "\010 \001(\005\022\020\n\010function\030\001 \002(\t\022\036\n\005point\030\002 \002(\0132\017" +
       ".federate.Point\022\r\n\005table\030\007 \002(\t\022\017\n\007litera" +
       "l\030\003 \002(\001\022\020\n\005fetch\030\004 \001(\005:\0010\022\r\n\005order\030\005 \003(\t" +
-      "\022\017\n\007groupby\030\006 \001(\t\"<\n\006Status\022!\n\004code\030\001 \002(" +
-      "\0162\016.federate.Code:\003kOk\022\017\n\003msg\030\002 \002(\t:\002ok\"" +
-      "$\n\020AddClientRequest\022\020\n\010endpoint\030\001 \002(\t\"3\n" +
-      "\017GeneralResponse\022 \n\006status\030\001 \002(\0132\020.feder" +
-      "ate.Status\"\031\n\nSQLRequest\022\013\n\003sql\030\001 \002(\t\"1\n" +
-      "\010SQLReply\022\024\n\014fakeLocalSum\030\002 \003(\005\022\017\n\007messa" +
-      "ge\030\001 \002(\001\"\037\n\014SQLReplyList\022\017\n\007message\030\001 \003(" +
-      "\t*9\n\004Code\022\007\n\003kOk\020\001\022\024\n\020kAddClientFailed\020\002" +
-      "\022\022\n\016kCacheNotExist\020\0032\311\002\n\010Federate\022B\n\tAdd" +
-      "Client\022\032.federate.AddClientRequest\032\031.fed" +
-      "erate.GeneralResponse\022:\n\tGetResult\022\027.fed" +
-      "erate.SQLExpression\032\022.federate.SQLReply\"" +
-      "\000\022;\n\nRangeCount\022\027.federate.SQLExpression" +
-      "\032\022.federate.SQLReply\"\000\022?\n\nRangeQuery\022\027.f" +
-      "ederate.SQLExpression\032\026.federate.SQLRepl" +
-      "yList\"\000\022?\n\016KnnRadiusQuery\022\027.federate.SQL" +
-      "Expression\032\022.federate.SQLReply\"\000B*\n\025com." +
-      "suda.federate.rpcB\017FederateServiceP\000"
+      "\022\017\n\007groupby\030\006 \001(\t\022\014\n\004uuid\030\013 \001(\t\"o\n\014Union" +
+      "Request\022\036\n\005point\030\001 \003(\0132\017.federate.Point\022" +
+      "\014\n\004loop\030\004 \002(\005\022\020\n\005index\030\002 \002(\005:\0010\022\021\n\tendpo" +
+      "ints\030\003 \003(\t\022\014\n\004uuid\030\005 \002(\t\"p\n\rUnionRespons" +
+      "e\022\036\n\005point\030\001 \003(\0132\017.federate.Point\022\014\n\004loo" +
+      "p\030\004 \002(\005\022\020\n\005index\030\002 \002(\005:\0010\022\021\n\tendpoints\030\003" +
+      " \003(\t\022\014\n\004uuid\030\005 \002(\t\"<\n\006Status\022!\n\004code\030\001 \002" +
+      "(\0162\016.federate.Code:\003kOk\022\017\n\003msg\030\002 \002(\t:\002ok" +
+      "\"$\n\020AddClientRequest\022\020\n\010endpoint\030\001 \002(\t\"3" +
+      "\n\017GeneralResponse\022 \n\006status\030\001 \002(\0132\020.fede" +
+      "rate.Status\"\031\n\nSQLRequest\022\013\n\003sql\030\001 \002(\t\"1" +
+      "\n\010SQLReply\022\024\n\014fakeLocalSum\030\002 \003(\005\022\017\n\007mess" +
+      "age\030\001 \002(\001\"\037\n\014SQLReplyList\022\017\n\007message\030\001 \003" +
+      "(\t*9\n\004Code\022\007\n\003kOk\020\001\022\024\n\020kAddClientFailed\020" +
+      "\002\022\022\n\016kCacheNotExist\020\0032\316\003\n\010Federate\022B\n\tAd" +
+      "dClient\022\032.federate.AddClientRequest\032\031.fe" +
+      "derate.GeneralResponse\022:\n\tGetResult\022\027.fe" +
+      "derate.SQLExpression\032\022.federate.SQLReply" +
+      "\"\000\022;\n\nRangeCount\022\027.federate.SQLExpressio" +
+      "n\032\022.federate.SQLReply\"\000\022?\n\nRangeQuery\022\027." +
+      "federate.SQLExpression\032\026.federate.SQLRep" +
+      "lyList\"\000\022@\n\021privacyRangeQuery\022\027.federate" +
+      ".SQLExpression\032\020.federate.Status\"\000\022?\n\016Kn" +
+      "nRadiusQuery\022\027.federate.SQLExpression\032\022." +
+      "federate.SQLReply\"\000\022A\n\014privacyUnion\022\026.fe" +
+      "derate.UnionRequest\032\027.federate.UnionResp" +
+      "onse\"\000B*\n\025com.suda.federate.rpcB\017Federat" +
+      "eServiceP\000"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -6163,39 +9477,51 @@ public final class FederateService {
     internal_static_federate_SQLExpression_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_federate_SQLExpression_descriptor,
-        new java.lang.String[] { "Id", "IdList", "T", "Function", "Point", "Table", "Literal", "Fetch", "Order", "Groupby", });
-    internal_static_federate_Status_descriptor =
+        new java.lang.String[] { "Id", "IdList", "T", "Function", "Point", "Table", "Literal", "Fetch", "Order", "Groupby", "Uuid", });
+    internal_static_federate_UnionRequest_descriptor =
       getDescriptor().getMessageTypes().get(1);
+    internal_static_federate_UnionRequest_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_federate_UnionRequest_descriptor,
+        new java.lang.String[] { "Point", "Loop", "Index", "Endpoints", "Uuid", });
+    internal_static_federate_UnionResponse_descriptor =
+      getDescriptor().getMessageTypes().get(2);
+    internal_static_federate_UnionResponse_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_federate_UnionResponse_descriptor,
+        new java.lang.String[] { "Point", "Loop", "Index", "Endpoints", "Uuid", });
+    internal_static_federate_Status_descriptor =
+      getDescriptor().getMessageTypes().get(3);
     internal_static_federate_Status_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_federate_Status_descriptor,
         new java.lang.String[] { "Code", "Msg", });
     internal_static_federate_AddClientRequest_descriptor =
-      getDescriptor().getMessageTypes().get(2);
+      getDescriptor().getMessageTypes().get(4);
     internal_static_federate_AddClientRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_federate_AddClientRequest_descriptor,
         new java.lang.String[] { "Endpoint", });
     internal_static_federate_GeneralResponse_descriptor =
-      getDescriptor().getMessageTypes().get(3);
+      getDescriptor().getMessageTypes().get(5);
     internal_static_federate_GeneralResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_federate_GeneralResponse_descriptor,
         new java.lang.String[] { "Status", });
     internal_static_federate_SQLRequest_descriptor =
-      getDescriptor().getMessageTypes().get(4);
+      getDescriptor().getMessageTypes().get(6);
     internal_static_federate_SQLRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_federate_SQLRequest_descriptor,
         new java.lang.String[] { "Sql", });
     internal_static_federate_SQLReply_descriptor =
-      getDescriptor().getMessageTypes().get(5);
+      getDescriptor().getMessageTypes().get(7);
     internal_static_federate_SQLReply_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_federate_SQLReply_descriptor,
         new java.lang.String[] { "FakeLocalSum", "Message", });
     internal_static_federate_SQLReplyList_descriptor =
-      getDescriptor().getMessageTypes().get(6);
+      getDescriptor().getMessageTypes().get(8);
     internal_static_federate_SQLReplyList_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_federate_SQLReplyList_descriptor,

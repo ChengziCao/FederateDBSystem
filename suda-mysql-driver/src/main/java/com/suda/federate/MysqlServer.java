@@ -6,6 +6,7 @@ import com.suda.federate.rpc.FederateCommon;
 import com.suda.federate.rpc.FederateGrpc;
 import com.suda.federate.rpc.FederateService;
 import com.suda.federate.silo.FederateDBServer;
+import com.suda.federate.silo.FederateDBService;
 import com.suda.federate.utils.ENUM;
 import com.suda.federate.utils.FederateUtils;
 import com.suda.federate.utils.SQLGenerator;
@@ -23,11 +24,12 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import static com.suda.federate.security.sha.SecretSum.localClient;
+import static com.suda.federate.security.sha.SecretSum.setSummation;
 
 public class MysqlServer extends FederateDBServer {
     private static final org.apache.logging.log4j.Logger LOGGER = LogManager.getLogger(MysqlServer.class);
 
-    private static class FederateMysqlService<T> extends FederateGrpc.FederateImplBase {
+    private static class FederateMysqlService<T> extends FederateDBService {
         private static final org.apache.logging.log4j.Logger LOG = LogManager.getLogger(MysqlServer.FederateMysqlService.class);
         private DatabaseMetaData metaData;
         private Connection conn;
@@ -53,20 +55,10 @@ public class MysqlServer extends FederateDBServer {
             System.out.println("收到的信息：" + request.getFunction());
             Integer result=0;
             try {
-                int id = request.getId();
-                List<Integer> idList =request.getIdListList();
-                int t = request.getT();
-                List<Integer> fakeLocalSum = new ArrayList<>();
 
                 result = localRangeCount(request.getPoint(),request.getTable(), request.getLiteral());
-                int[] ids = idList.stream().mapToInt(Integer::intValue).toArray();
-                int[]fakes=localClient(t,result,ids);
-                for(int i = 0; i < fakes.length; i++){
-                    fakeLocalSum.add(fakes[i]);
-                }
                 //构造返回
-                FederateService.SQLReply reply = FederateService.SQLReply.newBuilder().setMessage(result)
-                        .addAllFakeLocalSum(fakeLocalSum).build();
+                FederateService.SQLReply reply = setSummation(request,result);
                 responseObserver.onNext(reply);
                 responseObserver.onCompleted();
             } catch (SQLException | InvocationTargetException | NoSuchMethodException | InstantiationException | IllegalAccessException e) {
@@ -79,7 +71,7 @@ public class MysqlServer extends FederateDBServer {
             System.out.println("收到的信息：" + request.getFunction());
             FederateService.SQLReplyList.Builder replyList = null;
             try {
-                List<String> res =localRangeQuery(request.getPoint(), request.getLiteral());
+                List<String> res =localRangeQuery(request.getPoint(), request.getLiteral(),String.class);
                 replyList = FederateService.SQLReplyList.newBuilder()
                         .addAllMessage(res);
             } catch (Exception e) {
@@ -125,22 +117,13 @@ public class MysqlServer extends FederateDBServer {
             LOGGER.info(String.format("\n%s Target SQL: ", "Mysql") + sql);
             // 执行 SQL
             Integer ans = executeSql(sql, Integer.class, false);
-            ansList.add(ans);
+
             LOGGER.info(String.format("\n%s RangeCount Result: ", "Mysql") + ans);
 
             // TODO: secure summation
-            return setSummation(ansList, Integer.class);
+            return  ans;
         }
 
-        private <T extends Number> T setSummation(List<T> list, Class<T> clazz) throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
-            Double ans = list.stream().mapToDouble(Number::doubleValue).sum();
-            if (clazz == Integer.class || clazz == Long.class) {
-                long intPart = ans.longValue();
-                return clazz.getConstructor(String.class).newInstance(Long.toString(intPart));
-            } else {
-                return clazz.getConstructor(String.class).newInstance(Double.toString(ans));
-            }
-        }
 
         public Double localKnnRadiusQuery(FederateCommon.Point point,String tableName, Integer k) throws SQLException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {//knn主函数
             Double minRadius = Double.MAX_VALUE;
@@ -158,23 +141,17 @@ public class MysqlServer extends FederateDBServer {
          * @param point  query location
          * @param radius range count radius
          */
-        private List<String> localRangeQuery(FederateCommon.Point point, Double radius) throws SQLException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {//select * 获取knn结果
-            Map<String, List<String>> pointMapList = new HashMap<>();
-            // 读取参数
+        private <T> List<T> localRangeQuery(FederateCommon.Point point, Double radius,Class<T> resultClass) throws SQLException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {//select * 获取knn结果
 
             // 生成 SQL
             String sql = SQLGenerator.generateRangeQuerySQL(point, radius, databaseType);
             LOGGER.info(String.format("\n%s Target SQL: ", "Mysql") + sql);
             // 执行 SQL
-            List<String> pointList = executeSql(sql, String.class);
-            pointMapList.put("Mysql", pointList);
+            List<T> pointList = executeSql(sql, resultClass);
+
             LOGGER.info(String.format("\n%s RangeQuery Result:", "Mysql") + pointList.toString());
 
-            List<String> list = new ArrayList<>();
-            for (String name : pointMapList.keySet()) {
-                list.addAll(pointMapList.get(name));
-            }
-            return list.stream().distinct().collect(Collectors.toList());
+            return pointList;
         }
 
 

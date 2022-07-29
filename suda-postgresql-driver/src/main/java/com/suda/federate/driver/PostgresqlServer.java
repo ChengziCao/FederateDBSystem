@@ -1,11 +1,14 @@
 package com.suda.federate.driver;
 
+import com.suda.federate.application.FederateDBClient;
 import com.suda.federate.config.DbConfig;
 import com.suda.federate.driver.utils.SQLGenerator;
 import com.suda.federate.rpc.FederateCommon;
 import com.suda.federate.rpc.FederateGrpc;
 import com.suda.federate.rpc.FederateService;
+import com.suda.federate.security.sha.SiloCache;
 import com.suda.federate.silo.FederateDBServer;
+import com.suda.federate.silo.FederateDBService;
 import com.suda.federate.sql.function.FD_Knn;
 import com.suda.federate.sql.function.FD_RangeCount;
 import com.suda.federate.sql.function.FD_RangeQuery;
@@ -23,15 +26,19 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.*;
 import java.util.*;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
 import static com.suda.federate.security.sha.SecretSum.localClient;
+import static com.suda.federate.security.sha.SecretSum.setSummation;
 
 public class PostgresqlServer extends FederateDBServer {
     private static final org.apache.logging.log4j.Logger LOGGER = LogManager.getLogger(PostgresqlServer.class);
-
-    private static class FederatePostgresqlService<T> extends FederateGrpc.FederateImplBase {
+    private static boolean isLeader=false;
+    private static class FederatePostgresqlService<T> extends FederateDBService {
         private static final org.apache.logging.log4j.Logger LOG = LogManager.getLogger(FederatePostgresqlService.class);
         private DatabaseMetaData metaData;
         private Connection conn;
@@ -52,28 +59,78 @@ public class PostgresqlServer extends FederateDBServer {
 
         }
 
+
         @Override
         public void rangeCount(FederateService.SQLExpression request, StreamObserver<FederateService.SQLReply> responseObserver) {
             System.out.println("收到的信息：" + request.getFunction());
             Integer result=0;
             try {
-                int id = request.getId();
-                List<Integer> idList =request.getIdListList();
-                int t = request.getT();
-                List<Integer> fakeLocalSum = new ArrayList<>();
-
                 result = localRangeCount(request.getPoint(),request.getTable(), request.getLiteral());
-                int[] ids = idList.stream().mapToInt(Integer::intValue).toArray();
-                int[]fakes=localClient(t,result,ids);
-                for(int i = 0; i < fakes.length; i++){
-                    fakeLocalSum.add(fakes[i]);
-                }
-                //构造返回
-                FederateService.SQLReply reply = FederateService.SQLReply.newBuilder().setMessage(result)
-                        .addAllFakeLocalSum(fakeLocalSum).build();
+                FederateService.SQLReply reply = setSummation(request,result);
                 responseObserver.onNext(reply);
                 responseObserver.onCompleted();
             } catch (SQLException | InvocationTargetException | NoSuchMethodException | InstantiationException | IllegalAccessException e) {
+                e.printStackTrace();
+                System.out.println("eror"+e.getMessage());
+            }
+
+        }
+        @Override
+        public void privacyUnion(FederateService.UnionRequest request, StreamObserver<FederateService.UnionResponse> responseObserver) {
+            Integer currIndex= request.getIndex();
+            if(federateClientMap==null || federateClientMap.isEmpty()){
+                initClients(request.getEndpointsList());//索引endpoint都初始化，一劳永逸（如果loop顺序不变，建议只初始化nextnexFederateDBClient）
+            }
+            if (currIndex==-1){
+                isLeader=true;
+                currIndex+=1;
+            }
+
+            if (isLeader){
+
+                List<FederateCommon.Point> points = new ArrayList<>();
+                String nextEndpoint = request.getEndpoints(currIndex);
+                FederateDBClient nextFederateDBClient = getClient(nextEndpoint);
+                SiloCache siloCache = (SiloCache) buffer.get(request.getUuid());
+
+                FederateService.UnionRequest nexRequest = request.toBuilder()
+                        .setIndex(currIndex)
+                        .addAllPoint(siloCache.getObfSet()).build();
+                List<Callable<FederateService.UnionResponse>> task1 = new ArrayList<>();
+                task1.add(() -> {
+                    FederateService.UnionResponse unionResponse= nextFederateDBClient.privacyUnion(nexRequest);
+                    return unionResponse;
+                });
+                FederateService.UnionResponse recUnionResponse = null;
+                try {
+                    List<Future<FederateService.UnionResponse>> alphaList = executorService.invokeAll(task1);
+                    for (Future<FederateService.UnionResponse> falpha : alphaList) {
+                        recUnionResponse =falpha.get();
+                        break;
+                    }
+                } catch (InterruptedException | ExecutionException e) {
+                    e.printStackTrace();
+                }
+                assert recUnionResponse != null;
+                Integer loop = recUnionResponse.getLoop();
+                Integer index =recUnionResponse.getIndex();
+                if (loop)
+//            FederateDBClient federateDBClient = getClient(nextId);
+//            federateDBClient.privacyUnion()
+        }}
+
+        @Override
+        public void privacyRangeQuery(FederateService.SQLExpression request, StreamObserver<FederateService.Status> responseObserver) {
+            System.out.println("收到的信息：" + request.getFunction());
+            FederateService.Status status;
+            try {
+                List<FederateCommon.Point> res =localRangeQuery(request.getPoint(), request.getLiteral(),FederateCommon.Point.class);
+                SiloCache siloCache = new SiloCache(res);
+                buffer.set(request.getUuid(),siloCache);
+                status=FederateService.Status.newBuilder().build();
+                responseObserver.onNext(status);// 表示查成功了，不返回具体结果
+                responseObserver.onCompleted();
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 
@@ -84,7 +141,7 @@ public class PostgresqlServer extends FederateDBServer {
             System.out.println("收到的信息：" + request.getFunction());
             FederateService.SQLReplyList.Builder replyList = null;
             try {
-                List<String> res =localRangeQuery(request.getPoint(), request.getLiteral());
+                List<String> res =localRangeQuery(request.getPoint(), request.getLiteral(),String.class);
                 replyList = FederateService.SQLReplyList.newBuilder()
                         .addAllMessage(res);
             } catch (Exception e) {
@@ -121,7 +178,7 @@ public class PostgresqlServer extends FederateDBServer {
          * @param radius range count radius
          */
         public Integer localRangeCount(FederateCommon.Point point,String tableName, Double radius) throws SQLException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-            List<Integer> ansList = new ArrayList<>();
+
             // 读取参数
             // TODO: plaintext query
 
@@ -130,21 +187,11 @@ public class PostgresqlServer extends FederateDBServer {
             LOGGER.info(String.format("\n%s Target SQL: ", "postgresql") + sql);
             // 执行 SQL
             Integer ans = executeSql(sql, Integer.class, false);
-            ansList.add(ans);
+
             LOGGER.info(String.format("\n%s RangeCount Result: ", "postgresql") + ans);
 
             // TODO: secure summation
-            return setSummation(ansList, Integer.class);
-        }
-
-        private <T extends Number> T setSummation(List<T> list, Class<T> clazz) throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
-            Double ans = list.stream().mapToDouble(Number::doubleValue).sum();
-            if (clazz == Integer.class || clazz == Long.class) {
-                long intPart = ans.longValue();
-                return clazz.getConstructor(String.class).newInstance(Long.toString(intPart));
-            } else {
-                return clazz.getConstructor(String.class).newInstance(Double.toString(ans));
-            }
+            return ans;
         }
 
         public Double localKnnRadiusQuery(FederateCommon.Point point,String tableName, Integer k) throws SQLException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {//knn主函数
@@ -163,23 +210,15 @@ public class PostgresqlServer extends FederateDBServer {
          * @param point  query location
          * @param radius range count radius
          */
-        private List<String> localRangeQuery(FederateCommon.Point point, Double radius) throws SQLException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {//select * 获取knn结果
-            Map<String, List<String>> pointMapList = new HashMap<>();
-            // 读取参数
-
+        private <T> List<T>  localRangeQuery(FederateCommon.Point point, Double radius,Class<T> resultClass) throws SQLException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {//select * 获取knn结果
             // 生成 SQL
             String sql = SQLGenerator.generateRangeQuerySQL(point, radius, databaseType);
             LOGGER.info(String.format("\n%s Target SQL: ", "postgresql") + sql);
             // 执行 SQL
-            List<String> pointList = executeSql(sql, String.class);
-            pointMapList.put("postgresql", pointList);
+            List<T> pointList = executeSql(sql, resultClass);
             LOGGER.info(String.format("\n%s RangeQuery Result:", "postgresql") + pointList.toString());
 
-            List<String> list = new ArrayList<>();
-            for (String name : pointMapList.keySet()) {
-                list.addAll(pointMapList.get(name));
-            }
-            return list.stream().distinct().collect(Collectors.toList());
+            return pointList;
         }
 
 
@@ -206,7 +245,16 @@ public class PostgresqlServer extends FederateDBServer {
 //            throw new Exception("type not support.");
 //        }
         }
-
+        public <T> List<T> executeSql(String sql) throws SQLException {
+            Statement stmt = conn.createStatement();
+            ResultSet resultSet = stmt.executeQuery(sql);
+            List<T> resultList = new ArrayList<>();
+//            while (resultSet.next()) {
+//                T t = resultSet2Object(resultSet, clazz);
+//                resultList.add(t);
+//            }
+            return null;
+        }
         public <T> List<T> executeSql(String sql, Class<T> resultClass) throws SQLException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
             Statement stmt = conn.createStatement();
             ResultSet resultSet = stmt.executeQuery(sql);
@@ -233,9 +281,11 @@ public class PostgresqlServer extends FederateDBServer {
     public static void main(String[] args) throws Exception {
         String configFile = "config.json";
         DbConfig config = FederateUtils.configInitialization(configFile).get(0);
+
         int grpcPort = 8887;
         System.out.println("666");
         PostgresqlServer server = new PostgresqlServer(config, grpcPort);
+
         server.start();
         server.blockUntilShutdown();
     }

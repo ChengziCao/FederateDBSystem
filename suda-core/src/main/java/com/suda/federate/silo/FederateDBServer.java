@@ -5,7 +5,9 @@ import com.suda.federate.driver.MySQLDriver;
 import com.suda.federate.driver.PostgresqlDriver;
 import com.suda.federate.rpc.FederateCommon;
 import com.suda.federate.rpc.FederateGrpc;
+import com.suda.federate.sql.function.SpatialFunctions;
 import com.suda.federate.sql.type.FD_Point;
+import com.suda.federate.sql.type.Point;
 import com.suda.federate.utils.ENUM.DATABASE;
 import com.suda.federate.utils.FederateUtils;
 import io.grpc.Server;
@@ -104,6 +106,10 @@ public class FederateDBServer {
             return clazz.getConstructor(String.class).newInstance(resultSet.getObject(1).toString());
         } else if (clazz == FederateCommon.Point.class) {
             String content = resultSet.getObject(1).toString();
+//            Point point = (Point) SpatialFunctions.GeomFromTextWithoutBracket(content);
+//            FederateCommon.Point pointt = FederateCommon.Point.newBuilder()
+//                    .setLongitude(point.getX()).setLatitude(point.getY()).build();
+
             List<Float> temp = FederateUtils.parseNumFromString(content, Float.class);
             return clazz.getConstructor(Float.class, Float.class).newInstance(temp.get(0), temp.get(1));
         } else if (clazz == HashMap.class) {

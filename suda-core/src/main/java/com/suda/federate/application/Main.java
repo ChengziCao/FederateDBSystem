@@ -23,6 +23,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import com.suda.federate.rpc.FederateService.SQLExpression;
 import com.suda.federate.rpc.Client;
+
+import static com.suda.federate.security.sha.SecretSum.computeS;
+import static com.suda.federate.security.sha.SecretSum.lag;
+
 public class Main {
     public static final Logger LOGGER = LoggerFactory.getLogger(Main.class);
 
@@ -75,50 +79,13 @@ public class Main {
         //#TODO 需要多个client
         client.knnRadiusQuery(expression);
     }
-    private static int lag(int[] x, int[] y, double x0){
-        int m=x.length;
-        double y0;
-        double j=0;
-        for(int ib=0;ib<m;ib++) {
-            double k=1;
-            for(int ic=0;ic<m;ic++) {
-                if(ib!=ic){
-                    k=k*(x0-x[ic])/(x[ib]-x[ic]);
-                }
-            }
-            k=k*y[ib];
-            j=j+k;
-        }
-        y0=j;
-        return (int) y0;
-    }
 
-    public static int[] computeS(int[][] fakeLocalSumList) { //t*(t+1)
-        int t = fakeLocalSumList.length;
-        int[] S = new int[t+1];
-        for(int i = 0; i <= t; i++) {
-            S[i] = 0;
-        }
 
-        for (int[] ints : fakeLocalSumList) {
-            for (int j = 1; j <= t; j++) {
-                S[j] += ints[j];
-            }
-        }
-        return S;
-    }
-
-    public static Integer federateRangeCount(SQLExpression expression, Map<String,Map<String,String>> tableMap, Map<String, FederateDBClient> federateDBClients ){
-        ExecutorService executorService = Executors.newFixedThreadPool(federateDBClients.size());
+    public static Integer federateRangeCount(SQLExpression expression){
         List<Callable<Boolean>> tasks = new ArrayList<Callable<Boolean>>();
         StreamingIterator<FederateService.SQLReply> iterator = new StreamingIterator<>(federateDBClients.size());
-        AtomicInteger id = new AtomicInteger(1);
-        List<Integer> idList = new ArrayList<>();
-        for (int i = 0; i < federateDBClients.size(); i++){
-            idList.add(i+1);
-        }
-        int t=2;
-        int[][] fakeLocalSumList =new int[t][];
+
+
         for (Map.Entry<String,FederateDBClient> entry : federateDBClients.entrySet()) {
             tasks.add(() -> {
                 try {
@@ -127,11 +94,11 @@ public class Main {
                     String siloTableName =tableMap.get(expression.getTable()).get(endpoint);
 
                     try{
+
                         FederateService.SQLReply reply= federateDBClient.rangeCount(expression.toBuilder()
-                                .setT(3).setId(id.get())
+                                .setT(t).setId(endpoint2Id.get(endpoint))
                                 .addAllIdList(idList).setTable(siloTableName).build());
                         System.out.println(endpoint+" 服务器返回信息："+ reply.getMessage());
-                        id.addAndGet(1);
                         iterator.add(reply);
                     }catch (StatusRuntimeException e){
                         System.out.println("RPC调用失败："+e.getMessage());
@@ -157,13 +124,14 @@ public class Main {
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
+        //TODO beautify
         int count =0;
         int i=0;
-        int t_tmp=t;
+        int[][] fakeLocalSumList =new int[t][];
         while(iterator.hasNext()){
             FederateService.SQLReply reply = iterator.next();
             count+=reply.getMessage();
-            if(i<t_tmp){
+            if(i<t){
                 fakeLocalSumList[i]=reply.getFakeLocalSumList().stream().mapToInt(Integer::intValue).toArray();
             }
             i+=1;
@@ -179,8 +147,7 @@ public class Main {
 
     }
 
-    public static void federateRangeQuery(SQLExpression expression, Map<String,Map<String,String>> tableMap, Map<String, FederateDBClient> federateDBClients ){
-        ExecutorService executorService = Executors.newFixedThreadPool(federateDBClients.size());
+    public static void federateRangeQuery(SQLExpression expression){
         List<Callable<Boolean>> tasks = new ArrayList<Callable<Boolean>>();
         StreamingIterator<FederateService.SQLReplyList> iterator = new StreamingIterator<>(federateDBClients.size());
 
@@ -225,8 +192,62 @@ public class Main {
         }
 
     }
-    public static StreamingIterator<Double> federateKnnRadiusQuery(SQLExpression expression,Map<String,Map<String,String>> tableMap,Map<String,FederateDBClient> federateDBClients ){
-        ExecutorService executorService = Executors.newFixedThreadPool(federateDBClients.size());
+    public static void federatePrivacyRangeQuery(SQLExpression expression){
+        List<Callable<Boolean>> tasks = new ArrayList<Callable<Boolean>>();
+        StreamingIterator<Boolean> iterator = new StreamingIterator<>(federateDBClients.size());
+        String uuid = expression.getUuid();
+        for (Map.Entry<String,FederateDBClient> entry : federateDBClients.entrySet()) {
+            tasks.add(() -> {
+                try {
+                    FederateDBClient federateDBClient = entry.getValue();
+                    String endpoint= federateDBClient.getEndpoint();
+
+                    try{
+                        boolean  reply = federateDBClient.privacyRangeQuery(expression);
+                        System.out.println(endpoint+" 服务器返回信息：privacyRangeQuery "+ reply);
+                        iterator.add(reply);
+                    }catch (StatusRuntimeException e){
+                        System.out.println("RPC调用失败："+e.getMessage());
+                        return false;
+                    }
+
+                    return true;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return false;
+                } finally {
+                    iterator.finish();
+                }
+            });
+        }
+        try {
+            List<Future<Boolean>> statusList = executorService.invokeAll(tasks);
+            for (Future<Boolean> status : statusList) {
+                if (!status.get()) {
+                    LOGGER.error("error in fedSpatialPublicQuery");
+                }
+            }
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+
+
+
+        FederateService.UnionRequest.Builder unionRequest = FederateService.UnionRequest.newBuilder();
+        List<String> endpoints = new ArrayList<>(endpoint2Id.keySet());
+        String leader =endpoints.get(0);
+        unionRequest.setLoop(0).setIndex(-1).setUuid(uuid).addAllEndpoints(endpoints);
+
+        FederateDBClient leaderFederateDBClient =federateDBClients.get(leader);
+        leaderFederateDBClient.privacyUnion(unionRequest.build());
+
+        while(iterator.hasNext()){
+            System.out.println(iterator.next());
+        }
+
+    }
+    public static StreamingIterator<Double> federateKnnRadiusQuery(SQLExpression expression ){
+
         List<Callable<Boolean>> tasks = new ArrayList<Callable<Boolean>>();
         StreamingIterator<Double> iterator = new StreamingIterator<>(federateDBClients.size());
 
@@ -270,11 +291,20 @@ public class Main {
         return iterator;
 
     }
-    public static void main(String[] args) throws SQLException, IOException, ClassNotFoundException {
-        Map<String,FederateDBClient> federateDBClients = new TreeMap<>();
-        Map<String,Map<String,String>> tableMap = new HashMap<>();
+    public static Map<String,FederateDBClient> federateDBClients = new HashMap<>();
+    public static final Map<String,Map<String,String>> tableMap = new HashMap<>();
+    public static final ExecutorService executorService;
+    public static final List<Integer> idList;//secure sum id list
+    public static final Map<String,Integer> endpoint2Id= new HashMap<>();//secure sum id
+    public static final Integer t;//secure sum t
+    static {
         String modelFile= "model.json";
-        ModelConfig modelConfig = modelConfigInitialization(modelFile);
+        ModelConfig modelConfig = null;
+        try {
+            modelConfig = modelConfigInitialization(modelFile);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         ModelConfig.Schemas schema = modelConfig.getSchemas().get(0);
         List<ModelConfig.Tables>  tables = schema.getTables();
         for (ModelConfig.Tables table : tables) {
@@ -297,25 +327,37 @@ public class Main {
             }
             tableMap.put(federateTableName,oneTableMap);
         }
+        executorService= Executors.newFixedThreadPool(federateDBClients.size());
+        idList= new ArrayList<Integer>(){{for(int i=0;i<federateDBClients.size();i++){add(i+1);}}};
+        t=federateDBClients.size();
+        int i = 0;
+        for (String endpoint : federateDBClients.keySet()) {
+            endpoint2Id.put(endpoint,idList.get(i));//or put idList[i];
+            i+=1;
+        }
+    }
+    public static void main(String[] args) throws SQLException, IOException, ClassNotFoundException {
+
         try {
 
             String queryFile = "query.json";
-
-            // TODO 解析 query.json，获取原始 SQL
             List<SQLExpression> sqlExpressions = parseSQLExpression(queryFile);
 
             for (SQLExpression expression : sqlExpressions) {
                 System.out.printf("====================== NO.%d query statement =============================%n", sqlExpressions.indexOf(expression));
-                // TODO: query
+
                 if (expression.getFunction().equals("RangeCount")){
-                    int x= federateRangeCount(expression,tableMap,federateDBClients);
-                    System.out.println("count sum"+x);
+//                    int x= federateRangeCount(expression);
+//                    System.out.println("count sum "+x);
+
                 }
                 if(expression.getFunction().equals("RangeQuery")){
-                    federateRangeQuery(expression,tableMap,federateDBClients);
+                    federateRangeQuery(expression);
+                    break;//TODO test
+//                    federatePrivacyRangeQuery(expression.toBuilder().setUuid(UUID.randomUUID().toString()).build());
                 }
                 if(expression.getFunction().equals("Knn")){
-                    federateKnn(expression,tableMap,federateDBClients);
+                    federateKnn(expression);
                 }
 
                 System.out.println("===========================================================================");
@@ -325,41 +367,10 @@ public class Main {
 //
             LOGGER.error(buildErrorMessage(e));
         }
-//        Client client = new Client(8887,"127.0.0.1");
-//        try {
-//
-//            String queryFile = "query.json";
-//
-//            // TODO 解析 query.json，获取原始 SQL
-//            List<SQLExpression> sqlExpressions = parseSQLExpression(queryFile);
-//
-//            for (SQLExpression expression : sqlExpressions) {
-//                System.out.printf("====================== NO.%d query statement =============================%n", sqlExpressions.indexOf(expression));
-//                // TODO: query
-//                if (expression.getFunction().equals("RangeCount")){
-//                    client.rangeCount(expression);}
-//                if(expression.getFunction().equals("RangeQuery")){
-//                    client.rangeQuery(expression);}
-//                if(expression.getFunction().equals("Knn")){
-//                    federateKnn(expression,client);
-//                }
-//
-//                System.out.println("===========================================================================");
-//            }
-//
-//        } catch (Exception e) {
-////            e.printStackTrace();
-//            try {
-//                client.shutDown();
-//            } catch (InterruptedException ex) {
-//                ex.printStackTrace();
-//            }
-//            LOGGER.error(buildErrorMessage(e));
-//        }
     }
 
-    private static void federateKnn(SQLExpression expression, Map<String, Map<String, String>> tableMap, Map<String, FederateDBClient> federateDBClients) {
-        StreamingIterator<Double> radiusIterator=federateKnnRadiusQuery(expression,tableMap,federateDBClients);
+    private static void federateKnn(SQLExpression expression) {
+        StreamingIterator<Double> radiusIterator=federateKnnRadiusQuery(expression);
         double minRadius = Double.MAX_VALUE;
         while (radiusIterator.hasNext()){
             double r= radiusIterator.next();
@@ -374,20 +385,19 @@ public class Main {
             SQLExpression queryExpression = expression.toBuilder().setLiteral(threshold).build();
 
             int count =federateRangeCount(
-                    queryExpression,tableMap,federateDBClients
-            );
+                    queryExpression);
             //hufu有个        if (Math.abs(res.getKey() - k) < res.getValue()) { 提前终止，什么意思
             if (count > k) {
                 u = threshold;
             } else if (count < k) {
                 l = threshold;
             } else {
-                federateRangeQuery(expression.toBuilder().setLiteral(threshold).build(),tableMap,federateDBClients);
+                federateRangeQuery(expression.toBuilder().setLiteral(threshold).build());
                 return;
             }
         }
         System.out.println("out of loop! approximate query: ");
-        federateRangeQuery(expression.toBuilder().setLiteral(minRadius).build(),tableMap,federateDBClients);
+        federateRangeQuery(expression.toBuilder().setLiteral(minRadius).build());
         return;
     }
 

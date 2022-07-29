@@ -152,6 +152,37 @@ public final class FederateGrpc {
   }
 
   private static volatile io.grpc.MethodDescriptor<com.suda.federate.rpc.FederateService.SQLExpression,
+      com.suda.federate.rpc.FederateService.Status> getPrivacyRangeQueryMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "privacyRangeQuery",
+      requestType = com.suda.federate.rpc.FederateService.SQLExpression.class,
+      responseType = com.suda.federate.rpc.FederateService.Status.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<com.suda.federate.rpc.FederateService.SQLExpression,
+      com.suda.federate.rpc.FederateService.Status> getPrivacyRangeQueryMethod() {
+    io.grpc.MethodDescriptor<com.suda.federate.rpc.FederateService.SQLExpression, com.suda.federate.rpc.FederateService.Status> getPrivacyRangeQueryMethod;
+    if ((getPrivacyRangeQueryMethod = FederateGrpc.getPrivacyRangeQueryMethod) == null) {
+      synchronized (FederateGrpc.class) {
+        if ((getPrivacyRangeQueryMethod = FederateGrpc.getPrivacyRangeQueryMethod) == null) {
+          FederateGrpc.getPrivacyRangeQueryMethod = getPrivacyRangeQueryMethod =
+              io.grpc.MethodDescriptor.<com.suda.federate.rpc.FederateService.SQLExpression, com.suda.federate.rpc.FederateService.Status>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "privacyRangeQuery"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.suda.federate.rpc.FederateService.SQLExpression.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.suda.federate.rpc.FederateService.Status.getDefaultInstance()))
+              .setSchemaDescriptor(new FederateMethodDescriptorSupplier("privacyRangeQuery"))
+              .build();
+        }
+      }
+    }
+    return getPrivacyRangeQueryMethod;
+  }
+
+  private static volatile io.grpc.MethodDescriptor<com.suda.federate.rpc.FederateService.SQLExpression,
       com.suda.federate.rpc.FederateService.SQLReply> getKnnRadiusQueryMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
@@ -180,6 +211,37 @@ public final class FederateGrpc {
       }
     }
     return getKnnRadiusQueryMethod;
+  }
+
+  private static volatile io.grpc.MethodDescriptor<com.suda.federate.rpc.FederateService.UnionRequest,
+      com.suda.federate.rpc.FederateService.UnionResponse> getPrivacyUnionMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "privacyUnion",
+      requestType = com.suda.federate.rpc.FederateService.UnionRequest.class,
+      responseType = com.suda.federate.rpc.FederateService.UnionResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<com.suda.federate.rpc.FederateService.UnionRequest,
+      com.suda.federate.rpc.FederateService.UnionResponse> getPrivacyUnionMethod() {
+    io.grpc.MethodDescriptor<com.suda.federate.rpc.FederateService.UnionRequest, com.suda.federate.rpc.FederateService.UnionResponse> getPrivacyUnionMethod;
+    if ((getPrivacyUnionMethod = FederateGrpc.getPrivacyUnionMethod) == null) {
+      synchronized (FederateGrpc.class) {
+        if ((getPrivacyUnionMethod = FederateGrpc.getPrivacyUnionMethod) == null) {
+          FederateGrpc.getPrivacyUnionMethod = getPrivacyUnionMethod =
+              io.grpc.MethodDescriptor.<com.suda.federate.rpc.FederateService.UnionRequest, com.suda.federate.rpc.FederateService.UnionResponse>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "privacyUnion"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.suda.federate.rpc.FederateService.UnionRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.suda.federate.rpc.FederateService.UnionResponse.getDefaultInstance()))
+              .setSchemaDescriptor(new FederateMethodDescriptorSupplier("privacyUnion"))
+              .build();
+        }
+      }
+    }
+    return getPrivacyUnionMethod;
   }
 
   /**
@@ -263,9 +325,23 @@ public final class FederateGrpc {
 
     /**
      */
+    public void privacyRangeQuery(com.suda.federate.rpc.FederateService.SQLExpression request,
+        io.grpc.stub.StreamObserver<com.suda.federate.rpc.FederateService.Status> responseObserver) {
+      asyncUnimplementedUnaryCall(getPrivacyRangeQueryMethod(), responseObserver);
+    }
+
+    /**
+     */
     public void knnRadiusQuery(com.suda.federate.rpc.FederateService.SQLExpression request,
         io.grpc.stub.StreamObserver<com.suda.federate.rpc.FederateService.SQLReply> responseObserver) {
       asyncUnimplementedUnaryCall(getKnnRadiusQueryMethod(), responseObserver);
+    }
+
+    /**
+     */
+    public void privacyUnion(com.suda.federate.rpc.FederateService.UnionRequest request,
+        io.grpc.stub.StreamObserver<com.suda.federate.rpc.FederateService.UnionResponse> responseObserver) {
+      asyncUnimplementedUnaryCall(getPrivacyUnionMethod(), responseObserver);
     }
 
     @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
@@ -299,12 +375,26 @@ public final class FederateGrpc {
                 com.suda.federate.rpc.FederateService.SQLReplyList>(
                   this, METHODID_RANGE_QUERY)))
           .addMethod(
+            getPrivacyRangeQueryMethod(),
+            asyncUnaryCall(
+              new MethodHandlers<
+                com.suda.federate.rpc.FederateService.SQLExpression,
+                com.suda.federate.rpc.FederateService.Status>(
+                  this, METHODID_PRIVACY_RANGE_QUERY)))
+          .addMethod(
             getKnnRadiusQueryMethod(),
             asyncUnaryCall(
               new MethodHandlers<
                 com.suda.federate.rpc.FederateService.SQLExpression,
                 com.suda.federate.rpc.FederateService.SQLReply>(
                   this, METHODID_KNN_RADIUS_QUERY)))
+          .addMethod(
+            getPrivacyUnionMethod(),
+            asyncUnaryCall(
+              new MethodHandlers<
+                com.suda.federate.rpc.FederateService.UnionRequest,
+                com.suda.federate.rpc.FederateService.UnionResponse>(
+                  this, METHODID_PRIVACY_UNION)))
           .build();
     }
   }
@@ -360,10 +450,26 @@ public final class FederateGrpc {
 
     /**
      */
+    public void privacyRangeQuery(com.suda.federate.rpc.FederateService.SQLExpression request,
+        io.grpc.stub.StreamObserver<com.suda.federate.rpc.FederateService.Status> responseObserver) {
+      asyncUnaryCall(
+          getChannel().newCall(getPrivacyRangeQueryMethod(), getCallOptions()), request, responseObserver);
+    }
+
+    /**
+     */
     public void knnRadiusQuery(com.suda.federate.rpc.FederateService.SQLExpression request,
         io.grpc.stub.StreamObserver<com.suda.federate.rpc.FederateService.SQLReply> responseObserver) {
       asyncUnaryCall(
           getChannel().newCall(getKnnRadiusQueryMethod(), getCallOptions()), request, responseObserver);
+    }
+
+    /**
+     */
+    public void privacyUnion(com.suda.federate.rpc.FederateService.UnionRequest request,
+        io.grpc.stub.StreamObserver<com.suda.federate.rpc.FederateService.UnionResponse> responseObserver) {
+      asyncUnaryCall(
+          getChannel().newCall(getPrivacyUnionMethod(), getCallOptions()), request, responseObserver);
     }
   }
 
@@ -414,9 +520,23 @@ public final class FederateGrpc {
 
     /**
      */
+    public com.suda.federate.rpc.FederateService.Status privacyRangeQuery(com.suda.federate.rpc.FederateService.SQLExpression request) {
+      return blockingUnaryCall(
+          getChannel(), getPrivacyRangeQueryMethod(), getCallOptions(), request);
+    }
+
+    /**
+     */
     public com.suda.federate.rpc.FederateService.SQLReply knnRadiusQuery(com.suda.federate.rpc.FederateService.SQLExpression request) {
       return blockingUnaryCall(
           getChannel(), getKnnRadiusQueryMethod(), getCallOptions(), request);
+    }
+
+    /**
+     */
+    public com.suda.federate.rpc.FederateService.UnionResponse privacyUnion(com.suda.federate.rpc.FederateService.UnionRequest request) {
+      return blockingUnaryCall(
+          getChannel(), getPrivacyUnionMethod(), getCallOptions(), request);
     }
   }
 
@@ -471,10 +591,26 @@ public final class FederateGrpc {
 
     /**
      */
+    public com.google.common.util.concurrent.ListenableFuture<com.suda.federate.rpc.FederateService.Status> privacyRangeQuery(
+        com.suda.federate.rpc.FederateService.SQLExpression request) {
+      return futureUnaryCall(
+          getChannel().newCall(getPrivacyRangeQueryMethod(), getCallOptions()), request);
+    }
+
+    /**
+     */
     public com.google.common.util.concurrent.ListenableFuture<com.suda.federate.rpc.FederateService.SQLReply> knnRadiusQuery(
         com.suda.federate.rpc.FederateService.SQLExpression request) {
       return futureUnaryCall(
           getChannel().newCall(getKnnRadiusQueryMethod(), getCallOptions()), request);
+    }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture<com.suda.federate.rpc.FederateService.UnionResponse> privacyUnion(
+        com.suda.federate.rpc.FederateService.UnionRequest request) {
+      return futureUnaryCall(
+          getChannel().newCall(getPrivacyUnionMethod(), getCallOptions()), request);
     }
   }
 
@@ -482,7 +618,9 @@ public final class FederateGrpc {
   private static final int METHODID_GET_RESULT = 1;
   private static final int METHODID_RANGE_COUNT = 2;
   private static final int METHODID_RANGE_QUERY = 3;
-  private static final int METHODID_KNN_RADIUS_QUERY = 4;
+  private static final int METHODID_PRIVACY_RANGE_QUERY = 4;
+  private static final int METHODID_KNN_RADIUS_QUERY = 5;
+  private static final int METHODID_PRIVACY_UNION = 6;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -517,9 +655,17 @@ public final class FederateGrpc {
           serviceImpl.rangeQuery((com.suda.federate.rpc.FederateService.SQLExpression) request,
               (io.grpc.stub.StreamObserver<com.suda.federate.rpc.FederateService.SQLReplyList>) responseObserver);
           break;
+        case METHODID_PRIVACY_RANGE_QUERY:
+          serviceImpl.privacyRangeQuery((com.suda.federate.rpc.FederateService.SQLExpression) request,
+              (io.grpc.stub.StreamObserver<com.suda.federate.rpc.FederateService.Status>) responseObserver);
+          break;
         case METHODID_KNN_RADIUS_QUERY:
           serviceImpl.knnRadiusQuery((com.suda.federate.rpc.FederateService.SQLExpression) request,
               (io.grpc.stub.StreamObserver<com.suda.federate.rpc.FederateService.SQLReply>) responseObserver);
+          break;
+        case METHODID_PRIVACY_UNION:
+          serviceImpl.privacyUnion((com.suda.federate.rpc.FederateService.UnionRequest) request,
+              (io.grpc.stub.StreamObserver<com.suda.federate.rpc.FederateService.UnionResponse>) responseObserver);
           break;
         default:
           throw new AssertionError();
@@ -586,7 +732,9 @@ public final class FederateGrpc {
               .addMethod(getGetResultMethod())
               .addMethod(getRangeCountMethod())
               .addMethod(getRangeQueryMethod())
+              .addMethod(getPrivacyRangeQueryMethod())
               .addMethod(getKnnRadiusQueryMethod())
+              .addMethod(getPrivacyUnionMethod())
               .build();
         }
       }

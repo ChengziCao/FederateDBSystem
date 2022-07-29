@@ -21,6 +21,7 @@ message SQLExpression{
   optional int32 fetch = 4 [default = 0];
   repeated string order = 5;
   optional string groupby=6;
+  optional string uuid = 11;
 }
 //message Query {
 //  required string function = 1;//Range_count
@@ -40,7 +41,23 @@ service Federate {
   rpc GetResult (SQLExpression) returns (SQLReply) {}
   rpc RangeCount (SQLExpression) returns (SQLReply) {}
   rpc RangeQuery (SQLExpression) returns (SQLReplyList) {}
+  rpc privacyRangeQuery (SQLExpression) returns (Status) {}
   rpc KnnRadiusQuery (SQLExpression) returns (SQLReply) {}
+  rpc privacyUnion (UnionRequest) returns (UnionResponse){}
+}
+message UnionRequest{
+  repeated Point point=1;
+  required int32 loop=4;// loop=0,1 loop==1&& index==endpoints.length结束
+  required int32 index=2 [default=0];//记录loop的顺序,且 完成的设为 negative
+  repeated string endpoints=3;//RangeQuery时就把id发出去，endpoints[index]，各silo和master一样，也保存一份federateClientMap
+  required string uuid = 5;
+}
+message UnionResponse{
+  repeated Point point=1;
+  required int32 loop=4;// loop=0,1 loop==1&& index==endpoints.length结束
+  required int32 index=2 [default=0];//记录loop的顺序,且 完成的设为 negative
+  repeated string endpoints=3;//RangeQuery时就把id发出去，endpoints[index]，各silo和master一样，也保存一份federateClientMap
+  required string uuid = 5;
 }
 enum Code {
   kOk = 1;
