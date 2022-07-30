@@ -56,6 +56,7 @@ public final class FederateDBClient {//被edSpatialClient调用 List<String> end
     public FederateService.UnionResponse privacyUnion(FederateService.UnionRequest unionRequest){
         try {
             FederateService.UnionResponse unionResponse= blockingStub.privacyUnion(unionRequest);
+            return unionResponse;
         }catch (StatusRuntimeException e){
         System.out.println("RPC调用失败："+e.getMessage());
         }

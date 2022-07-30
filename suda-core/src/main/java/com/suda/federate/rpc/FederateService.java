@@ -2419,16 +2419,28 @@ public final class FederateService {
         getEndpointsBytes(int index);
 
     /**
+     * <pre>
+     *  required bool end=6;
+     * </pre>
+     *
      * <code>required string uuid = 5;</code>
      * @return Whether the uuid field is set.
      */
     boolean hasUuid();
     /**
+     * <pre>
+     *  required bool end=6;
+     * </pre>
+     *
      * <code>required string uuid = 5;</code>
      * @return The uuid.
      */
     java.lang.String getUuid();
     /**
+     * <pre>
+     *  required bool end=6;
+     * </pre>
+     *
      * <code>required string uuid = 5;</code>
      * @return The bytes for uuid.
      */
@@ -2705,6 +2717,10 @@ public final class FederateService {
     public static final int UUID_FIELD_NUMBER = 5;
     private volatile java.lang.Object uuid_;
     /**
+     * <pre>
+     *  required bool end=6;
+     * </pre>
+     *
      * <code>required string uuid = 5;</code>
      * @return Whether the uuid field is set.
      */
@@ -2713,6 +2729,10 @@ public final class FederateService {
       return ((bitField0_ & 0x00000004) != 0);
     }
     /**
+     * <pre>
+     *  required bool end=6;
+     * </pre>
+     *
      * <code>required string uuid = 5;</code>
      * @return The uuid.
      */
@@ -2732,6 +2752,10 @@ public final class FederateService {
       }
     }
     /**
+     * <pre>
+     *  required bool end=6;
+     * </pre>
+     *
      * <code>required string uuid = 5;</code>
      * @return The bytes for uuid.
      */
@@ -3733,6 +3757,10 @@ public final class FederateService {
 
       private java.lang.Object uuid_ = "";
       /**
+       * <pre>
+       *  required bool end=6;
+       * </pre>
+       *
        * <code>required string uuid = 5;</code>
        * @return Whether the uuid field is set.
        */
@@ -3740,6 +3768,10 @@ public final class FederateService {
         return ((bitField0_ & 0x00000010) != 0);
       }
       /**
+       * <pre>
+       *  required bool end=6;
+       * </pre>
+       *
        * <code>required string uuid = 5;</code>
        * @return The uuid.
        */
@@ -3758,6 +3790,10 @@ public final class FederateService {
         }
       }
       /**
+       * <pre>
+       *  required bool end=6;
+       * </pre>
+       *
        * <code>required string uuid = 5;</code>
        * @return The bytes for uuid.
        */
@@ -3775,6 +3811,10 @@ public final class FederateService {
         }
       }
       /**
+       * <pre>
+       *  required bool end=6;
+       * </pre>
+       *
        * <code>required string uuid = 5;</code>
        * @param value The uuid to set.
        * @return This builder for chaining.
@@ -3790,6 +3830,10 @@ public final class FederateService {
         return this;
       }
       /**
+       * <pre>
+       *  required bool end=6;
+       * </pre>
+       *
        * <code>required string uuid = 5;</code>
        * @return This builder for chaining.
        */
@@ -3800,6 +3844,10 @@ public final class FederateService {
         return this;
       }
       /**
+       * <pre>
+       *  required bool end=6;
+       * </pre>
+       *
        * <code>required string uuid = 5;</code>
        * @param value The bytes for uuid to set.
        * @return This builder for chaining.
@@ -3975,16 +4023,28 @@ public final class FederateService {
         getEndpointsBytes(int index);
 
     /**
+     * <pre>
+     *  required bool end=6;
+     * </pre>
+     *
      * <code>required string uuid = 5;</code>
      * @return Whether the uuid field is set.
      */
     boolean hasUuid();
     /**
+     * <pre>
+     *  required bool end=6;
+     * </pre>
+     *
      * <code>required string uuid = 5;</code>
      * @return The uuid.
      */
     java.lang.String getUuid();
     /**
+     * <pre>
+     *  required bool end=6;
+     * </pre>
+     *
      * <code>required string uuid = 5;</code>
      * @return The bytes for uuid.
      */
@@ -4261,6 +4321,10 @@ public final class FederateService {
     public static final int UUID_FIELD_NUMBER = 5;
     private volatile java.lang.Object uuid_;
     /**
+     * <pre>
+     *  required bool end=6;
+     * </pre>
+     *
      * <code>required string uuid = 5;</code>
      * @return Whether the uuid field is set.
      */
@@ -4269,6 +4333,10 @@ public final class FederateService {
       return ((bitField0_ & 0x00000004) != 0);
     }
     /**
+     * <pre>
+     *  required bool end=6;
+     * </pre>
+     *
      * <code>required string uuid = 5;</code>
      * @return The uuid.
      */
@@ -4288,6 +4356,10 @@ public final class FederateService {
       }
     }
     /**
+     * <pre>
+     *  required bool end=6;
+     * </pre>
+     *
      * <code>required string uuid = 5;</code>
      * @return The bytes for uuid.
      */
@@ -5289,6 +5361,10 @@ public final class FederateService {
 
       private java.lang.Object uuid_ = "";
       /**
+       * <pre>
+       *  required bool end=6;
+       * </pre>
+       *
        * <code>required string uuid = 5;</code>
        * @return Whether the uuid field is set.
        */
@@ -5296,6 +5372,10 @@ public final class FederateService {
         return ((bitField0_ & 0x00000010) != 0);
       }
       /**
+       * <pre>
+       *  required bool end=6;
+       * </pre>
+       *
        * <code>required string uuid = 5;</code>
        * @return The uuid.
        */
@@ -5314,6 +5394,10 @@ public final class FederateService {
         }
       }
       /**
+       * <pre>
+       *  required bool end=6;
+       * </pre>
+       *
        * <code>required string uuid = 5;</code>
        * @return The bytes for uuid.
        */
@@ -5331,6 +5415,10 @@ public final class FederateService {
         }
       }
       /**
+       * <pre>
+       *  required bool end=6;
+       * </pre>
+       *
        * <code>required string uuid = 5;</code>
        * @param value The uuid to set.
        * @return This builder for chaining.
@@ -5346,6 +5434,10 @@ public final class FederateService {
         return this;
       }
       /**
+       * <pre>
+       *  required bool end=6;
+       * </pre>
+       *
        * <code>required string uuid = 5;</code>
        * @return This builder for chaining.
        */
@@ -5356,6 +5448,10 @@ public final class FederateService {
         return this;
       }
       /**
+       * <pre>
+       *  required bool end=6;
+       * </pre>
+       *
        * <code>required string uuid = 5;</code>
        * @param value The bytes for uuid to set.
        * @return This builder for chaining.

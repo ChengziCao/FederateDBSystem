@@ -5,6 +5,7 @@ import com.suda.federate.config.FedSpatialConfig;
 import com.suda.federate.rpc.FederateGrpc;
 import com.suda.federate.security.dp.Laplace;
 import com.suda.federate.utils.ConcurrentBuffer;
+import io.grpc.ManagedChannelBuilder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -20,7 +21,7 @@ public abstract class FederateDBService extends FederateGrpc.FederateImplBase {
     public int THREAD_POOL_SIZE = 0;
     public ExecutorService executorService = null;
     public Laplace lp = null;
-    protected ConcurrentBuffer buffer;
+    public ConcurrentBuffer buffer = new ConcurrentBuffer();;
 
     public void initClients(List<String> endpoints) {
         endpoints = endpoints;
@@ -28,16 +29,20 @@ public abstract class FederateDBService extends FederateGrpc.FederateImplBase {
         for (String endpoint : endpoints) {
             federateClientMap.put(endpoint, new FederateDBClient(endpoint));
         }
-        buffer = new ConcurrentBuffer();
         THREAD_POOL_SIZE = endpoints.size();
         executorService = Executors.newFixedThreadPool(THREAD_POOL_SIZE);
         lp = new Laplace(FedSpatialConfig.EPS_DP, FedSpatialConfig.SD_DP);
     }
-    public FederateDBClient getClient(String endpoint){
+    public FederateDBClient getClient(String endpoint,boolean used){//没啥用
         if (federateClientMap.containsKey(endpoint)){
             return federateClientMap.get(endpoint);
         }
         return null;
+    }
+
+    public FederateDBClient getClient(String endpoint) {
+        return new FederateDBClient(endpoint);
+
     }
     public FederateDBClient getClient(Integer endpointId){
         String endpoint = endpoints.get(endpointId);
@@ -46,6 +51,5 @@ public abstract class FederateDBService extends FederateGrpc.FederateImplBase {
         }
         return null;
     }
-//    public abstract Integer getUnionInfo(FederateService.SQLReply reply);
 
 }

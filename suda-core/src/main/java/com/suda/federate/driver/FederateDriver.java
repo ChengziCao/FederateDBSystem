@@ -30,7 +30,7 @@ public abstract class FederateDriver {
      *
      * @param sql         sql for execution
      * @param resultClass
-     * @param ListFlag    无实际作用，占位，重载
+     * @param listFlag    无实际作用，占位，重载
      * @return resultClass
      */
     public abstract <T> T executeSql(String sql, Class<T> resultClass, Boolean listFlag) throws SQLException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException;

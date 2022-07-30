@@ -3,6 +3,7 @@ package com.suda.federate.security.sha;
 import com.suda.federate.config.FedSpatialConfig;
 import com.suda.federate.rpc.FederateCommon;
 import com.suda.federate.security.dp.Laplace;
+import org.apache.commons.lang3.tuple.Pair;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -16,8 +17,8 @@ public class SecretUnion {
 
 
 
-    public static Set<FederateCommon.Point> randomShares(int[] IDLst, int num, HashMap<Integer, SiloCache> silos) {
-        Set<FederateCommon.Point> unionResult = new HashSet<>();
+    public static Set<Pair<Double,Double>> randomShares(int[] IDLst, int num, HashMap<Integer, SiloCache> silos) {
+        Set<Pair<Double,Double>> unionResult = new HashSet<>();
         for (int id : IDLst) {//loop 1
             unionResult.addAll(silos.get(id).getObfSet());//加入 fake random Set<FederateCommon.Point>
             if (id % num == 0) {
@@ -33,8 +34,8 @@ public class SecretUnion {
 
     }
 
-    public static Set<FederateCommon.Point> plaintextUnion(HashMap<Integer, SiloCache> silos) {
-        Set<FederateCommon.Point> unionResult = new HashSet<>();
+    public static Set<Pair<Double,Double>> plaintextUnion(HashMap<Integer, SiloCache> silos) {
+        Set<Pair<Double,Double>> unionResult = new HashSet<>();
         for (int k : silos.keySet()) {
             unionResult.addAll(silos.get(k).getLocalSet());
         }

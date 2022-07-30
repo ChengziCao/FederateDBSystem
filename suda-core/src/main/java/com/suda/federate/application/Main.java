@@ -187,9 +187,14 @@ public class Main {
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
+        List<String> result = new ArrayList<>();
         while(iterator.hasNext()){
-            System.out.println(iterator.next());
+            result.addAll(iterator.next().getMessageList());
         }
+        for(String r : result){
+            System.out.println(r);
+        }
+        System.out.println("public range query count:"+ result.size());
 
     }
     public static void federatePrivacyRangeQuery(SQLExpression expression){
@@ -235,15 +240,15 @@ public class Main {
 
         FederateService.UnionRequest.Builder unionRequest = FederateService.UnionRequest.newBuilder();
         List<String> endpoints = new ArrayList<>(endpoint2Id.keySet());
-        String leader =endpoints.get(0);
-        unionRequest.setLoop(0).setIndex(-1).setUuid(uuid).addAllEndpoints(endpoints);
+        int index=-1;//TODO hardcode
+        String leader =endpoints.get(index+1);
+        unionRequest.setLoop(1).setIndex(index).setUuid(uuid).addAllEndpoints(endpoints);
 
         FederateDBClient leaderFederateDBClient =federateDBClients.get(leader);
-        leaderFederateDBClient.privacyUnion(unionRequest.build());
+        FederateService.UnionResponse unionResponse=leaderFederateDBClient.privacyUnion(unionRequest.build());
 
-        while(iterator.hasNext()){
-            System.out.println(iterator.next());
-        }
+        System.out.println(unionResponse.getPointList());
+        System.out.println(unionResponse.getPointCount());
 
     }
     public static StreamingIterator<Double> federateKnnRadiusQuery(SQLExpression expression ){
@@ -353,8 +358,9 @@ public class Main {
                 }
                 if(expression.getFunction().equals("RangeQuery")){
                     federateRangeQuery(expression);
-                    break;//TODO test
-//                    federatePrivacyRangeQuery(expression.toBuilder().setUuid(UUID.randomUUID().toString()).build());
+                     //TODO test
+                    federatePrivacyRangeQuery(expression.toBuilder().setUuid(UUID.randomUUID().toString()).build());
+                    break;
                 }
                 if(expression.getFunction().equals("Knn")){
                     federateKnn(expression);

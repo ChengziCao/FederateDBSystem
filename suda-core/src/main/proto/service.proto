@@ -51,6 +51,7 @@ message UnionRequest{
   required int32 index=2 [default=0];//记录loop的顺序,且 完成的设为 negative
   repeated string endpoints=3;//RangeQuery时就把id发出去，endpoints[index]，各silo和master一样，也保存一份federateClientMap
   required string uuid = 5;
+//  required bool end=6;
 }
 message UnionResponse{
   repeated Point point=1;
@@ -58,6 +59,7 @@ message UnionResponse{
   required int32 index=2 [default=0];//记录loop的顺序,且 完成的设为 negative
   repeated string endpoints=3;//RangeQuery时就把id发出去，endpoints[index]，各silo和master一样，也保存一份federateClientMap
   required string uuid = 5;
+//  required bool end=6;
 }
 enum Code {
   kOk = 1;
