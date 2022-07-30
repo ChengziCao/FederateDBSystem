@@ -244,6 +244,37 @@ public final class FederateGrpc {
     return getPrivacyUnionMethod;
   }
 
+  private static volatile io.grpc.MethodDescriptor<com.suda.federate.rpc.FederateService.UnionRequest,
+      com.suda.federate.rpc.FederateService.UnionResponse> getLocalUnionMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "localUnion",
+      requestType = com.suda.federate.rpc.FederateService.UnionRequest.class,
+      responseType = com.suda.federate.rpc.FederateService.UnionResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<com.suda.federate.rpc.FederateService.UnionRequest,
+      com.suda.federate.rpc.FederateService.UnionResponse> getLocalUnionMethod() {
+    io.grpc.MethodDescriptor<com.suda.federate.rpc.FederateService.UnionRequest, com.suda.federate.rpc.FederateService.UnionResponse> getLocalUnionMethod;
+    if ((getLocalUnionMethod = FederateGrpc.getLocalUnionMethod) == null) {
+      synchronized (FederateGrpc.class) {
+        if ((getLocalUnionMethod = FederateGrpc.getLocalUnionMethod) == null) {
+          FederateGrpc.getLocalUnionMethod = getLocalUnionMethod =
+              io.grpc.MethodDescriptor.<com.suda.federate.rpc.FederateService.UnionRequest, com.suda.federate.rpc.FederateService.UnionResponse>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "localUnion"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.suda.federate.rpc.FederateService.UnionRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.suda.federate.rpc.FederateService.UnionResponse.getDefaultInstance()))
+              .setSchemaDescriptor(new FederateMethodDescriptorSupplier("localUnion"))
+              .build();
+        }
+      }
+    }
+    return getLocalUnionMethod;
+  }
+
   /**
    * Creates a new async stub that supports all call types for the service
    */
@@ -344,6 +375,13 @@ public final class FederateGrpc {
       asyncUnimplementedUnaryCall(getPrivacyUnionMethod(), responseObserver);
     }
 
+    /**
+     */
+    public void localUnion(com.suda.federate.rpc.FederateService.UnionRequest request,
+        io.grpc.stub.StreamObserver<com.suda.federate.rpc.FederateService.UnionResponse> responseObserver) {
+      asyncUnimplementedUnaryCall(getLocalUnionMethod(), responseObserver);
+    }
+
     @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
       return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
           .addMethod(
@@ -395,6 +433,13 @@ public final class FederateGrpc {
                 com.suda.federate.rpc.FederateService.UnionRequest,
                 com.suda.federate.rpc.FederateService.UnionResponse>(
                   this, METHODID_PRIVACY_UNION)))
+          .addMethod(
+            getLocalUnionMethod(),
+            asyncUnaryCall(
+              new MethodHandlers<
+                com.suda.federate.rpc.FederateService.UnionRequest,
+                com.suda.federate.rpc.FederateService.UnionResponse>(
+                  this, METHODID_LOCAL_UNION)))
           .build();
     }
   }
@@ -471,6 +516,14 @@ public final class FederateGrpc {
       asyncUnaryCall(
           getChannel().newCall(getPrivacyUnionMethod(), getCallOptions()), request, responseObserver);
     }
+
+    /**
+     */
+    public void localUnion(com.suda.federate.rpc.FederateService.UnionRequest request,
+        io.grpc.stub.StreamObserver<com.suda.federate.rpc.FederateService.UnionResponse> responseObserver) {
+      asyncUnaryCall(
+          getChannel().newCall(getLocalUnionMethod(), getCallOptions()), request, responseObserver);
+    }
   }
 
   /**
@@ -537,6 +590,13 @@ public final class FederateGrpc {
     public com.suda.federate.rpc.FederateService.UnionResponse privacyUnion(com.suda.federate.rpc.FederateService.UnionRequest request) {
       return blockingUnaryCall(
           getChannel(), getPrivacyUnionMethod(), getCallOptions(), request);
+    }
+
+    /**
+     */
+    public com.suda.federate.rpc.FederateService.UnionResponse localUnion(com.suda.federate.rpc.FederateService.UnionRequest request) {
+      return blockingUnaryCall(
+          getChannel(), getLocalUnionMethod(), getCallOptions(), request);
     }
   }
 
@@ -612,6 +672,14 @@ public final class FederateGrpc {
       return futureUnaryCall(
           getChannel().newCall(getPrivacyUnionMethod(), getCallOptions()), request);
     }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture<com.suda.federate.rpc.FederateService.UnionResponse> localUnion(
+        com.suda.federate.rpc.FederateService.UnionRequest request) {
+      return futureUnaryCall(
+          getChannel().newCall(getLocalUnionMethod(), getCallOptions()), request);
+    }
   }
 
   private static final int METHODID_ADD_CLIENT = 0;
@@ -621,6 +689,7 @@ public final class FederateGrpc {
   private static final int METHODID_PRIVACY_RANGE_QUERY = 4;
   private static final int METHODID_KNN_RADIUS_QUERY = 5;
   private static final int METHODID_PRIVACY_UNION = 6;
+  private static final int METHODID_LOCAL_UNION = 7;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -665,6 +734,10 @@ public final class FederateGrpc {
           break;
         case METHODID_PRIVACY_UNION:
           serviceImpl.privacyUnion((com.suda.federate.rpc.FederateService.UnionRequest) request,
+              (io.grpc.stub.StreamObserver<com.suda.federate.rpc.FederateService.UnionResponse>) responseObserver);
+          break;
+        case METHODID_LOCAL_UNION:
+          serviceImpl.localUnion((com.suda.federate.rpc.FederateService.UnionRequest) request,
               (io.grpc.stub.StreamObserver<com.suda.federate.rpc.FederateService.UnionResponse>) responseObserver);
           break;
         default:
@@ -735,6 +808,7 @@ public final class FederateGrpc {
               .addMethod(getPrivacyRangeQueryMethod())
               .addMethod(getKnnRadiusQueryMethod())
               .addMethod(getPrivacyUnionMethod())
+              .addMethod(getLocalUnionMethod())
               .build();
         }
       }

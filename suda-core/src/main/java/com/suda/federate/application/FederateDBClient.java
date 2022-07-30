@@ -62,6 +62,15 @@ public final class FederateDBClient {//被edSpatialClient调用 List<String> end
         }
         return null;
     }
+    public FederateService.UnionResponse localUnion(FederateService.UnionRequest unionRequest){
+        try {
+            FederateService.UnionResponse unionResponse= blockingStub.localUnion(unionRequest);
+            return unionResponse;
+        }catch (StatusRuntimeException e){
+            System.out.println("RPC调用失败："+e.getMessage());
+        }
+        return null;
+    }
     public boolean privacyRangeQuery(FederateService.SQLExpression expression){
         try {
             FederateService.Status status= blockingStub.privacyRangeQuery(expression);

@@ -44,6 +44,7 @@ service Federate {
   rpc privacyRangeQuery (SQLExpression) returns (Status) {}
   rpc KnnRadiusQuery (SQLExpression) returns (SQLReply) {}
   rpc privacyUnion (UnionRequest) returns (UnionResponse){}
+  rpc localUnion (UnionRequest) returns (UnionResponse){}
 }
 message UnionRequest{
   repeated Point point=1;

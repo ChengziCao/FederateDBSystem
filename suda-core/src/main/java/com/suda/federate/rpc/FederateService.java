@@ -9547,7 +9547,7 @@ public final class FederateService {
       "\n\010SQLReply\022\024\n\014fakeLocalSum\030\002 \003(\005\022\017\n\007mess" +
       "age\030\001 \002(\001\"\037\n\014SQLReplyList\022\017\n\007message\030\001 \003" +
       "(\t*9\n\004Code\022\007\n\003kOk\020\001\022\024\n\020kAddClientFailed\020" +
-      "\002\022\022\n\016kCacheNotExist\020\0032\316\003\n\010Federate\022B\n\tAd" +
+      "\002\022\022\n\016kCacheNotExist\020\0032\217\004\n\010Federate\022B\n\tAd" +
       "dClient\022\032.federate.AddClientRequest\032\031.fe" +
       "derate.GeneralResponse\022:\n\tGetResult\022\027.fe" +
       "derate.SQLExpression\032\022.federate.SQLReply" +
@@ -9559,8 +9559,9 @@ public final class FederateService {
       "nRadiusQuery\022\027.federate.SQLExpression\032\022." +
       "federate.SQLReply\"\000\022A\n\014privacyUnion\022\026.fe" +
       "derate.UnionRequest\032\027.federate.UnionResp" +
-      "onse\"\000B*\n\025com.suda.federate.rpcB\017Federat" +
-      "eServiceP\000"
+      "onse\"\000\022?\n\nlocalUnion\022\026.federate.UnionReq" +
+      "uest\032\027.federate.UnionResponse\"\000B*\n\025com.s" +
+      "uda.federate.rpcB\017FederateServiceP\000"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
