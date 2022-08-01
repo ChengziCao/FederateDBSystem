@@ -4,7 +4,6 @@ package com.suda.federate;
 import com.suda.federate.application.FederateDBClient;
 import com.suda.federate.config.DbConfig;
 import com.suda.federate.rpc.FederateCommon;
-import com.suda.federate.rpc.FederateGrpc;
 import com.suda.federate.rpc.FederateService;
 import com.suda.federate.security.sha.SiloCache;
 import com.suda.federate.silo.FederateDBServer;
@@ -20,13 +19,14 @@ import org.apache.logging.log4j.LogManager;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
-import java.util.stream.Collectors;
 
-import static com.suda.federate.security.sha.SecretSum.localClient;
 import static com.suda.federate.security.sha.SecretSum.setSummation;
 
 public class MysqlServer extends FederateDBServer {
@@ -69,110 +69,110 @@ public class MysqlServer extends FederateDBServer {
             }
         }
 
-
-        public void privacyUnion2(FederateService.UnionRequest request, StreamObserver<FederateService.UnionResponse> responseObserver) {
-            Integer currIndex = request.getIndex();
-            Integer currLoop = request.getLoop();
-            if (federateClientMap == null || federateClientMap.isEmpty()) {
-                initClients(request.getEndpointsList());//索引endpoint都初始化，一劳永逸（如果loop顺序不变，建议只初始化nextnexFederateDBClient）
-            }
-            List<Callable<FederateService.UnionResponse>> task1 = new ArrayList<>();
-
-
-            if (currIndex ==0 && currLoop==0) {//第一次循环开始
-                isLeader = true;
-            }
-
-            int nextIndexOfEndPoint = currIndex+1;
-            int newLoop=currLoop;
-            if (nextIndexOfEndPoint == request.getEndpointsCount()){
-                nextIndexOfEndPoint=0;//再来一圈
-                newLoop=currLoop+1;
-            }
-
-            int finalNextIndexOfEndPoint = nextIndexOfEndPoint;
-            int finalNewLoop = newLoop;
-            if (finalNewLoop==2 && finalNextIndexOfEndPoint == 1){
-                SiloCache siloCache = (SiloCache) buffer.get(request.getUuid());
-                List<FederateCommon.Point> points = request.getPointList();
-                Set<Pair<Double,Double>> resPairs = new TreeSet<Pair<Double, Double>>();
-                for (FederateCommon.Point point : points) {
-                    resPairs.add(Pair.of(point.getLongitude(),point.getLatitude()));
-                }
-                resPairs.removeAll(siloCache.getObfSet());
-                resPairs.addAll(siloCache.getLocalSet());
-                List<FederateCommon.Point> points2= new ArrayList<>();
-                for (Pair<Double, Double> point : resPairs) {
-                    points2.add(FederateCommon.Point.newBuilder().setLongitude(point.getLeft()).setLatitude(point.getRight()).build());
-                }
-                FederateService.UnionResponse finalResult = FederateService.UnionResponse.newBuilder()
-                        .setLoop(finalNewLoop)
-                        .setIndex(finalNextIndexOfEndPoint)
-                        .addAllEndpoints(request.getEndpointsList())
-                        .setUuid(request.getUuid())
-                        .addAllPoint(points2)
-                        .build();
-                responseObserver.onNext(finalResult);
-                responseObserver.onCompleted();
-                System.out.println(isLeader);
-                System.out.println("Send final res "+finalResult);
-                System.out.println("Send final res size"+finalResult.getPointCount());
-                return;//return 是灵魂
-            }else{
-            task1.add(() -> {
-                String nextEndpoint = request.getEndpoints(finalNextIndexOfEndPoint);
-                FederateDBClient nextFederateDBClient = getClient(nextEndpoint);
-                SiloCache siloCache = (SiloCache) buffer.get(request.getUuid());
-                FederateService.UnionRequest.Builder nexRequest = request.toBuilder()
-                        .setLoop(finalNewLoop);
-                if (finalNewLoop == 0 || (finalNewLoop == 1 && finalNextIndexOfEndPoint==0)) {
-                    System.out.printf("loop 1, add random %d,%d",finalNewLoop,finalNextIndexOfEndPoint);
-                    Set<Pair<Double,Double>> pairs = siloCache.getObfSet();
-                    List<FederateCommon.Point> points= new ArrayList<>();
-                    for (Pair<Double, Double> point : pairs) {
-                        points.add(FederateCommon.Point.newBuilder().setLongitude(point.getLeft())
-                                .setLatitude(point.getRight()).build());
-                    }
-                    nexRequest.setIndex(finalNextIndexOfEndPoint)
-                            .addAllPoint(points);
-
-                } else if(finalNewLoop==1 || (finalNewLoop==2 && finalNextIndexOfEndPoint==0)){
-                    System.out.printf("loop 2, remove random %d,%d",finalNewLoop,finalNextIndexOfEndPoint);
-                    List<FederateCommon.Point> points = request.getPointList();
-                    //FIXME list.removeAll(Set) UnsupportedOperationException
-                    Set<Pair<Double,Double>> resPairs = new TreeSet<Pair<Double, Double>>();
-                    for (FederateCommon.Point point : points) {
-                        resPairs.add(Pair.of(point.getLongitude(),point.getLatitude()));
-                    }
-                    resPairs.removeAll(siloCache.getObfSet());
-                    resPairs.addAll(siloCache.getLocalSet());
-                    List<FederateCommon.Point> points2= new ArrayList<>();
-                    for (Pair<Double, Double> point : resPairs) {
-                        points2.add(FederateCommon.Point.newBuilder()
-                                .setLongitude(point.getLeft()).setLatitude(point.getRight()).build());
-                    }
-                    nexRequest.setIndex(finalNextIndexOfEndPoint)
-                            .addAllPoint(points2);
-                }
-                FederateService.UnionResponse unionResponse = nextFederateDBClient.privacyUnion(nexRequest.build());
-                return unionResponse;
-            });
-            FederateService.UnionResponse recUnionResponse = null;
-            try {
-                List<Future<FederateService.UnionResponse>> alphaList = executorService.invokeAll(task1);
-                for (Future<FederateService.UnionResponse> falpha : alphaList) {
-                    recUnionResponse = falpha.get();
-                    System.out.println("task res "+recUnionResponse);
-                }
-            } catch (InterruptedException | ExecutionException e) {
-                e.printStackTrace();
-            }
-            assert recUnionResponse != null;
-            responseObserver.onNext(recUnionResponse);
-            responseObserver.onCompleted();}
-
-
-        }
+//
+//        public void privacyUnion2(FederateService.UnionRequest request, StreamObserver<FederateService.UnionResponse> responseObserver) {
+//            Integer currIndex = request.getIndex();
+//            Integer currLoop = request.getLoop();
+//            if (federateClientMap == null || federateClientMap.isEmpty()) {
+//                initClients(request.getEndpointsList());//索引endpoint都初始化，一劳永逸（如果loop顺序不变，建议只初始化nextnexFederateDBClient）
+//            }
+//            List<Callable<FederateService.UnionResponse>> task1 = new ArrayList<>();
+//
+//
+//            if (currIndex ==0 && currLoop==0) {//第一次循环开始
+//                isLeader = true;
+//            }
+//
+//            int nextIndexOfEndPoint = currIndex+1;
+//            int newLoop=currLoop;
+//            if (nextIndexOfEndPoint == request.getEndpointsCount()){
+//                nextIndexOfEndPoint=0;//再来一圈
+//                newLoop=currLoop+1;
+//            }
+//
+//            int finalNextIndexOfEndPoint = nextIndexOfEndPoint;
+//            int finalNewLoop = newLoop;
+//            if (finalNewLoop==2 && finalNextIndexOfEndPoint == 1){
+//                SiloCache siloCache = (SiloCache) buffer.get(request.getUuid());
+//                List<FederateCommon.Point> points = request.getPointList();
+//                Set<Pair<Double,Double>> resPairs = new TreeSet<Pair<Double, Double>>();
+//                for (FederateCommon.Point point : points) {
+//                    resPairs.add(Pair.of(point.getLongitude(),point.getLatitude()));
+//                }
+//                resPairs.removeAll(siloCache.getObfSet());
+//                resPairs.addAll(siloCache.getLocalSet());
+//                List<FederateCommon.Point> points2= new ArrayList<>();
+//                for (Pair<Double, Double> point : resPairs) {
+//                    points2.add(FederateCommon.Point.newBuilder().setLongitude(point.getLeft()).setLatitude(point.getRight()).build());
+//                }
+//                FederateService.UnionResponse finalResult = FederateService.UnionResponse.newBuilder()
+//                        .setLoop(finalNewLoop)
+//                        .setIndex(finalNextIndexOfEndPoint)
+//                        .addAllEndpoints(request.getEndpointsList())
+//                        .setUuid(request.getUuid())
+//                        .addAllPoint(points2)
+//                        .build();
+//                responseObserver.onNext(finalResult);
+//                responseObserver.onCompleted();
+//                System.out.println(isLeader);
+//                System.out.println("Send final res "+finalResult);
+//                System.out.println("Send final res size"+finalResult.getPointCount());
+//                return;//return 是灵魂
+//            }else{
+//            task1.add(() -> {
+//                String nextEndpoint = request.getEndpoints(finalNextIndexOfEndPoint);
+//                FederateDBClient nextFederateDBClient = getClient(nextEndpoint);
+//                SiloCache siloCache = (SiloCache) buffer.get(request.getUuid());
+//                FederateService.UnionRequest.Builder nexRequest = request.toBuilder()
+//                        .setLoop(finalNewLoop);
+//                if (finalNewLoop == 0 || (finalNewLoop == 1 && finalNextIndexOfEndPoint==0)) {
+//                    System.out.printf("loop 1, add random %d,%d",finalNewLoop,finalNextIndexOfEndPoint);
+//                    Set<Pair<Double,Double>> pairs = siloCache.getObfSet();
+//                    List<FederateCommon.Point> points= new ArrayList<>();
+//                    for (Pair<Double, Double> point : pairs) {
+//                        points.add(FederateCommon.Point.newBuilder().setLongitude(point.getLeft())
+//                                .setLatitude(point.getRight()).build());
+//                    }
+//                    nexRequest.setIndex(finalNextIndexOfEndPoint)
+//                            .addAllPoint(points);
+//
+//                } else if(finalNewLoop==1 || (finalNewLoop==2 && finalNextIndexOfEndPoint==0)){
+//                    System.out.printf("loop 2, remove random %d,%d",finalNewLoop,finalNextIndexOfEndPoint);
+//                    List<FederateCommon.Point> points = request.getPointList();
+//                    //FIXME list.removeAll(Set) UnsupportedOperationException
+//                    Set<Pair<Double,Double>> resPairs = new TreeSet<Pair<Double, Double>>();
+//                    for (FederateCommon.Point point : points) {
+//                        resPairs.add(Pair.of(point.getLongitude(),point.getLatitude()));
+//                    }
+//                    resPairs.removeAll(siloCache.getObfSet());
+//                    resPairs.addAll(siloCache.getLocalSet());
+//                    List<FederateCommon.Point> points2= new ArrayList<>();
+//                    for (Pair<Double, Double> point : resPairs) {
+//                        points2.add(FederateCommon.Point.newBuilder()
+//                                .setLongitude(point.getLeft()).setLatitude(point.getRight()).build());
+//                    }
+//                    nexRequest.setIndex(finalNextIndexOfEndPoint)
+//                            .addAllPoint(points2);
+//                }
+//                FederateService.UnionResponse unionResponse = nextFederateDBClient.privacyUnion(nexRequest.build());
+//                return unionResponse;
+//            });
+//            FederateService.UnionResponse recUnionResponse = null;
+//            try {
+//                List<Future<FederateService.UnionResponse>> alphaList = executorService.invokeAll(task1);
+//                for (Future<FederateService.UnionResponse> falpha : alphaList) {
+//                    recUnionResponse = falpha.get();
+//                    System.out.println("task res "+recUnionResponse);
+//                }
+//            } catch (InterruptedException | ExecutionException e) {
+//                e.printStackTrace();
+//            }
+//            assert recUnionResponse != null;
+//            responseObserver.onNext(recUnionResponse);
+//            responseObserver.onCompleted();}
+//
+//
+//        }
 
 
         @Override
@@ -200,7 +200,7 @@ public class MysqlServer extends FederateDBServer {
             System.out.println("收到的信息：" + request.getFunction());
             FederateService.SQLReplyList.Builder replyList = null;
             try {
-                List<String> res =localRangeQuery(request.getPoint(), request.getLiteral(),String.class);
+                List<FederateCommon.Point> res =localRangeQuery(request.getPoint(), request.getLiteral(),FederateCommon.Point.class);
                 replyList = FederateService.SQLReplyList.newBuilder()
                         .addAllMessage(res);
             } catch (Exception e) {
@@ -289,7 +289,7 @@ public class MysqlServer extends FederateDBServer {
         }
 
 
-        public void localQuery(FederateService.SQLExpression expression) throws Exception {
+//        public void localQuery(FederateService.SQLExpression expression) throws Exception {
 //        if (expression.getFunction() == ENUM.FUNCTION.RANGE_COUNT.name()) {
 //            FD_RangeCount rangeCounting = new FD_RangeCount(expression);
 //            Integer result = localRangeCount(rangeCounting.point, rangeCounting.radius);
@@ -306,7 +306,7 @@ public class MysqlServer extends FederateDBServer {
 //        } else {
 //            throw new Exception("type not support.");
 //        }
-        }
+//        }
 
         public <T> List<T> executeSql(String sql, Class<T> resultClass) throws SQLException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
             Statement stmt = conn.createStatement();

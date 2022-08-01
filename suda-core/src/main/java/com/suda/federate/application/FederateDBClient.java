@@ -12,7 +12,7 @@ public final class FederateDBClient {//被edSpatialClient调用 List<String> end
     private static final Logger LOG = LogManager.getLogger(FederateDBClient.class);
 
     private final FederateGrpc.FederateBlockingStub blockingStub; //非阻塞 AbstractBlockingStub
-    private final FederateGrpc.FederateStub asyncStub; // extends AbstractAsyncStub 没用到？
+//    private final FederateGrpc.FederateStub asyncStub; // extends AbstractAsyncStub 没用到？
     private String endpoint;
 
     public FederateDBClient(String host, int port) {
@@ -31,7 +31,7 @@ public final class FederateDBClient {//被edSpatialClient调用 List<String> end
 
     public FederateDBClient(Channel channel) {
         blockingStub = FederateGrpc.newBlockingStub(channel);
-        asyncStub = FederateGrpc.newStub(channel);
+//        asyncStub = FederateGrpc.newStub(channel);
     }
     public void FederateRangeCount(){
         try {
@@ -110,23 +110,23 @@ public final class FederateDBClient {//被edSpatialClient调用 List<String> end
         return endpoint;
     }
 
-    public boolean addClient(String endpoint) {
-        FederateService.AddClientRequest request = FederateService.AddClientRequest.newBuilder().setEndpoint(endpoint).build();
-        FederateService.GeneralResponse response;
-        try {
-            response = blockingStub.addClient(request);
-        } catch (StatusRuntimeException e) {
-            LOG.error("RPC failed in add client: {}", e.getStatus());
-            return false;
-        }
-        if (response.getStatus().getCode() != FederateService.Code.kOk) {
-            LOG.error("add client {} failed", endpoint);
-            return false;
-        } else {
-            LOG.debug("add client {} ok", endpoint);
-            return true;
-        }
-    }
+//    public boolean addClient(String endpoint) {
+//        FederateService.AddClientRequest request = FederateService.AddClientRequest.newBuilder().setEndpoint(endpoint).build();
+//        FederateService.GeneralResponse response;
+//        try {
+//            response = blockingStub.addClient(request);
+//        } catch (StatusRuntimeException e) {
+//            LOG.error("RPC failed in add client: {}", e.getStatus());
+//            return false;
+//        }
+//        if (response.getStatus().getCode() != FederateService.Code.kOk) {
+//            LOG.error("add client {} failed", endpoint);
+//            return false;
+//        } else {
+//            LOG.debug("add client {} ok", endpoint);
+//            return true;
+//        }
+//    }
     @Override
     public String toString() {
         return String.format("DBClient[%s]", endpoint);
@@ -139,14 +139,14 @@ public final class FederateDBClient {//被edSpatialClient调用 List<String> end
         }
         return endpoint.equals(((FederateDBClient) obj).endpoint);
     }
-    public void clearCache(String uuid) {
-        try {
-//            blockingStub.clearCache(CacheID.newBuilder().setUuid(uuid).build());
-            //TODO
-            return;
-        } catch (StatusRuntimeException e) {
-            LOG.error("RPC failed in clear cache: {}", e.getStatus());
-            return;
-        }
-    }
+//    public void clearCache(String uuid) {
+//        try {
+////            blockingStub.clearCache(CacheID.newBuilder().setUuid(uuid).build());
+//            //TODO
+//            return;
+//        } catch (StatusRuntimeException e) {
+//            LOG.error("RPC failed in clear cache: {}", e.getStatus());
+//            return;
+//        }
+//    }
 }

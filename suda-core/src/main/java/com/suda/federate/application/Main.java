@@ -6,6 +6,7 @@ import com.suda.federate.config.DbConfig;
 import com.suda.federate.config.ModelConfig;
 import com.suda.federate.rpc.FederateCommon;
 import com.suda.federate.rpc.FederateService;
+import com.suda.federate.rpc.FederateService.SQLExpression;
 import com.suda.federate.sql.enumerator.StreamingIterator;
 import com.suda.federate.sql.function.SpatialFunctions;
 import com.suda.federate.utils.FederateUtils;
@@ -19,10 +20,6 @@ import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.util.*;
 import java.util.concurrent.*;
-import java.util.concurrent.atomic.AtomicInteger;
-
-import com.suda.federate.rpc.FederateService.SQLExpression;
-import com.suda.federate.rpc.Client;
 
 import static com.suda.federate.security.sha.SecretSum.computeS;
 import static com.suda.federate.security.sha.SecretSum.lag;
@@ -75,10 +72,7 @@ public class Main {
         ModelConfig obj = JSONObject.parseObject(jsonString, ModelConfig.class);
         return obj;
     }
-    public static void federateKnn(SQLExpression expression,Client client){
-        //#TODO 需要多个client
-        client.knnRadiusQuery(expression);
-    }
+
 
 
     public static Integer federateRangeCount(SQLExpression expression){
@@ -161,7 +155,7 @@ public class Main {
 
                     try{
                         FederateService.SQLReplyList  replylist = federateDBClient.rangeQuery(expression);
-                        System.out.println(endpoint+" 服务器返回信息："+ replylist.getMessageList());
+//                        System.out.println(endpoint+" 服务器返回信息："+ replylist.getMessageList());
                         iterator.add(replylist);
                     }catch (StatusRuntimeException e){
                         System.out.println("RPC调用失败："+e.getMessage());
@@ -187,11 +181,11 @@ public class Main {
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
-        List<String> result = new ArrayList<>();
+        List<FederateCommon.Point> result = new ArrayList<>();
         while(iterator.hasNext()){
             result.addAll(iterator.next().getMessageList());
         }
-        for(String r : result){
+        for(FederateCommon.Point r : result){
             System.out.println(r);
         }
         System.out.println("public range query count:"+ result.size());
@@ -357,13 +351,15 @@ public class Main {
 
                 }
                 if(expression.getFunction().equals("RangeQuery")){
-                    federateRangeQuery(expression);
-                     //TODO test
-                    federatePrivacyRangeQuery(expression.toBuilder().setUuid(UUID.randomUUID().toString()).build());
-                    break;
+//                    federateRangeQuery(expression);
+//                    federatePrivacyRangeQuery(expression.toBuilder().setUuid(UUID.randomUUID().toString()).build());
+
                 }
                 if(expression.getFunction().equals("Knn")){
                     federateKnn(expression);
+                    System.out.println("===========================================================================");
+
+                    federatePrivacyKnn(expression.toBuilder().setUuid(UUID.randomUUID().toString()).build());
                 }
 
                 System.out.println("===========================================================================");
@@ -404,6 +400,36 @@ public class Main {
         }
         System.out.println("out of loop! approximate query: ");
         federateRangeQuery(expression.toBuilder().setLiteral(minRadius).build());
+        return;
+    }
+    private static void federatePrivacyKnn(SQLExpression expression) {
+        StreamingIterator<Double> radiusIterator=federateKnnRadiusQuery(expression);
+        double minRadius = Double.MAX_VALUE;
+        while (radiusIterator.hasNext()){
+            double r= radiusIterator.next();
+            minRadius = r < minRadius ? r : minRadius;
+        }
+        int k =(int)expression.getLiteral();//TODO 精确度
+        double l = 0.0, u = minRadius, e = 1e-3;
+        double threshold = minRadius;
+        while (u - l >= e) {//TODO 改为并发？！
+            threshold = (l + u) / 2;
+
+            SQLExpression queryExpression = expression.toBuilder().setLiteral(threshold).build();
+
+            int count =federateRangeCount(queryExpression);//TODO secure
+            //hufu有个        if (Math.abs(res.getKey() - k) < res.getValue()) { 提前终止，什么意思
+            if (count > k) {
+                u = threshold;
+            } else if (count < k) {
+                l = threshold;
+            } else {
+                federatePrivacyRangeQuery(expression.toBuilder().setLiteral(threshold).build());
+                return;
+            }
+        }
+        System.out.println("out of loop! approximate query: ");
+        federatePrivacyRangeQuery(expression.toBuilder().setLiteral(minRadius).build());
         return;
     }
 

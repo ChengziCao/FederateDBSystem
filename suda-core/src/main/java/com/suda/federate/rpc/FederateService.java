@@ -124,134 +124,134 @@ public final class FederateService {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>optional int32 id = 9;</code>
+     * <code>required .federate.Point point = 1;</code>
+     * @return Whether the point field is set.
+     */
+    boolean hasPoint();
+    /**
+     * <code>required .federate.Point point = 1;</code>
+     * @return The point.
+     */
+    com.suda.federate.rpc.FederateCommon.Point getPoint();
+    /**
+     * <code>required .federate.Point point = 1;</code>
+     */
+    com.suda.federate.rpc.FederateCommon.PointOrBuilder getPointOrBuilder();
+
+    /**
+     * <code>optional int32 id = 2;</code>
      * @return Whether the id field is set.
      */
     boolean hasId();
     /**
-     * <code>optional int32 id = 9;</code>
+     * <code>optional int32 id = 2;</code>
      * @return The id.
      */
     int getId();
 
     /**
-     * <code>repeated int32 idList = 10;</code>
+     * <code>repeated int32 idList = 3;</code>
      * @return A list containing the idList.
      */
     java.util.List<java.lang.Integer> getIdListList();
     /**
-     * <code>repeated int32 idList = 10;</code>
+     * <code>repeated int32 idList = 3;</code>
      * @return The count of idList.
      */
     int getIdListCount();
     /**
-     * <code>repeated int32 idList = 10;</code>
+     * <code>repeated int32 idList = 3;</code>
      * @param index The index of the element to return.
      * @return The idList at the given index.
      */
     int getIdList(int index);
 
     /**
-     * <code>optional int32 t = 8;</code>
+     * <code>optional int32 t = 4;</code>
      * @return Whether the t field is set.
      */
     boolean hasT();
     /**
-     * <code>optional int32 t = 8;</code>
+     * <code>optional int32 t = 4;</code>
      * @return The t.
      */
     int getT();
 
     /**
-     * <code>required string function = 1;</code>
+     * <code>required string function = 5;</code>
      * @return Whether the function field is set.
      */
     boolean hasFunction();
     /**
-     * <code>required string function = 1;</code>
+     * <code>required string function = 5;</code>
      * @return The function.
      */
     java.lang.String getFunction();
     /**
-     * <code>required string function = 1;</code>
+     * <code>required string function = 5;</code>
      * @return The bytes for function.
      */
     com.google.protobuf.ByteString
         getFunctionBytes();
 
     /**
-     * <code>required .federate.Point point = 2;</code>
-     * @return Whether the point field is set.
-     */
-    boolean hasPoint();
-    /**
-     * <code>required .federate.Point point = 2;</code>
-     * @return The point.
-     */
-    com.suda.federate.rpc.FederateCommon.Point getPoint();
-    /**
-     * <code>required .federate.Point point = 2;</code>
-     */
-    com.suda.federate.rpc.FederateCommon.PointOrBuilder getPointOrBuilder();
-
-    /**
-     * <code>required string table = 7;</code>
+     * <code>required string table = 6;</code>
      * @return Whether the table field is set.
      */
     boolean hasTable();
     /**
-     * <code>required string table = 7;</code>
+     * <code>required string table = 6;</code>
      * @return The table.
      */
     java.lang.String getTable();
     /**
-     * <code>required string table = 7;</code>
+     * <code>required string table = 6;</code>
      * @return The bytes for table.
      */
     com.google.protobuf.ByteString
         getTableBytes();
 
     /**
-     * <code>required double literal = 3;</code>
+     * <code>required double literal = 7;</code>
      * @return Whether the literal field is set.
      */
     boolean hasLiteral();
     /**
-     * <code>required double literal = 3;</code>
+     * <code>required double literal = 7;</code>
      * @return The literal.
      */
     double getLiteral();
 
     /**
-     * <code>optional int32 fetch = 4 [default = 0];</code>
+     * <code>optional int32 fetch = 8 [default = 0];</code>
      * @return Whether the fetch field is set.
      */
     boolean hasFetch();
     /**
-     * <code>optional int32 fetch = 4 [default = 0];</code>
+     * <code>optional int32 fetch = 8 [default = 0];</code>
      * @return The fetch.
      */
     int getFetch();
 
     /**
-     * <code>repeated string order = 5;</code>
+     * <code>repeated string order = 9;</code>
      * @return A list containing the order.
      */
     java.util.List<java.lang.String>
         getOrderList();
     /**
-     * <code>repeated string order = 5;</code>
+     * <code>repeated string order = 9;</code>
      * @return The count of order.
      */
     int getOrderCount();
     /**
-     * <code>repeated string order = 5;</code>
+     * <code>repeated string order = 9;</code>
      * @param index The index of the element to return.
      * @return The order at the given index.
      */
     java.lang.String getOrder(int index);
     /**
-     * <code>repeated string order = 5;</code>
+     * <code>repeated string order = 9;</code>
      * @param index The index of the value to return.
      * @return The bytes of the order at the given index.
      */
@@ -259,17 +259,17 @@ public final class FederateService {
         getOrderBytes(int index);
 
     /**
-     * <code>optional string groupby = 6;</code>
+     * <code>optional string groupby = 10;</code>
      * @return Whether the groupby field is set.
      */
     boolean hasGroupby();
     /**
-     * <code>optional string groupby = 6;</code>
+     * <code>optional string groupby = 10;</code>
      * @return The groupby.
      */
     java.lang.String getGroupby();
     /**
-     * <code>optional string groupby = 6;</code>
+     * <code>optional string groupby = 10;</code>
      * @return The bytes for groupby.
      */
     com.google.protobuf.ByteString
@@ -345,14 +345,8 @@ public final class FederateService {
               done = true;
               break;
             case 10: {
-              com.google.protobuf.ByteString bs = input.readBytes();
-              bitField0_ |= 0x00000004;
-              function_ = bs;
-              break;
-            }
-            case 18: {
               com.suda.federate.rpc.FederateCommon.Point.Builder subBuilder = null;
-              if (((bitField0_ & 0x00000008) != 0)) {
+              if (((bitField0_ & 0x00000001) != 0)) {
                 subBuilder = point_.toBuilder();
               }
               point_ = input.readMessage(com.suda.federate.rpc.FederateCommon.Point.PARSER, extensionRegistry);
@@ -360,20 +354,63 @@ public final class FederateService {
                 subBuilder.mergeFrom(point_);
                 point_ = subBuilder.buildPartial();
               }
-              bitField0_ |= 0x00000008;
+              bitField0_ |= 0x00000001;
               break;
             }
-            case 25: {
+            case 16: {
+              bitField0_ |= 0x00000002;
+              id_ = input.readInt32();
+              break;
+            }
+            case 24: {
+              if (!((mutable_bitField0_ & 0x00000004) != 0)) {
+                idList_ = newIntList();
+                mutable_bitField0_ |= 0x00000004;
+              }
+              idList_.addInt(input.readInt32());
+              break;
+            }
+            case 26: {
+              int length = input.readRawVarint32();
+              int limit = input.pushLimit(length);
+              if (!((mutable_bitField0_ & 0x00000004) != 0) && input.getBytesUntilLimit() > 0) {
+                idList_ = newIntList();
+                mutable_bitField0_ |= 0x00000004;
+              }
+              while (input.getBytesUntilLimit() > 0) {
+                idList_.addInt(input.readInt32());
+              }
+              input.popLimit(limit);
+              break;
+            }
+            case 32: {
+              bitField0_ |= 0x00000004;
+              t_ = input.readInt32();
+              break;
+            }
+            case 42: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00000008;
+              function_ = bs;
+              break;
+            }
+            case 50: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00000010;
+              table_ = bs;
+              break;
+            }
+            case 57: {
               bitField0_ |= 0x00000020;
               literal_ = input.readDouble();
               break;
             }
-            case 32: {
+            case 64: {
               bitField0_ |= 0x00000040;
               fetch_ = input.readInt32();
               break;
             }
-            case 42: {
+            case 74: {
               com.google.protobuf.ByteString bs = input.readBytes();
               if (!((mutable_bitField0_ & 0x00000100) != 0)) {
                 order_ = new com.google.protobuf.LazyStringArrayList();
@@ -382,47 +419,10 @@ public final class FederateService {
               order_.add(bs);
               break;
             }
-            case 50: {
+            case 82: {
               com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000080;
               groupby_ = bs;
-              break;
-            }
-            case 58: {
-              com.google.protobuf.ByteString bs = input.readBytes();
-              bitField0_ |= 0x00000010;
-              table_ = bs;
-              break;
-            }
-            case 64: {
-              bitField0_ |= 0x00000002;
-              t_ = input.readInt32();
-              break;
-            }
-            case 72: {
-              bitField0_ |= 0x00000001;
-              id_ = input.readInt32();
-              break;
-            }
-            case 80: {
-              if (!((mutable_bitField0_ & 0x00000002) != 0)) {
-                idList_ = newIntList();
-                mutable_bitField0_ |= 0x00000002;
-              }
-              idList_.addInt(input.readInt32());
-              break;
-            }
-            case 82: {
-              int length = input.readRawVarint32();
-              int limit = input.pushLimit(length);
-              if (!((mutable_bitField0_ & 0x00000002) != 0) && input.getBytesUntilLimit() > 0) {
-                idList_ = newIntList();
-                mutable_bitField0_ |= 0x00000002;
-              }
-              while (input.getBytesUntilLimit() > 0) {
-                idList_.addInt(input.readInt32());
-              }
-              input.popLimit(limit);
               break;
             }
             case 90: {
@@ -446,11 +446,11 @@ public final class FederateService {
         throw new com.google.protobuf.InvalidProtocolBufferException(
             e).setUnfinishedMessage(this);
       } finally {
+        if (((mutable_bitField0_ & 0x00000004) != 0)) {
+          idList_.makeImmutable(); // C
+        }
         if (((mutable_bitField0_ & 0x00000100) != 0)) {
           order_ = order_.getUnmodifiableView();
-        }
-        if (((mutable_bitField0_ & 0x00000002) != 0)) {
-          idList_.makeImmutable(); // C
         }
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
@@ -470,18 +470,44 @@ public final class FederateService {
     }
 
     private int bitField0_;
-    public static final int ID_FIELD_NUMBER = 9;
+    public static final int POINT_FIELD_NUMBER = 1;
+    private com.suda.federate.rpc.FederateCommon.Point point_;
+    /**
+     * <code>required .federate.Point point = 1;</code>
+     * @return Whether the point field is set.
+     */
+    @java.lang.Override
+    public boolean hasPoint() {
+      return ((bitField0_ & 0x00000001) != 0);
+    }
+    /**
+     * <code>required .federate.Point point = 1;</code>
+     * @return The point.
+     */
+    @java.lang.Override
+    public com.suda.federate.rpc.FederateCommon.Point getPoint() {
+      return point_ == null ? com.suda.federate.rpc.FederateCommon.Point.getDefaultInstance() : point_;
+    }
+    /**
+     * <code>required .federate.Point point = 1;</code>
+     */
+    @java.lang.Override
+    public com.suda.federate.rpc.FederateCommon.PointOrBuilder getPointOrBuilder() {
+      return point_ == null ? com.suda.federate.rpc.FederateCommon.Point.getDefaultInstance() : point_;
+    }
+
+    public static final int ID_FIELD_NUMBER = 2;
     private int id_;
     /**
-     * <code>optional int32 id = 9;</code>
+     * <code>optional int32 id = 2;</code>
      * @return Whether the id field is set.
      */
     @java.lang.Override
     public boolean hasId() {
-      return ((bitField0_ & 0x00000001) != 0);
+      return ((bitField0_ & 0x00000002) != 0);
     }
     /**
-     * <code>optional int32 id = 9;</code>
+     * <code>optional int32 id = 2;</code>
      * @return The id.
      */
     @java.lang.Override
@@ -489,10 +515,10 @@ public final class FederateService {
       return id_;
     }
 
-    public static final int IDLIST_FIELD_NUMBER = 10;
+    public static final int IDLIST_FIELD_NUMBER = 3;
     private com.google.protobuf.Internal.IntList idList_;
     /**
-     * <code>repeated int32 idList = 10;</code>
+     * <code>repeated int32 idList = 3;</code>
      * @return A list containing the idList.
      */
     @java.lang.Override
@@ -501,14 +527,14 @@ public final class FederateService {
       return idList_;
     }
     /**
-     * <code>repeated int32 idList = 10;</code>
+     * <code>repeated int32 idList = 3;</code>
      * @return The count of idList.
      */
     public int getIdListCount() {
       return idList_.size();
     }
     /**
-     * <code>repeated int32 idList = 10;</code>
+     * <code>repeated int32 idList = 3;</code>
      * @param index The index of the element to return.
      * @return The idList at the given index.
      */
@@ -516,18 +542,18 @@ public final class FederateService {
       return idList_.getInt(index);
     }
 
-    public static final int T_FIELD_NUMBER = 8;
+    public static final int T_FIELD_NUMBER = 4;
     private int t_;
     /**
-     * <code>optional int32 t = 8;</code>
+     * <code>optional int32 t = 4;</code>
      * @return Whether the t field is set.
      */
     @java.lang.Override
     public boolean hasT() {
-      return ((bitField0_ & 0x00000002) != 0);
+      return ((bitField0_ & 0x00000004) != 0);
     }
     /**
-     * <code>optional int32 t = 8;</code>
+     * <code>optional int32 t = 4;</code>
      * @return The t.
      */
     @java.lang.Override
@@ -535,18 +561,18 @@ public final class FederateService {
       return t_;
     }
 
-    public static final int FUNCTION_FIELD_NUMBER = 1;
+    public static final int FUNCTION_FIELD_NUMBER = 5;
     private volatile java.lang.Object function_;
     /**
-     * <code>required string function = 1;</code>
+     * <code>required string function = 5;</code>
      * @return Whether the function field is set.
      */
     @java.lang.Override
     public boolean hasFunction() {
-      return ((bitField0_ & 0x00000004) != 0);
+      return ((bitField0_ & 0x00000008) != 0);
     }
     /**
-     * <code>required string function = 1;</code>
+     * <code>required string function = 5;</code>
      * @return The function.
      */
     @java.lang.Override
@@ -565,7 +591,7 @@ public final class FederateService {
       }
     }
     /**
-     * <code>required string function = 1;</code>
+     * <code>required string function = 5;</code>
      * @return The bytes for function.
      */
     @java.lang.Override
@@ -583,36 +609,10 @@ public final class FederateService {
       }
     }
 
-    public static final int POINT_FIELD_NUMBER = 2;
-    private com.suda.federate.rpc.FederateCommon.Point point_;
-    /**
-     * <code>required .federate.Point point = 2;</code>
-     * @return Whether the point field is set.
-     */
-    @java.lang.Override
-    public boolean hasPoint() {
-      return ((bitField0_ & 0x00000008) != 0);
-    }
-    /**
-     * <code>required .federate.Point point = 2;</code>
-     * @return The point.
-     */
-    @java.lang.Override
-    public com.suda.federate.rpc.FederateCommon.Point getPoint() {
-      return point_ == null ? com.suda.federate.rpc.FederateCommon.Point.getDefaultInstance() : point_;
-    }
-    /**
-     * <code>required .federate.Point point = 2;</code>
-     */
-    @java.lang.Override
-    public com.suda.federate.rpc.FederateCommon.PointOrBuilder getPointOrBuilder() {
-      return point_ == null ? com.suda.federate.rpc.FederateCommon.Point.getDefaultInstance() : point_;
-    }
-
-    public static final int TABLE_FIELD_NUMBER = 7;
+    public static final int TABLE_FIELD_NUMBER = 6;
     private volatile java.lang.Object table_;
     /**
-     * <code>required string table = 7;</code>
+     * <code>required string table = 6;</code>
      * @return Whether the table field is set.
      */
     @java.lang.Override
@@ -620,7 +620,7 @@ public final class FederateService {
       return ((bitField0_ & 0x00000010) != 0);
     }
     /**
-     * <code>required string table = 7;</code>
+     * <code>required string table = 6;</code>
      * @return The table.
      */
     @java.lang.Override
@@ -639,7 +639,7 @@ public final class FederateService {
       }
     }
     /**
-     * <code>required string table = 7;</code>
+     * <code>required string table = 6;</code>
      * @return The bytes for table.
      */
     @java.lang.Override
@@ -657,10 +657,10 @@ public final class FederateService {
       }
     }
 
-    public static final int LITERAL_FIELD_NUMBER = 3;
+    public static final int LITERAL_FIELD_NUMBER = 7;
     private double literal_;
     /**
-     * <code>required double literal = 3;</code>
+     * <code>required double literal = 7;</code>
      * @return Whether the literal field is set.
      */
     @java.lang.Override
@@ -668,7 +668,7 @@ public final class FederateService {
       return ((bitField0_ & 0x00000020) != 0);
     }
     /**
-     * <code>required double literal = 3;</code>
+     * <code>required double literal = 7;</code>
      * @return The literal.
      */
     @java.lang.Override
@@ -676,10 +676,10 @@ public final class FederateService {
       return literal_;
     }
 
-    public static final int FETCH_FIELD_NUMBER = 4;
+    public static final int FETCH_FIELD_NUMBER = 8;
     private int fetch_;
     /**
-     * <code>optional int32 fetch = 4 [default = 0];</code>
+     * <code>optional int32 fetch = 8 [default = 0];</code>
      * @return Whether the fetch field is set.
      */
     @java.lang.Override
@@ -687,7 +687,7 @@ public final class FederateService {
       return ((bitField0_ & 0x00000040) != 0);
     }
     /**
-     * <code>optional int32 fetch = 4 [default = 0];</code>
+     * <code>optional int32 fetch = 8 [default = 0];</code>
      * @return The fetch.
      */
     @java.lang.Override
@@ -695,10 +695,10 @@ public final class FederateService {
       return fetch_;
     }
 
-    public static final int ORDER_FIELD_NUMBER = 5;
+    public static final int ORDER_FIELD_NUMBER = 9;
     private com.google.protobuf.LazyStringList order_;
     /**
-     * <code>repeated string order = 5;</code>
+     * <code>repeated string order = 9;</code>
      * @return A list containing the order.
      */
     public com.google.protobuf.ProtocolStringList
@@ -706,14 +706,14 @@ public final class FederateService {
       return order_;
     }
     /**
-     * <code>repeated string order = 5;</code>
+     * <code>repeated string order = 9;</code>
      * @return The count of order.
      */
     public int getOrderCount() {
       return order_.size();
     }
     /**
-     * <code>repeated string order = 5;</code>
+     * <code>repeated string order = 9;</code>
      * @param index The index of the element to return.
      * @return The order at the given index.
      */
@@ -721,7 +721,7 @@ public final class FederateService {
       return order_.get(index);
     }
     /**
-     * <code>repeated string order = 5;</code>
+     * <code>repeated string order = 9;</code>
      * @param index The index of the value to return.
      * @return The bytes of the order at the given index.
      */
@@ -730,10 +730,10 @@ public final class FederateService {
       return order_.getByteString(index);
     }
 
-    public static final int GROUPBY_FIELD_NUMBER = 6;
+    public static final int GROUPBY_FIELD_NUMBER = 10;
     private volatile java.lang.Object groupby_;
     /**
-     * <code>optional string groupby = 6;</code>
+     * <code>optional string groupby = 10;</code>
      * @return Whether the groupby field is set.
      */
     @java.lang.Override
@@ -741,7 +741,7 @@ public final class FederateService {
       return ((bitField0_ & 0x00000080) != 0);
     }
     /**
-     * <code>optional string groupby = 6;</code>
+     * <code>optional string groupby = 10;</code>
      * @return The groupby.
      */
     @java.lang.Override
@@ -760,7 +760,7 @@ public final class FederateService {
       }
     }
     /**
-     * <code>optional string groupby = 6;</code>
+     * <code>optional string groupby = 10;</code>
      * @return The bytes for groupby.
      */
     @java.lang.Override
@@ -833,11 +833,11 @@ public final class FederateService {
       if (isInitialized == 1) return true;
       if (isInitialized == 0) return false;
 
-      if (!hasFunction()) {
+      if (!hasPoint()) {
         memoizedIsInitialized = 0;
         return false;
       }
-      if (!hasPoint()) {
+      if (!hasFunction()) {
         memoizedIsInitialized = 0;
         return false;
       }
@@ -860,35 +860,35 @@ public final class FederateService {
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (((bitField0_ & 0x00000004) != 0)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, function_);
-      }
-      if (((bitField0_ & 0x00000008) != 0)) {
-        output.writeMessage(2, getPoint());
-      }
-      if (((bitField0_ & 0x00000020) != 0)) {
-        output.writeDouble(3, literal_);
-      }
-      if (((bitField0_ & 0x00000040) != 0)) {
-        output.writeInt32(4, fetch_);
-      }
-      for (int i = 0; i < order_.size(); i++) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 5, order_.getRaw(i));
-      }
-      if (((bitField0_ & 0x00000080) != 0)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 6, groupby_);
-      }
-      if (((bitField0_ & 0x00000010) != 0)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 7, table_);
+      if (((bitField0_ & 0x00000001) != 0)) {
+        output.writeMessage(1, getPoint());
       }
       if (((bitField0_ & 0x00000002) != 0)) {
-        output.writeInt32(8, t_);
-      }
-      if (((bitField0_ & 0x00000001) != 0)) {
-        output.writeInt32(9, id_);
+        output.writeInt32(2, id_);
       }
       for (int i = 0; i < idList_.size(); i++) {
-        output.writeInt32(10, idList_.getInt(i));
+        output.writeInt32(3, idList_.getInt(i));
+      }
+      if (((bitField0_ & 0x00000004) != 0)) {
+        output.writeInt32(4, t_);
+      }
+      if (((bitField0_ & 0x00000008) != 0)) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 5, function_);
+      }
+      if (((bitField0_ & 0x00000010) != 0)) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 6, table_);
+      }
+      if (((bitField0_ & 0x00000020) != 0)) {
+        output.writeDouble(7, literal_);
+      }
+      if (((bitField0_ & 0x00000040) != 0)) {
+        output.writeInt32(8, fetch_);
+      }
+      for (int i = 0; i < order_.size(); i++) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 9, order_.getRaw(i));
+      }
+      if (((bitField0_ & 0x00000080) != 0)) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 10, groupby_);
       }
       if (((bitField0_ & 0x00000100) != 0)) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 11, uuid_);
@@ -902,20 +902,40 @@ public final class FederateService {
       if (size != -1) return size;
 
       size = 0;
+      if (((bitField0_ & 0x00000001) != 0)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(1, getPoint());
+      }
+      if (((bitField0_ & 0x00000002) != 0)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(2, id_);
+      }
+      {
+        int dataSize = 0;
+        for (int i = 0; i < idList_.size(); i++) {
+          dataSize += com.google.protobuf.CodedOutputStream
+            .computeInt32SizeNoTag(idList_.getInt(i));
+        }
+        size += dataSize;
+        size += 1 * getIdListList().size();
+      }
       if (((bitField0_ & 0x00000004) != 0)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, function_);
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(4, t_);
       }
       if (((bitField0_ & 0x00000008) != 0)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(2, getPoint());
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, function_);
+      }
+      if (((bitField0_ & 0x00000010) != 0)) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(6, table_);
       }
       if (((bitField0_ & 0x00000020) != 0)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeDoubleSize(3, literal_);
+          .computeDoubleSize(7, literal_);
       }
       if (((bitField0_ & 0x00000040) != 0)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(4, fetch_);
+          .computeInt32Size(8, fetch_);
       }
       {
         int dataSize = 0;
@@ -926,27 +946,7 @@ public final class FederateService {
         size += 1 * getOrderList().size();
       }
       if (((bitField0_ & 0x00000080) != 0)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(6, groupby_);
-      }
-      if (((bitField0_ & 0x00000010) != 0)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(7, table_);
-      }
-      if (((bitField0_ & 0x00000002) != 0)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(8, t_);
-      }
-      if (((bitField0_ & 0x00000001) != 0)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(9, id_);
-      }
-      {
-        int dataSize = 0;
-        for (int i = 0; i < idList_.size(); i++) {
-          dataSize += com.google.protobuf.CodedOutputStream
-            .computeInt32SizeNoTag(idList_.getInt(i));
-        }
-        size += dataSize;
-        size += 1 * getIdListList().size();
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(10, groupby_);
       }
       if (((bitField0_ & 0x00000100) != 0)) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(11, uuid_);
@@ -966,6 +966,11 @@ public final class FederateService {
       }
       com.suda.federate.rpc.FederateService.SQLExpression other = (com.suda.federate.rpc.FederateService.SQLExpression) obj;
 
+      if (hasPoint() != other.hasPoint()) return false;
+      if (hasPoint()) {
+        if (!getPoint()
+            .equals(other.getPoint())) return false;
+      }
       if (hasId() != other.hasId()) return false;
       if (hasId()) {
         if (getId()
@@ -982,11 +987,6 @@ public final class FederateService {
       if (hasFunction()) {
         if (!getFunction()
             .equals(other.getFunction())) return false;
-      }
-      if (hasPoint() != other.hasPoint()) return false;
-      if (hasPoint()) {
-        if (!getPoint()
-            .equals(other.getPoint())) return false;
       }
       if (hasTable() != other.hasTable()) return false;
       if (hasTable()) {
@@ -1027,6 +1027,10 @@ public final class FederateService {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
+      if (hasPoint()) {
+        hash = (37 * hash) + POINT_FIELD_NUMBER;
+        hash = (53 * hash) + getPoint().hashCode();
+      }
       if (hasId()) {
         hash = (37 * hash) + ID_FIELD_NUMBER;
         hash = (53 * hash) + getId();
@@ -1042,10 +1046,6 @@ public final class FederateService {
       if (hasFunction()) {
         hash = (37 * hash) + FUNCTION_FIELD_NUMBER;
         hash = (53 * hash) + getFunction().hashCode();
-      }
-      if (hasPoint()) {
-        hash = (37 * hash) + POINT_FIELD_NUMBER;
-        hash = (53 * hash) + getPoint().hashCode();
       }
       if (hasTable()) {
         hash = (37 * hash) + TABLE_FIELD_NUMBER;
@@ -1206,19 +1206,19 @@ public final class FederateService {
       @java.lang.Override
       public Builder clear() {
         super.clear();
-        id_ = 0;
-        bitField0_ = (bitField0_ & ~0x00000001);
-        idList_ = emptyIntList();
-        bitField0_ = (bitField0_ & ~0x00000002);
-        t_ = 0;
-        bitField0_ = (bitField0_ & ~0x00000004);
-        function_ = "";
-        bitField0_ = (bitField0_ & ~0x00000008);
         if (pointBuilder_ == null) {
           point_ = null;
         } else {
           pointBuilder_.clear();
         }
+        bitField0_ = (bitField0_ & ~0x00000001);
+        id_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000002);
+        idList_ = emptyIntList();
+        bitField0_ = (bitField0_ & ~0x00000004);
+        t_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000008);
+        function_ = "";
         bitField0_ = (bitField0_ & ~0x00000010);
         table_ = "";
         bitField0_ = (bitField0_ & ~0x00000020);
@@ -1261,30 +1261,30 @@ public final class FederateService {
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
         if (((from_bitField0_ & 0x00000001) != 0)) {
-          result.id_ = id_;
-          to_bitField0_ |= 0x00000001;
-        }
-        if (((bitField0_ & 0x00000002) != 0)) {
-          idList_.makeImmutable();
-          bitField0_ = (bitField0_ & ~0x00000002);
-        }
-        result.idList_ = idList_;
-        if (((from_bitField0_ & 0x00000004) != 0)) {
-          result.t_ = t_;
-          to_bitField0_ |= 0x00000002;
-        }
-        if (((from_bitField0_ & 0x00000008) != 0)) {
-          to_bitField0_ |= 0x00000004;
-        }
-        result.function_ = function_;
-        if (((from_bitField0_ & 0x00000010) != 0)) {
           if (pointBuilder_ == null) {
             result.point_ = point_;
           } else {
             result.point_ = pointBuilder_.build();
           }
+          to_bitField0_ |= 0x00000001;
+        }
+        if (((from_bitField0_ & 0x00000002) != 0)) {
+          result.id_ = id_;
+          to_bitField0_ |= 0x00000002;
+        }
+        if (((bitField0_ & 0x00000004) != 0)) {
+          idList_.makeImmutable();
+          bitField0_ = (bitField0_ & ~0x00000004);
+        }
+        result.idList_ = idList_;
+        if (((from_bitField0_ & 0x00000008) != 0)) {
+          result.t_ = t_;
+          to_bitField0_ |= 0x00000004;
+        }
+        if (((from_bitField0_ & 0x00000010) != 0)) {
           to_bitField0_ |= 0x00000008;
         }
+        result.function_ = function_;
         if (((from_bitField0_ & 0x00000020) != 0)) {
           to_bitField0_ |= 0x00000010;
         }
@@ -1359,13 +1359,16 @@ public final class FederateService {
 
       public Builder mergeFrom(com.suda.federate.rpc.FederateService.SQLExpression other) {
         if (other == com.suda.federate.rpc.FederateService.SQLExpression.getDefaultInstance()) return this;
+        if (other.hasPoint()) {
+          mergePoint(other.getPoint());
+        }
         if (other.hasId()) {
           setId(other.getId());
         }
         if (!other.idList_.isEmpty()) {
           if (idList_.isEmpty()) {
             idList_ = other.idList_;
-            bitField0_ = (bitField0_ & ~0x00000002);
+            bitField0_ = (bitField0_ & ~0x00000004);
           } else {
             ensureIdListIsMutable();
             idList_.addAll(other.idList_);
@@ -1376,12 +1379,9 @@ public final class FederateService {
           setT(other.getT());
         }
         if (other.hasFunction()) {
-          bitField0_ |= 0x00000008;
+          bitField0_ |= 0x00000010;
           function_ = other.function_;
           onChanged();
-        }
-        if (other.hasPoint()) {
-          mergePoint(other.getPoint());
         }
         if (other.hasTable()) {
           bitField0_ |= 0x00000020;
@@ -1421,10 +1421,10 @@ public final class FederateService {
 
       @java.lang.Override
       public final boolean isInitialized() {
-        if (!hasFunction()) {
+        if (!hasPoint()) {
           return false;
         }
-        if (!hasPoint()) {
+        if (!hasFunction()) {
           return false;
         }
         if (!hasTable()) {
@@ -1459,17 +1459,137 @@ public final class FederateService {
       }
       private int bitField0_;
 
+      private com.suda.federate.rpc.FederateCommon.Point point_;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.suda.federate.rpc.FederateCommon.Point, com.suda.federate.rpc.FederateCommon.Point.Builder, com.suda.federate.rpc.FederateCommon.PointOrBuilder> pointBuilder_;
+      /**
+       * <code>required .federate.Point point = 1;</code>
+       * @return Whether the point field is set.
+       */
+      public boolean hasPoint() {
+        return ((bitField0_ & 0x00000001) != 0);
+      }
+      /**
+       * <code>required .federate.Point point = 1;</code>
+       * @return The point.
+       */
+      public com.suda.federate.rpc.FederateCommon.Point getPoint() {
+        if (pointBuilder_ == null) {
+          return point_ == null ? com.suda.federate.rpc.FederateCommon.Point.getDefaultInstance() : point_;
+        } else {
+          return pointBuilder_.getMessage();
+        }
+      }
+      /**
+       * <code>required .federate.Point point = 1;</code>
+       */
+      public Builder setPoint(com.suda.federate.rpc.FederateCommon.Point value) {
+        if (pointBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          point_ = value;
+          onChanged();
+        } else {
+          pointBuilder_.setMessage(value);
+        }
+        bitField0_ |= 0x00000001;
+        return this;
+      }
+      /**
+       * <code>required .federate.Point point = 1;</code>
+       */
+      public Builder setPoint(
+          com.suda.federate.rpc.FederateCommon.Point.Builder builderForValue) {
+        if (pointBuilder_ == null) {
+          point_ = builderForValue.build();
+          onChanged();
+        } else {
+          pointBuilder_.setMessage(builderForValue.build());
+        }
+        bitField0_ |= 0x00000001;
+        return this;
+      }
+      /**
+       * <code>required .federate.Point point = 1;</code>
+       */
+      public Builder mergePoint(com.suda.federate.rpc.FederateCommon.Point value) {
+        if (pointBuilder_ == null) {
+          if (((bitField0_ & 0x00000001) != 0) &&
+              point_ != null &&
+              point_ != com.suda.federate.rpc.FederateCommon.Point.getDefaultInstance()) {
+            point_ =
+              com.suda.federate.rpc.FederateCommon.Point.newBuilder(point_).mergeFrom(value).buildPartial();
+          } else {
+            point_ = value;
+          }
+          onChanged();
+        } else {
+          pointBuilder_.mergeFrom(value);
+        }
+        bitField0_ |= 0x00000001;
+        return this;
+      }
+      /**
+       * <code>required .federate.Point point = 1;</code>
+       */
+      public Builder clearPoint() {
+        if (pointBuilder_ == null) {
+          point_ = null;
+          onChanged();
+        } else {
+          pointBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000001);
+        return this;
+      }
+      /**
+       * <code>required .federate.Point point = 1;</code>
+       */
+      public com.suda.federate.rpc.FederateCommon.Point.Builder getPointBuilder() {
+        bitField0_ |= 0x00000001;
+        onChanged();
+        return getPointFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>required .federate.Point point = 1;</code>
+       */
+      public com.suda.federate.rpc.FederateCommon.PointOrBuilder getPointOrBuilder() {
+        if (pointBuilder_ != null) {
+          return pointBuilder_.getMessageOrBuilder();
+        } else {
+          return point_ == null ?
+              com.suda.federate.rpc.FederateCommon.Point.getDefaultInstance() : point_;
+        }
+      }
+      /**
+       * <code>required .federate.Point point = 1;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.suda.federate.rpc.FederateCommon.Point, com.suda.federate.rpc.FederateCommon.Point.Builder, com.suda.federate.rpc.FederateCommon.PointOrBuilder> 
+          getPointFieldBuilder() {
+        if (pointBuilder_ == null) {
+          pointBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              com.suda.federate.rpc.FederateCommon.Point, com.suda.federate.rpc.FederateCommon.Point.Builder, com.suda.federate.rpc.FederateCommon.PointOrBuilder>(
+                  getPoint(),
+                  getParentForChildren(),
+                  isClean());
+          point_ = null;
+        }
+        return pointBuilder_;
+      }
+
       private int id_ ;
       /**
-       * <code>optional int32 id = 9;</code>
+       * <code>optional int32 id = 2;</code>
        * @return Whether the id field is set.
        */
       @java.lang.Override
       public boolean hasId() {
-        return ((bitField0_ & 0x00000001) != 0);
+        return ((bitField0_ & 0x00000002) != 0);
       }
       /**
-       * <code>optional int32 id = 9;</code>
+       * <code>optional int32 id = 2;</code>
        * @return The id.
        */
       @java.lang.Override
@@ -1477,22 +1597,22 @@ public final class FederateService {
         return id_;
       }
       /**
-       * <code>optional int32 id = 9;</code>
+       * <code>optional int32 id = 2;</code>
        * @param value The id to set.
        * @return This builder for chaining.
        */
       public Builder setId(int value) {
-        bitField0_ |= 0x00000001;
+        bitField0_ |= 0x00000002;
         id_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>optional int32 id = 9;</code>
+       * <code>optional int32 id = 2;</code>
        * @return This builder for chaining.
        */
       public Builder clearId() {
-        bitField0_ = (bitField0_ & ~0x00000001);
+        bitField0_ = (bitField0_ & ~0x00000002);
         id_ = 0;
         onChanged();
         return this;
@@ -1500,29 +1620,29 @@ public final class FederateService {
 
       private com.google.protobuf.Internal.IntList idList_ = emptyIntList();
       private void ensureIdListIsMutable() {
-        if (!((bitField0_ & 0x00000002) != 0)) {
+        if (!((bitField0_ & 0x00000004) != 0)) {
           idList_ = mutableCopy(idList_);
-          bitField0_ |= 0x00000002;
+          bitField0_ |= 0x00000004;
          }
       }
       /**
-       * <code>repeated int32 idList = 10;</code>
+       * <code>repeated int32 idList = 3;</code>
        * @return A list containing the idList.
        */
       public java.util.List<java.lang.Integer>
           getIdListList() {
-        return ((bitField0_ & 0x00000002) != 0) ?
+        return ((bitField0_ & 0x00000004) != 0) ?
                  java.util.Collections.unmodifiableList(idList_) : idList_;
       }
       /**
-       * <code>repeated int32 idList = 10;</code>
+       * <code>repeated int32 idList = 3;</code>
        * @return The count of idList.
        */
       public int getIdListCount() {
         return idList_.size();
       }
       /**
-       * <code>repeated int32 idList = 10;</code>
+       * <code>repeated int32 idList = 3;</code>
        * @param index The index of the element to return.
        * @return The idList at the given index.
        */
@@ -1530,7 +1650,7 @@ public final class FederateService {
         return idList_.getInt(index);
       }
       /**
-       * <code>repeated int32 idList = 10;</code>
+       * <code>repeated int32 idList = 3;</code>
        * @param index The index to set the value at.
        * @param value The idList to set.
        * @return This builder for chaining.
@@ -1543,7 +1663,7 @@ public final class FederateService {
         return this;
       }
       /**
-       * <code>repeated int32 idList = 10;</code>
+       * <code>repeated int32 idList = 3;</code>
        * @param value The idList to add.
        * @return This builder for chaining.
        */
@@ -1554,7 +1674,7 @@ public final class FederateService {
         return this;
       }
       /**
-       * <code>repeated int32 idList = 10;</code>
+       * <code>repeated int32 idList = 3;</code>
        * @param values The idList to add.
        * @return This builder for chaining.
        */
@@ -1567,27 +1687,27 @@ public final class FederateService {
         return this;
       }
       /**
-       * <code>repeated int32 idList = 10;</code>
+       * <code>repeated int32 idList = 3;</code>
        * @return This builder for chaining.
        */
       public Builder clearIdList() {
         idList_ = emptyIntList();
-        bitField0_ = (bitField0_ & ~0x00000002);
+        bitField0_ = (bitField0_ & ~0x00000004);
         onChanged();
         return this;
       }
 
       private int t_ ;
       /**
-       * <code>optional int32 t = 8;</code>
+       * <code>optional int32 t = 4;</code>
        * @return Whether the t field is set.
        */
       @java.lang.Override
       public boolean hasT() {
-        return ((bitField0_ & 0x00000004) != 0);
+        return ((bitField0_ & 0x00000008) != 0);
       }
       /**
-       * <code>optional int32 t = 8;</code>
+       * <code>optional int32 t = 4;</code>
        * @return The t.
        */
       @java.lang.Override
@@ -1595,22 +1715,22 @@ public final class FederateService {
         return t_;
       }
       /**
-       * <code>optional int32 t = 8;</code>
+       * <code>optional int32 t = 4;</code>
        * @param value The t to set.
        * @return This builder for chaining.
        */
       public Builder setT(int value) {
-        bitField0_ |= 0x00000004;
+        bitField0_ |= 0x00000008;
         t_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>optional int32 t = 8;</code>
+       * <code>optional int32 t = 4;</code>
        * @return This builder for chaining.
        */
       public Builder clearT() {
-        bitField0_ = (bitField0_ & ~0x00000004);
+        bitField0_ = (bitField0_ & ~0x00000008);
         t_ = 0;
         onChanged();
         return this;
@@ -1618,14 +1738,14 @@ public final class FederateService {
 
       private java.lang.Object function_ = "";
       /**
-       * <code>required string function = 1;</code>
+       * <code>required string function = 5;</code>
        * @return Whether the function field is set.
        */
       public boolean hasFunction() {
-        return ((bitField0_ & 0x00000008) != 0);
+        return ((bitField0_ & 0x00000010) != 0);
       }
       /**
-       * <code>required string function = 1;</code>
+       * <code>required string function = 5;</code>
        * @return The function.
        */
       public java.lang.String getFunction() {
@@ -1643,7 +1763,7 @@ public final class FederateService {
         }
       }
       /**
-       * <code>required string function = 1;</code>
+       * <code>required string function = 5;</code>
        * @return The bytes for function.
        */
       public com.google.protobuf.ByteString
@@ -1660,7 +1780,7 @@ public final class FederateService {
         }
       }
       /**
-       * <code>required string function = 1;</code>
+       * <code>required string function = 5;</code>
        * @param value The function to set.
        * @return This builder for chaining.
        */
@@ -1669,23 +1789,23 @@ public final class FederateService {
         if (value == null) {
     throw new NullPointerException();
   }
-  bitField0_ |= 0x00000008;
+  bitField0_ |= 0x00000010;
         function_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>required string function = 1;</code>
+       * <code>required string function = 5;</code>
        * @return This builder for chaining.
        */
       public Builder clearFunction() {
-        bitField0_ = (bitField0_ & ~0x00000008);
+        bitField0_ = (bitField0_ & ~0x00000010);
         function_ = getDefaultInstance().getFunction();
         onChanged();
         return this;
       }
       /**
-       * <code>required string function = 1;</code>
+       * <code>required string function = 5;</code>
        * @param value The bytes for function to set.
        * @return This builder for chaining.
        */
@@ -1694,142 +1814,22 @@ public final class FederateService {
         if (value == null) {
     throw new NullPointerException();
   }
-  bitField0_ |= 0x00000008;
+  bitField0_ |= 0x00000010;
         function_ = value;
         onChanged();
         return this;
       }
 
-      private com.suda.federate.rpc.FederateCommon.Point point_;
-      private com.google.protobuf.SingleFieldBuilderV3<
-          com.suda.federate.rpc.FederateCommon.Point, com.suda.federate.rpc.FederateCommon.Point.Builder, com.suda.federate.rpc.FederateCommon.PointOrBuilder> pointBuilder_;
-      /**
-       * <code>required .federate.Point point = 2;</code>
-       * @return Whether the point field is set.
-       */
-      public boolean hasPoint() {
-        return ((bitField0_ & 0x00000010) != 0);
-      }
-      /**
-       * <code>required .federate.Point point = 2;</code>
-       * @return The point.
-       */
-      public com.suda.federate.rpc.FederateCommon.Point getPoint() {
-        if (pointBuilder_ == null) {
-          return point_ == null ? com.suda.federate.rpc.FederateCommon.Point.getDefaultInstance() : point_;
-        } else {
-          return pointBuilder_.getMessage();
-        }
-      }
-      /**
-       * <code>required .federate.Point point = 2;</code>
-       */
-      public Builder setPoint(com.suda.federate.rpc.FederateCommon.Point value) {
-        if (pointBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          point_ = value;
-          onChanged();
-        } else {
-          pointBuilder_.setMessage(value);
-        }
-        bitField0_ |= 0x00000010;
-        return this;
-      }
-      /**
-       * <code>required .federate.Point point = 2;</code>
-       */
-      public Builder setPoint(
-          com.suda.federate.rpc.FederateCommon.Point.Builder builderForValue) {
-        if (pointBuilder_ == null) {
-          point_ = builderForValue.build();
-          onChanged();
-        } else {
-          pointBuilder_.setMessage(builderForValue.build());
-        }
-        bitField0_ |= 0x00000010;
-        return this;
-      }
-      /**
-       * <code>required .federate.Point point = 2;</code>
-       */
-      public Builder mergePoint(com.suda.federate.rpc.FederateCommon.Point value) {
-        if (pointBuilder_ == null) {
-          if (((bitField0_ & 0x00000010) != 0) &&
-              point_ != null &&
-              point_ != com.suda.federate.rpc.FederateCommon.Point.getDefaultInstance()) {
-            point_ =
-              com.suda.federate.rpc.FederateCommon.Point.newBuilder(point_).mergeFrom(value).buildPartial();
-          } else {
-            point_ = value;
-          }
-          onChanged();
-        } else {
-          pointBuilder_.mergeFrom(value);
-        }
-        bitField0_ |= 0x00000010;
-        return this;
-      }
-      /**
-       * <code>required .federate.Point point = 2;</code>
-       */
-      public Builder clearPoint() {
-        if (pointBuilder_ == null) {
-          point_ = null;
-          onChanged();
-        } else {
-          pointBuilder_.clear();
-        }
-        bitField0_ = (bitField0_ & ~0x00000010);
-        return this;
-      }
-      /**
-       * <code>required .federate.Point point = 2;</code>
-       */
-      public com.suda.federate.rpc.FederateCommon.Point.Builder getPointBuilder() {
-        bitField0_ |= 0x00000010;
-        onChanged();
-        return getPointFieldBuilder().getBuilder();
-      }
-      /**
-       * <code>required .federate.Point point = 2;</code>
-       */
-      public com.suda.federate.rpc.FederateCommon.PointOrBuilder getPointOrBuilder() {
-        if (pointBuilder_ != null) {
-          return pointBuilder_.getMessageOrBuilder();
-        } else {
-          return point_ == null ?
-              com.suda.federate.rpc.FederateCommon.Point.getDefaultInstance() : point_;
-        }
-      }
-      /**
-       * <code>required .federate.Point point = 2;</code>
-       */
-      private com.google.protobuf.SingleFieldBuilderV3<
-          com.suda.federate.rpc.FederateCommon.Point, com.suda.federate.rpc.FederateCommon.Point.Builder, com.suda.federate.rpc.FederateCommon.PointOrBuilder> 
-          getPointFieldBuilder() {
-        if (pointBuilder_ == null) {
-          pointBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-              com.suda.federate.rpc.FederateCommon.Point, com.suda.federate.rpc.FederateCommon.Point.Builder, com.suda.federate.rpc.FederateCommon.PointOrBuilder>(
-                  getPoint(),
-                  getParentForChildren(),
-                  isClean());
-          point_ = null;
-        }
-        return pointBuilder_;
-      }
-
       private java.lang.Object table_ = "";
       /**
-       * <code>required string table = 7;</code>
+       * <code>required string table = 6;</code>
        * @return Whether the table field is set.
        */
       public boolean hasTable() {
         return ((bitField0_ & 0x00000020) != 0);
       }
       /**
-       * <code>required string table = 7;</code>
+       * <code>required string table = 6;</code>
        * @return The table.
        */
       public java.lang.String getTable() {
@@ -1847,7 +1847,7 @@ public final class FederateService {
         }
       }
       /**
-       * <code>required string table = 7;</code>
+       * <code>required string table = 6;</code>
        * @return The bytes for table.
        */
       public com.google.protobuf.ByteString
@@ -1864,7 +1864,7 @@ public final class FederateService {
         }
       }
       /**
-       * <code>required string table = 7;</code>
+       * <code>required string table = 6;</code>
        * @param value The table to set.
        * @return This builder for chaining.
        */
@@ -1879,7 +1879,7 @@ public final class FederateService {
         return this;
       }
       /**
-       * <code>required string table = 7;</code>
+       * <code>required string table = 6;</code>
        * @return This builder for chaining.
        */
       public Builder clearTable() {
@@ -1889,7 +1889,7 @@ public final class FederateService {
         return this;
       }
       /**
-       * <code>required string table = 7;</code>
+       * <code>required string table = 6;</code>
        * @param value The bytes for table to set.
        * @return This builder for chaining.
        */
@@ -1906,7 +1906,7 @@ public final class FederateService {
 
       private double literal_ ;
       /**
-       * <code>required double literal = 3;</code>
+       * <code>required double literal = 7;</code>
        * @return Whether the literal field is set.
        */
       @java.lang.Override
@@ -1914,7 +1914,7 @@ public final class FederateService {
         return ((bitField0_ & 0x00000040) != 0);
       }
       /**
-       * <code>required double literal = 3;</code>
+       * <code>required double literal = 7;</code>
        * @return The literal.
        */
       @java.lang.Override
@@ -1922,7 +1922,7 @@ public final class FederateService {
         return literal_;
       }
       /**
-       * <code>required double literal = 3;</code>
+       * <code>required double literal = 7;</code>
        * @param value The literal to set.
        * @return This builder for chaining.
        */
@@ -1933,7 +1933,7 @@ public final class FederateService {
         return this;
       }
       /**
-       * <code>required double literal = 3;</code>
+       * <code>required double literal = 7;</code>
        * @return This builder for chaining.
        */
       public Builder clearLiteral() {
@@ -1945,7 +1945,7 @@ public final class FederateService {
 
       private int fetch_ ;
       /**
-       * <code>optional int32 fetch = 4 [default = 0];</code>
+       * <code>optional int32 fetch = 8 [default = 0];</code>
        * @return Whether the fetch field is set.
        */
       @java.lang.Override
@@ -1953,7 +1953,7 @@ public final class FederateService {
         return ((bitField0_ & 0x00000080) != 0);
       }
       /**
-       * <code>optional int32 fetch = 4 [default = 0];</code>
+       * <code>optional int32 fetch = 8 [default = 0];</code>
        * @return The fetch.
        */
       @java.lang.Override
@@ -1961,7 +1961,7 @@ public final class FederateService {
         return fetch_;
       }
       /**
-       * <code>optional int32 fetch = 4 [default = 0];</code>
+       * <code>optional int32 fetch = 8 [default = 0];</code>
        * @param value The fetch to set.
        * @return This builder for chaining.
        */
@@ -1972,7 +1972,7 @@ public final class FederateService {
         return this;
       }
       /**
-       * <code>optional int32 fetch = 4 [default = 0];</code>
+       * <code>optional int32 fetch = 8 [default = 0];</code>
        * @return This builder for chaining.
        */
       public Builder clearFetch() {
@@ -1990,7 +1990,7 @@ public final class FederateService {
          }
       }
       /**
-       * <code>repeated string order = 5;</code>
+       * <code>repeated string order = 9;</code>
        * @return A list containing the order.
        */
       public com.google.protobuf.ProtocolStringList
@@ -1998,14 +1998,14 @@ public final class FederateService {
         return order_.getUnmodifiableView();
       }
       /**
-       * <code>repeated string order = 5;</code>
+       * <code>repeated string order = 9;</code>
        * @return The count of order.
        */
       public int getOrderCount() {
         return order_.size();
       }
       /**
-       * <code>repeated string order = 5;</code>
+       * <code>repeated string order = 9;</code>
        * @param index The index of the element to return.
        * @return The order at the given index.
        */
@@ -2013,7 +2013,7 @@ public final class FederateService {
         return order_.get(index);
       }
       /**
-       * <code>repeated string order = 5;</code>
+       * <code>repeated string order = 9;</code>
        * @param index The index of the value to return.
        * @return The bytes of the order at the given index.
        */
@@ -2022,7 +2022,7 @@ public final class FederateService {
         return order_.getByteString(index);
       }
       /**
-       * <code>repeated string order = 5;</code>
+       * <code>repeated string order = 9;</code>
        * @param index The index to set the value at.
        * @param value The order to set.
        * @return This builder for chaining.
@@ -2038,7 +2038,7 @@ public final class FederateService {
         return this;
       }
       /**
-       * <code>repeated string order = 5;</code>
+       * <code>repeated string order = 9;</code>
        * @param value The order to add.
        * @return This builder for chaining.
        */
@@ -2053,7 +2053,7 @@ public final class FederateService {
         return this;
       }
       /**
-       * <code>repeated string order = 5;</code>
+       * <code>repeated string order = 9;</code>
        * @param values The order to add.
        * @return This builder for chaining.
        */
@@ -2066,7 +2066,7 @@ public final class FederateService {
         return this;
       }
       /**
-       * <code>repeated string order = 5;</code>
+       * <code>repeated string order = 9;</code>
        * @return This builder for chaining.
        */
       public Builder clearOrder() {
@@ -2076,7 +2076,7 @@ public final class FederateService {
         return this;
       }
       /**
-       * <code>repeated string order = 5;</code>
+       * <code>repeated string order = 9;</code>
        * @param value The bytes of the order to add.
        * @return This builder for chaining.
        */
@@ -2093,14 +2093,14 @@ public final class FederateService {
 
       private java.lang.Object groupby_ = "";
       /**
-       * <code>optional string groupby = 6;</code>
+       * <code>optional string groupby = 10;</code>
        * @return Whether the groupby field is set.
        */
       public boolean hasGroupby() {
         return ((bitField0_ & 0x00000200) != 0);
       }
       /**
-       * <code>optional string groupby = 6;</code>
+       * <code>optional string groupby = 10;</code>
        * @return The groupby.
        */
       public java.lang.String getGroupby() {
@@ -2118,7 +2118,7 @@ public final class FederateService {
         }
       }
       /**
-       * <code>optional string groupby = 6;</code>
+       * <code>optional string groupby = 10;</code>
        * @return The bytes for groupby.
        */
       public com.google.protobuf.ByteString
@@ -2135,7 +2135,7 @@ public final class FederateService {
         }
       }
       /**
-       * <code>optional string groupby = 6;</code>
+       * <code>optional string groupby = 10;</code>
        * @param value The groupby to set.
        * @return This builder for chaining.
        */
@@ -2150,7 +2150,7 @@ public final class FederateService {
         return this;
       }
       /**
-       * <code>optional string groupby = 6;</code>
+       * <code>optional string groupby = 10;</code>
        * @return This builder for chaining.
        */
       public Builder clearGroupby() {
@@ -2160,7 +2160,7 @@ public final class FederateService {
         return this;
       }
       /**
-       * <code>optional string groupby = 6;</code>
+       * <code>optional string groupby = 10;</code>
        * @param value The bytes for groupby to set.
        * @return This builder for chaining.
        */
@@ -2344,7 +2344,7 @@ public final class FederateService {
      * loop=0,1 loop==1&amp;&amp; index==endpoints.length结束
      * </pre>
      *
-     * <code>required int32 loop = 4;</code>
+     * <code>required int32 loop = 2;</code>
      * @return Whether the loop field is set.
      */
     boolean hasLoop();
@@ -2353,7 +2353,7 @@ public final class FederateService {
      * loop=0,1 loop==1&amp;&amp; index==endpoints.length结束
      * </pre>
      *
-     * <code>required int32 loop = 4;</code>
+     * <code>required int32 loop = 2;</code>
      * @return The loop.
      */
     int getLoop();
@@ -2363,7 +2363,7 @@ public final class FederateService {
      *记录loop的顺序,且 完成的设为 negative
      * </pre>
      *
-     * <code>required int32 index = 2 [default = 0];</code>
+     * <code>required int32 index = 3 [default = 0];</code>
      * @return Whether the index field is set.
      */
     boolean hasIndex();
@@ -2372,7 +2372,7 @@ public final class FederateService {
      *记录loop的顺序,且 完成的设为 negative
      * </pre>
      *
-     * <code>required int32 index = 2 [default = 0];</code>
+     * <code>required int32 index = 3 [default = 0];</code>
      * @return The index.
      */
     int getIndex();
@@ -2382,7 +2382,7 @@ public final class FederateService {
      *RangeQuery时就把id发出去，endpoints[index]，各silo和master一样，也保存一份federateClientMap
      * </pre>
      *
-     * <code>repeated string endpoints = 3;</code>
+     * <code>repeated string endpoints = 4;</code>
      * @return A list containing the endpoints.
      */
     java.util.List<java.lang.String>
@@ -2392,7 +2392,7 @@ public final class FederateService {
      *RangeQuery时就把id发出去，endpoints[index]，各silo和master一样，也保存一份federateClientMap
      * </pre>
      *
-     * <code>repeated string endpoints = 3;</code>
+     * <code>repeated string endpoints = 4;</code>
      * @return The count of endpoints.
      */
     int getEndpointsCount();
@@ -2401,7 +2401,7 @@ public final class FederateService {
      *RangeQuery时就把id发出去，endpoints[index]，各silo和master一样，也保存一份federateClientMap
      * </pre>
      *
-     * <code>repeated string endpoints = 3;</code>
+     * <code>repeated string endpoints = 4;</code>
      * @param index The index of the element to return.
      * @return The endpoints at the given index.
      */
@@ -2411,7 +2411,7 @@ public final class FederateService {
      *RangeQuery时就把id发出去，endpoints[index]，各silo和master一样，也保存一份federateClientMap
      * </pre>
      *
-     * <code>repeated string endpoints = 3;</code>
+     * <code>repeated string endpoints = 4;</code>
      * @param index The index of the value to return.
      * @return The bytes of the endpoints at the given index.
      */
@@ -2506,22 +2506,22 @@ public final class FederateService {
               break;
             }
             case 16: {
+              bitField0_ |= 0x00000001;
+              loop_ = input.readInt32();
+              break;
+            }
+            case 24: {
               bitField0_ |= 0x00000002;
               index_ = input.readInt32();
               break;
             }
-            case 26: {
+            case 34: {
               com.google.protobuf.ByteString bs = input.readBytes();
               if (!((mutable_bitField0_ & 0x00000008) != 0)) {
                 endpoints_ = new com.google.protobuf.LazyStringArrayList();
                 mutable_bitField0_ |= 0x00000008;
               }
               endpoints_.add(bs);
-              break;
-            }
-            case 32: {
-              bitField0_ |= 0x00000001;
-              loop_ = input.readInt32();
               break;
             }
             case 42: {
@@ -2609,14 +2609,14 @@ public final class FederateService {
       return point_.get(index);
     }
 
-    public static final int LOOP_FIELD_NUMBER = 4;
+    public static final int LOOP_FIELD_NUMBER = 2;
     private int loop_;
     /**
      * <pre>
      * loop=0,1 loop==1&amp;&amp; index==endpoints.length结束
      * </pre>
      *
-     * <code>required int32 loop = 4;</code>
+     * <code>required int32 loop = 2;</code>
      * @return Whether the loop field is set.
      */
     @java.lang.Override
@@ -2628,7 +2628,7 @@ public final class FederateService {
      * loop=0,1 loop==1&amp;&amp; index==endpoints.length结束
      * </pre>
      *
-     * <code>required int32 loop = 4;</code>
+     * <code>required int32 loop = 2;</code>
      * @return The loop.
      */
     @java.lang.Override
@@ -2636,14 +2636,14 @@ public final class FederateService {
       return loop_;
     }
 
-    public static final int INDEX_FIELD_NUMBER = 2;
+    public static final int INDEX_FIELD_NUMBER = 3;
     private int index_;
     /**
      * <pre>
      *记录loop的顺序,且 完成的设为 negative
      * </pre>
      *
-     * <code>required int32 index = 2 [default = 0];</code>
+     * <code>required int32 index = 3 [default = 0];</code>
      * @return Whether the index field is set.
      */
     @java.lang.Override
@@ -2655,7 +2655,7 @@ public final class FederateService {
      *记录loop的顺序,且 完成的设为 negative
      * </pre>
      *
-     * <code>required int32 index = 2 [default = 0];</code>
+     * <code>required int32 index = 3 [default = 0];</code>
      * @return The index.
      */
     @java.lang.Override
@@ -2663,14 +2663,14 @@ public final class FederateService {
       return index_;
     }
 
-    public static final int ENDPOINTS_FIELD_NUMBER = 3;
+    public static final int ENDPOINTS_FIELD_NUMBER = 4;
     private com.google.protobuf.LazyStringList endpoints_;
     /**
      * <pre>
      *RangeQuery时就把id发出去，endpoints[index]，各silo和master一样，也保存一份federateClientMap
      * </pre>
      *
-     * <code>repeated string endpoints = 3;</code>
+     * <code>repeated string endpoints = 4;</code>
      * @return A list containing the endpoints.
      */
     public com.google.protobuf.ProtocolStringList
@@ -2682,7 +2682,7 @@ public final class FederateService {
      *RangeQuery时就把id发出去，endpoints[index]，各silo和master一样，也保存一份federateClientMap
      * </pre>
      *
-     * <code>repeated string endpoints = 3;</code>
+     * <code>repeated string endpoints = 4;</code>
      * @return The count of endpoints.
      */
     public int getEndpointsCount() {
@@ -2693,7 +2693,7 @@ public final class FederateService {
      *RangeQuery时就把id发出去，endpoints[index]，各silo和master一样，也保存一份federateClientMap
      * </pre>
      *
-     * <code>repeated string endpoints = 3;</code>
+     * <code>repeated string endpoints = 4;</code>
      * @param index The index of the element to return.
      * @return The endpoints at the given index.
      */
@@ -2705,7 +2705,7 @@ public final class FederateService {
      *RangeQuery时就把id发出去，endpoints[index]，各silo和master一样，也保存一份federateClientMap
      * </pre>
      *
-     * <code>repeated string endpoints = 3;</code>
+     * <code>repeated string endpoints = 4;</code>
      * @param index The index of the value to return.
      * @return The bytes of the endpoints at the given index.
      */
@@ -2809,14 +2809,14 @@ public final class FederateService {
       for (int i = 0; i < point_.size(); i++) {
         output.writeMessage(1, point_.get(i));
       }
+      if (((bitField0_ & 0x00000001) != 0)) {
+        output.writeInt32(2, loop_);
+      }
       if (((bitField0_ & 0x00000002) != 0)) {
-        output.writeInt32(2, index_);
+        output.writeInt32(3, index_);
       }
       for (int i = 0; i < endpoints_.size(); i++) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 3, endpoints_.getRaw(i));
-      }
-      if (((bitField0_ & 0x00000001) != 0)) {
-        output.writeInt32(4, loop_);
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 4, endpoints_.getRaw(i));
       }
       if (((bitField0_ & 0x00000004) != 0)) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 5, uuid_);
@@ -2834,9 +2834,13 @@ public final class FederateService {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(1, point_.get(i));
       }
+      if (((bitField0_ & 0x00000001) != 0)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(2, loop_);
+      }
       if (((bitField0_ & 0x00000002) != 0)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(2, index_);
+          .computeInt32Size(3, index_);
       }
       {
         int dataSize = 0;
@@ -2845,10 +2849,6 @@ public final class FederateService {
         }
         size += dataSize;
         size += 1 * getEndpointsList().size();
-      }
-      if (((bitField0_ & 0x00000001) != 0)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(4, loop_);
       }
       if (((bitField0_ & 0x00000004) != 0)) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, uuid_);
@@ -3506,7 +3506,7 @@ public final class FederateService {
        * loop=0,1 loop==1&amp;&amp; index==endpoints.length结束
        * </pre>
        *
-       * <code>required int32 loop = 4;</code>
+       * <code>required int32 loop = 2;</code>
        * @return Whether the loop field is set.
        */
       @java.lang.Override
@@ -3518,7 +3518,7 @@ public final class FederateService {
        * loop=0,1 loop==1&amp;&amp; index==endpoints.length结束
        * </pre>
        *
-       * <code>required int32 loop = 4;</code>
+       * <code>required int32 loop = 2;</code>
        * @return The loop.
        */
       @java.lang.Override
@@ -3530,7 +3530,7 @@ public final class FederateService {
        * loop=0,1 loop==1&amp;&amp; index==endpoints.length结束
        * </pre>
        *
-       * <code>required int32 loop = 4;</code>
+       * <code>required int32 loop = 2;</code>
        * @param value The loop to set.
        * @return This builder for chaining.
        */
@@ -3545,7 +3545,7 @@ public final class FederateService {
        * loop=0,1 loop==1&amp;&amp; index==endpoints.length结束
        * </pre>
        *
-       * <code>required int32 loop = 4;</code>
+       * <code>required int32 loop = 2;</code>
        * @return This builder for chaining.
        */
       public Builder clearLoop() {
@@ -3561,7 +3561,7 @@ public final class FederateService {
        *记录loop的顺序,且 完成的设为 negative
        * </pre>
        *
-       * <code>required int32 index = 2 [default = 0];</code>
+       * <code>required int32 index = 3 [default = 0];</code>
        * @return Whether the index field is set.
        */
       @java.lang.Override
@@ -3573,7 +3573,7 @@ public final class FederateService {
        *记录loop的顺序,且 完成的设为 negative
        * </pre>
        *
-       * <code>required int32 index = 2 [default = 0];</code>
+       * <code>required int32 index = 3 [default = 0];</code>
        * @return The index.
        */
       @java.lang.Override
@@ -3585,7 +3585,7 @@ public final class FederateService {
        *记录loop的顺序,且 完成的设为 negative
        * </pre>
        *
-       * <code>required int32 index = 2 [default = 0];</code>
+       * <code>required int32 index = 3 [default = 0];</code>
        * @param value The index to set.
        * @return This builder for chaining.
        */
@@ -3600,7 +3600,7 @@ public final class FederateService {
        *记录loop的顺序,且 完成的设为 negative
        * </pre>
        *
-       * <code>required int32 index = 2 [default = 0];</code>
+       * <code>required int32 index = 3 [default = 0];</code>
        * @return This builder for chaining.
        */
       public Builder clearIndex() {
@@ -3622,7 +3622,7 @@ public final class FederateService {
        *RangeQuery时就把id发出去，endpoints[index]，各silo和master一样，也保存一份federateClientMap
        * </pre>
        *
-       * <code>repeated string endpoints = 3;</code>
+       * <code>repeated string endpoints = 4;</code>
        * @return A list containing the endpoints.
        */
       public com.google.protobuf.ProtocolStringList
@@ -3634,7 +3634,7 @@ public final class FederateService {
        *RangeQuery时就把id发出去，endpoints[index]，各silo和master一样，也保存一份federateClientMap
        * </pre>
        *
-       * <code>repeated string endpoints = 3;</code>
+       * <code>repeated string endpoints = 4;</code>
        * @return The count of endpoints.
        */
       public int getEndpointsCount() {
@@ -3645,7 +3645,7 @@ public final class FederateService {
        *RangeQuery时就把id发出去，endpoints[index]，各silo和master一样，也保存一份federateClientMap
        * </pre>
        *
-       * <code>repeated string endpoints = 3;</code>
+       * <code>repeated string endpoints = 4;</code>
        * @param index The index of the element to return.
        * @return The endpoints at the given index.
        */
@@ -3657,7 +3657,7 @@ public final class FederateService {
        *RangeQuery时就把id发出去，endpoints[index]，各silo和master一样，也保存一份federateClientMap
        * </pre>
        *
-       * <code>repeated string endpoints = 3;</code>
+       * <code>repeated string endpoints = 4;</code>
        * @param index The index of the value to return.
        * @return The bytes of the endpoints at the given index.
        */
@@ -3670,7 +3670,7 @@ public final class FederateService {
        *RangeQuery时就把id发出去，endpoints[index]，各silo和master一样，也保存一份federateClientMap
        * </pre>
        *
-       * <code>repeated string endpoints = 3;</code>
+       * <code>repeated string endpoints = 4;</code>
        * @param index The index to set the value at.
        * @param value The endpoints to set.
        * @return This builder for chaining.
@@ -3690,7 +3690,7 @@ public final class FederateService {
        *RangeQuery时就把id发出去，endpoints[index]，各silo和master一样，也保存一份federateClientMap
        * </pre>
        *
-       * <code>repeated string endpoints = 3;</code>
+       * <code>repeated string endpoints = 4;</code>
        * @param value The endpoints to add.
        * @return This builder for chaining.
        */
@@ -3709,7 +3709,7 @@ public final class FederateService {
        *RangeQuery时就把id发出去，endpoints[index]，各silo和master一样，也保存一份federateClientMap
        * </pre>
        *
-       * <code>repeated string endpoints = 3;</code>
+       * <code>repeated string endpoints = 4;</code>
        * @param values The endpoints to add.
        * @return This builder for chaining.
        */
@@ -3726,7 +3726,7 @@ public final class FederateService {
        *RangeQuery时就把id发出去，endpoints[index]，各silo和master一样，也保存一份federateClientMap
        * </pre>
        *
-       * <code>repeated string endpoints = 3;</code>
+       * <code>repeated string endpoints = 4;</code>
        * @return This builder for chaining.
        */
       public Builder clearEndpoints() {
@@ -3740,7 +3740,7 @@ public final class FederateService {
        *RangeQuery时就把id发出去，endpoints[index]，各silo和master一样，也保存一份federateClientMap
        * </pre>
        *
-       * <code>repeated string endpoints = 3;</code>
+       * <code>repeated string endpoints = 4;</code>
        * @param value The bytes of the endpoints to add.
        * @return This builder for chaining.
        */
@@ -3948,7 +3948,7 @@ public final class FederateService {
      * loop=0,1 loop==1&amp;&amp; index==endpoints.length结束
      * </pre>
      *
-     * <code>required int32 loop = 4;</code>
+     * <code>required int32 loop = 2;</code>
      * @return Whether the loop field is set.
      */
     boolean hasLoop();
@@ -3957,7 +3957,7 @@ public final class FederateService {
      * loop=0,1 loop==1&amp;&amp; index==endpoints.length结束
      * </pre>
      *
-     * <code>required int32 loop = 4;</code>
+     * <code>required int32 loop = 2;</code>
      * @return The loop.
      */
     int getLoop();
@@ -3967,7 +3967,7 @@ public final class FederateService {
      *记录loop的顺序,且 完成的设为 negative
      * </pre>
      *
-     * <code>required int32 index = 2 [default = 0];</code>
+     * <code>required int32 index = 3 [default = 0];</code>
      * @return Whether the index field is set.
      */
     boolean hasIndex();
@@ -3976,7 +3976,7 @@ public final class FederateService {
      *记录loop的顺序,且 完成的设为 negative
      * </pre>
      *
-     * <code>required int32 index = 2 [default = 0];</code>
+     * <code>required int32 index = 3 [default = 0];</code>
      * @return The index.
      */
     int getIndex();
@@ -3986,7 +3986,7 @@ public final class FederateService {
      *RangeQuery时就把id发出去，endpoints[index]，各silo和master一样，也保存一份federateClientMap
      * </pre>
      *
-     * <code>repeated string endpoints = 3;</code>
+     * <code>repeated string endpoints = 4;</code>
      * @return A list containing the endpoints.
      */
     java.util.List<java.lang.String>
@@ -3996,7 +3996,7 @@ public final class FederateService {
      *RangeQuery时就把id发出去，endpoints[index]，各silo和master一样，也保存一份federateClientMap
      * </pre>
      *
-     * <code>repeated string endpoints = 3;</code>
+     * <code>repeated string endpoints = 4;</code>
      * @return The count of endpoints.
      */
     int getEndpointsCount();
@@ -4005,7 +4005,7 @@ public final class FederateService {
      *RangeQuery时就把id发出去，endpoints[index]，各silo和master一样，也保存一份federateClientMap
      * </pre>
      *
-     * <code>repeated string endpoints = 3;</code>
+     * <code>repeated string endpoints = 4;</code>
      * @param index The index of the element to return.
      * @return The endpoints at the given index.
      */
@@ -4015,7 +4015,7 @@ public final class FederateService {
      *RangeQuery时就把id发出去，endpoints[index]，各silo和master一样，也保存一份federateClientMap
      * </pre>
      *
-     * <code>repeated string endpoints = 3;</code>
+     * <code>repeated string endpoints = 4;</code>
      * @param index The index of the value to return.
      * @return The bytes of the endpoints at the given index.
      */
@@ -4110,22 +4110,22 @@ public final class FederateService {
               break;
             }
             case 16: {
+              bitField0_ |= 0x00000001;
+              loop_ = input.readInt32();
+              break;
+            }
+            case 24: {
               bitField0_ |= 0x00000002;
               index_ = input.readInt32();
               break;
             }
-            case 26: {
+            case 34: {
               com.google.protobuf.ByteString bs = input.readBytes();
               if (!((mutable_bitField0_ & 0x00000008) != 0)) {
                 endpoints_ = new com.google.protobuf.LazyStringArrayList();
                 mutable_bitField0_ |= 0x00000008;
               }
               endpoints_.add(bs);
-              break;
-            }
-            case 32: {
-              bitField0_ |= 0x00000001;
-              loop_ = input.readInt32();
               break;
             }
             case 42: {
@@ -4213,14 +4213,14 @@ public final class FederateService {
       return point_.get(index);
     }
 
-    public static final int LOOP_FIELD_NUMBER = 4;
+    public static final int LOOP_FIELD_NUMBER = 2;
     private int loop_;
     /**
      * <pre>
      * loop=0,1 loop==1&amp;&amp; index==endpoints.length结束
      * </pre>
      *
-     * <code>required int32 loop = 4;</code>
+     * <code>required int32 loop = 2;</code>
      * @return Whether the loop field is set.
      */
     @java.lang.Override
@@ -4232,7 +4232,7 @@ public final class FederateService {
      * loop=0,1 loop==1&amp;&amp; index==endpoints.length结束
      * </pre>
      *
-     * <code>required int32 loop = 4;</code>
+     * <code>required int32 loop = 2;</code>
      * @return The loop.
      */
     @java.lang.Override
@@ -4240,14 +4240,14 @@ public final class FederateService {
       return loop_;
     }
 
-    public static final int INDEX_FIELD_NUMBER = 2;
+    public static final int INDEX_FIELD_NUMBER = 3;
     private int index_;
     /**
      * <pre>
      *记录loop的顺序,且 完成的设为 negative
      * </pre>
      *
-     * <code>required int32 index = 2 [default = 0];</code>
+     * <code>required int32 index = 3 [default = 0];</code>
      * @return Whether the index field is set.
      */
     @java.lang.Override
@@ -4259,7 +4259,7 @@ public final class FederateService {
      *记录loop的顺序,且 完成的设为 negative
      * </pre>
      *
-     * <code>required int32 index = 2 [default = 0];</code>
+     * <code>required int32 index = 3 [default = 0];</code>
      * @return The index.
      */
     @java.lang.Override
@@ -4267,14 +4267,14 @@ public final class FederateService {
       return index_;
     }
 
-    public static final int ENDPOINTS_FIELD_NUMBER = 3;
+    public static final int ENDPOINTS_FIELD_NUMBER = 4;
     private com.google.protobuf.LazyStringList endpoints_;
     /**
      * <pre>
      *RangeQuery时就把id发出去，endpoints[index]，各silo和master一样，也保存一份federateClientMap
      * </pre>
      *
-     * <code>repeated string endpoints = 3;</code>
+     * <code>repeated string endpoints = 4;</code>
      * @return A list containing the endpoints.
      */
     public com.google.protobuf.ProtocolStringList
@@ -4286,7 +4286,7 @@ public final class FederateService {
      *RangeQuery时就把id发出去，endpoints[index]，各silo和master一样，也保存一份federateClientMap
      * </pre>
      *
-     * <code>repeated string endpoints = 3;</code>
+     * <code>repeated string endpoints = 4;</code>
      * @return The count of endpoints.
      */
     public int getEndpointsCount() {
@@ -4297,7 +4297,7 @@ public final class FederateService {
      *RangeQuery时就把id发出去，endpoints[index]，各silo和master一样，也保存一份federateClientMap
      * </pre>
      *
-     * <code>repeated string endpoints = 3;</code>
+     * <code>repeated string endpoints = 4;</code>
      * @param index The index of the element to return.
      * @return The endpoints at the given index.
      */
@@ -4309,7 +4309,7 @@ public final class FederateService {
      *RangeQuery时就把id发出去，endpoints[index]，各silo和master一样，也保存一份federateClientMap
      * </pre>
      *
-     * <code>repeated string endpoints = 3;</code>
+     * <code>repeated string endpoints = 4;</code>
      * @param index The index of the value to return.
      * @return The bytes of the endpoints at the given index.
      */
@@ -4413,14 +4413,14 @@ public final class FederateService {
       for (int i = 0; i < point_.size(); i++) {
         output.writeMessage(1, point_.get(i));
       }
+      if (((bitField0_ & 0x00000001) != 0)) {
+        output.writeInt32(2, loop_);
+      }
       if (((bitField0_ & 0x00000002) != 0)) {
-        output.writeInt32(2, index_);
+        output.writeInt32(3, index_);
       }
       for (int i = 0; i < endpoints_.size(); i++) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 3, endpoints_.getRaw(i));
-      }
-      if (((bitField0_ & 0x00000001) != 0)) {
-        output.writeInt32(4, loop_);
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 4, endpoints_.getRaw(i));
       }
       if (((bitField0_ & 0x00000004) != 0)) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 5, uuid_);
@@ -4438,9 +4438,13 @@ public final class FederateService {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(1, point_.get(i));
       }
+      if (((bitField0_ & 0x00000001) != 0)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(2, loop_);
+      }
       if (((bitField0_ & 0x00000002) != 0)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(2, index_);
+          .computeInt32Size(3, index_);
       }
       {
         int dataSize = 0;
@@ -4449,10 +4453,6 @@ public final class FederateService {
         }
         size += dataSize;
         size += 1 * getEndpointsList().size();
-      }
-      if (((bitField0_ & 0x00000001) != 0)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(4, loop_);
       }
       if (((bitField0_ & 0x00000004) != 0)) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, uuid_);
@@ -5110,7 +5110,7 @@ public final class FederateService {
        * loop=0,1 loop==1&amp;&amp; index==endpoints.length结束
        * </pre>
        *
-       * <code>required int32 loop = 4;</code>
+       * <code>required int32 loop = 2;</code>
        * @return Whether the loop field is set.
        */
       @java.lang.Override
@@ -5122,7 +5122,7 @@ public final class FederateService {
        * loop=0,1 loop==1&amp;&amp; index==endpoints.length结束
        * </pre>
        *
-       * <code>required int32 loop = 4;</code>
+       * <code>required int32 loop = 2;</code>
        * @return The loop.
        */
       @java.lang.Override
@@ -5134,7 +5134,7 @@ public final class FederateService {
        * loop=0,1 loop==1&amp;&amp; index==endpoints.length结束
        * </pre>
        *
-       * <code>required int32 loop = 4;</code>
+       * <code>required int32 loop = 2;</code>
        * @param value The loop to set.
        * @return This builder for chaining.
        */
@@ -5149,7 +5149,7 @@ public final class FederateService {
        * loop=0,1 loop==1&amp;&amp; index==endpoints.length结束
        * </pre>
        *
-       * <code>required int32 loop = 4;</code>
+       * <code>required int32 loop = 2;</code>
        * @return This builder for chaining.
        */
       public Builder clearLoop() {
@@ -5165,7 +5165,7 @@ public final class FederateService {
        *记录loop的顺序,且 完成的设为 negative
        * </pre>
        *
-       * <code>required int32 index = 2 [default = 0];</code>
+       * <code>required int32 index = 3 [default = 0];</code>
        * @return Whether the index field is set.
        */
       @java.lang.Override
@@ -5177,7 +5177,7 @@ public final class FederateService {
        *记录loop的顺序,且 完成的设为 negative
        * </pre>
        *
-       * <code>required int32 index = 2 [default = 0];</code>
+       * <code>required int32 index = 3 [default = 0];</code>
        * @return The index.
        */
       @java.lang.Override
@@ -5189,7 +5189,7 @@ public final class FederateService {
        *记录loop的顺序,且 完成的设为 negative
        * </pre>
        *
-       * <code>required int32 index = 2 [default = 0];</code>
+       * <code>required int32 index = 3 [default = 0];</code>
        * @param value The index to set.
        * @return This builder for chaining.
        */
@@ -5204,7 +5204,7 @@ public final class FederateService {
        *记录loop的顺序,且 完成的设为 negative
        * </pre>
        *
-       * <code>required int32 index = 2 [default = 0];</code>
+       * <code>required int32 index = 3 [default = 0];</code>
        * @return This builder for chaining.
        */
       public Builder clearIndex() {
@@ -5226,7 +5226,7 @@ public final class FederateService {
        *RangeQuery时就把id发出去，endpoints[index]，各silo和master一样，也保存一份federateClientMap
        * </pre>
        *
-       * <code>repeated string endpoints = 3;</code>
+       * <code>repeated string endpoints = 4;</code>
        * @return A list containing the endpoints.
        */
       public com.google.protobuf.ProtocolStringList
@@ -5238,7 +5238,7 @@ public final class FederateService {
        *RangeQuery时就把id发出去，endpoints[index]，各silo和master一样，也保存一份federateClientMap
        * </pre>
        *
-       * <code>repeated string endpoints = 3;</code>
+       * <code>repeated string endpoints = 4;</code>
        * @return The count of endpoints.
        */
       public int getEndpointsCount() {
@@ -5249,7 +5249,7 @@ public final class FederateService {
        *RangeQuery时就把id发出去，endpoints[index]，各silo和master一样，也保存一份federateClientMap
        * </pre>
        *
-       * <code>repeated string endpoints = 3;</code>
+       * <code>repeated string endpoints = 4;</code>
        * @param index The index of the element to return.
        * @return The endpoints at the given index.
        */
@@ -5261,7 +5261,7 @@ public final class FederateService {
        *RangeQuery时就把id发出去，endpoints[index]，各silo和master一样，也保存一份federateClientMap
        * </pre>
        *
-       * <code>repeated string endpoints = 3;</code>
+       * <code>repeated string endpoints = 4;</code>
        * @param index The index of the value to return.
        * @return The bytes of the endpoints at the given index.
        */
@@ -5274,7 +5274,7 @@ public final class FederateService {
        *RangeQuery时就把id发出去，endpoints[index]，各silo和master一样，也保存一份federateClientMap
        * </pre>
        *
-       * <code>repeated string endpoints = 3;</code>
+       * <code>repeated string endpoints = 4;</code>
        * @param index The index to set the value at.
        * @param value The endpoints to set.
        * @return This builder for chaining.
@@ -5294,7 +5294,7 @@ public final class FederateService {
        *RangeQuery时就把id发出去，endpoints[index]，各silo和master一样，也保存一份federateClientMap
        * </pre>
        *
-       * <code>repeated string endpoints = 3;</code>
+       * <code>repeated string endpoints = 4;</code>
        * @param value The endpoints to add.
        * @return This builder for chaining.
        */
@@ -5313,7 +5313,7 @@ public final class FederateService {
        *RangeQuery时就把id发出去，endpoints[index]，各silo和master一样，也保存一份federateClientMap
        * </pre>
        *
-       * <code>repeated string endpoints = 3;</code>
+       * <code>repeated string endpoints = 4;</code>
        * @param values The endpoints to add.
        * @return This builder for chaining.
        */
@@ -5330,7 +5330,7 @@ public final class FederateService {
        *RangeQuery时就把id发出去，endpoints[index]，各silo和master一样，也保存一份federateClientMap
        * </pre>
        *
-       * <code>repeated string endpoints = 3;</code>
+       * <code>repeated string endpoints = 4;</code>
        * @return This builder for chaining.
        */
       public Builder clearEndpoints() {
@@ -5344,7 +5344,7 @@ public final class FederateService {
        *RangeQuery时就把id发出去，endpoints[index]，各silo和master一样，也保存一份federateClientMap
        * </pre>
        *
-       * <code>repeated string endpoints = 3;</code>
+       * <code>repeated string endpoints = 4;</code>
        * @param value The bytes of the endpoints to add.
        * @return This builder for chaining.
        */
@@ -8841,29 +8841,28 @@ public final class FederateService {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>repeated string message = 1;</code>
-     * @return A list containing the message.
+     * <code>repeated .federate.Point message = 1;</code>
      */
-    java.util.List<java.lang.String>
+    java.util.List<com.suda.federate.rpc.FederateCommon.Point> 
         getMessageList();
     /**
-     * <code>repeated string message = 1;</code>
-     * @return The count of message.
+     * <code>repeated .federate.Point message = 1;</code>
+     */
+    com.suda.federate.rpc.FederateCommon.Point getMessage(int index);
+    /**
+     * <code>repeated .federate.Point message = 1;</code>
      */
     int getMessageCount();
     /**
-     * <code>repeated string message = 1;</code>
-     * @param index The index of the element to return.
-     * @return The message at the given index.
+     * <code>repeated .federate.Point message = 1;</code>
      */
-    java.lang.String getMessage(int index);
+    java.util.List<? extends com.suda.federate.rpc.FederateCommon.PointOrBuilder> 
+        getMessageOrBuilderList();
     /**
-     * <code>repeated string message = 1;</code>
-     * @param index The index of the value to return.
-     * @return The bytes of the message at the given index.
+     * <code>repeated .federate.Point message = 1;</code>
      */
-    com.google.protobuf.ByteString
-        getMessageBytes(int index);
+    com.suda.federate.rpc.FederateCommon.PointOrBuilder getMessageOrBuilder(
+        int index);
   }
   /**
    * Protobuf type {@code federate.SQLReplyList}
@@ -8878,7 +8877,7 @@ public final class FederateService {
       super(builder);
     }
     private SQLReplyList() {
-      message_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      message_ = java.util.Collections.emptyList();
     }
 
     @java.lang.Override
@@ -8913,12 +8912,12 @@ public final class FederateService {
               done = true;
               break;
             case 10: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               if (!((mutable_bitField0_ & 0x00000001) != 0)) {
-                message_ = new com.google.protobuf.LazyStringArrayList();
+                message_ = new java.util.ArrayList<com.suda.federate.rpc.FederateCommon.Point>();
                 mutable_bitField0_ |= 0x00000001;
               }
-              message_.add(bs);
+              message_.add(
+                  input.readMessage(com.suda.federate.rpc.FederateCommon.Point.PARSER, extensionRegistry));
               break;
             }
             default: {
@@ -8937,7 +8936,7 @@ public final class FederateService {
             e).setUnfinishedMessage(this);
       } finally {
         if (((mutable_bitField0_ & 0x00000001) != 0)) {
-          message_ = message_.getUnmodifiableView();
+          message_ = java.util.Collections.unmodifiableList(message_);
         }
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
@@ -8957,38 +8956,43 @@ public final class FederateService {
     }
 
     public static final int MESSAGE_FIELD_NUMBER = 1;
-    private com.google.protobuf.LazyStringList message_;
+    private java.util.List<com.suda.federate.rpc.FederateCommon.Point> message_;
     /**
-     * <code>repeated string message = 1;</code>
-     * @return A list containing the message.
+     * <code>repeated .federate.Point message = 1;</code>
      */
-    public com.google.protobuf.ProtocolStringList
-        getMessageList() {
+    @java.lang.Override
+    public java.util.List<com.suda.federate.rpc.FederateCommon.Point> getMessageList() {
       return message_;
     }
     /**
-     * <code>repeated string message = 1;</code>
-     * @return The count of message.
+     * <code>repeated .federate.Point message = 1;</code>
      */
+    @java.lang.Override
+    public java.util.List<? extends com.suda.federate.rpc.FederateCommon.PointOrBuilder> 
+        getMessageOrBuilderList() {
+      return message_;
+    }
+    /**
+     * <code>repeated .federate.Point message = 1;</code>
+     */
+    @java.lang.Override
     public int getMessageCount() {
       return message_.size();
     }
     /**
-     * <code>repeated string message = 1;</code>
-     * @param index The index of the element to return.
-     * @return The message at the given index.
+     * <code>repeated .federate.Point message = 1;</code>
      */
-    public java.lang.String getMessage(int index) {
+    @java.lang.Override
+    public com.suda.federate.rpc.FederateCommon.Point getMessage(int index) {
       return message_.get(index);
     }
     /**
-     * <code>repeated string message = 1;</code>
-     * @param index The index of the value to return.
-     * @return The bytes of the message at the given index.
+     * <code>repeated .federate.Point message = 1;</code>
      */
-    public com.google.protobuf.ByteString
-        getMessageBytes(int index) {
-      return message_.getByteString(index);
+    @java.lang.Override
+    public com.suda.federate.rpc.FederateCommon.PointOrBuilder getMessageOrBuilder(
+        int index) {
+      return message_.get(index);
     }
 
     private byte memoizedIsInitialized = -1;
@@ -8998,6 +9002,12 @@ public final class FederateService {
       if (isInitialized == 1) return true;
       if (isInitialized == 0) return false;
 
+      for (int i = 0; i < getMessageCount(); i++) {
+        if (!getMessage(i).isInitialized()) {
+          memoizedIsInitialized = 0;
+          return false;
+        }
+      }
       memoizedIsInitialized = 1;
       return true;
     }
@@ -9006,7 +9016,7 @@ public final class FederateService {
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       for (int i = 0; i < message_.size(); i++) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, message_.getRaw(i));
+        output.writeMessage(1, message_.get(i));
       }
       unknownFields.writeTo(output);
     }
@@ -9017,13 +9027,9 @@ public final class FederateService {
       if (size != -1) return size;
 
       size = 0;
-      {
-        int dataSize = 0;
-        for (int i = 0; i < message_.size(); i++) {
-          dataSize += computeStringSizeNoTag(message_.getRaw(i));
-        }
-        size += dataSize;
-        size += 1 * getMessageList().size();
+      for (int i = 0; i < message_.size(); i++) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(1, message_.get(i));
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -9185,13 +9191,18 @@ public final class FederateService {
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessageV3
                 .alwaysUseFieldBuilders) {
+          getMessageFieldBuilder();
         }
       }
       @java.lang.Override
       public Builder clear() {
         super.clear();
-        message_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-        bitField0_ = (bitField0_ & ~0x00000001);
+        if (messageBuilder_ == null) {
+          message_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000001);
+        } else {
+          messageBuilder_.clear();
+        }
         return this;
       }
 
@@ -9219,11 +9230,15 @@ public final class FederateService {
       public com.suda.federate.rpc.FederateService.SQLReplyList buildPartial() {
         com.suda.federate.rpc.FederateService.SQLReplyList result = new com.suda.federate.rpc.FederateService.SQLReplyList(this);
         int from_bitField0_ = bitField0_;
-        if (((bitField0_ & 0x00000001) != 0)) {
-          message_ = message_.getUnmodifiableView();
-          bitField0_ = (bitField0_ & ~0x00000001);
+        if (messageBuilder_ == null) {
+          if (((bitField0_ & 0x00000001) != 0)) {
+            message_ = java.util.Collections.unmodifiableList(message_);
+            bitField0_ = (bitField0_ & ~0x00000001);
+          }
+          result.message_ = message_;
+        } else {
+          result.message_ = messageBuilder_.build();
         }
-        result.message_ = message_;
         onBuilt();
         return result;
       }
@@ -9272,15 +9287,31 @@ public final class FederateService {
 
       public Builder mergeFrom(com.suda.federate.rpc.FederateService.SQLReplyList other) {
         if (other == com.suda.federate.rpc.FederateService.SQLReplyList.getDefaultInstance()) return this;
-        if (!other.message_.isEmpty()) {
-          if (message_.isEmpty()) {
-            message_ = other.message_;
-            bitField0_ = (bitField0_ & ~0x00000001);
-          } else {
-            ensureMessageIsMutable();
-            message_.addAll(other.message_);
+        if (messageBuilder_ == null) {
+          if (!other.message_.isEmpty()) {
+            if (message_.isEmpty()) {
+              message_ = other.message_;
+              bitField0_ = (bitField0_ & ~0x00000001);
+            } else {
+              ensureMessageIsMutable();
+              message_.addAll(other.message_);
+            }
+            onChanged();
           }
-          onChanged();
+        } else {
+          if (!other.message_.isEmpty()) {
+            if (messageBuilder_.isEmpty()) {
+              messageBuilder_.dispose();
+              messageBuilder_ = null;
+              message_ = other.message_;
+              bitField0_ = (bitField0_ & ~0x00000001);
+              messageBuilder_ = 
+                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
+                   getMessageFieldBuilder() : null;
+            } else {
+              messageBuilder_.addAllMessages(other.message_);
+            }
+          }
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -9289,6 +9320,11 @@ public final class FederateService {
 
       @java.lang.Override
       public final boolean isInitialized() {
+        for (int i = 0; i < getMessageCount(); i++) {
+          if (!getMessage(i).isInitialized()) {
+            return false;
+          }
+        }
         return true;
       }
 
@@ -9312,113 +9348,244 @@ public final class FederateService {
       }
       private int bitField0_;
 
-      private com.google.protobuf.LazyStringList message_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      private java.util.List<com.suda.federate.rpc.FederateCommon.Point> message_ =
+        java.util.Collections.emptyList();
       private void ensureMessageIsMutable() {
         if (!((bitField0_ & 0x00000001) != 0)) {
-          message_ = new com.google.protobuf.LazyStringArrayList(message_);
+          message_ = new java.util.ArrayList<com.suda.federate.rpc.FederateCommon.Point>(message_);
           bitField0_ |= 0x00000001;
          }
       }
+
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          com.suda.federate.rpc.FederateCommon.Point, com.suda.federate.rpc.FederateCommon.Point.Builder, com.suda.federate.rpc.FederateCommon.PointOrBuilder> messageBuilder_;
+
       /**
-       * <code>repeated string message = 1;</code>
-       * @return A list containing the message.
+       * <code>repeated .federate.Point message = 1;</code>
        */
-      public com.google.protobuf.ProtocolStringList
-          getMessageList() {
-        return message_.getUnmodifiableView();
+      public java.util.List<com.suda.federate.rpc.FederateCommon.Point> getMessageList() {
+        if (messageBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(message_);
+        } else {
+          return messageBuilder_.getMessageList();
+        }
       }
       /**
-       * <code>repeated string message = 1;</code>
-       * @return The count of message.
+       * <code>repeated .federate.Point message = 1;</code>
        */
       public int getMessageCount() {
-        return message_.size();
+        if (messageBuilder_ == null) {
+          return message_.size();
+        } else {
+          return messageBuilder_.getCount();
+        }
       }
       /**
-       * <code>repeated string message = 1;</code>
-       * @param index The index of the element to return.
-       * @return The message at the given index.
+       * <code>repeated .federate.Point message = 1;</code>
        */
-      public java.lang.String getMessage(int index) {
-        return message_.get(index);
+      public com.suda.federate.rpc.FederateCommon.Point getMessage(int index) {
+        if (messageBuilder_ == null) {
+          return message_.get(index);
+        } else {
+          return messageBuilder_.getMessage(index);
+        }
       }
       /**
-       * <code>repeated string message = 1;</code>
-       * @param index The index of the value to return.
-       * @return The bytes of the message at the given index.
-       */
-      public com.google.protobuf.ByteString
-          getMessageBytes(int index) {
-        return message_.getByteString(index);
-      }
-      /**
-       * <code>repeated string message = 1;</code>
-       * @param index The index to set the value at.
-       * @param value The message to set.
-       * @return This builder for chaining.
+       * <code>repeated .federate.Point message = 1;</code>
        */
       public Builder setMessage(
-          int index, java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  ensureMessageIsMutable();
-        message_.set(index, value);
-        onChanged();
+          int index, com.suda.federate.rpc.FederateCommon.Point value) {
+        if (messageBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureMessageIsMutable();
+          message_.set(index, value);
+          onChanged();
+        } else {
+          messageBuilder_.setMessage(index, value);
+        }
         return this;
       }
       /**
-       * <code>repeated string message = 1;</code>
-       * @param value The message to add.
-       * @return This builder for chaining.
+       * <code>repeated .federate.Point message = 1;</code>
+       */
+      public Builder setMessage(
+          int index, com.suda.federate.rpc.FederateCommon.Point.Builder builderForValue) {
+        if (messageBuilder_ == null) {
+          ensureMessageIsMutable();
+          message_.set(index, builderForValue.build());
+          onChanged();
+        } else {
+          messageBuilder_.setMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .federate.Point message = 1;</code>
+       */
+      public Builder addMessage(com.suda.federate.rpc.FederateCommon.Point value) {
+        if (messageBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureMessageIsMutable();
+          message_.add(value);
+          onChanged();
+        } else {
+          messageBuilder_.addMessage(value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .federate.Point message = 1;</code>
        */
       public Builder addMessage(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  ensureMessageIsMutable();
-        message_.add(value);
-        onChanged();
+          int index, com.suda.federate.rpc.FederateCommon.Point value) {
+        if (messageBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureMessageIsMutable();
+          message_.add(index, value);
+          onChanged();
+        } else {
+          messageBuilder_.addMessage(index, value);
+        }
         return this;
       }
       /**
-       * <code>repeated string message = 1;</code>
-       * @param values The message to add.
-       * @return This builder for chaining.
+       * <code>repeated .federate.Point message = 1;</code>
+       */
+      public Builder addMessage(
+          com.suda.federate.rpc.FederateCommon.Point.Builder builderForValue) {
+        if (messageBuilder_ == null) {
+          ensureMessageIsMutable();
+          message_.add(builderForValue.build());
+          onChanged();
+        } else {
+          messageBuilder_.addMessage(builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .federate.Point message = 1;</code>
+       */
+      public Builder addMessage(
+          int index, com.suda.federate.rpc.FederateCommon.Point.Builder builderForValue) {
+        if (messageBuilder_ == null) {
+          ensureMessageIsMutable();
+          message_.add(index, builderForValue.build());
+          onChanged();
+        } else {
+          messageBuilder_.addMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .federate.Point message = 1;</code>
        */
       public Builder addAllMessage(
-          java.lang.Iterable<java.lang.String> values) {
-        ensureMessageIsMutable();
-        com.google.protobuf.AbstractMessageLite.Builder.addAll(
-            values, message_);
-        onChanged();
+          java.lang.Iterable<? extends com.suda.federate.rpc.FederateCommon.Point> values) {
+        if (messageBuilder_ == null) {
+          ensureMessageIsMutable();
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, message_);
+          onChanged();
+        } else {
+          messageBuilder_.addAllMessages(values);
+        }
         return this;
       }
       /**
-       * <code>repeated string message = 1;</code>
-       * @return This builder for chaining.
+       * <code>repeated .federate.Point message = 1;</code>
        */
       public Builder clearMessage() {
-        message_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-        bitField0_ = (bitField0_ & ~0x00000001);
-        onChanged();
+        if (messageBuilder_ == null) {
+          message_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000001);
+          onChanged();
+        } else {
+          messageBuilder_.clear();
+        }
         return this;
       }
       /**
-       * <code>repeated string message = 1;</code>
-       * @param value The bytes of the message to add.
-       * @return This builder for chaining.
+       * <code>repeated .federate.Point message = 1;</code>
        */
-      public Builder addMessageBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  ensureMessageIsMutable();
-        message_.add(value);
-        onChanged();
+      public Builder removeMessage(int index) {
+        if (messageBuilder_ == null) {
+          ensureMessageIsMutable();
+          message_.remove(index);
+          onChanged();
+        } else {
+          messageBuilder_.remove(index);
+        }
         return this;
+      }
+      /**
+       * <code>repeated .federate.Point message = 1;</code>
+       */
+      public com.suda.federate.rpc.FederateCommon.Point.Builder getMessageBuilder(
+          int index) {
+        return getMessageFieldBuilder().getBuilder(index);
+      }
+      /**
+       * <code>repeated .federate.Point message = 1;</code>
+       */
+      public com.suda.federate.rpc.FederateCommon.PointOrBuilder getMessageOrBuilder(
+          int index) {
+        if (messageBuilder_ == null) {
+          return message_.get(index);  } else {
+          return messageBuilder_.getMessageOrBuilder(index);
+        }
+      }
+      /**
+       * <code>repeated .federate.Point message = 1;</code>
+       */
+      public java.util.List<? extends com.suda.federate.rpc.FederateCommon.PointOrBuilder> 
+           getMessageOrBuilderList() {
+        if (messageBuilder_ != null) {
+          return messageBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(message_);
+        }
+      }
+      /**
+       * <code>repeated .federate.Point message = 1;</code>
+       */
+      public com.suda.federate.rpc.FederateCommon.Point.Builder addMessageBuilder() {
+        return getMessageFieldBuilder().addBuilder(
+            com.suda.federate.rpc.FederateCommon.Point.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .federate.Point message = 1;</code>
+       */
+      public com.suda.federate.rpc.FederateCommon.Point.Builder addMessageBuilder(
+          int index) {
+        return getMessageFieldBuilder().addBuilder(
+            index, com.suda.federate.rpc.FederateCommon.Point.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .federate.Point message = 1;</code>
+       */
+      public java.util.List<com.suda.federate.rpc.FederateCommon.Point.Builder> 
+           getMessageBuilderList() {
+        return getMessageFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          com.suda.federate.rpc.FederateCommon.Point, com.suda.federate.rpc.FederateCommon.Point.Builder, com.suda.federate.rpc.FederateCommon.PointOrBuilder> 
+          getMessageFieldBuilder() {
+        if (messageBuilder_ == null) {
+          messageBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+              com.suda.federate.rpc.FederateCommon.Point, com.suda.federate.rpc.FederateCommon.Point.Builder, com.suda.federate.rpc.FederateCommon.PointOrBuilder>(
+                  message_,
+                  ((bitField0_ & 0x00000001) != 0),
+                  getParentForChildren(),
+                  isClean());
+          message_ = null;
+        }
+        return messageBuilder_;
       }
       @java.lang.Override
       public final Builder setUnknownFields(
@@ -9529,39 +9696,40 @@ public final class FederateService {
     java.lang.String[] descriptorData = {
       "\n\rservice.proto\022\010federate\032\033google/protob" +
       "uf/empty.proto\032\014common.proto\"\310\001\n\rSQLExpr" +
-      "ession\022\n\n\002id\030\t \001(\005\022\016\n\006idList\030\n \003(\005\022\t\n\001t\030" +
-      "\010 \001(\005\022\020\n\010function\030\001 \002(\t\022\036\n\005point\030\002 \002(\0132\017" +
-      ".federate.Point\022\r\n\005table\030\007 \002(\t\022\017\n\007litera" +
-      "l\030\003 \002(\001\022\020\n\005fetch\030\004 \001(\005:\0010\022\r\n\005order\030\005 \003(\t" +
-      "\022\017\n\007groupby\030\006 \001(\t\022\014\n\004uuid\030\013 \001(\t\"o\n\014Union" +
+      "ession\022\036\n\005point\030\001 \002(\0132\017.federate.Point\022\n" +
+      "\n\002id\030\002 \001(\005\022\016\n\006idList\030\003 \003(\005\022\t\n\001t\030\004 \001(\005\022\020\n" +
+      "\010function\030\005 \002(\t\022\r\n\005table\030\006 \002(\t\022\017\n\007litera" +
+      "l\030\007 \002(\001\022\020\n\005fetch\030\010 \001(\005:\0010\022\r\n\005order\030\t \003(\t" +
+      "\022\017\n\007groupby\030\n \001(\t\022\014\n\004uuid\030\013 \001(\t\"o\n\014Union" +
       "Request\022\036\n\005point\030\001 \003(\0132\017.federate.Point\022" +
-      "\014\n\004loop\030\004 \002(\005\022\020\n\005index\030\002 \002(\005:\0010\022\021\n\tendpo" +
-      "ints\030\003 \003(\t\022\014\n\004uuid\030\005 \002(\t\"p\n\rUnionRespons" +
+      "\014\n\004loop\030\002 \002(\005\022\020\n\005index\030\003 \002(\005:\0010\022\021\n\tendpo" +
+      "ints\030\004 \003(\t\022\014\n\004uuid\030\005 \002(\t\"p\n\rUnionRespons" +
       "e\022\036\n\005point\030\001 \003(\0132\017.federate.Point\022\014\n\004loo" +
-      "p\030\004 \002(\005\022\020\n\005index\030\002 \002(\005:\0010\022\021\n\tendpoints\030\003" +
+      "p\030\002 \002(\005\022\020\n\005index\030\003 \002(\005:\0010\022\021\n\tendpoints\030\004" +
       " \003(\t\022\014\n\004uuid\030\005 \002(\t\"<\n\006Status\022!\n\004code\030\001 \002" +
       "(\0162\016.federate.Code:\003kOk\022\017\n\003msg\030\002 \002(\t:\002ok" +
       "\"$\n\020AddClientRequest\022\020\n\010endpoint\030\001 \002(\t\"3" +
       "\n\017GeneralResponse\022 \n\006status\030\001 \002(\0132\020.fede" +
       "rate.Status\"\031\n\nSQLRequest\022\013\n\003sql\030\001 \002(\t\"1" +
       "\n\010SQLReply\022\024\n\014fakeLocalSum\030\002 \003(\005\022\017\n\007mess" +
-      "age\030\001 \002(\001\"\037\n\014SQLReplyList\022\017\n\007message\030\001 \003" +
-      "(\t*9\n\004Code\022\007\n\003kOk\020\001\022\024\n\020kAddClientFailed\020" +
-      "\002\022\022\n\016kCacheNotExist\020\0032\217\004\n\010Federate\022B\n\tAd" +
-      "dClient\022\032.federate.AddClientRequest\032\031.fe" +
-      "derate.GeneralResponse\022:\n\tGetResult\022\027.fe" +
-      "derate.SQLExpression\032\022.federate.SQLReply" +
-      "\"\000\022;\n\nRangeCount\022\027.federate.SQLExpressio" +
-      "n\032\022.federate.SQLReply\"\000\022?\n\nRangeQuery\022\027." +
-      "federate.SQLExpression\032\026.federate.SQLRep" +
-      "lyList\"\000\022@\n\021privacyRangeQuery\022\027.federate" +
-      ".SQLExpression\032\020.federate.Status\"\000\022?\n\016Kn" +
-      "nRadiusQuery\022\027.federate.SQLExpression\032\022." +
-      "federate.SQLReply\"\000\022A\n\014privacyUnion\022\026.fe" +
-      "derate.UnionRequest\032\027.federate.UnionResp" +
-      "onse\"\000\022?\n\nlocalUnion\022\026.federate.UnionReq" +
-      "uest\032\027.federate.UnionResponse\"\000B*\n\025com.s" +
-      "uda.federate.rpcB\017FederateServiceP\000"
+      "age\030\001 \002(\001\"0\n\014SQLReplyList\022 \n\007message\030\001 \003" +
+      "(\0132\017.federate.Point*9\n\004Code\022\007\n\003kOk\020\001\022\024\n\020" +
+      "kAddClientFailed\020\002\022\022\n\016kCacheNotExist\020\0032\217" +
+      "\004\n\010Federate\022B\n\tAddClient\022\032.federate.AddC" +
+      "lientRequest\032\031.federate.GeneralResponse\022" +
+      ":\n\tGetResult\022\027.federate.SQLExpression\032\022." +
+      "federate.SQLReply\"\000\022;\n\nRangeCount\022\027.fede" +
+      "rate.SQLExpression\032\022.federate.SQLReply\"\000" +
+      "\022?\n\nRangeQuery\022\027.federate.SQLExpression\032" +
+      "\026.federate.SQLReplyList\"\000\022@\n\021privacyRang" +
+      "eQuery\022\027.federate.SQLExpression\032\020.federa" +
+      "te.Status\"\000\022?\n\016KnnRadiusQuery\022\027.federate" +
+      ".SQLExpression\032\022.federate.SQLReply\"\000\022A\n\014" +
+      "privacyUnion\022\026.federate.UnionRequest\032\027.f" +
+      "ederate.UnionResponse\"\000\022?\n\nlocalUnion\022\026." +
+      "federate.UnionRequest\032\027.federate.UnionRe" +
+      "sponse\"\000B*\n\025com.suda.federate.rpcB\017Feder" +
+      "ateServiceP\000"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -9574,7 +9742,7 @@ public final class FederateService {
     internal_static_federate_SQLExpression_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_federate_SQLExpression_descriptor,
-        new java.lang.String[] { "Id", "IdList", "T", "Function", "Point", "Table", "Literal", "Fetch", "Order", "Groupby", "Uuid", });
+        new java.lang.String[] { "Point", "Id", "IdList", "T", "Function", "Table", "Literal", "Fetch", "Order", "Groupby", "Uuid", });
     internal_static_federate_UnionRequest_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_federate_UnionRequest_fieldAccessorTable = new

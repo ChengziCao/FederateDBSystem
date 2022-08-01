@@ -1,39 +1,25 @@
 package com.suda.federate.driver;
 
-import com.suda.federate.application.FederateDBClient;
 import com.suda.federate.config.DbConfig;
 import com.suda.federate.driver.utils.SQLGenerator;
 import com.suda.federate.rpc.FederateCommon;
-import com.suda.federate.rpc.FederateGrpc;
 import com.suda.federate.rpc.FederateService;
 import com.suda.federate.security.sha.SiloCache;
 import com.suda.federate.silo.FederateDBServer;
 import com.suda.federate.silo.FederateDBService;
-import com.suda.federate.sql.function.FD_Knn;
-import com.suda.federate.sql.function.FD_RangeCount;
-import com.suda.federate.sql.function.FD_RangeQuery;
-import com.suda.federate.sql.type.FD_Point;
-import com.suda.federate.sql.type.Point;
 import com.suda.federate.utils.ENUM;
 import com.suda.federate.utils.FederateUtils;
 import io.grpc.ServerBuilder;
 import io.grpc.stub.StreamObserver;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.logging.log4j.LogManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.*;
-import java.util.*;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
-import java.util.concurrent.ThreadLocalRandom;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.List;
 
-import static com.suda.federate.security.sha.SecretSum.localClient;
 import static com.suda.federate.security.sha.SecretSum.setSummation;
 
 public class PostgresqlServer extends FederateDBServer {
@@ -425,7 +411,7 @@ public class PostgresqlServer extends FederateDBServer {
             System.out.println("收到的信息：" + request.getFunction());
             FederateService.SQLReplyList.Builder replyList = null;
             try {
-                List<String> res = localRangeQuery(request.getPoint(), request.getLiteral(), String.class);
+                List<FederateCommon.Point> res = localRangeQuery(request.getPoint(), request.getLiteral(), FederateCommon.Point.class);
                 replyList = FederateService.SQLReplyList.newBuilder()
                         .addAllMessage(res);
             } catch (Exception e) {

@@ -1,7 +1,6 @@
 package com.suda.federate.security.sha;
 
 import com.suda.federate.config.FedSpatialConfig;
-import com.suda.federate.rpc.FederateCommon;
 import com.suda.federate.security.dp.Laplace;
 import org.apache.commons.lang3.tuple.Pair;
 

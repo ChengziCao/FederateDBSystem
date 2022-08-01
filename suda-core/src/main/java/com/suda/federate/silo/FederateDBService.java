@@ -39,14 +39,14 @@ public abstract class FederateDBService extends FederateGrpc.FederateImplBase {
         executorService = Executors.newFixedThreadPool(THREAD_POOL_SIZE);
         lp = new Laplace(FedSpatialConfig.EPS_DP, FedSpatialConfig.SD_DP);
     }
-    public FederateDBClient getClient(String endpoint,boolean used){//没啥用
+    public FederateDBClient getClient(String endpoint){
         if (federateClientMap.containsKey(endpoint)){
             return federateClientMap.get(endpoint);
         }
         return null;
     }
 
-    public FederateDBClient getClient(String endpoint) {
+    public FederateDBClient getClient(String endpoint,boolean used) {//没啥用
         return new FederateDBClient(endpoint);
 
     }
@@ -195,18 +195,15 @@ public abstract class FederateDBService extends FederateGrpc.FederateImplBase {
     }
     @Override
     public void localUnion(FederateService.UnionRequest request, StreamObserver<FederateService.UnionResponse> responseObserver) {
+
+        if (federateClientMap == null || federateClientMap.isEmpty()) {
+            initClients(request.getEndpointsList());//索引endpoint都初始化，一劳永逸（如果loop顺序不变，建议只初始化nextnexFederateDBClient）
+            System.out.println("init client ok");
+        }
         Integer currIndex = request.getIndex();
         Integer currLoop = request.getLoop();
 
-        boolean add= currIndex+1<request.getEndpointsCount() && currLoop==1;
-        boolean lastAdd = currIndex+1==request.getEndpointsCount() && currLoop==1;
-
-        boolean del =currIndex+1<request.getEndpointsCount() && currLoop==0;
-        boolean lastDel =currIndex+1==request.getEndpointsCount() && currLoop==0;
-
-
         int finalNextIndexOfEndPoint=currIndex+1;
-//        int finalNewLoop =finalNextIndexOfEndPoint>=request.getEndpointsCount() ? 1 : 0;
 
         int endpointIdx=finalNextIndexOfEndPoint%request.getEndpointsCount();
         String nextEndpoint = request.getEndpoints(endpointIdx);
@@ -220,14 +217,14 @@ public abstract class FederateDBService extends FederateGrpc.FederateImplBase {
 
         FederateService.UnionResponse.Builder unionResponse =FederateService.UnionResponse.newBuilder();
         List<FederateCommon.Point> points;
-        if(add || lastAdd){
+        if(currLoop==1){//currLoop==1 add
             points= new ArrayList<>();
             for (Pair<Double, Double> pp : obfPairs) {
                 FederateCommon.Point px=FederateCommon.Point.newBuilder().setLongitude(pp.getLeft()).setLatitude(pp.getRight()).build();
                 points.add(px);
             }
 
-        }else{
+        }else{//currLoop==0 del
             System.out.println("errr!!!!!!");
             points = request.getPointList();
             Set<Pair<Double, Double>> resPairs = new TreeSet<Pair<Double, Double>>();
@@ -248,7 +245,6 @@ public abstract class FederateDBService extends FederateGrpc.FederateImplBase {
             points=points2;
         }
 //        unionResponse.addAllPoint(points);
-        System.out.printf("currloop %d, currIndex %d, add %b, lastAdd %b, del %b, lastDel %b \n",currLoop,currIndex,add,lastAdd,del,lastDel);
 
         FederateService.UnionResponse resultResponse = UnionRequest2UnionResponse(request).toBuilder()
                 .clearPoint().addAllPoint(points).setIndex(finalNextIndexOfEndPoint).build();
@@ -312,7 +308,6 @@ public abstract class FederateDBService extends FederateGrpc.FederateImplBase {
 
     @Override
     public void privacyUnion(FederateService.UnionRequest request, StreamObserver<FederateService.UnionResponse> responseObserver) {
-
         if (federateClientMap == null || federateClientMap.isEmpty()) {
             initClients(request.getEndpointsList());//索引endpoint都初始化，一劳永逸（如果loop顺序不变，建议只初始化nextnexFederateDBClient）
             System.out.println("init client ok");
@@ -325,6 +320,7 @@ public abstract class FederateDBService extends FederateGrpc.FederateImplBase {
         System.out.println("response of add "+response.getPointCount());
 
         request=personalDel(UnionResponse2UnionRequest(response));
+        // 可以 random Endpoints 更加safe
         response=client.localUnion(request.toBuilder().setLoop(0).setIndex(0).build());
 //        System.out.println("response of add "+response.getPointList());
         System.out.println("response of add "+response.getPointCount());

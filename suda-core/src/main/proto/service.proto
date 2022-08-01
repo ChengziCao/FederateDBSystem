@@ -11,16 +11,16 @@ option java_outer_classname = "FederateService";
 
 
 message SQLExpression{
-  optional int32 id =9;
-  repeated int32 idList=10;
-  optional int32 t=8;
-  required string function=1;
-  required Point point=2;
-  required string table=7;
-  required double literal =3;
-  optional int32 fetch = 4 [default = 0];
-  repeated string order = 5;
-  optional string groupby=6;
+  required Point point=1;
+  optional int32 id =2;
+  repeated int32 idList=3;
+  optional int32 t=4;
+  required string function=5;
+  required string table=6;
+  required double literal =7;
+  optional int32 fetch = 8 [default = 0];
+  repeated string order = 9;
+  optional string groupby=10;
   optional string uuid = 11;
 }
 //message Query {
@@ -48,17 +48,17 @@ service Federate {
 }
 message UnionRequest{
   repeated Point point=1;
-  required int32 loop=4;// loop=0,1 loop==1&& index==endpoints.length结束
-  required int32 index=2 [default=0];//记录loop的顺序,且 完成的设为 negative
-  repeated string endpoints=3;//RangeQuery时就把id发出去，endpoints[index]，各silo和master一样，也保存一份federateClientMap
+  required int32 loop=2;// loop=0,1 loop==1&& index==endpoints.length结束
+  required int32 index=3 [default=0];//记录loop的顺序,且 完成的设为 negative
+  repeated string endpoints=4;//RangeQuery时就把id发出去，endpoints[index]，各silo和master一样，也保存一份federateClientMap
   required string uuid = 5;
 //  required bool end=6;
 }
 message UnionResponse{
   repeated Point point=1;
-  required int32 loop=4;// loop=0,1 loop==1&& index==endpoints.length结束
-  required int32 index=2 [default=0];//记录loop的顺序,且 完成的设为 negative
-  repeated string endpoints=3;//RangeQuery时就把id发出去，endpoints[index]，各silo和master一样，也保存一份federateClientMap
+  required int32 loop=2;// loop=0,1 loop==1&& index==endpoints.length结束
+  required int32 index=3 [default=0];//记录loop的顺序,且 完成的设为 negative
+  repeated string endpoints=4;//RangeQuery时就把id发出去，endpoints[index]，各silo和master一样，也保存一份federateClientMap
   required string uuid = 5;
 //  required bool end=6;
 }
@@ -94,6 +94,6 @@ message SQLReply {
 }
 message SQLReplyList {
 
-  repeated string message = 1;
+  repeated Point message = 1;
 
 }
