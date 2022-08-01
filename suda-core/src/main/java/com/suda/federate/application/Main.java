@@ -243,6 +243,8 @@ public class Main {
 
         System.out.println(unionResponse.getPointList());
         System.out.println(unionResponse.getPointCount());
+        //清理各silo垃圾
+        clearCache(uuid);
 
     }
     public static StreamingIterator<Double> federateKnnRadiusQuery(SQLExpression expression ){
@@ -441,7 +443,12 @@ public class Main {
 //            LOGGER.info(content);
 //        }
 //    }
-
+    //TODO 用完清理垃圾
+    public static void clearCache(String uuid) {
+        for (FederateDBClient client: federateDBClients.values()) {
+            client.clearCache(uuid);
+        }
+    }
 
     public static String getStackTraceString(Throwable ex) {//(Exception ex) {
         StackTraceElement[] traceElements = ex.getStackTrace();

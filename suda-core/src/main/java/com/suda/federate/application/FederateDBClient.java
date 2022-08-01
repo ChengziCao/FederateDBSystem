@@ -93,15 +93,15 @@ public final class FederateDBClient {//被edSpatialClient调用 List<String> end
         return response;
     }
     public Double knnRadiusQuery(FederateService.SQLExpression expression){
-        FederateService.SQLReply response;
+        FederateService.KnnRadiusQueryResponse response;
         try{
             response = blockingStub.knnRadiusQuery(expression);
         }catch (StatusRuntimeException e){
             System.out.println("RPC调用失败："+e.getMessage());
             return 0.0;
         }
-        System.out.println("服务器返回信息："+response.getMessage());
-        return response.getMessage();
+        System.out.println("服务器返回信息："+response.getRadius());
+        return response.getRadius();
 
     }
 
@@ -139,14 +139,13 @@ public final class FederateDBClient {//被edSpatialClient调用 List<String> end
         }
         return endpoint.equals(((FederateDBClient) obj).endpoint);
     }
-//    public void clearCache(String uuid) {
-//        try {
-////            blockingStub.clearCache(CacheID.newBuilder().setUuid(uuid).build());
-//            //TODO
-//            return;
-//        } catch (StatusRuntimeException e) {
-//            LOG.error("RPC failed in clear cache: {}", e.getStatus());
-//            return;
-//        }
-//    }
+    public void clearCache(String uuid) {
+        try {
+            blockingStub.clearCache(FederateService.CacheID.newBuilder().setUuid(uuid).build());
+            return;
+        } catch (StatusRuntimeException e) {
+            LOG.error("RPC failed in clear cache: {}", e.getStatus());
+            return;
+        }
+    }
 }

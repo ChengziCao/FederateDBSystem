@@ -424,7 +424,7 @@ public class PostgresqlServer extends FederateDBServer {
         }
 
         @Override
-        public void knnRadiusQuery(FederateService.SQLExpression request, StreamObserver<FederateService.SQLReply> responseObserver) {
+        public void knnRadiusQuery(FederateService.SQLExpression request, StreamObserver<FederateService.KnnRadiusQueryResponse> responseObserver) {
             System.out.println("收到的信息：" + request.getFunction());
             Double result = 0.0;
             try {
@@ -435,7 +435,7 @@ public class PostgresqlServer extends FederateDBServer {
                 e.printStackTrace();
             }
             //构造返回
-            FederateService.SQLReply reply = FederateService.SQLReply.newBuilder().setMessage(result).build();
+            FederateService.KnnRadiusQueryResponse reply = FederateService.KnnRadiusQueryResponse.newBuilder().setRadius(result).build();
             responseObserver.onNext(reply);
             responseObserver.onCompleted();
         }

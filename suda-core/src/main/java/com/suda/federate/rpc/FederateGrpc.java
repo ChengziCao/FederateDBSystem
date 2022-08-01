@@ -183,28 +183,28 @@ public final class FederateGrpc {
   }
 
   private static volatile io.grpc.MethodDescriptor<com.suda.federate.rpc.FederateService.SQLExpression,
-      com.suda.federate.rpc.FederateService.SQLReply> getKnnRadiusQueryMethod;
+      com.suda.federate.rpc.FederateService.KnnRadiusQueryResponse> getKnnRadiusQueryMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
       fullMethodName = SERVICE_NAME + '/' + "KnnRadiusQuery",
       requestType = com.suda.federate.rpc.FederateService.SQLExpression.class,
-      responseType = com.suda.federate.rpc.FederateService.SQLReply.class,
+      responseType = com.suda.federate.rpc.FederateService.KnnRadiusQueryResponse.class,
       methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
   public static io.grpc.MethodDescriptor<com.suda.federate.rpc.FederateService.SQLExpression,
-      com.suda.federate.rpc.FederateService.SQLReply> getKnnRadiusQueryMethod() {
-    io.grpc.MethodDescriptor<com.suda.federate.rpc.FederateService.SQLExpression, com.suda.federate.rpc.FederateService.SQLReply> getKnnRadiusQueryMethod;
+      com.suda.federate.rpc.FederateService.KnnRadiusQueryResponse> getKnnRadiusQueryMethod() {
+    io.grpc.MethodDescriptor<com.suda.federate.rpc.FederateService.SQLExpression, com.suda.federate.rpc.FederateService.KnnRadiusQueryResponse> getKnnRadiusQueryMethod;
     if ((getKnnRadiusQueryMethod = FederateGrpc.getKnnRadiusQueryMethod) == null) {
       synchronized (FederateGrpc.class) {
         if ((getKnnRadiusQueryMethod = FederateGrpc.getKnnRadiusQueryMethod) == null) {
           FederateGrpc.getKnnRadiusQueryMethod = getKnnRadiusQueryMethod =
-              io.grpc.MethodDescriptor.<com.suda.federate.rpc.FederateService.SQLExpression, com.suda.federate.rpc.FederateService.SQLReply>newBuilder()
+              io.grpc.MethodDescriptor.<com.suda.federate.rpc.FederateService.SQLExpression, com.suda.federate.rpc.FederateService.KnnRadiusQueryResponse>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(SERVICE_NAME, "KnnRadiusQuery"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
                   com.suda.federate.rpc.FederateService.SQLExpression.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.suda.federate.rpc.FederateService.SQLReply.getDefaultInstance()))
+                  com.suda.federate.rpc.FederateService.KnnRadiusQueryResponse.getDefaultInstance()))
               .setSchemaDescriptor(new FederateMethodDescriptorSupplier("KnnRadiusQuery"))
               .build();
         }
@@ -273,6 +273,37 @@ public final class FederateGrpc {
       }
     }
     return getLocalUnionMethod;
+  }
+
+  private static volatile io.grpc.MethodDescriptor<com.suda.federate.rpc.FederateService.CacheID,
+      com.google.protobuf.Empty> getClearCacheMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "ClearCache",
+      requestType = com.suda.federate.rpc.FederateService.CacheID.class,
+      responseType = com.google.protobuf.Empty.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<com.suda.federate.rpc.FederateService.CacheID,
+      com.google.protobuf.Empty> getClearCacheMethod() {
+    io.grpc.MethodDescriptor<com.suda.federate.rpc.FederateService.CacheID, com.google.protobuf.Empty> getClearCacheMethod;
+    if ((getClearCacheMethod = FederateGrpc.getClearCacheMethod) == null) {
+      synchronized (FederateGrpc.class) {
+        if ((getClearCacheMethod = FederateGrpc.getClearCacheMethod) == null) {
+          FederateGrpc.getClearCacheMethod = getClearCacheMethod =
+              io.grpc.MethodDescriptor.<com.suda.federate.rpc.FederateService.CacheID, com.google.protobuf.Empty>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "ClearCache"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.suda.federate.rpc.FederateService.CacheID.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.google.protobuf.Empty.getDefaultInstance()))
+              .setSchemaDescriptor(new FederateMethodDescriptorSupplier("ClearCache"))
+              .build();
+        }
+      }
+    }
+    return getClearCacheMethod;
   }
 
   /**
@@ -364,7 +395,7 @@ public final class FederateGrpc {
     /**
      */
     public void knnRadiusQuery(com.suda.federate.rpc.FederateService.SQLExpression request,
-        io.grpc.stub.StreamObserver<com.suda.federate.rpc.FederateService.SQLReply> responseObserver) {
+        io.grpc.stub.StreamObserver<com.suda.federate.rpc.FederateService.KnnRadiusQueryResponse> responseObserver) {
       asyncUnimplementedUnaryCall(getKnnRadiusQueryMethod(), responseObserver);
     }
 
@@ -380,6 +411,13 @@ public final class FederateGrpc {
     public void localUnion(com.suda.federate.rpc.FederateService.UnionRequest request,
         io.grpc.stub.StreamObserver<com.suda.federate.rpc.FederateService.UnionResponse> responseObserver) {
       asyncUnimplementedUnaryCall(getLocalUnionMethod(), responseObserver);
+    }
+
+    /**
+     */
+    public void clearCache(com.suda.federate.rpc.FederateService.CacheID request,
+        io.grpc.stub.StreamObserver<com.google.protobuf.Empty> responseObserver) {
+      asyncUnimplementedUnaryCall(getClearCacheMethod(), responseObserver);
     }
 
     @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
@@ -424,7 +462,7 @@ public final class FederateGrpc {
             asyncUnaryCall(
               new MethodHandlers<
                 com.suda.federate.rpc.FederateService.SQLExpression,
-                com.suda.federate.rpc.FederateService.SQLReply>(
+                com.suda.federate.rpc.FederateService.KnnRadiusQueryResponse>(
                   this, METHODID_KNN_RADIUS_QUERY)))
           .addMethod(
             getPrivacyUnionMethod(),
@@ -440,6 +478,13 @@ public final class FederateGrpc {
                 com.suda.federate.rpc.FederateService.UnionRequest,
                 com.suda.federate.rpc.FederateService.UnionResponse>(
                   this, METHODID_LOCAL_UNION)))
+          .addMethod(
+            getClearCacheMethod(),
+            asyncUnaryCall(
+              new MethodHandlers<
+                com.suda.federate.rpc.FederateService.CacheID,
+                com.google.protobuf.Empty>(
+                  this, METHODID_CLEAR_CACHE)))
           .build();
     }
   }
@@ -504,7 +549,7 @@ public final class FederateGrpc {
     /**
      */
     public void knnRadiusQuery(com.suda.federate.rpc.FederateService.SQLExpression request,
-        io.grpc.stub.StreamObserver<com.suda.federate.rpc.FederateService.SQLReply> responseObserver) {
+        io.grpc.stub.StreamObserver<com.suda.federate.rpc.FederateService.KnnRadiusQueryResponse> responseObserver) {
       asyncUnaryCall(
           getChannel().newCall(getKnnRadiusQueryMethod(), getCallOptions()), request, responseObserver);
     }
@@ -523,6 +568,14 @@ public final class FederateGrpc {
         io.grpc.stub.StreamObserver<com.suda.federate.rpc.FederateService.UnionResponse> responseObserver) {
       asyncUnaryCall(
           getChannel().newCall(getLocalUnionMethod(), getCallOptions()), request, responseObserver);
+    }
+
+    /**
+     */
+    public void clearCache(com.suda.federate.rpc.FederateService.CacheID request,
+        io.grpc.stub.StreamObserver<com.google.protobuf.Empty> responseObserver) {
+      asyncUnaryCall(
+          getChannel().newCall(getClearCacheMethod(), getCallOptions()), request, responseObserver);
     }
   }
 
@@ -580,7 +633,7 @@ public final class FederateGrpc {
 
     /**
      */
-    public com.suda.federate.rpc.FederateService.SQLReply knnRadiusQuery(com.suda.federate.rpc.FederateService.SQLExpression request) {
+    public com.suda.federate.rpc.FederateService.KnnRadiusQueryResponse knnRadiusQuery(com.suda.federate.rpc.FederateService.SQLExpression request) {
       return blockingUnaryCall(
           getChannel(), getKnnRadiusQueryMethod(), getCallOptions(), request);
     }
@@ -597,6 +650,13 @@ public final class FederateGrpc {
     public com.suda.federate.rpc.FederateService.UnionResponse localUnion(com.suda.federate.rpc.FederateService.UnionRequest request) {
       return blockingUnaryCall(
           getChannel(), getLocalUnionMethod(), getCallOptions(), request);
+    }
+
+    /**
+     */
+    public com.google.protobuf.Empty clearCache(com.suda.federate.rpc.FederateService.CacheID request) {
+      return blockingUnaryCall(
+          getChannel(), getClearCacheMethod(), getCallOptions(), request);
     }
   }
 
@@ -659,7 +719,7 @@ public final class FederateGrpc {
 
     /**
      */
-    public com.google.common.util.concurrent.ListenableFuture<com.suda.federate.rpc.FederateService.SQLReply> knnRadiusQuery(
+    public com.google.common.util.concurrent.ListenableFuture<com.suda.federate.rpc.FederateService.KnnRadiusQueryResponse> knnRadiusQuery(
         com.suda.federate.rpc.FederateService.SQLExpression request) {
       return futureUnaryCall(
           getChannel().newCall(getKnnRadiusQueryMethod(), getCallOptions()), request);
@@ -680,6 +740,14 @@ public final class FederateGrpc {
       return futureUnaryCall(
           getChannel().newCall(getLocalUnionMethod(), getCallOptions()), request);
     }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture<com.google.protobuf.Empty> clearCache(
+        com.suda.federate.rpc.FederateService.CacheID request) {
+      return futureUnaryCall(
+          getChannel().newCall(getClearCacheMethod(), getCallOptions()), request);
+    }
   }
 
   private static final int METHODID_ADD_CLIENT = 0;
@@ -690,6 +758,7 @@ public final class FederateGrpc {
   private static final int METHODID_KNN_RADIUS_QUERY = 5;
   private static final int METHODID_PRIVACY_UNION = 6;
   private static final int METHODID_LOCAL_UNION = 7;
+  private static final int METHODID_CLEAR_CACHE = 8;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -730,7 +799,7 @@ public final class FederateGrpc {
           break;
         case METHODID_KNN_RADIUS_QUERY:
           serviceImpl.knnRadiusQuery((com.suda.federate.rpc.FederateService.SQLExpression) request,
-              (io.grpc.stub.StreamObserver<com.suda.federate.rpc.FederateService.SQLReply>) responseObserver);
+              (io.grpc.stub.StreamObserver<com.suda.federate.rpc.FederateService.KnnRadiusQueryResponse>) responseObserver);
           break;
         case METHODID_PRIVACY_UNION:
           serviceImpl.privacyUnion((com.suda.federate.rpc.FederateService.UnionRequest) request,
@@ -739,6 +808,10 @@ public final class FederateGrpc {
         case METHODID_LOCAL_UNION:
           serviceImpl.localUnion((com.suda.federate.rpc.FederateService.UnionRequest) request,
               (io.grpc.stub.StreamObserver<com.suda.federate.rpc.FederateService.UnionResponse>) responseObserver);
+          break;
+        case METHODID_CLEAR_CACHE:
+          serviceImpl.clearCache((com.suda.federate.rpc.FederateService.CacheID) request,
+              (io.grpc.stub.StreamObserver<com.google.protobuf.Empty>) responseObserver);
           break;
         default:
           throw new AssertionError();
@@ -809,6 +882,7 @@ public final class FederateGrpc {
               .addMethod(getKnnRadiusQueryMethod())
               .addMethod(getPrivacyUnionMethod())
               .addMethod(getLocalUnionMethod())
+              .addMethod(getClearCacheMethod())
               .build();
         }
       }

@@ -2311,6 +2311,1151 @@ public final class FederateService {
 
   }
 
+  public interface CacheIDOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:federate.CacheID)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>required string uuid = 1;</code>
+     * @return Whether the uuid field is set.
+     */
+    boolean hasUuid();
+    /**
+     * <code>required string uuid = 1;</code>
+     * @return The uuid.
+     */
+    java.lang.String getUuid();
+    /**
+     * <code>required string uuid = 1;</code>
+     * @return The bytes for uuid.
+     */
+    com.google.protobuf.ByteString
+        getUuidBytes();
+  }
+  /**
+   * Protobuf type {@code federate.CacheID}
+   */
+  public static final class CacheID extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:federate.CacheID)
+      CacheIDOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use CacheID.newBuilder() to construct.
+    private CacheID(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private CacheID() {
+      uuid_ = "";
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new CacheID();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private CacheID(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 10: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00000001;
+              uuid_ = bs;
+              break;
+            }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.suda.federate.rpc.FederateService.internal_static_federate_CacheID_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.suda.federate.rpc.FederateService.internal_static_federate_CacheID_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.suda.federate.rpc.FederateService.CacheID.class, com.suda.federate.rpc.FederateService.CacheID.Builder.class);
+    }
+
+    private int bitField0_;
+    public static final int UUID_FIELD_NUMBER = 1;
+    private volatile java.lang.Object uuid_;
+    /**
+     * <code>required string uuid = 1;</code>
+     * @return Whether the uuid field is set.
+     */
+    @java.lang.Override
+    public boolean hasUuid() {
+      return ((bitField0_ & 0x00000001) != 0);
+    }
+    /**
+     * <code>required string uuid = 1;</code>
+     * @return The uuid.
+     */
+    @java.lang.Override
+    public java.lang.String getUuid() {
+      java.lang.Object ref = uuid_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          uuid_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <code>required string uuid = 1;</code>
+     * @return The bytes for uuid.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString
+        getUuidBytes() {
+      java.lang.Object ref = uuid_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        uuid_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      if (!hasUuid()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (((bitField0_ & 0x00000001) != 0)) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, uuid_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (((bitField0_ & 0x00000001) != 0)) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, uuid_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof com.suda.federate.rpc.FederateService.CacheID)) {
+        return super.equals(obj);
+      }
+      com.suda.federate.rpc.FederateService.CacheID other = (com.suda.federate.rpc.FederateService.CacheID) obj;
+
+      if (hasUuid() != other.hasUuid()) return false;
+      if (hasUuid()) {
+        if (!getUuid()
+            .equals(other.getUuid())) return false;
+      }
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      if (hasUuid()) {
+        hash = (37 * hash) + UUID_FIELD_NUMBER;
+        hash = (53 * hash) + getUuid().hashCode();
+      }
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static com.suda.federate.rpc.FederateService.CacheID parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.suda.federate.rpc.FederateService.CacheID parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.suda.federate.rpc.FederateService.CacheID parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.suda.federate.rpc.FederateService.CacheID parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.suda.federate.rpc.FederateService.CacheID parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.suda.federate.rpc.FederateService.CacheID parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.suda.federate.rpc.FederateService.CacheID parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.suda.federate.rpc.FederateService.CacheID parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.suda.federate.rpc.FederateService.CacheID parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static com.suda.federate.rpc.FederateService.CacheID parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.suda.federate.rpc.FederateService.CacheID parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.suda.federate.rpc.FederateService.CacheID parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(com.suda.federate.rpc.FederateService.CacheID prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code federate.CacheID}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:federate.CacheID)
+        com.suda.federate.rpc.FederateService.CacheIDOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.suda.federate.rpc.FederateService.internal_static_federate_CacheID_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.suda.federate.rpc.FederateService.internal_static_federate_CacheID_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.suda.federate.rpc.FederateService.CacheID.class, com.suda.federate.rpc.FederateService.CacheID.Builder.class);
+      }
+
+      // Construct using com.suda.federate.rpc.FederateService.CacheID.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        uuid_ = "";
+        bitField0_ = (bitField0_ & ~0x00000001);
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.suda.federate.rpc.FederateService.internal_static_federate_CacheID_descriptor;
+      }
+
+      @java.lang.Override
+      public com.suda.federate.rpc.FederateService.CacheID getDefaultInstanceForType() {
+        return com.suda.federate.rpc.FederateService.CacheID.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public com.suda.federate.rpc.FederateService.CacheID build() {
+        com.suda.federate.rpc.FederateService.CacheID result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public com.suda.federate.rpc.FederateService.CacheID buildPartial() {
+        com.suda.federate.rpc.FederateService.CacheID result = new com.suda.federate.rpc.FederateService.CacheID(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        if (((from_bitField0_ & 0x00000001) != 0)) {
+          to_bitField0_ |= 0x00000001;
+        }
+        result.uuid_ = uuid_;
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.suda.federate.rpc.FederateService.CacheID) {
+          return mergeFrom((com.suda.federate.rpc.FederateService.CacheID)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.suda.federate.rpc.FederateService.CacheID other) {
+        if (other == com.suda.federate.rpc.FederateService.CacheID.getDefaultInstance()) return this;
+        if (other.hasUuid()) {
+          bitField0_ |= 0x00000001;
+          uuid_ = other.uuid_;
+          onChanged();
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        if (!hasUuid()) {
+          return false;
+        }
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.suda.federate.rpc.FederateService.CacheID parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.suda.federate.rpc.FederateService.CacheID) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      private int bitField0_;
+
+      private java.lang.Object uuid_ = "";
+      /**
+       * <code>required string uuid = 1;</code>
+       * @return Whether the uuid field is set.
+       */
+      public boolean hasUuid() {
+        return ((bitField0_ & 0x00000001) != 0);
+      }
+      /**
+       * <code>required string uuid = 1;</code>
+       * @return The uuid.
+       */
+      public java.lang.String getUuid() {
+        java.lang.Object ref = uuid_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            uuid_ = s;
+          }
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>required string uuid = 1;</code>
+       * @return The bytes for uuid.
+       */
+      public com.google.protobuf.ByteString
+          getUuidBytes() {
+        java.lang.Object ref = uuid_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          uuid_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>required string uuid = 1;</code>
+       * @param value The uuid to set.
+       * @return This builder for chaining.
+       */
+      public Builder setUuid(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000001;
+        uuid_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required string uuid = 1;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearUuid() {
+        bitField0_ = (bitField0_ & ~0x00000001);
+        uuid_ = getDefaultInstance().getUuid();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required string uuid = 1;</code>
+       * @param value The bytes for uuid to set.
+       * @return This builder for chaining.
+       */
+      public Builder setUuidBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000001;
+        uuid_ = value;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:federate.CacheID)
+    }
+
+    // @@protoc_insertion_point(class_scope:federate.CacheID)
+    private static final com.suda.federate.rpc.FederateService.CacheID DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new com.suda.federate.rpc.FederateService.CacheID();
+    }
+
+    public static com.suda.federate.rpc.FederateService.CacheID getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    @java.lang.Deprecated public static final com.google.protobuf.Parser<CacheID>
+        PARSER = new com.google.protobuf.AbstractParser<CacheID>() {
+      @java.lang.Override
+      public CacheID parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new CacheID(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<CacheID> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<CacheID> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.suda.federate.rpc.FederateService.CacheID getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface KnnRadiusQueryResponseOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:federate.KnnRadiusQueryResponse)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>required double radius = 1;</code>
+     * @return Whether the radius field is set.
+     */
+    boolean hasRadius();
+    /**
+     * <code>required double radius = 1;</code>
+     * @return The radius.
+     */
+    double getRadius();
+  }
+  /**
+   * Protobuf type {@code federate.KnnRadiusQueryResponse}
+   */
+  public static final class KnnRadiusQueryResponse extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:federate.KnnRadiusQueryResponse)
+      KnnRadiusQueryResponseOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use KnnRadiusQueryResponse.newBuilder() to construct.
+    private KnnRadiusQueryResponse(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private KnnRadiusQueryResponse() {
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new KnnRadiusQueryResponse();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private KnnRadiusQueryResponse(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 9: {
+              bitField0_ |= 0x00000001;
+              radius_ = input.readDouble();
+              break;
+            }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.suda.federate.rpc.FederateService.internal_static_federate_KnnRadiusQueryResponse_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.suda.federate.rpc.FederateService.internal_static_federate_KnnRadiusQueryResponse_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.suda.federate.rpc.FederateService.KnnRadiusQueryResponse.class, com.suda.federate.rpc.FederateService.KnnRadiusQueryResponse.Builder.class);
+    }
+
+    private int bitField0_;
+    public static final int RADIUS_FIELD_NUMBER = 1;
+    private double radius_;
+    /**
+     * <code>required double radius = 1;</code>
+     * @return Whether the radius field is set.
+     */
+    @java.lang.Override
+    public boolean hasRadius() {
+      return ((bitField0_ & 0x00000001) != 0);
+    }
+    /**
+     * <code>required double radius = 1;</code>
+     * @return The radius.
+     */
+    @java.lang.Override
+    public double getRadius() {
+      return radius_;
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      if (!hasRadius()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (((bitField0_ & 0x00000001) != 0)) {
+        output.writeDouble(1, radius_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (((bitField0_ & 0x00000001) != 0)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeDoubleSize(1, radius_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof com.suda.federate.rpc.FederateService.KnnRadiusQueryResponse)) {
+        return super.equals(obj);
+      }
+      com.suda.federate.rpc.FederateService.KnnRadiusQueryResponse other = (com.suda.federate.rpc.FederateService.KnnRadiusQueryResponse) obj;
+
+      if (hasRadius() != other.hasRadius()) return false;
+      if (hasRadius()) {
+        if (java.lang.Double.doubleToLongBits(getRadius())
+            != java.lang.Double.doubleToLongBits(
+                other.getRadius())) return false;
+      }
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      if (hasRadius()) {
+        hash = (37 * hash) + RADIUS_FIELD_NUMBER;
+        hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+            java.lang.Double.doubleToLongBits(getRadius()));
+      }
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static com.suda.federate.rpc.FederateService.KnnRadiusQueryResponse parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.suda.federate.rpc.FederateService.KnnRadiusQueryResponse parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.suda.federate.rpc.FederateService.KnnRadiusQueryResponse parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.suda.federate.rpc.FederateService.KnnRadiusQueryResponse parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.suda.federate.rpc.FederateService.KnnRadiusQueryResponse parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.suda.federate.rpc.FederateService.KnnRadiusQueryResponse parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.suda.federate.rpc.FederateService.KnnRadiusQueryResponse parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.suda.federate.rpc.FederateService.KnnRadiusQueryResponse parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.suda.federate.rpc.FederateService.KnnRadiusQueryResponse parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static com.suda.federate.rpc.FederateService.KnnRadiusQueryResponse parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.suda.federate.rpc.FederateService.KnnRadiusQueryResponse parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.suda.federate.rpc.FederateService.KnnRadiusQueryResponse parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(com.suda.federate.rpc.FederateService.KnnRadiusQueryResponse prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code federate.KnnRadiusQueryResponse}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:federate.KnnRadiusQueryResponse)
+        com.suda.federate.rpc.FederateService.KnnRadiusQueryResponseOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.suda.federate.rpc.FederateService.internal_static_federate_KnnRadiusQueryResponse_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.suda.federate.rpc.FederateService.internal_static_federate_KnnRadiusQueryResponse_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.suda.federate.rpc.FederateService.KnnRadiusQueryResponse.class, com.suda.federate.rpc.FederateService.KnnRadiusQueryResponse.Builder.class);
+      }
+
+      // Construct using com.suda.federate.rpc.FederateService.KnnRadiusQueryResponse.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        radius_ = 0D;
+        bitField0_ = (bitField0_ & ~0x00000001);
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.suda.federate.rpc.FederateService.internal_static_federate_KnnRadiusQueryResponse_descriptor;
+      }
+
+      @java.lang.Override
+      public com.suda.federate.rpc.FederateService.KnnRadiusQueryResponse getDefaultInstanceForType() {
+        return com.suda.federate.rpc.FederateService.KnnRadiusQueryResponse.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public com.suda.federate.rpc.FederateService.KnnRadiusQueryResponse build() {
+        com.suda.federate.rpc.FederateService.KnnRadiusQueryResponse result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public com.suda.federate.rpc.FederateService.KnnRadiusQueryResponse buildPartial() {
+        com.suda.federate.rpc.FederateService.KnnRadiusQueryResponse result = new com.suda.federate.rpc.FederateService.KnnRadiusQueryResponse(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        if (((from_bitField0_ & 0x00000001) != 0)) {
+          result.radius_ = radius_;
+          to_bitField0_ |= 0x00000001;
+        }
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.suda.federate.rpc.FederateService.KnnRadiusQueryResponse) {
+          return mergeFrom((com.suda.federate.rpc.FederateService.KnnRadiusQueryResponse)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.suda.federate.rpc.FederateService.KnnRadiusQueryResponse other) {
+        if (other == com.suda.federate.rpc.FederateService.KnnRadiusQueryResponse.getDefaultInstance()) return this;
+        if (other.hasRadius()) {
+          setRadius(other.getRadius());
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        if (!hasRadius()) {
+          return false;
+        }
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.suda.federate.rpc.FederateService.KnnRadiusQueryResponse parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.suda.federate.rpc.FederateService.KnnRadiusQueryResponse) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      private int bitField0_;
+
+      private double radius_ ;
+      /**
+       * <code>required double radius = 1;</code>
+       * @return Whether the radius field is set.
+       */
+      @java.lang.Override
+      public boolean hasRadius() {
+        return ((bitField0_ & 0x00000001) != 0);
+      }
+      /**
+       * <code>required double radius = 1;</code>
+       * @return The radius.
+       */
+      @java.lang.Override
+      public double getRadius() {
+        return radius_;
+      }
+      /**
+       * <code>required double radius = 1;</code>
+       * @param value The radius to set.
+       * @return This builder for chaining.
+       */
+      public Builder setRadius(double value) {
+        bitField0_ |= 0x00000001;
+        radius_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required double radius = 1;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearRadius() {
+        bitField0_ = (bitField0_ & ~0x00000001);
+        radius_ = 0D;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:federate.KnnRadiusQueryResponse)
+    }
+
+    // @@protoc_insertion_point(class_scope:federate.KnnRadiusQueryResponse)
+    private static final com.suda.federate.rpc.FederateService.KnnRadiusQueryResponse DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new com.suda.federate.rpc.FederateService.KnnRadiusQueryResponse();
+    }
+
+    public static com.suda.federate.rpc.FederateService.KnnRadiusQueryResponse getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    @java.lang.Deprecated public static final com.google.protobuf.Parser<KnnRadiusQueryResponse>
+        PARSER = new com.google.protobuf.AbstractParser<KnnRadiusQueryResponse>() {
+      @java.lang.Override
+      public KnnRadiusQueryResponse parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new KnnRadiusQueryResponse(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<KnnRadiusQueryResponse> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<KnnRadiusQueryResponse> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.suda.federate.rpc.FederateService.KnnRadiusQueryResponse getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
   public interface UnionRequestOrBuilder extends
       // @@protoc_insertion_point(interface_extends:federate.UnionRequest)
       com.google.protobuf.MessageOrBuilder {
@@ -9646,6 +10791,16 @@ public final class FederateService {
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_federate_SQLExpression_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_federate_CacheID_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_federate_CacheID_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_federate_KnnRadiusQueryResponse_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_federate_KnnRadiusQueryResponse_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_federate_UnionRequest_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
@@ -9700,36 +10855,39 @@ public final class FederateService {
       "\n\002id\030\002 \001(\005\022\016\n\006idList\030\003 \003(\005\022\t\n\001t\030\004 \001(\005\022\020\n" +
       "\010function\030\005 \002(\t\022\r\n\005table\030\006 \002(\t\022\017\n\007litera" +
       "l\030\007 \002(\001\022\020\n\005fetch\030\010 \001(\005:\0010\022\r\n\005order\030\t \003(\t" +
-      "\022\017\n\007groupby\030\n \001(\t\022\014\n\004uuid\030\013 \001(\t\"o\n\014Union" +
-      "Request\022\036\n\005point\030\001 \003(\0132\017.federate.Point\022" +
-      "\014\n\004loop\030\002 \002(\005\022\020\n\005index\030\003 \002(\005:\0010\022\021\n\tendpo" +
-      "ints\030\004 \003(\t\022\014\n\004uuid\030\005 \002(\t\"p\n\rUnionRespons" +
-      "e\022\036\n\005point\030\001 \003(\0132\017.federate.Point\022\014\n\004loo" +
-      "p\030\002 \002(\005\022\020\n\005index\030\003 \002(\005:\0010\022\021\n\tendpoints\030\004" +
-      " \003(\t\022\014\n\004uuid\030\005 \002(\t\"<\n\006Status\022!\n\004code\030\001 \002" +
-      "(\0162\016.federate.Code:\003kOk\022\017\n\003msg\030\002 \002(\t:\002ok" +
-      "\"$\n\020AddClientRequest\022\020\n\010endpoint\030\001 \002(\t\"3" +
-      "\n\017GeneralResponse\022 \n\006status\030\001 \002(\0132\020.fede" +
-      "rate.Status\"\031\n\nSQLRequest\022\013\n\003sql\030\001 \002(\t\"1" +
-      "\n\010SQLReply\022\024\n\014fakeLocalSum\030\002 \003(\005\022\017\n\007mess" +
-      "age\030\001 \002(\001\"0\n\014SQLReplyList\022 \n\007message\030\001 \003" +
-      "(\0132\017.federate.Point*9\n\004Code\022\007\n\003kOk\020\001\022\024\n\020" +
-      "kAddClientFailed\020\002\022\022\n\016kCacheNotExist\020\0032\217" +
-      "\004\n\010Federate\022B\n\tAddClient\022\032.federate.AddC" +
-      "lientRequest\032\031.federate.GeneralResponse\022" +
-      ":\n\tGetResult\022\027.federate.SQLExpression\032\022." +
-      "federate.SQLReply\"\000\022;\n\nRangeCount\022\027.fede" +
-      "rate.SQLExpression\032\022.federate.SQLReply\"\000" +
-      "\022?\n\nRangeQuery\022\027.federate.SQLExpression\032" +
-      "\026.federate.SQLReplyList\"\000\022@\n\021privacyRang" +
-      "eQuery\022\027.federate.SQLExpression\032\020.federa" +
-      "te.Status\"\000\022?\n\016KnnRadiusQuery\022\027.federate" +
-      ".SQLExpression\032\022.federate.SQLReply\"\000\022A\n\014" +
-      "privacyUnion\022\026.federate.UnionRequest\032\027.f" +
-      "ederate.UnionResponse\"\000\022?\n\nlocalUnion\022\026." +
-      "federate.UnionRequest\032\027.federate.UnionRe" +
-      "sponse\"\000B*\n\025com.suda.federate.rpcB\017Feder" +
-      "ateServiceP\000"
+      "\022\017\n\007groupby\030\n \001(\t\022\014\n\004uuid\030\013 \001(\t\"\027\n\007Cache" +
+      "ID\022\014\n\004uuid\030\001 \002(\t\"(\n\026KnnRadiusQueryRespon" +
+      "se\022\016\n\006radius\030\001 \002(\001\"o\n\014UnionRequest\022\036\n\005po" +
+      "int\030\001 \003(\0132\017.federate.Point\022\014\n\004loop\030\002 \002(\005" +
+      "\022\020\n\005index\030\003 \002(\005:\0010\022\021\n\tendpoints\030\004 \003(\t\022\014\n" +
+      "\004uuid\030\005 \002(\t\"p\n\rUnionResponse\022\036\n\005point\030\001 " +
+      "\003(\0132\017.federate.Point\022\014\n\004loop\030\002 \002(\005\022\020\n\005in" +
+      "dex\030\003 \002(\005:\0010\022\021\n\tendpoints\030\004 \003(\t\022\014\n\004uuid\030" +
+      "\005 \002(\t\"<\n\006Status\022!\n\004code\030\001 \002(\0162\016.federate" +
+      ".Code:\003kOk\022\017\n\003msg\030\002 \002(\t:\002ok\"$\n\020AddClient" +
+      "Request\022\020\n\010endpoint\030\001 \002(\t\"3\n\017GeneralResp" +
+      "onse\022 \n\006status\030\001 \002(\0132\020.federate.Status\"\031" +
+      "\n\nSQLRequest\022\013\n\003sql\030\001 \002(\t\"1\n\010SQLReply\022\024\n" +
+      "\014fakeLocalSum\030\002 \003(\005\022\017\n\007message\030\001 \002(\001\"0\n\014" +
+      "SQLReplyList\022 \n\007message\030\001 \003(\0132\017.federate" +
+      ".Point*9\n\004Code\022\007\n\003kOk\020\001\022\024\n\020kAddClientFai" +
+      "led\020\002\022\022\n\016kCacheNotExist\020\0032\326\004\n\010Federate\022B" +
+      "\n\tAddClient\022\032.federate.AddClientRequest\032" +
+      "\031.federate.GeneralResponse\022:\n\tGetResult\022" +
+      "\027.federate.SQLExpression\032\022.federate.SQLR" +
+      "eply\"\000\022;\n\nRangeCount\022\027.federate.SQLExpre" +
+      "ssion\032\022.federate.SQLReply\"\000\022?\n\nRangeQuer" +
+      "y\022\027.federate.SQLExpression\032\026.federate.SQ" +
+      "LReplyList\"\000\022@\n\021privacyRangeQuery\022\027.fede" +
+      "rate.SQLExpression\032\020.federate.Status\"\000\022M" +
+      "\n\016KnnRadiusQuery\022\027.federate.SQLExpressio" +
+      "n\032 .federate.KnnRadiusQueryResponse\"\000\022A\n" +
+      "\014privacyUnion\022\026.federate.UnionRequest\032\027." +
+      "federate.UnionResponse\"\000\022?\n\nlocalUnion\022\026" +
+      ".federate.UnionRequest\032\027.federate.UnionR" +
+      "esponse\"\000\0227\n\nClearCache\022\021.federate.Cache" +
+      "ID\032\026.google.protobuf.EmptyB*\n\025com.suda.f" +
+      "ederate.rpcB\017FederateServiceP\000"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -9743,50 +10901,62 @@ public final class FederateService {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_federate_SQLExpression_descriptor,
         new java.lang.String[] { "Point", "Id", "IdList", "T", "Function", "Table", "Literal", "Fetch", "Order", "Groupby", "Uuid", });
-    internal_static_federate_UnionRequest_descriptor =
+    internal_static_federate_CacheID_descriptor =
       getDescriptor().getMessageTypes().get(1);
+    internal_static_federate_CacheID_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_federate_CacheID_descriptor,
+        new java.lang.String[] { "Uuid", });
+    internal_static_federate_KnnRadiusQueryResponse_descriptor =
+      getDescriptor().getMessageTypes().get(2);
+    internal_static_federate_KnnRadiusQueryResponse_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_federate_KnnRadiusQueryResponse_descriptor,
+        new java.lang.String[] { "Radius", });
+    internal_static_federate_UnionRequest_descriptor =
+      getDescriptor().getMessageTypes().get(3);
     internal_static_federate_UnionRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_federate_UnionRequest_descriptor,
         new java.lang.String[] { "Point", "Loop", "Index", "Endpoints", "Uuid", });
     internal_static_federate_UnionResponse_descriptor =
-      getDescriptor().getMessageTypes().get(2);
+      getDescriptor().getMessageTypes().get(4);
     internal_static_federate_UnionResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_federate_UnionResponse_descriptor,
         new java.lang.String[] { "Point", "Loop", "Index", "Endpoints", "Uuid", });
     internal_static_federate_Status_descriptor =
-      getDescriptor().getMessageTypes().get(3);
+      getDescriptor().getMessageTypes().get(5);
     internal_static_federate_Status_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_federate_Status_descriptor,
         new java.lang.String[] { "Code", "Msg", });
     internal_static_federate_AddClientRequest_descriptor =
-      getDescriptor().getMessageTypes().get(4);
+      getDescriptor().getMessageTypes().get(6);
     internal_static_federate_AddClientRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_federate_AddClientRequest_descriptor,
         new java.lang.String[] { "Endpoint", });
     internal_static_federate_GeneralResponse_descriptor =
-      getDescriptor().getMessageTypes().get(5);
+      getDescriptor().getMessageTypes().get(7);
     internal_static_federate_GeneralResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_federate_GeneralResponse_descriptor,
         new java.lang.String[] { "Status", });
     internal_static_federate_SQLRequest_descriptor =
-      getDescriptor().getMessageTypes().get(6);
+      getDescriptor().getMessageTypes().get(8);
     internal_static_federate_SQLRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_federate_SQLRequest_descriptor,
         new java.lang.String[] { "Sql", });
     internal_static_federate_SQLReply_descriptor =
-      getDescriptor().getMessageTypes().get(7);
+      getDescriptor().getMessageTypes().get(9);
     internal_static_federate_SQLReply_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_federate_SQLReply_descriptor,
         new java.lang.String[] { "FakeLocalSum", "Message", });
     internal_static_federate_SQLReplyList_descriptor =
-      getDescriptor().getMessageTypes().get(8);
+      getDescriptor().getMessageTypes().get(10);
     internal_static_federate_SQLReplyList_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_federate_SQLReplyList_descriptor,

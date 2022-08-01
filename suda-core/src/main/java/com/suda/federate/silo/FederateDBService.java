@@ -1,5 +1,6 @@
 package com.suda.federate.silo;
 
+import com.google.protobuf.Empty;
 import com.suda.federate.application.FederateDBClient;
 import com.suda.federate.config.FedSpatialConfig;
 import com.suda.federate.rpc.FederateCommon;
@@ -225,7 +226,6 @@ public abstract class FederateDBService extends FederateGrpc.FederateImplBase {
             }
 
         }else{//currLoop==0 del
-            System.out.println("errr!!!!!!");
             points = request.getPointList();
             Set<Pair<Double, Double>> resPairs = new TreeSet<Pair<Double, Double>>();
             for (FederateCommon.Point point : points) {
@@ -329,7 +329,7 @@ public abstract class FederateDBService extends FederateGrpc.FederateImplBase {
         responseObserver.onNext(response);
         responseObserver.onCompleted();
 
-
+    }
 
 //        List<FederateCommon.Point> points =request.getPointCount()==0 ? new ArrayList<>(): request.getPointList();
 //        if(add || lastAdd){
@@ -393,6 +393,29 @@ public abstract class FederateDBService extends FederateGrpc.FederateImplBase {
 
 
 
+
+    @Override
+    public void clearCache(FederateService.CacheID request, StreamObserver<Empty> observer) {
+        String uuid = request.getUuid();
+        buffer.remove(uuid);
+        observer.onNext(Empty.newBuilder().build());
+        observer.onCompleted();
     }
+
+    //TODO 使用 cache 计算 knn ，优化knn中while循环的rangeCount
+//    private double bufferCount(FederateService.PrivacyCountRequest request) {
+//        Object o = buffer.get(request.getCacheUuid());
+//        if (o instanceof DistanceDataSet) {
+//            DistanceDataSet distanceDataSet = (DistanceDataSet) o;
+//            int count = distanceDataSet.getRangeCount(request.getRadius());
+//            LOG.debug("in privacy knn local radius: {} , count: {} ", request.getRadius(), count);
+//            return count;
+//        } else {
+//            AggCache aggCache = (AggCache) o;
+//            double res = aggCache.getColumn(request.getColumnId());
+//            LOG.info("in privacy aggregate the result is {}", res);
+//            return res;
+//        }
+//    }
 
 }
