@@ -422,7 +422,26 @@ public class PostgresqlServer extends FederateDBServer {
             responseObserver.onNext(replyList.build());
             responseObserver.onCompleted();
         }
+        @Override
+        public void privacyPolygonRangeQuery(FederateService.PolygonRequest request, StreamObserver<FederateService.Status> responseObserver) {
+            System.out.println("收到的信息：" + request.getFunction());
+            FederateService.Status status;
+            try {
+                List<FederateCommon.Point> res = localPolyonRangeQuery(request.getPolygonList(), FederateCommon.Point.class);
+                List<Pair<Double,Double>> resPairs = new ArrayList<>();
+                for (FederateCommon.Point point : res) {
+                    resPairs.add(Pair.of(point.getLongitude(),point.getLatitude()));
+                }
+                SiloCache siloCache = new SiloCache(resPairs);
+                buffer.set(request.getUuid(), siloCache);
+                status = FederateService.Status.newBuilder().setCode(FederateService.Code.kOk).setMsg("ok").build();
+                responseObserver.onNext(status);// 表示查成功了，不返回具体结果
+                responseObserver.onCompleted();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
+        }
         @Override
         public void knnRadiusQuery(FederateService.SQLExpression request, StreamObserver<FederateService.KnnRadiusQueryResponse> responseObserver) {
             System.out.println("收到的信息：" + request.getFunction());
@@ -439,7 +458,34 @@ public class PostgresqlServer extends FederateDBServer {
             responseObserver.onNext(reply);
             responseObserver.onCompleted();
         }
+        @Override
+        public void polygonRangeQuery(FederateService.PolygonRequest request, StreamObserver<FederateService.SQLReplyList> responseObserver) {
+            System.out.println("收到的信息：" + request.getFunction());
+            FederateService.SQLReplyList.Builder replyList = null;
+            try {
+                List<FederateCommon.Point> res =localPolyonRangeQuery(request.getPolygonList(),FederateCommon.Point.class);
+                replyList = FederateService.SQLReplyList.newBuilder()
+                        .addAllMessage(res);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            //构造返回
+            assert replyList != null;
+            responseObserver.onNext(replyList.build());
+            responseObserver.onCompleted();
+        }
+        private <T> List<T> localPolyonRangeQuery(List<String> polygon,Class<T> resultClass) throws SQLException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {//select * 获取knn结果
 
+            // 生成 SQL
+            String sql = SQLGenerator.generatePolygonRangeQuerySQL(polygon, databaseType);
+            LOGGER.info(String.format("\n%s Target SQL: ", "Mysql") + sql);
+            // 执行 SQL
+            List<T> pointList = executeSql(sql, resultClass);
+
+            LOGGER.info(String.format("\n%s PolyonRangeQuery Result:", "Mysql") + pointList.toString());
+
+            return pointList;
+        }
         /**
          * query: select RangeCounting (P, radius) from table_name;
          * result: Integer，The number of points whose distance from P < radius in table_name.

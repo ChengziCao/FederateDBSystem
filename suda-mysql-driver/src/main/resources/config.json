@@ -3,6 +3,6 @@
     "driver": "com.mysql.cj.jdbc.Driver",
     "user": "root",
     "password": "123465",
-    "url": "jdbc:mysql://10.10.64.117:33061/gis",
+    "url": "jdbc:mysql://10.10.65.122:33061/gis",
     "type": "MYSQL"
 }

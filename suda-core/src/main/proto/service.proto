@@ -34,6 +34,20 @@ message SQLExpression{
 
 // The greeting service definition.
 
+message PolygonRequest{
+  repeated string polygon =1;// POLYGON((P1.X P1.Y, P2.X P2.Y, ...)) => WHERE ST_Contains(ST_GEOMFROMTEXT('POLYGON(polygon)'), location);
+  optional int32 id =2;
+  repeated int32 idList=3;
+  optional int32 t=4;
+  required string function=5;
+  required string table=6;
+  optional double literal =7;
+  optional int32 fetch = 8 [default = 0];
+  repeated string order = 9;
+  optional string groupby=10;
+  optional string uuid = 11;
+}
+
 service Federate {
 
 
@@ -41,11 +55,12 @@ service Federate {
   rpc GetResult (SQLExpression) returns (SQLReply) {}
   rpc RangeCount (SQLExpression) returns (SQLReply) {}
   rpc RangeQuery (SQLExpression) returns ( SQLReplyList) {}
+  rpc PolygonRangeQuery(PolygonRequest) returns ( SQLReplyList) {}
   rpc privacyRangeQuery (SQLExpression) returns (Status) {}
+  rpc privacyPolygonRangeQuery(PolygonRequest) returns ( Status) {}
   rpc KnnRadiusQuery (SQLExpression) returns (KnnRadiusQueryResponse) {}
   rpc privacyUnion (UnionRequest) returns (UnionResponse){}
   rpc localUnion (UnionRequest) returns (UnionResponse){}
-
   rpc ClearCache(CacheID) returns (google.protobuf.Empty);
 
 }

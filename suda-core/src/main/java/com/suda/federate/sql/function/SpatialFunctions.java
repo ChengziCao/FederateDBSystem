@@ -5,6 +5,9 @@ import com.suda.federate.sql.type.Point;
 import org.apache.calcite.runtime.Geometries;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class SpatialFunctions {
   private SpatialFunctions() {
@@ -41,6 +44,11 @@ public class SpatialFunctions {
     String ss[] = s.split(" ");
     return new Point(Double.parseDouble(ss[0]),Double.parseDouble(ss[1]));
   }
+  public static List<String> PolygonFromTextWithoutBracket(String s){
+    String ss[] = s.split(",");
+    return Arrays.asList(ss);
+  }
+
 
   public static Boolean DWithin(Geometries.Geom p1, Geometries.Geom p2, double distance) {
     return Distance(p1, p2) <= distance;

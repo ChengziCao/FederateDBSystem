@@ -1,0 +1,12 @@
+[
+  {
+    "function":"PolygonRangeQuery",
+    "table": "osm_sh",
+    "params":[
+      {
+        "type":"polygon",
+        "value":"121 31, 122 31, 122 31.5, 121 31"
+      }
+    ]
+  }
+]

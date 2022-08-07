@@ -28,6 +28,20 @@
     ]
   },
   {
+    "function":"PolygonRangeQuery",
+    "table": "osm_sh",
+    "params":[
+      {
+        "type":"polygon",
+        "value":"121.456107 31.253359 "
+      },
+      {
+        "type":"Double",
+        "value":2500
+      }
+    ]
+  },
+  {
     "function":"Knn",
     "table": "osm_sh",
     "params":[

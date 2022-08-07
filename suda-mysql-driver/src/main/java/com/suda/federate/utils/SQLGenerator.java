@@ -2,6 +2,9 @@ package com.suda.federate.utils;
 
 import com.suda.federate.rpc.FederateCommon;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SQLGenerator {
     /**
      * queryL select RangeQuery (point, radius) from table;
@@ -24,6 +27,36 @@ public class SQLGenerator {
             return null;
         }
     }
+    /**
+     * queryL select RangeQuery (point, radius) from table;
+     *
+     * @param polygon
+     * @param dbType
+     * @return
+     */
+    public static String generatePolygonRangeQuerySQL(List<String> polygon, ENUM.DATABASE dbType) {//TODO debug
+        String template;
+
+
+        if (ENUM.DATABASE.POSTGRESQL == dbType) {
+            String polygonString = String.join(",",polygon);
+            template = "select st_astext(location) from osm_sh where ST_Contains(GeomFromText('POLYGON((%s))',st_srid(location)),location) limit 10000;";
+            return String.format(template,  polygonString);
+        } else if (ENUM.DATABASE.MYSQL == dbType) {
+            List<String> tmp= new ArrayList<>();
+            for(String s:polygon){
+                String ss[]=s.split(" ");
+                tmp.add(String.format("%s %s",ss[1],ss[0]));//翻转
+            }
+            String polygonString =String.join(",",tmp);
+            template = "select ST_AsText(location) from osm_sh where ST_Contains(ST_GeomFromText('POLYGON((%s))',st_srid(location)),location) limit 10000";
+            return String.format(template, polygonString);
+        } else {
+            template = "";
+            return null;
+        }
+    }
+
 
     /**
      * select RangeCounting (point, radius) from table;

@@ -92,6 +92,29 @@ public final class FederateDBClient {//被edSpatialClient调用 List<String> end
         }
         return response;
     }
+    //客户端方法
+    public FederateService.SQLReplyList polygonRangeQuery(FederateService.PolygonRequest expression){
+
+        FederateService.SQLReplyList response;
+        try{
+            response = blockingStub.polygonRangeQuery(expression);
+        }catch (StatusRuntimeException e){
+            System.out.println("RPC调用失败："+e.getMessage());
+            return FederateService.SQLReplyList.newBuilder().build();
+        }
+        return response;
+    }
+    public boolean privacyPolygonRangeQuery(FederateService.PolygonRequest expression){
+
+        FederateService.Status status;
+        try{
+            status = blockingStub.privacyPolygonRangeQuery(expression);
+            return status.getMsg().equals("ok");
+        }catch (StatusRuntimeException e){
+            System.out.println("RPC调用失败："+e.getMessage());
+            return false;
+        }
+    }
     public Double knnRadiusQuery(FederateService.SQLExpression expression){
         FederateService.KnnRadiusQueryResponse response;
         try{
