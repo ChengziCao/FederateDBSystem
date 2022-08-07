@@ -124,17 +124,17 @@ public final class FederateService {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>required .federate.Point point = 1;</code>
+     * <code>optional .federate.Point point = 1;</code>
      * @return Whether the point field is set.
      */
     boolean hasPoint();
     /**
-     * <code>required .federate.Point point = 1;</code>
+     * <code>optional .federate.Point point = 1;</code>
      * @return The point.
      */
     com.suda.federate.rpc.FederateCommon.Point getPoint();
     /**
-     * <code>required .federate.Point point = 1;</code>
+     * <code>optional .federate.Point point = 1;</code>
      */
     com.suda.federate.rpc.FederateCommon.PointOrBuilder getPointOrBuilder();
 
@@ -473,7 +473,7 @@ public final class FederateService {
     public static final int POINT_FIELD_NUMBER = 1;
     private com.suda.federate.rpc.FederateCommon.Point point_;
     /**
-     * <code>required .federate.Point point = 1;</code>
+     * <code>optional .federate.Point point = 1;</code>
      * @return Whether the point field is set.
      */
     @java.lang.Override
@@ -481,7 +481,7 @@ public final class FederateService {
       return ((bitField0_ & 0x00000001) != 0);
     }
     /**
-     * <code>required .federate.Point point = 1;</code>
+     * <code>optional .federate.Point point = 1;</code>
      * @return The point.
      */
     @java.lang.Override
@@ -489,7 +489,7 @@ public final class FederateService {
       return point_ == null ? com.suda.federate.rpc.FederateCommon.Point.getDefaultInstance() : point_;
     }
     /**
-     * <code>required .federate.Point point = 1;</code>
+     * <code>optional .federate.Point point = 1;</code>
      */
     @java.lang.Override
     public com.suda.federate.rpc.FederateCommon.PointOrBuilder getPointOrBuilder() {
@@ -833,10 +833,6 @@ public final class FederateService {
       if (isInitialized == 1) return true;
       if (isInitialized == 0) return false;
 
-      if (!hasPoint()) {
-        memoizedIsInitialized = 0;
-        return false;
-      }
       if (!hasFunction()) {
         memoizedIsInitialized = 0;
         return false;
@@ -849,9 +845,11 @@ public final class FederateService {
         memoizedIsInitialized = 0;
         return false;
       }
-      if (!getPoint().isInitialized()) {
-        memoizedIsInitialized = 0;
-        return false;
+      if (hasPoint()) {
+        if (!getPoint().isInitialized()) {
+          memoizedIsInitialized = 0;
+          return false;
+        }
       }
       memoizedIsInitialized = 1;
       return true;
@@ -1421,9 +1419,6 @@ public final class FederateService {
 
       @java.lang.Override
       public final boolean isInitialized() {
-        if (!hasPoint()) {
-          return false;
-        }
         if (!hasFunction()) {
           return false;
         }
@@ -1433,8 +1428,10 @@ public final class FederateService {
         if (!hasLiteral()) {
           return false;
         }
-        if (!getPoint().isInitialized()) {
-          return false;
+        if (hasPoint()) {
+          if (!getPoint().isInitialized()) {
+            return false;
+          }
         }
         return true;
       }
@@ -1463,14 +1460,14 @@ public final class FederateService {
       private com.google.protobuf.SingleFieldBuilderV3<
           com.suda.federate.rpc.FederateCommon.Point, com.suda.federate.rpc.FederateCommon.Point.Builder, com.suda.federate.rpc.FederateCommon.PointOrBuilder> pointBuilder_;
       /**
-       * <code>required .federate.Point point = 1;</code>
+       * <code>optional .federate.Point point = 1;</code>
        * @return Whether the point field is set.
        */
       public boolean hasPoint() {
         return ((bitField0_ & 0x00000001) != 0);
       }
       /**
-       * <code>required .federate.Point point = 1;</code>
+       * <code>optional .federate.Point point = 1;</code>
        * @return The point.
        */
       public com.suda.federate.rpc.FederateCommon.Point getPoint() {
@@ -1481,7 +1478,7 @@ public final class FederateService {
         }
       }
       /**
-       * <code>required .federate.Point point = 1;</code>
+       * <code>optional .federate.Point point = 1;</code>
        */
       public Builder setPoint(com.suda.federate.rpc.FederateCommon.Point value) {
         if (pointBuilder_ == null) {
@@ -1497,7 +1494,7 @@ public final class FederateService {
         return this;
       }
       /**
-       * <code>required .federate.Point point = 1;</code>
+       * <code>optional .federate.Point point = 1;</code>
        */
       public Builder setPoint(
           com.suda.federate.rpc.FederateCommon.Point.Builder builderForValue) {
@@ -1511,7 +1508,7 @@ public final class FederateService {
         return this;
       }
       /**
-       * <code>required .federate.Point point = 1;</code>
+       * <code>optional .federate.Point point = 1;</code>
        */
       public Builder mergePoint(com.suda.federate.rpc.FederateCommon.Point value) {
         if (pointBuilder_ == null) {
@@ -1531,7 +1528,7 @@ public final class FederateService {
         return this;
       }
       /**
-       * <code>required .federate.Point point = 1;</code>
+       * <code>optional .federate.Point point = 1;</code>
        */
       public Builder clearPoint() {
         if (pointBuilder_ == null) {
@@ -1544,7 +1541,7 @@ public final class FederateService {
         return this;
       }
       /**
-       * <code>required .federate.Point point = 1;</code>
+       * <code>optional .federate.Point point = 1;</code>
        */
       public com.suda.federate.rpc.FederateCommon.Point.Builder getPointBuilder() {
         bitField0_ |= 0x00000001;
@@ -1552,7 +1549,7 @@ public final class FederateService {
         return getPointFieldBuilder().getBuilder();
       }
       /**
-       * <code>required .federate.Point point = 1;</code>
+       * <code>optional .federate.Point point = 1;</code>
        */
       public com.suda.federate.rpc.FederateCommon.PointOrBuilder getPointOrBuilder() {
         if (pointBuilder_ != null) {
@@ -1563,7 +1560,7 @@ public final class FederateService {
         }
       }
       /**
-       * <code>required .federate.Point point = 1;</code>
+       * <code>optional .federate.Point point = 1;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
           com.suda.federate.rpc.FederateCommon.Point, com.suda.federate.rpc.FederateCommon.Point.Builder, com.suda.federate.rpc.FederateCommon.PointOrBuilder> 
@@ -12909,7 +12906,7 @@ public final class FederateService {
     java.lang.String[] descriptorData = {
       "\n\rservice.proto\022\010federate\032\033google/protob" +
       "uf/empty.proto\032\014common.proto\"\310\001\n\rSQLExpr" +
-      "ession\022\036\n\005point\030\001 \002(\0132\017.federate.Point\022\n" +
+      "ession\022\036\n\005point\030\001 \001(\0132\017.federate.Point\022\n" +
       "\n\002id\030\002 \001(\005\022\016\n\006idList\030\003 \003(\005\022\t\n\001t\030\004 \001(\005\022\020\n" +
       "\010function\030\005 \002(\t\022\r\n\005table\030\006 \002(\t\022\017\n\007litera" +
       "l\030\007 \002(\001\022\020\n\005fetch\030\010 \001(\005:\0010\022\r\n\005order\030\t \003(\t" +

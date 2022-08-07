@@ -11,7 +11,7 @@ option java_outer_classname = "FederateService";
 
 
 message SQLExpression{
-  required Point point=1;
+  optional Point point=1;
   optional int32 id =2;
   repeated int32 idList=3;
   optional int32 t=4;
@@ -23,14 +23,6 @@ message SQLExpression{
   optional string groupby=10;
   optional string uuid = 11;
 }
-//message Query {
-//  required string function = 1;//Range_count
-//  repeated string projectExp = 3;
-//  repeated Expression filterExp = 5;
-//  required int32 fetch = 6;
-//  repeated string order = 7;
-//  optional string aggUuid = 8;
-//}
 
 // The greeting service definition.
 

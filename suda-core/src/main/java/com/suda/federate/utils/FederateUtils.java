@@ -5,6 +5,7 @@ import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
 import com.alibaba.fastjson2.TypeReference;
 import com.suda.federate.config.DbConfig;
+import com.suda.federate.config.ModelConfig;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,11 +22,22 @@ import java.util.regex.Pattern;
 
 public class FederateUtils {
 
+    public static ModelConfig modelConfigInitialization(String configFile) throws IOException, SQLException, ClassNotFoundException {
+        String configPath = FederateUtils.getRealPath(configFile);
+        List<DbConfig> configList = new ArrayList<>();
+        String jsonString = new String(Files.readAllBytes(Paths.get(configPath)));
+        // 可能有多个数据源，写成 json array 格式
+        ModelConfig obj = JSONObject.parseObject(jsonString, ModelConfig.class);
+        return obj;
+    }
+
+
     public static List<DbConfig> configInitialization(String configFile) throws IOException, SQLException, ClassNotFoundException {
         String configPath = FederateUtils.getRealPath(configFile);
         List<DbConfig> configList = new ArrayList<>();
         String jsonString = new String(Files.readAllBytes(Paths.get(configPath)));
         // 可能有多个数据源，写成 json array 格式
+        if (jsonString.charAt(0) == '{') jsonString = '[' + jsonString + ']';
         JSONArray jsonArray = JSON.parseArray(jsonString);
         for (Object object : jsonArray) {
             JSONObject jsonObject = (JSONObject) object;
@@ -33,14 +45,6 @@ public class FederateUtils {
         }
         return configList;
     }
-    public static DbConfig configInitialization2(String configFile) throws IOException, SQLException, ClassNotFoundException {
-        String configPath = FederateUtils.getRealPath(configFile);
-        String jsonString = new String(Files.readAllBytes(Paths.get(configPath)));
-        // 可能有多个数据源，写成 json array 格式
-        JSONObject jsonObject = JSONObject.parseObject(jsonString);
-        return jsonObject.to(DbConfig.class);
-    }
-
 
     public static String getOneResult(ResultSet rs) throws SQLException {
         int count = rs.getMetaData().getColumnCount();
@@ -53,25 +57,6 @@ public class FederateUtils {
         }
 
         return res;
-    }
-
-    public static Map<String, Object> printResultSet(ResultSet rs) throws SQLException {
-        int count = rs.getMetaData().getColumnCount();
-        Map<String, Object> hm = new HashMap<>();
-        while (rs.next()) {
-            StringBuilder sb = new StringBuilder();
-            for (int i = 1; i <= count; i++) {
-                String label = rs.getMetaData().getColumnLabel(i);
-                Object val = rs.getObject(i);
-                String value = "null";
-                if (val != null) value = val.toString();
-                sb.append(label).append(":").append(value);
-                hm.put(label, value);
-                if (i != count) sb.append(" , ");
-            }
-            System.out.println(sb);
-        }
-        return hm;
     }
 
 

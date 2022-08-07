@@ -1,12 +1,10 @@
-package com.suda.federate.sql.function;
+package com.suda.federate.query;
 
 import com.esri.core.geometry.GeometryEngine;
 import com.suda.federate.rpc.FederateCommon;
-import com.suda.federate.sql.type.Point;
 import org.apache.calcite.runtime.Geometries;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,34 +17,11 @@ public class SpatialFunctions {
         return GeometryEngine.distance(p1.g(), p2.g(), p1.sr());
     }
 
-    public static Geometries.Geom MakePoint(double lon, double lat) {
-        return Point(lon, lat);
-    }
-
-    public static Geometries.Geom MakePoint(BigDecimal lon, BigDecimal lat) {
-        return Point(lon.doubleValue(), lat.doubleValue());
-    }
-
-    public static Geometries.Geom Point(double lon, double lat) {
-        return new Point(lon, lat);
-    }
-
-    public static Geometries.Geom Point(BigDecimal lon, BigDecimal lat) {
-        return new Point(lon.doubleValue(), lat.doubleValue());
-    }
-
+    
     public static String AsText(Geometries.Geom p) {
         return p.toString();
     }
 
-    public static Geometries.Geom GeomFromText(String s) {
-        return Point.parsePoint(s);
-    }
-
-    public static Geometries.Geom GeomFromTextWithoutBracket(String s) {
-        String ss[] = s.split(" ");
-        return new Point(Double.parseDouble(ss[0]), Double.parseDouble(ss[1]));
-    }
 
     /**
      * 31.253359 121.45611 --> Point

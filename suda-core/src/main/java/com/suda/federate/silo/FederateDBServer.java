@@ -1,13 +1,7 @@
 package com.suda.federate.silo;
 
-import com.suda.federate.config.DbConfig;
-import com.suda.federate.driver.MySQLDriver;
-import com.suda.federate.driver.PostgresqlDriver;
 import com.suda.federate.rpc.FederateCommon;
 import com.suda.federate.rpc.FederateGrpc;
-import com.suda.federate.sql.function.SpatialFunctions;
-import com.suda.federate.sql.type.FD_Point;
-import com.suda.federate.sql.type.Point;
 import com.suda.federate.utils.ENUM.DATABASE;
 import com.suda.federate.utils.FederateUtils;
 import io.grpc.Server;
