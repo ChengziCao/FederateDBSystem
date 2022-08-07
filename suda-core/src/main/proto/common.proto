@@ -4,9 +4,14 @@ package federate;
 option java_package = "com.suda.federate.rpc";
 option java_outer_classname = "FederateCommon";
 //!  message字段格式：限定修饰符 |  数据类型 |  字段名称 | = |  字段编码值 | [字段默认值]
+
 message Point {
   required double latitude = 1;
   required double longitude = 2;
+}
+
+message Polygon{
+  repeated Point point = 1;
 }
 
 message IndexPoint {

@@ -2320,41 +2320,27 @@ public final class FederateService {
      * POLYGON((P1.X P1.Y, P2.X P2.Y, ...)) =&gt; WHERE ST_Contains(ST_GEOMFROMTEXT('POLYGON(polygon)'), location);
      * </pre>
      *
-     * <code>repeated string polygon = 1;</code>
-     * @return A list containing the polygon.
+     * <code>required .federate.Polygon polygon = 1;</code>
+     * @return Whether the polygon field is set.
      */
-    java.util.List<java.lang.String>
-        getPolygonList();
+    boolean hasPolygon();
     /**
      * <pre>
      * POLYGON((P1.X P1.Y, P2.X P2.Y, ...)) =&gt; WHERE ST_Contains(ST_GEOMFROMTEXT('POLYGON(polygon)'), location);
      * </pre>
      *
-     * <code>repeated string polygon = 1;</code>
-     * @return The count of polygon.
+     * <code>required .federate.Polygon polygon = 1;</code>
+     * @return The polygon.
      */
-    int getPolygonCount();
+    com.suda.federate.rpc.FederateCommon.Polygon getPolygon();
     /**
      * <pre>
      * POLYGON((P1.X P1.Y, P2.X P2.Y, ...)) =&gt; WHERE ST_Contains(ST_GEOMFROMTEXT('POLYGON(polygon)'), location);
      * </pre>
      *
-     * <code>repeated string polygon = 1;</code>
-     * @param index The index of the element to return.
-     * @return The polygon at the given index.
+     * <code>required .federate.Polygon polygon = 1;</code>
      */
-    java.lang.String getPolygon(int index);
-    /**
-     * <pre>
-     * POLYGON((P1.X P1.Y, P2.X P2.Y, ...)) =&gt; WHERE ST_Contains(ST_GEOMFROMTEXT('POLYGON(polygon)'), location);
-     * </pre>
-     *
-     * <code>repeated string polygon = 1;</code>
-     * @param index The index of the value to return.
-     * @return The bytes of the polygon at the given index.
-     */
-    com.google.protobuf.ByteString
-        getPolygonBytes(int index);
+    com.suda.federate.rpc.FederateCommon.PolygonOrBuilder getPolygonOrBuilder();
 
     /**
      * <code>optional int32 id = 2;</code>
@@ -2523,7 +2509,6 @@ public final class FederateService {
       super(builder);
     }
     private PolygonRequest() {
-      polygon_ = com.google.protobuf.LazyStringArrayList.EMPTY;
       idList_ = emptyIntList();
       function_ = "";
       table_ = "";
@@ -2564,16 +2549,20 @@ public final class FederateService {
               done = true;
               break;
             case 10: {
-              com.google.protobuf.ByteString bs = input.readBytes();
-              if (!((mutable_bitField0_ & 0x00000001) != 0)) {
-                polygon_ = new com.google.protobuf.LazyStringArrayList();
-                mutable_bitField0_ |= 0x00000001;
+              com.suda.federate.rpc.FederateCommon.Polygon.Builder subBuilder = null;
+              if (((bitField0_ & 0x00000001) != 0)) {
+                subBuilder = polygon_.toBuilder();
               }
-              polygon_.add(bs);
+              polygon_ = input.readMessage(com.suda.federate.rpc.FederateCommon.Polygon.PARSER, extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(polygon_);
+                polygon_ = subBuilder.buildPartial();
+              }
+              bitField0_ |= 0x00000001;
               break;
             }
             case 16: {
-              bitField0_ |= 0x00000001;
+              bitField0_ |= 0x00000002;
               id_ = input.readInt32();
               break;
             }
@@ -2599,29 +2588,29 @@ public final class FederateService {
               break;
             }
             case 32: {
-              bitField0_ |= 0x00000002;
+              bitField0_ |= 0x00000004;
               t_ = input.readInt32();
               break;
             }
             case 42: {
               com.google.protobuf.ByteString bs = input.readBytes();
-              bitField0_ |= 0x00000004;
+              bitField0_ |= 0x00000008;
               function_ = bs;
               break;
             }
             case 50: {
               com.google.protobuf.ByteString bs = input.readBytes();
-              bitField0_ |= 0x00000008;
+              bitField0_ |= 0x00000010;
               table_ = bs;
               break;
             }
             case 57: {
-              bitField0_ |= 0x00000010;
+              bitField0_ |= 0x00000020;
               literal_ = input.readDouble();
               break;
             }
             case 64: {
-              bitField0_ |= 0x00000020;
+              bitField0_ |= 0x00000040;
               fetch_ = input.readInt32();
               break;
             }
@@ -2636,13 +2625,13 @@ public final class FederateService {
             }
             case 82: {
               com.google.protobuf.ByteString bs = input.readBytes();
-              bitField0_ |= 0x00000040;
+              bitField0_ |= 0x00000080;
               groupby_ = bs;
               break;
             }
             case 90: {
               com.google.protobuf.ByteString bs = input.readBytes();
-              bitField0_ |= 0x00000080;
+              bitField0_ |= 0x00000100;
               uuid_ = bs;
               break;
             }
@@ -2661,9 +2650,6 @@ public final class FederateService {
         throw new com.google.protobuf.InvalidProtocolBufferException(
             e).setUnfinishedMessage(this);
       } finally {
-        if (((mutable_bitField0_ & 0x00000001) != 0)) {
-          polygon_ = polygon_.getUnmodifiableView();
-        }
         if (((mutable_bitField0_ & 0x00000004) != 0)) {
           idList_.makeImmutable(); // C
         }
@@ -2689,54 +2675,41 @@ public final class FederateService {
 
     private int bitField0_;
     public static final int POLYGON_FIELD_NUMBER = 1;
-    private com.google.protobuf.LazyStringList polygon_;
+    private com.suda.federate.rpc.FederateCommon.Polygon polygon_;
     /**
      * <pre>
      * POLYGON((P1.X P1.Y, P2.X P2.Y, ...)) =&gt; WHERE ST_Contains(ST_GEOMFROMTEXT('POLYGON(polygon)'), location);
      * </pre>
      *
-     * <code>repeated string polygon = 1;</code>
-     * @return A list containing the polygon.
+     * <code>required .federate.Polygon polygon = 1;</code>
+     * @return Whether the polygon field is set.
      */
-    public com.google.protobuf.ProtocolStringList
-        getPolygonList() {
-      return polygon_;
+    @java.lang.Override
+    public boolean hasPolygon() {
+      return ((bitField0_ & 0x00000001) != 0);
     }
     /**
      * <pre>
      * POLYGON((P1.X P1.Y, P2.X P2.Y, ...)) =&gt; WHERE ST_Contains(ST_GEOMFROMTEXT('POLYGON(polygon)'), location);
      * </pre>
      *
-     * <code>repeated string polygon = 1;</code>
-     * @return The count of polygon.
+     * <code>required .federate.Polygon polygon = 1;</code>
+     * @return The polygon.
      */
-    public int getPolygonCount() {
-      return polygon_.size();
+    @java.lang.Override
+    public com.suda.federate.rpc.FederateCommon.Polygon getPolygon() {
+      return polygon_ == null ? com.suda.federate.rpc.FederateCommon.Polygon.getDefaultInstance() : polygon_;
     }
     /**
      * <pre>
      * POLYGON((P1.X P1.Y, P2.X P2.Y, ...)) =&gt; WHERE ST_Contains(ST_GEOMFROMTEXT('POLYGON(polygon)'), location);
      * </pre>
      *
-     * <code>repeated string polygon = 1;</code>
-     * @param index The index of the element to return.
-     * @return The polygon at the given index.
+     * <code>required .federate.Polygon polygon = 1;</code>
      */
-    public java.lang.String getPolygon(int index) {
-      return polygon_.get(index);
-    }
-    /**
-     * <pre>
-     * POLYGON((P1.X P1.Y, P2.X P2.Y, ...)) =&gt; WHERE ST_Contains(ST_GEOMFROMTEXT('POLYGON(polygon)'), location);
-     * </pre>
-     *
-     * <code>repeated string polygon = 1;</code>
-     * @param index The index of the value to return.
-     * @return The bytes of the polygon at the given index.
-     */
-    public com.google.protobuf.ByteString
-        getPolygonBytes(int index) {
-      return polygon_.getByteString(index);
+    @java.lang.Override
+    public com.suda.federate.rpc.FederateCommon.PolygonOrBuilder getPolygonOrBuilder() {
+      return polygon_ == null ? com.suda.federate.rpc.FederateCommon.Polygon.getDefaultInstance() : polygon_;
     }
 
     public static final int ID_FIELD_NUMBER = 2;
@@ -2747,7 +2720,7 @@ public final class FederateService {
      */
     @java.lang.Override
     public boolean hasId() {
-      return ((bitField0_ & 0x00000001) != 0);
+      return ((bitField0_ & 0x00000002) != 0);
     }
     /**
      * <code>optional int32 id = 2;</code>
@@ -2793,7 +2766,7 @@ public final class FederateService {
      */
     @java.lang.Override
     public boolean hasT() {
-      return ((bitField0_ & 0x00000002) != 0);
+      return ((bitField0_ & 0x00000004) != 0);
     }
     /**
      * <code>optional int32 t = 4;</code>
@@ -2812,7 +2785,7 @@ public final class FederateService {
      */
     @java.lang.Override
     public boolean hasFunction() {
-      return ((bitField0_ & 0x00000004) != 0);
+      return ((bitField0_ & 0x00000008) != 0);
     }
     /**
      * <code>required string function = 5;</code>
@@ -2860,7 +2833,7 @@ public final class FederateService {
      */
     @java.lang.Override
     public boolean hasTable() {
-      return ((bitField0_ & 0x00000008) != 0);
+      return ((bitField0_ & 0x00000010) != 0);
     }
     /**
      * <code>required string table = 6;</code>
@@ -2908,7 +2881,7 @@ public final class FederateService {
      */
     @java.lang.Override
     public boolean hasLiteral() {
-      return ((bitField0_ & 0x00000010) != 0);
+      return ((bitField0_ & 0x00000020) != 0);
     }
     /**
      * <code>optional double literal = 7;</code>
@@ -2927,7 +2900,7 @@ public final class FederateService {
      */
     @java.lang.Override
     public boolean hasFetch() {
-      return ((bitField0_ & 0x00000020) != 0);
+      return ((bitField0_ & 0x00000040) != 0);
     }
     /**
      * <code>optional int32 fetch = 8 [default = 0];</code>
@@ -2981,7 +2954,7 @@ public final class FederateService {
      */
     @java.lang.Override
     public boolean hasGroupby() {
-      return ((bitField0_ & 0x00000040) != 0);
+      return ((bitField0_ & 0x00000080) != 0);
     }
     /**
      * <code>optional string groupby = 10;</code>
@@ -3029,7 +3002,7 @@ public final class FederateService {
      */
     @java.lang.Override
     public boolean hasUuid() {
-      return ((bitField0_ & 0x00000080) != 0);
+      return ((bitField0_ & 0x00000100) != 0);
     }
     /**
      * <code>optional string uuid = 11;</code>
@@ -3076,11 +3049,19 @@ public final class FederateService {
       if (isInitialized == 1) return true;
       if (isInitialized == 0) return false;
 
+      if (!hasPolygon()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
       if (!hasFunction()) {
         memoizedIsInitialized = 0;
         return false;
       }
       if (!hasTable()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!getPolygon().isInitialized()) {
         memoizedIsInitialized = 0;
         return false;
       }
@@ -3091,37 +3072,37 @@ public final class FederateService {
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      for (int i = 0; i < polygon_.size(); i++) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, polygon_.getRaw(i));
-      }
       if (((bitField0_ & 0x00000001) != 0)) {
+        output.writeMessage(1, getPolygon());
+      }
+      if (((bitField0_ & 0x00000002) != 0)) {
         output.writeInt32(2, id_);
       }
       for (int i = 0; i < idList_.size(); i++) {
         output.writeInt32(3, idList_.getInt(i));
       }
-      if (((bitField0_ & 0x00000002) != 0)) {
+      if (((bitField0_ & 0x00000004) != 0)) {
         output.writeInt32(4, t_);
       }
-      if (((bitField0_ & 0x00000004) != 0)) {
+      if (((bitField0_ & 0x00000008) != 0)) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 5, function_);
       }
-      if (((bitField0_ & 0x00000008) != 0)) {
+      if (((bitField0_ & 0x00000010) != 0)) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 6, table_);
       }
-      if (((bitField0_ & 0x00000010) != 0)) {
+      if (((bitField0_ & 0x00000020) != 0)) {
         output.writeDouble(7, literal_);
       }
-      if (((bitField0_ & 0x00000020) != 0)) {
+      if (((bitField0_ & 0x00000040) != 0)) {
         output.writeInt32(8, fetch_);
       }
       for (int i = 0; i < order_.size(); i++) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 9, order_.getRaw(i));
       }
-      if (((bitField0_ & 0x00000040) != 0)) {
+      if (((bitField0_ & 0x00000080) != 0)) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 10, groupby_);
       }
-      if (((bitField0_ & 0x00000080) != 0)) {
+      if (((bitField0_ & 0x00000100) != 0)) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 11, uuid_);
       }
       unknownFields.writeTo(output);
@@ -3133,15 +3114,11 @@ public final class FederateService {
       if (size != -1) return size;
 
       size = 0;
-      {
-        int dataSize = 0;
-        for (int i = 0; i < polygon_.size(); i++) {
-          dataSize += computeStringSizeNoTag(polygon_.getRaw(i));
-        }
-        size += dataSize;
-        size += 1 * getPolygonList().size();
-      }
       if (((bitField0_ & 0x00000001) != 0)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(1, getPolygon());
+      }
+      if (((bitField0_ & 0x00000002) != 0)) {
         size += com.google.protobuf.CodedOutputStream
           .computeInt32Size(2, id_);
       }
@@ -3154,21 +3131,21 @@ public final class FederateService {
         size += dataSize;
         size += 1 * getIdListList().size();
       }
-      if (((bitField0_ & 0x00000002) != 0)) {
+      if (((bitField0_ & 0x00000004) != 0)) {
         size += com.google.protobuf.CodedOutputStream
           .computeInt32Size(4, t_);
       }
-      if (((bitField0_ & 0x00000004) != 0)) {
+      if (((bitField0_ & 0x00000008) != 0)) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, function_);
       }
-      if (((bitField0_ & 0x00000008) != 0)) {
+      if (((bitField0_ & 0x00000010) != 0)) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(6, table_);
       }
-      if (((bitField0_ & 0x00000010) != 0)) {
+      if (((bitField0_ & 0x00000020) != 0)) {
         size += com.google.protobuf.CodedOutputStream
           .computeDoubleSize(7, literal_);
       }
-      if (((bitField0_ & 0x00000020) != 0)) {
+      if (((bitField0_ & 0x00000040) != 0)) {
         size += com.google.protobuf.CodedOutputStream
           .computeInt32Size(8, fetch_);
       }
@@ -3180,10 +3157,10 @@ public final class FederateService {
         size += dataSize;
         size += 1 * getOrderList().size();
       }
-      if (((bitField0_ & 0x00000040) != 0)) {
+      if (((bitField0_ & 0x00000080) != 0)) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(10, groupby_);
       }
-      if (((bitField0_ & 0x00000080) != 0)) {
+      if (((bitField0_ & 0x00000100) != 0)) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(11, uuid_);
       }
       size += unknownFields.getSerializedSize();
@@ -3201,8 +3178,11 @@ public final class FederateService {
       }
       com.suda.federate.rpc.FederateService.PolygonRequest other = (com.suda.federate.rpc.FederateService.PolygonRequest) obj;
 
-      if (!getPolygonList()
-          .equals(other.getPolygonList())) return false;
+      if (hasPolygon() != other.hasPolygon()) return false;
+      if (hasPolygon()) {
+        if (!getPolygon()
+            .equals(other.getPolygon())) return false;
+      }
       if (hasId() != other.hasId()) return false;
       if (hasId()) {
         if (getId()
@@ -3259,9 +3239,9 @@ public final class FederateService {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
-      if (getPolygonCount() > 0) {
+      if (hasPolygon()) {
         hash = (37 * hash) + POLYGON_FIELD_NUMBER;
-        hash = (53 * hash) + getPolygonList().hashCode();
+        hash = (53 * hash) + getPolygon().hashCode();
       }
       if (hasId()) {
         hash = (37 * hash) + ID_FIELD_NUMBER;
@@ -3432,12 +3412,17 @@ public final class FederateService {
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessageV3
                 .alwaysUseFieldBuilders) {
+          getPolygonFieldBuilder();
         }
       }
       @java.lang.Override
       public Builder clear() {
         super.clear();
-        polygon_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+        if (polygonBuilder_ == null) {
+          polygon_ = null;
+        } else {
+          polygonBuilder_.clear();
+        }
         bitField0_ = (bitField0_ & ~0x00000001);
         id_ = 0;
         bitField0_ = (bitField0_ & ~0x00000002);
@@ -3487,14 +3472,17 @@ public final class FederateService {
         com.suda.federate.rpc.FederateService.PolygonRequest result = new com.suda.federate.rpc.FederateService.PolygonRequest(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
-        if (((bitField0_ & 0x00000001) != 0)) {
-          polygon_ = polygon_.getUnmodifiableView();
-          bitField0_ = (bitField0_ & ~0x00000001);
+        if (((from_bitField0_ & 0x00000001) != 0)) {
+          if (polygonBuilder_ == null) {
+            result.polygon_ = polygon_;
+          } else {
+            result.polygon_ = polygonBuilder_.build();
+          }
+          to_bitField0_ |= 0x00000001;
         }
-        result.polygon_ = polygon_;
         if (((from_bitField0_ & 0x00000002) != 0)) {
           result.id_ = id_;
-          to_bitField0_ |= 0x00000001;
+          to_bitField0_ |= 0x00000002;
         }
         if (((bitField0_ & 0x00000004) != 0)) {
           idList_.makeImmutable();
@@ -3503,23 +3491,23 @@ public final class FederateService {
         result.idList_ = idList_;
         if (((from_bitField0_ & 0x00000008) != 0)) {
           result.t_ = t_;
-          to_bitField0_ |= 0x00000002;
+          to_bitField0_ |= 0x00000004;
         }
         if (((from_bitField0_ & 0x00000010) != 0)) {
-          to_bitField0_ |= 0x00000004;
+          to_bitField0_ |= 0x00000008;
         }
         result.function_ = function_;
         if (((from_bitField0_ & 0x00000020) != 0)) {
-          to_bitField0_ |= 0x00000008;
+          to_bitField0_ |= 0x00000010;
         }
         result.table_ = table_;
         if (((from_bitField0_ & 0x00000040) != 0)) {
           result.literal_ = literal_;
-          to_bitField0_ |= 0x00000010;
+          to_bitField0_ |= 0x00000020;
         }
         if (((from_bitField0_ & 0x00000080) != 0)) {
           result.fetch_ = fetch_;
-          to_bitField0_ |= 0x00000020;
+          to_bitField0_ |= 0x00000040;
         }
         if (((bitField0_ & 0x00000100) != 0)) {
           order_ = order_.getUnmodifiableView();
@@ -3527,11 +3515,11 @@ public final class FederateService {
         }
         result.order_ = order_;
         if (((from_bitField0_ & 0x00000200) != 0)) {
-          to_bitField0_ |= 0x00000040;
+          to_bitField0_ |= 0x00000080;
         }
         result.groupby_ = groupby_;
         if (((from_bitField0_ & 0x00000400) != 0)) {
-          to_bitField0_ |= 0x00000080;
+          to_bitField0_ |= 0x00000100;
         }
         result.uuid_ = uuid_;
         result.bitField0_ = to_bitField0_;
@@ -3583,15 +3571,8 @@ public final class FederateService {
 
       public Builder mergeFrom(com.suda.federate.rpc.FederateService.PolygonRequest other) {
         if (other == com.suda.federate.rpc.FederateService.PolygonRequest.getDefaultInstance()) return this;
-        if (!other.polygon_.isEmpty()) {
-          if (polygon_.isEmpty()) {
-            polygon_ = other.polygon_;
-            bitField0_ = (bitField0_ & ~0x00000001);
-          } else {
-            ensurePolygonIsMutable();
-            polygon_.addAll(other.polygon_);
-          }
-          onChanged();
+        if (other.hasPolygon()) {
+          mergePolygon(other.getPolygon());
         }
         if (other.hasId()) {
           setId(other.getId());
@@ -3652,10 +3633,16 @@ public final class FederateService {
 
       @java.lang.Override
       public final boolean isInitialized() {
+        if (!hasPolygon()) {
+          return false;
+        }
         if (!hasFunction()) {
           return false;
         }
         if (!hasTable()) {
+          return false;
+        }
+        if (!getPolygon().isInitialized()) {
           return false;
         }
         return true;
@@ -3681,79 +3668,71 @@ public final class FederateService {
       }
       private int bitField0_;
 
-      private com.google.protobuf.LazyStringList polygon_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-      private void ensurePolygonIsMutable() {
-        if (!((bitField0_ & 0x00000001) != 0)) {
-          polygon_ = new com.google.protobuf.LazyStringArrayList(polygon_);
-          bitField0_ |= 0x00000001;
-         }
-      }
+      private com.suda.federate.rpc.FederateCommon.Polygon polygon_;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.suda.federate.rpc.FederateCommon.Polygon, com.suda.federate.rpc.FederateCommon.Polygon.Builder, com.suda.federate.rpc.FederateCommon.PolygonOrBuilder> polygonBuilder_;
       /**
        * <pre>
        * POLYGON((P1.X P1.Y, P2.X P2.Y, ...)) =&gt; WHERE ST_Contains(ST_GEOMFROMTEXT('POLYGON(polygon)'), location);
        * </pre>
        *
-       * <code>repeated string polygon = 1;</code>
-       * @return A list containing the polygon.
+       * <code>required .federate.Polygon polygon = 1;</code>
+       * @return Whether the polygon field is set.
        */
-      public com.google.protobuf.ProtocolStringList
-          getPolygonList() {
-        return polygon_.getUnmodifiableView();
+      public boolean hasPolygon() {
+        return ((bitField0_ & 0x00000001) != 0);
       }
       /**
        * <pre>
        * POLYGON((P1.X P1.Y, P2.X P2.Y, ...)) =&gt; WHERE ST_Contains(ST_GEOMFROMTEXT('POLYGON(polygon)'), location);
        * </pre>
        *
-       * <code>repeated string polygon = 1;</code>
-       * @return The count of polygon.
+       * <code>required .federate.Polygon polygon = 1;</code>
+       * @return The polygon.
        */
-      public int getPolygonCount() {
-        return polygon_.size();
+      public com.suda.federate.rpc.FederateCommon.Polygon getPolygon() {
+        if (polygonBuilder_ == null) {
+          return polygon_ == null ? com.suda.federate.rpc.FederateCommon.Polygon.getDefaultInstance() : polygon_;
+        } else {
+          return polygonBuilder_.getMessage();
+        }
       }
       /**
        * <pre>
        * POLYGON((P1.X P1.Y, P2.X P2.Y, ...)) =&gt; WHERE ST_Contains(ST_GEOMFROMTEXT('POLYGON(polygon)'), location);
        * </pre>
        *
-       * <code>repeated string polygon = 1;</code>
-       * @param index The index of the element to return.
-       * @return The polygon at the given index.
+       * <code>required .federate.Polygon polygon = 1;</code>
        */
-      public java.lang.String getPolygon(int index) {
-        return polygon_.get(index);
+      public Builder setPolygon(com.suda.federate.rpc.FederateCommon.Polygon value) {
+        if (polygonBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          polygon_ = value;
+          onChanged();
+        } else {
+          polygonBuilder_.setMessage(value);
+        }
+        bitField0_ |= 0x00000001;
+        return this;
       }
       /**
        * <pre>
        * POLYGON((P1.X P1.Y, P2.X P2.Y, ...)) =&gt; WHERE ST_Contains(ST_GEOMFROMTEXT('POLYGON(polygon)'), location);
        * </pre>
        *
-       * <code>repeated string polygon = 1;</code>
-       * @param index The index of the value to return.
-       * @return The bytes of the polygon at the given index.
-       */
-      public com.google.protobuf.ByteString
-          getPolygonBytes(int index) {
-        return polygon_.getByteString(index);
-      }
-      /**
-       * <pre>
-       * POLYGON((P1.X P1.Y, P2.X P2.Y, ...)) =&gt; WHERE ST_Contains(ST_GEOMFROMTEXT('POLYGON(polygon)'), location);
-       * </pre>
-       *
-       * <code>repeated string polygon = 1;</code>
-       * @param index The index to set the value at.
-       * @param value The polygon to set.
-       * @return This builder for chaining.
+       * <code>required .federate.Polygon polygon = 1;</code>
        */
       public Builder setPolygon(
-          int index, java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  ensurePolygonIsMutable();
-        polygon_.set(index, value);
-        onChanged();
+          com.suda.federate.rpc.FederateCommon.Polygon.Builder builderForValue) {
+        if (polygonBuilder_ == null) {
+          polygon_ = builderForValue.build();
+          onChanged();
+        } else {
+          polygonBuilder_.setMessage(builderForValue.build());
+        }
+        bitField0_ |= 0x00000001;
         return this;
       }
       /**
@@ -3761,18 +3740,23 @@ public final class FederateService {
        * POLYGON((P1.X P1.Y, P2.X P2.Y, ...)) =&gt; WHERE ST_Contains(ST_GEOMFROMTEXT('POLYGON(polygon)'), location);
        * </pre>
        *
-       * <code>repeated string polygon = 1;</code>
-       * @param value The polygon to add.
-       * @return This builder for chaining.
+       * <code>required .federate.Polygon polygon = 1;</code>
        */
-      public Builder addPolygon(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  ensurePolygonIsMutable();
-        polygon_.add(value);
-        onChanged();
+      public Builder mergePolygon(com.suda.federate.rpc.FederateCommon.Polygon value) {
+        if (polygonBuilder_ == null) {
+          if (((bitField0_ & 0x00000001) != 0) &&
+              polygon_ != null &&
+              polygon_ != com.suda.federate.rpc.FederateCommon.Polygon.getDefaultInstance()) {
+            polygon_ =
+              com.suda.federate.rpc.FederateCommon.Polygon.newBuilder(polygon_).mergeFrom(value).buildPartial();
+          } else {
+            polygon_ = value;
+          }
+          onChanged();
+        } else {
+          polygonBuilder_.mergeFrom(value);
+        }
+        bitField0_ |= 0x00000001;
         return this;
       }
       /**
@@ -3780,30 +3764,16 @@ public final class FederateService {
        * POLYGON((P1.X P1.Y, P2.X P2.Y, ...)) =&gt; WHERE ST_Contains(ST_GEOMFROMTEXT('POLYGON(polygon)'), location);
        * </pre>
        *
-       * <code>repeated string polygon = 1;</code>
-       * @param values The polygon to add.
-       * @return This builder for chaining.
-       */
-      public Builder addAllPolygon(
-          java.lang.Iterable<java.lang.String> values) {
-        ensurePolygonIsMutable();
-        com.google.protobuf.AbstractMessageLite.Builder.addAll(
-            values, polygon_);
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       * POLYGON((P1.X P1.Y, P2.X P2.Y, ...)) =&gt; WHERE ST_Contains(ST_GEOMFROMTEXT('POLYGON(polygon)'), location);
-       * </pre>
-       *
-       * <code>repeated string polygon = 1;</code>
-       * @return This builder for chaining.
+       * <code>required .federate.Polygon polygon = 1;</code>
        */
       public Builder clearPolygon() {
-        polygon_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+        if (polygonBuilder_ == null) {
+          polygon_ = null;
+          onChanged();
+        } else {
+          polygonBuilder_.clear();
+        }
         bitField0_ = (bitField0_ & ~0x00000001);
-        onChanged();
         return this;
       }
       /**
@@ -3811,19 +3781,47 @@ public final class FederateService {
        * POLYGON((P1.X P1.Y, P2.X P2.Y, ...)) =&gt; WHERE ST_Contains(ST_GEOMFROMTEXT('POLYGON(polygon)'), location);
        * </pre>
        *
-       * <code>repeated string polygon = 1;</code>
-       * @param value The bytes of the polygon to add.
-       * @return This builder for chaining.
+       * <code>required .federate.Polygon polygon = 1;</code>
        */
-      public Builder addPolygonBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  ensurePolygonIsMutable();
-        polygon_.add(value);
+      public com.suda.federate.rpc.FederateCommon.Polygon.Builder getPolygonBuilder() {
+        bitField0_ |= 0x00000001;
         onChanged();
-        return this;
+        return getPolygonFieldBuilder().getBuilder();
+      }
+      /**
+       * <pre>
+       * POLYGON((P1.X P1.Y, P2.X P2.Y, ...)) =&gt; WHERE ST_Contains(ST_GEOMFROMTEXT('POLYGON(polygon)'), location);
+       * </pre>
+       *
+       * <code>required .federate.Polygon polygon = 1;</code>
+       */
+      public com.suda.federate.rpc.FederateCommon.PolygonOrBuilder getPolygonOrBuilder() {
+        if (polygonBuilder_ != null) {
+          return polygonBuilder_.getMessageOrBuilder();
+        } else {
+          return polygon_ == null ?
+              com.suda.federate.rpc.FederateCommon.Polygon.getDefaultInstance() : polygon_;
+        }
+      }
+      /**
+       * <pre>
+       * POLYGON((P1.X P1.Y, P2.X P2.Y, ...)) =&gt; WHERE ST_Contains(ST_GEOMFROMTEXT('POLYGON(polygon)'), location);
+       * </pre>
+       *
+       * <code>required .federate.Polygon polygon = 1;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.suda.federate.rpc.FederateCommon.Polygon, com.suda.federate.rpc.FederateCommon.Polygon.Builder, com.suda.federate.rpc.FederateCommon.PolygonOrBuilder> 
+          getPolygonFieldBuilder() {
+        if (polygonBuilder_ == null) {
+          polygonBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              com.suda.federate.rpc.FederateCommon.Polygon, com.suda.federate.rpc.FederateCommon.Polygon.Builder, com.suda.federate.rpc.FederateCommon.PolygonOrBuilder>(
+                  getPolygon(),
+                  getParentForChildren(),
+                  isClean());
+          polygon_ = null;
+        }
+        return polygonBuilder_;
       }
 
       private int id_ ;
@@ -12915,48 +12913,48 @@ public final class FederateService {
       "\n\002id\030\002 \001(\005\022\016\n\006idList\030\003 \003(\005\022\t\n\001t\030\004 \001(\005\022\020\n" +
       "\010function\030\005 \002(\t\022\r\n\005table\030\006 \002(\t\022\017\n\007litera" +
       "l\030\007 \002(\001\022\020\n\005fetch\030\010 \001(\005:\0010\022\r\n\005order\030\t \003(\t" +
-      "\022\017\n\007groupby\030\n \001(\t\022\014\n\004uuid\030\013 \001(\t\"\272\001\n\016Poly" +
-      "gonRequest\022\017\n\007polygon\030\001 \003(\t\022\n\n\002id\030\002 \001(\005\022" +
-      "\016\n\006idList\030\003 \003(\005\022\t\n\001t\030\004 \001(\005\022\020\n\010function\030\005" +
-      " \002(\t\022\r\n\005table\030\006 \002(\t\022\017\n\007literal\030\007 \001(\001\022\020\n\005" +
-      "fetch\030\010 \001(\005:\0010\022\r\n\005order\030\t \003(\t\022\017\n\007groupby" +
-      "\030\n \001(\t\022\014\n\004uuid\030\013 \001(\t\"\027\n\007CacheID\022\014\n\004uuid\030" +
-      "\001 \002(\t\"(\n\026KnnRadiusQueryResponse\022\016\n\006radiu" +
-      "s\030\001 \002(\001\"o\n\014UnionRequest\022\036\n\005point\030\001 \003(\0132\017" +
-      ".federate.Point\022\014\n\004loop\030\002 \002(\005\022\020\n\005index\030\003" +
-      " \002(\005:\0010\022\021\n\tendpoints\030\004 \003(\t\022\014\n\004uuid\030\005 \002(\t" +
-      "\"p\n\rUnionResponse\022\036\n\005point\030\001 \003(\0132\017.feder" +
-      "ate.Point\022\014\n\004loop\030\002 \002(\005\022\020\n\005index\030\003 \002(\005:\001" +
-      "0\022\021\n\tendpoints\030\004 \003(\t\022\014\n\004uuid\030\005 \002(\t\"<\n\006St" +
-      "atus\022!\n\004code\030\001 \002(\0162\016.federate.Code:\003kOk\022" +
-      "\017\n\003msg\030\002 \002(\t:\002ok\"$\n\020AddClientRequest\022\020\n\010" +
-      "endpoint\030\001 \002(\t\"3\n\017GeneralResponse\022 \n\006sta" +
-      "tus\030\001 \002(\0132\020.federate.Status\"\031\n\nSQLReques" +
-      "t\022\013\n\003sql\030\001 \002(\t\"1\n\010SQLReply\022\024\n\014fakeLocalS" +
-      "um\030\002 \003(\005\022\017\n\007message\030\001 \002(\001\"0\n\014SQLReplyLis" +
-      "t\022 \n\007message\030\001 \003(\0132\017.federate.Point*9\n\004C" +
-      "ode\022\007\n\003kOk\020\001\022\024\n\020kAddClientFailed\020\002\022\022\n\016kC" +
-      "acheNotExist\020\0032\351\005\n\010Federate\022B\n\tAddClient" +
-      "\022\032.federate.AddClientRequest\032\031.federate." +
-      "GeneralResponse\022:\n\tGetResult\022\027.federate." +
-      "SQLExpression\032\022.federate.SQLReply\"\000\022;\n\nR" +
-      "angeCount\022\027.federate.SQLExpression\032\022.fed" +
-      "erate.SQLReply\"\000\022?\n\nRangeQuery\022\027.federat" +
-      "e.SQLExpression\032\026.federate.SQLReplyList\"" +
-      "\000\022G\n\021PolygonRangeQuery\022\030.federate.Polygo" +
-      "nRequest\032\026.federate.SQLReplyList\"\000\022@\n\021pr" +
-      "ivacyRangeQuery\022\027.federate.SQLExpression" +
-      "\032\020.federate.Status\"\000\022H\n\030privacyPolygonRa" +
-      "ngeQuery\022\030.federate.PolygonRequest\032\020.fed" +
-      "erate.Status\"\000\022M\n\016KnnRadiusQuery\022\027.feder" +
-      "ate.SQLExpression\032 .federate.KnnRadiusQu" +
-      "eryResponse\"\000\022A\n\014privacyUnion\022\026.federate" +
-      ".UnionRequest\032\027.federate.UnionResponse\"\000" +
-      "\022?\n\nlocalUnion\022\026.federate.UnionRequest\032\027" +
-      ".federate.UnionResponse\"\000\0227\n\nClearCache\022" +
-      "\021.federate.CacheID\032\026.google.protobuf.Emp" +
-      "tyB*\n\025com.suda.federate.rpcB\017FederateSer" +
-      "viceP\000"
+      "\022\017\n\007groupby\030\n \001(\t\022\014\n\004uuid\030\013 \001(\t\"\315\001\n\016Poly" +
+      "gonRequest\022\"\n\007polygon\030\001 \002(\0132\021.federate.P" +
+      "olygon\022\n\n\002id\030\002 \001(\005\022\016\n\006idList\030\003 \003(\005\022\t\n\001t\030" +
+      "\004 \001(\005\022\020\n\010function\030\005 \002(\t\022\r\n\005table\030\006 \002(\t\022\017" +
+      "\n\007literal\030\007 \001(\001\022\020\n\005fetch\030\010 \001(\005:\0010\022\r\n\005ord" +
+      "er\030\t \003(\t\022\017\n\007groupby\030\n \001(\t\022\014\n\004uuid\030\013 \001(\t\"" +
+      "\027\n\007CacheID\022\014\n\004uuid\030\001 \002(\t\"(\n\026KnnRadiusQue" +
+      "ryResponse\022\016\n\006radius\030\001 \002(\001\"o\n\014UnionReque" +
+      "st\022\036\n\005point\030\001 \003(\0132\017.federate.Point\022\014\n\004lo" +
+      "op\030\002 \002(\005\022\020\n\005index\030\003 \002(\005:\0010\022\021\n\tendpoints\030" +
+      "\004 \003(\t\022\014\n\004uuid\030\005 \002(\t\"p\n\rUnionResponse\022\036\n\005" +
+      "point\030\001 \003(\0132\017.federate.Point\022\014\n\004loop\030\002 \002" +
+      "(\005\022\020\n\005index\030\003 \002(\005:\0010\022\021\n\tendpoints\030\004 \003(\t\022" +
+      "\014\n\004uuid\030\005 \002(\t\"<\n\006Status\022!\n\004code\030\001 \002(\0162\016." +
+      "federate.Code:\003kOk\022\017\n\003msg\030\002 \002(\t:\002ok\"$\n\020A" +
+      "ddClientRequest\022\020\n\010endpoint\030\001 \002(\t\"3\n\017Gen" +
+      "eralResponse\022 \n\006status\030\001 \002(\0132\020.federate." +
+      "Status\"\031\n\nSQLRequest\022\013\n\003sql\030\001 \002(\t\"1\n\010SQL" +
+      "Reply\022\024\n\014fakeLocalSum\030\002 \003(\005\022\017\n\007message\030\001" +
+      " \002(\001\"0\n\014SQLReplyList\022 \n\007message\030\001 \003(\0132\017." +
+      "federate.Point*9\n\004Code\022\007\n\003kOk\020\001\022\024\n\020kAddC" +
+      "lientFailed\020\002\022\022\n\016kCacheNotExist\020\0032\351\005\n\010Fe" +
+      "derate\022B\n\tAddClient\022\032.federate.AddClient" +
+      "Request\032\031.federate.GeneralResponse\022:\n\tGe" +
+      "tResult\022\027.federate.SQLExpression\032\022.feder" +
+      "ate.SQLReply\"\000\022;\n\nRangeCount\022\027.federate." +
+      "SQLExpression\032\022.federate.SQLReply\"\000\022?\n\nR" +
+      "angeQuery\022\027.federate.SQLExpression\032\026.fed" +
+      "erate.SQLReplyList\"\000\022G\n\021PolygonRangeQuer" +
+      "y\022\030.federate.PolygonRequest\032\026.federate.S" +
+      "QLReplyList\"\000\022@\n\021privacyRangeQuery\022\027.fed" +
+      "erate.SQLExpression\032\020.federate.Status\"\000\022" +
+      "H\n\030privacyPolygonRangeQuery\022\030.federate.P" +
+      "olygonRequest\032\020.federate.Status\"\000\022M\n\016Knn" +
+      "RadiusQuery\022\027.federate.SQLExpression\032 .f" +
+      "ederate.KnnRadiusQueryResponse\"\000\022A\n\014priv" +
+      "acyUnion\022\026.federate.UnionRequest\032\027.feder" +
+      "ate.UnionResponse\"\000\022?\n\nlocalUnion\022\026.fede" +
+      "rate.UnionRequest\032\027.federate.UnionRespon" +
+      "se\"\000\0227\n\nClearCache\022\021.federate.CacheID\032\026." +
+      "google.protobuf.EmptyB*\n\025com.suda.federa" +
+      "te.rpcB\017FederateServiceP\000"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,

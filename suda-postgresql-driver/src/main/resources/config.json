@@ -1,8 +1,10 @@
-[{
+[
+  {
     "name": "postgis_db",
     "driver": "org.postgresql.Driver",
     "user": "postgres",
     "password": "123",
     "url": "jdbc:postgresql://10.10.65.122:54322/gis",
     "type": "POSTGRESQL"
-},]
+  }
+]

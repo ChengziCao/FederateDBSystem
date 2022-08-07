@@ -32,11 +32,11 @@ import static com.suda.federate.security.sha.SecretSum.setSummation;
 public class MysqlServer extends FederateDBServer {
     private static final org.apache.logging.log4j.Logger LOGGER = LogManager.getLogger(MysqlServer.class);
     private static boolean isLeader = false;
+
     private static class FederateMysqlService<T> extends FederateDBService {
         private static final org.apache.logging.log4j.Logger LOG = LogManager.getLogger(MysqlServer.FederateMysqlService.class);
         private DatabaseMetaData metaData;
         private Connection conn;
-        private ENUM.DATABASE databaseType;
 
         FederateMysqlService(DbConfig config) {
             try {
@@ -47,7 +47,6 @@ public class MysqlServer extends FederateDBServer {
         }
 
         public void init(DbConfig config) throws ClassNotFoundException, SQLException {
-            databaseType = ENUM.DATABASE.MYSQL;//TODO
             Class.forName(config.getDriver());
             conn = DriverManager.getConnection(config.getUrl(), config.getUser(), config.getPassword());
 
@@ -56,12 +55,12 @@ public class MysqlServer extends FederateDBServer {
         @Override
         public void rangeCount(FederateService.SQLExpression request, StreamObserver<FederateService.SQLReply> responseObserver) {
             System.out.println("收到的信息：" + request.getFunction());
-            Integer result=0;
+            Integer result = 0;
             try {
 
-                result = localRangeCount(request.getPoint(),request.getTable(), request.getLiteral());
+                result = localRangeCount(request.getPoint(), request.getTable(), request.getLiteral());
                 //构造返回
-                FederateService.SQLReply reply = setSummation(request,result);
+                FederateService.SQLReply reply = setSummation(request, result);
                 responseObserver.onNext(reply);
                 responseObserver.onCompleted();
             } catch (SQLException | InvocationTargetException | NoSuchMethodException | InstantiationException | IllegalAccessException e) {
@@ -181,9 +180,9 @@ public class MysqlServer extends FederateDBServer {
             FederateService.Status status;
             try {
                 List<FederateCommon.Point> res = localRangeQuery(request.getPoint(), request.getLiteral(), FederateCommon.Point.class);
-                List<Pair<Double,Double>> resPairs = new ArrayList<>();
+                List<Pair<Double, Double>> resPairs = new ArrayList<>();
                 for (FederateCommon.Point point : res) {
-                    resPairs.add(Pair.of(point.getLongitude(),point.getLatitude()));
+                    resPairs.add(Pair.of(point.getLongitude(), point.getLatitude()));
                 }
                 SiloCache siloCache = new SiloCache(resPairs);
                 buffer.set(request.getUuid(), siloCache);
@@ -201,10 +200,10 @@ public class MysqlServer extends FederateDBServer {
             System.out.println("收到的信息：" + request.getFunction());
             FederateService.Status status;
             try {
-                List<FederateCommon.Point> res = localPolyonRangeQuery(request.getPolygonList(), FederateCommon.Point.class);
-                List<Pair<Double,Double>> resPairs = new ArrayList<>();
+                List<FederateCommon.Point> res = localPolyonRangeQuery(request.getPolygon(), FederateCommon.Point.class);
+                List<Pair<Double, Double>> resPairs = new ArrayList<>();
                 for (FederateCommon.Point point : res) {
-                    resPairs.add(Pair.of(point.getLongitude(),point.getLatitude()));
+                    resPairs.add(Pair.of(point.getLongitude(), point.getLatitude()));
                 }
                 SiloCache siloCache = new SiloCache(resPairs);
                 buffer.set(request.getUuid(), siloCache);
@@ -222,7 +221,7 @@ public class MysqlServer extends FederateDBServer {
             System.out.println("收到的信息：" + request.getFunction());
             FederateService.SQLReplyList.Builder replyList = null;
             try {
-                List<FederateCommon.Point> res =localRangeQuery(request.getPoint(), request.getLiteral(),FederateCommon.Point.class);
+                List<FederateCommon.Point> res = localRangeQuery(request.getPoint(), request.getLiteral(), FederateCommon.Point.class);
                 replyList = FederateService.SQLReplyList.newBuilder()
                         .addAllMessage(res);
             } catch (Exception e) {
@@ -237,11 +236,11 @@ public class MysqlServer extends FederateDBServer {
         @Override
         public void knnRadiusQuery(FederateService.SQLExpression request, StreamObserver<FederateService.KnnRadiusQueryResponse> responseObserver) {
             System.out.println("收到的信息：" + request.getFunction());
-            Double result=0.0;
+            Double result = 0.0;
             try {
-                Double k =request.getLiteral();
+                Double k = request.getLiteral();
                 int kk = k.intValue();
-                result = localKnnRadiusQuery(request.getPoint(),request.getTable(),kk);
+                result = localKnnRadiusQuery(request.getPoint(), request.getTable(), kk);
             } catch (SQLException | InvocationTargetException | NoSuchMethodException | InstantiationException | IllegalAccessException e) {
                 e.printStackTrace();
             }
@@ -256,7 +255,7 @@ public class MysqlServer extends FederateDBServer {
             System.out.println("收到的信息：" + request.getFunction());
             FederateService.SQLReplyList.Builder replyList = null;
             try {
-                List<FederateCommon.Point> res =localPolyonRangeQuery(request.getPolygonList(),FederateCommon.Point.class);
+                List<FederateCommon.Point> res = localPolyonRangeQuery(request.getPolygon(), FederateCommon.Point.class);
                 replyList = FederateService.SQLReplyList.newBuilder()
                         .addAllMessage(res);
             } catch (Exception e) {
@@ -275,13 +274,13 @@ public class MysqlServer extends FederateDBServer {
          * @param point  query location
          * @param radius range count radius
          */
-        public Integer localRangeCount(FederateCommon.Point point,String tableName, Double radius) throws SQLException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+        public Integer localRangeCount(FederateCommon.Point point, String tableName, Double radius) throws SQLException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
             List<Integer> ansList = new ArrayList<>();
             // 读取参数
             // TODO: plaintext query
 
             // 生成目标 SQL
-            String sql = SQLGenerator.generateRangeCountingSQL(point,tableName,radius, databaseType);
+            String sql = SQLGenerator.generateRangeCountingSQL(point, tableName, radius);
             LOGGER.info(String.format("\n%s Target SQL: ", "Mysql") + sql);
             // 执行 SQL
             Integer ans = executeSql(sql, Integer.class, false);
@@ -289,14 +288,14 @@ public class MysqlServer extends FederateDBServer {
             LOGGER.info(String.format("\n%s RangeCount Result: ", "Mysql") + ans);
 
             // TODO: secure summation
-            return  ans;
+            return ans;
         }
 
 
-        public Double localKnnRadiusQuery(FederateCommon.Point point,String tableName, Integer k) throws SQLException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {//knn主函数
+        public Double localKnnRadiusQuery(FederateCommon.Point point, String tableName, Integer k) throws SQLException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {//knn主函数
             Double minRadius = Double.MAX_VALUE;
             // 初始化查询半径
-            String sql = SQLGenerator.generateKnnRadiusQuerySQL(point,tableName, k, databaseType);
+            String sql = SQLGenerator.generateKnnRadiusQuerySQL(point, tableName, k);
             Double ans = executeSql(sql, Double.class, false);
             return ans;
         }
@@ -309,10 +308,10 @@ public class MysqlServer extends FederateDBServer {
          * @param point  query location
          * @param radius range count radius
          */
-        private <T> List<T> localRangeQuery(FederateCommon.Point point, Double radius,Class<T> resultClass) throws SQLException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {//select * 获取knn结果
+        private <T> List<T> localRangeQuery(FederateCommon.Point point, Double radius, Class<T> resultClass) throws SQLException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {//select * 获取knn结果
 
             // 生成 SQL
-            String sql = SQLGenerator.generateRangeQuerySQL(point, radius, databaseType);
+            String sql = SQLGenerator.generateRangeQuerySQL(point, radius);
             LOGGER.info(String.format("\n%s Target SQL: ", "Mysql") + sql);
             // 执行 SQL
             List<T> pointList = executeSql(sql, resultClass);
@@ -322,10 +321,10 @@ public class MysqlServer extends FederateDBServer {
             return pointList;
         }
 
-        private <T> List<T> localPolyonRangeQuery(List<String> polygon,Class<T> resultClass) throws SQLException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {//select * 获取knn结果
+        private <T> List<T> localPolyonRangeQuery(FederateCommon.Polygon polygon, Class<T> resultClass) throws SQLException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {//select * 获取knn结果
 
             // 生成 SQL
-            String sql = SQLGenerator.generatePolygonRangeQuerySQL(polygon, databaseType);
+            String sql = SQLGenerator.generatePolygonRangeQuerySQL(polygon);
             LOGGER.info(String.format("\n%s Target SQL: ", "Mysql") + sql);
             // 执行 SQL
             List<T> pointList = executeSql(sql, resultClass);
@@ -385,14 +384,13 @@ public class MysqlServer extends FederateDBServer {
 
     public static void main(String[] args) throws Exception {
         String configFile = "config.json";
-        DbConfig config = FederateUtils.configInitialization2(configFile) ;
+        DbConfig config = FederateUtils.configInitialization2(configFile);
         int grpcPort = 8886;
         System.out.println("666");
         MysqlServer server = new MysqlServer(config, grpcPort);
         server.start();
         server.blockUntilShutdown();
     }
-
 
 
     public static String getStackTraceString(Throwable ex) {//(Exception ex) {

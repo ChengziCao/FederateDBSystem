@@ -35,7 +35,7 @@ message SQLExpression{
 // The greeting service definition.
 
 message PolygonRequest{
-  repeated string polygon =1;// POLYGON((P1.X P1.Y, P2.X P2.Y, ...)) => WHERE ST_Contains(ST_GEOMFROMTEXT('POLYGON(polygon)'), location);
+  required Polygon polygon =1;// POLYGON((P1.X P1.Y, P2.X P2.Y, ...)) => WHERE ST_Contains(ST_GEOMFROMTEXT('POLYGON(polygon)'), location);
   optional int32 id =2;
   repeated int32 idList=3;
   optional int32 t=4;

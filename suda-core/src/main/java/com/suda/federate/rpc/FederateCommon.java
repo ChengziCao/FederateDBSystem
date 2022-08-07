@@ -458,10 +458,6 @@ public final class FederateCommon {
     double getLongitude();
   }
   /**
-   * <pre>
-   *!  message字段格式：限定修饰符 |  数据类型 |  字段名称 | = |  字段编码值 | [字段默认值]
-   * </pre>
-   *
    * Protobuf type {@code federate.Point}
    */
   public static final class Point extends
@@ -777,10 +773,6 @@ public final class FederateCommon {
       return builder;
     }
     /**
-     * <pre>
-     *!  message字段格式：限定修饰符 |  数据类型 |  字段名称 | = |  字段编码值 | [字段默认值]
-     * </pre>
-     *
      * Protobuf type {@code federate.Point}
      */
     public static final class Builder extends
@@ -1074,6 +1066,810 @@ public final class FederateCommon {
 
     @java.lang.Override
     public com.suda.federate.rpc.FederateCommon.Point getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface PolygonOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:federate.Polygon)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>repeated .federate.Point point = 1;</code>
+     */
+    java.util.List<com.suda.federate.rpc.FederateCommon.Point> 
+        getPointList();
+    /**
+     * <code>repeated .federate.Point point = 1;</code>
+     */
+    com.suda.federate.rpc.FederateCommon.Point getPoint(int index);
+    /**
+     * <code>repeated .federate.Point point = 1;</code>
+     */
+    int getPointCount();
+    /**
+     * <code>repeated .federate.Point point = 1;</code>
+     */
+    java.util.List<? extends com.suda.federate.rpc.FederateCommon.PointOrBuilder> 
+        getPointOrBuilderList();
+    /**
+     * <code>repeated .federate.Point point = 1;</code>
+     */
+    com.suda.federate.rpc.FederateCommon.PointOrBuilder getPointOrBuilder(
+        int index);
+  }
+  /**
+   * Protobuf type {@code federate.Polygon}
+   */
+  public static final class Polygon extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:federate.Polygon)
+      PolygonOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use Polygon.newBuilder() to construct.
+    private Polygon(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private Polygon() {
+      point_ = java.util.Collections.emptyList();
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new Polygon();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private Polygon(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 10: {
+              if (!((mutable_bitField0_ & 0x00000001) != 0)) {
+                point_ = new java.util.ArrayList<com.suda.federate.rpc.FederateCommon.Point>();
+                mutable_bitField0_ |= 0x00000001;
+              }
+              point_.add(
+                  input.readMessage(com.suda.federate.rpc.FederateCommon.Point.PARSER, extensionRegistry));
+              break;
+            }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        if (((mutable_bitField0_ & 0x00000001) != 0)) {
+          point_ = java.util.Collections.unmodifiableList(point_);
+        }
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.suda.federate.rpc.FederateCommon.internal_static_federate_Polygon_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.suda.federate.rpc.FederateCommon.internal_static_federate_Polygon_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.suda.federate.rpc.FederateCommon.Polygon.class, com.suda.federate.rpc.FederateCommon.Polygon.Builder.class);
+    }
+
+    public static final int POINT_FIELD_NUMBER = 1;
+    private java.util.List<com.suda.federate.rpc.FederateCommon.Point> point_;
+    /**
+     * <code>repeated .federate.Point point = 1;</code>
+     */
+    @java.lang.Override
+    public java.util.List<com.suda.federate.rpc.FederateCommon.Point> getPointList() {
+      return point_;
+    }
+    /**
+     * <code>repeated .federate.Point point = 1;</code>
+     */
+    @java.lang.Override
+    public java.util.List<? extends com.suda.federate.rpc.FederateCommon.PointOrBuilder> 
+        getPointOrBuilderList() {
+      return point_;
+    }
+    /**
+     * <code>repeated .federate.Point point = 1;</code>
+     */
+    @java.lang.Override
+    public int getPointCount() {
+      return point_.size();
+    }
+    /**
+     * <code>repeated .federate.Point point = 1;</code>
+     */
+    @java.lang.Override
+    public com.suda.federate.rpc.FederateCommon.Point getPoint(int index) {
+      return point_.get(index);
+    }
+    /**
+     * <code>repeated .federate.Point point = 1;</code>
+     */
+    @java.lang.Override
+    public com.suda.federate.rpc.FederateCommon.PointOrBuilder getPointOrBuilder(
+        int index) {
+      return point_.get(index);
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      for (int i = 0; i < getPointCount(); i++) {
+        if (!getPoint(i).isInitialized()) {
+          memoizedIsInitialized = 0;
+          return false;
+        }
+      }
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      for (int i = 0; i < point_.size(); i++) {
+        output.writeMessage(1, point_.get(i));
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      for (int i = 0; i < point_.size(); i++) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(1, point_.get(i));
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof com.suda.federate.rpc.FederateCommon.Polygon)) {
+        return super.equals(obj);
+      }
+      com.suda.federate.rpc.FederateCommon.Polygon other = (com.suda.federate.rpc.FederateCommon.Polygon) obj;
+
+      if (!getPointList()
+          .equals(other.getPointList())) return false;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      if (getPointCount() > 0) {
+        hash = (37 * hash) + POINT_FIELD_NUMBER;
+        hash = (53 * hash) + getPointList().hashCode();
+      }
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static com.suda.federate.rpc.FederateCommon.Polygon parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.suda.federate.rpc.FederateCommon.Polygon parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.suda.federate.rpc.FederateCommon.Polygon parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.suda.federate.rpc.FederateCommon.Polygon parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.suda.federate.rpc.FederateCommon.Polygon parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.suda.federate.rpc.FederateCommon.Polygon parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.suda.federate.rpc.FederateCommon.Polygon parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.suda.federate.rpc.FederateCommon.Polygon parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.suda.federate.rpc.FederateCommon.Polygon parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static com.suda.federate.rpc.FederateCommon.Polygon parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.suda.federate.rpc.FederateCommon.Polygon parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.suda.federate.rpc.FederateCommon.Polygon parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(com.suda.federate.rpc.FederateCommon.Polygon prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code federate.Polygon}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:federate.Polygon)
+        com.suda.federate.rpc.FederateCommon.PolygonOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.suda.federate.rpc.FederateCommon.internal_static_federate_Polygon_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.suda.federate.rpc.FederateCommon.internal_static_federate_Polygon_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.suda.federate.rpc.FederateCommon.Polygon.class, com.suda.federate.rpc.FederateCommon.Polygon.Builder.class);
+      }
+
+      // Construct using com.suda.federate.rpc.FederateCommon.Polygon.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+          getPointFieldBuilder();
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        if (pointBuilder_ == null) {
+          point_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000001);
+        } else {
+          pointBuilder_.clear();
+        }
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.suda.federate.rpc.FederateCommon.internal_static_federate_Polygon_descriptor;
+      }
+
+      @java.lang.Override
+      public com.suda.federate.rpc.FederateCommon.Polygon getDefaultInstanceForType() {
+        return com.suda.federate.rpc.FederateCommon.Polygon.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public com.suda.federate.rpc.FederateCommon.Polygon build() {
+        com.suda.federate.rpc.FederateCommon.Polygon result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public com.suda.federate.rpc.FederateCommon.Polygon buildPartial() {
+        com.suda.federate.rpc.FederateCommon.Polygon result = new com.suda.federate.rpc.FederateCommon.Polygon(this);
+        int from_bitField0_ = bitField0_;
+        if (pointBuilder_ == null) {
+          if (((bitField0_ & 0x00000001) != 0)) {
+            point_ = java.util.Collections.unmodifiableList(point_);
+            bitField0_ = (bitField0_ & ~0x00000001);
+          }
+          result.point_ = point_;
+        } else {
+          result.point_ = pointBuilder_.build();
+        }
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.suda.federate.rpc.FederateCommon.Polygon) {
+          return mergeFrom((com.suda.federate.rpc.FederateCommon.Polygon)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.suda.federate.rpc.FederateCommon.Polygon other) {
+        if (other == com.suda.federate.rpc.FederateCommon.Polygon.getDefaultInstance()) return this;
+        if (pointBuilder_ == null) {
+          if (!other.point_.isEmpty()) {
+            if (point_.isEmpty()) {
+              point_ = other.point_;
+              bitField0_ = (bitField0_ & ~0x00000001);
+            } else {
+              ensurePointIsMutable();
+              point_.addAll(other.point_);
+            }
+            onChanged();
+          }
+        } else {
+          if (!other.point_.isEmpty()) {
+            if (pointBuilder_.isEmpty()) {
+              pointBuilder_.dispose();
+              pointBuilder_ = null;
+              point_ = other.point_;
+              bitField0_ = (bitField0_ & ~0x00000001);
+              pointBuilder_ = 
+                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
+                   getPointFieldBuilder() : null;
+            } else {
+              pointBuilder_.addAllMessages(other.point_);
+            }
+          }
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        for (int i = 0; i < getPointCount(); i++) {
+          if (!getPoint(i).isInitialized()) {
+            return false;
+          }
+        }
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.suda.federate.rpc.FederateCommon.Polygon parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.suda.federate.rpc.FederateCommon.Polygon) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      private int bitField0_;
+
+      private java.util.List<com.suda.federate.rpc.FederateCommon.Point> point_ =
+        java.util.Collections.emptyList();
+      private void ensurePointIsMutable() {
+        if (!((bitField0_ & 0x00000001) != 0)) {
+          point_ = new java.util.ArrayList<com.suda.federate.rpc.FederateCommon.Point>(point_);
+          bitField0_ |= 0x00000001;
+         }
+      }
+
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          com.suda.federate.rpc.FederateCommon.Point, com.suda.federate.rpc.FederateCommon.Point.Builder, com.suda.federate.rpc.FederateCommon.PointOrBuilder> pointBuilder_;
+
+      /**
+       * <code>repeated .federate.Point point = 1;</code>
+       */
+      public java.util.List<com.suda.federate.rpc.FederateCommon.Point> getPointList() {
+        if (pointBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(point_);
+        } else {
+          return pointBuilder_.getMessageList();
+        }
+      }
+      /**
+       * <code>repeated .federate.Point point = 1;</code>
+       */
+      public int getPointCount() {
+        if (pointBuilder_ == null) {
+          return point_.size();
+        } else {
+          return pointBuilder_.getCount();
+        }
+      }
+      /**
+       * <code>repeated .federate.Point point = 1;</code>
+       */
+      public com.suda.federate.rpc.FederateCommon.Point getPoint(int index) {
+        if (pointBuilder_ == null) {
+          return point_.get(index);
+        } else {
+          return pointBuilder_.getMessage(index);
+        }
+      }
+      /**
+       * <code>repeated .federate.Point point = 1;</code>
+       */
+      public Builder setPoint(
+          int index, com.suda.federate.rpc.FederateCommon.Point value) {
+        if (pointBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensurePointIsMutable();
+          point_.set(index, value);
+          onChanged();
+        } else {
+          pointBuilder_.setMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .federate.Point point = 1;</code>
+       */
+      public Builder setPoint(
+          int index, com.suda.federate.rpc.FederateCommon.Point.Builder builderForValue) {
+        if (pointBuilder_ == null) {
+          ensurePointIsMutable();
+          point_.set(index, builderForValue.build());
+          onChanged();
+        } else {
+          pointBuilder_.setMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .federate.Point point = 1;</code>
+       */
+      public Builder addPoint(com.suda.federate.rpc.FederateCommon.Point value) {
+        if (pointBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensurePointIsMutable();
+          point_.add(value);
+          onChanged();
+        } else {
+          pointBuilder_.addMessage(value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .federate.Point point = 1;</code>
+       */
+      public Builder addPoint(
+          int index, com.suda.federate.rpc.FederateCommon.Point value) {
+        if (pointBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensurePointIsMutable();
+          point_.add(index, value);
+          onChanged();
+        } else {
+          pointBuilder_.addMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .federate.Point point = 1;</code>
+       */
+      public Builder addPoint(
+          com.suda.federate.rpc.FederateCommon.Point.Builder builderForValue) {
+        if (pointBuilder_ == null) {
+          ensurePointIsMutable();
+          point_.add(builderForValue.build());
+          onChanged();
+        } else {
+          pointBuilder_.addMessage(builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .federate.Point point = 1;</code>
+       */
+      public Builder addPoint(
+          int index, com.suda.federate.rpc.FederateCommon.Point.Builder builderForValue) {
+        if (pointBuilder_ == null) {
+          ensurePointIsMutable();
+          point_.add(index, builderForValue.build());
+          onChanged();
+        } else {
+          pointBuilder_.addMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .federate.Point point = 1;</code>
+       */
+      public Builder addAllPoint(
+          java.lang.Iterable<? extends com.suda.federate.rpc.FederateCommon.Point> values) {
+        if (pointBuilder_ == null) {
+          ensurePointIsMutable();
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, point_);
+          onChanged();
+        } else {
+          pointBuilder_.addAllMessages(values);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .federate.Point point = 1;</code>
+       */
+      public Builder clearPoint() {
+        if (pointBuilder_ == null) {
+          point_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000001);
+          onChanged();
+        } else {
+          pointBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .federate.Point point = 1;</code>
+       */
+      public Builder removePoint(int index) {
+        if (pointBuilder_ == null) {
+          ensurePointIsMutable();
+          point_.remove(index);
+          onChanged();
+        } else {
+          pointBuilder_.remove(index);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .federate.Point point = 1;</code>
+       */
+      public com.suda.federate.rpc.FederateCommon.Point.Builder getPointBuilder(
+          int index) {
+        return getPointFieldBuilder().getBuilder(index);
+      }
+      /**
+       * <code>repeated .federate.Point point = 1;</code>
+       */
+      public com.suda.federate.rpc.FederateCommon.PointOrBuilder getPointOrBuilder(
+          int index) {
+        if (pointBuilder_ == null) {
+          return point_.get(index);  } else {
+          return pointBuilder_.getMessageOrBuilder(index);
+        }
+      }
+      /**
+       * <code>repeated .federate.Point point = 1;</code>
+       */
+      public java.util.List<? extends com.suda.federate.rpc.FederateCommon.PointOrBuilder> 
+           getPointOrBuilderList() {
+        if (pointBuilder_ != null) {
+          return pointBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(point_);
+        }
+      }
+      /**
+       * <code>repeated .federate.Point point = 1;</code>
+       */
+      public com.suda.federate.rpc.FederateCommon.Point.Builder addPointBuilder() {
+        return getPointFieldBuilder().addBuilder(
+            com.suda.federate.rpc.FederateCommon.Point.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .federate.Point point = 1;</code>
+       */
+      public com.suda.federate.rpc.FederateCommon.Point.Builder addPointBuilder(
+          int index) {
+        return getPointFieldBuilder().addBuilder(
+            index, com.suda.federate.rpc.FederateCommon.Point.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .federate.Point point = 1;</code>
+       */
+      public java.util.List<com.suda.federate.rpc.FederateCommon.Point.Builder> 
+           getPointBuilderList() {
+        return getPointFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          com.suda.federate.rpc.FederateCommon.Point, com.suda.federate.rpc.FederateCommon.Point.Builder, com.suda.federate.rpc.FederateCommon.PointOrBuilder> 
+          getPointFieldBuilder() {
+        if (pointBuilder_ == null) {
+          pointBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+              com.suda.federate.rpc.FederateCommon.Point, com.suda.federate.rpc.FederateCommon.Point.Builder, com.suda.federate.rpc.FederateCommon.PointOrBuilder>(
+                  point_,
+                  ((bitField0_ & 0x00000001) != 0),
+                  getParentForChildren(),
+                  isClean());
+          point_ = null;
+        }
+        return pointBuilder_;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:federate.Polygon)
+    }
+
+    // @@protoc_insertion_point(class_scope:federate.Polygon)
+    private static final com.suda.federate.rpc.FederateCommon.Polygon DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new com.suda.federate.rpc.FederateCommon.Polygon();
+    }
+
+    public static com.suda.federate.rpc.FederateCommon.Polygon getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    @java.lang.Deprecated public static final com.google.protobuf.Parser<Polygon>
+        PARSER = new com.google.protobuf.AbstractParser<Polygon>() {
+      @java.lang.Override
+      public Polygon parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new Polygon(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<Polygon> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<Polygon> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.suda.federate.rpc.FederateCommon.Polygon getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -7053,6 +7849,11 @@ public final class FederateCommon {
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_federate_Point_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_federate_Polygon_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_federate_Polygon_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_federate_IndexPoint_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
@@ -7097,27 +7898,28 @@ public final class FederateCommon {
   static {
     java.lang.String[] descriptorData = {
       "\n\014common.proto\022\010federate\",\n\005Point\022\020\n\010lat" +
-      "itude\030\001 \002(\001\022\021\n\tlongitude\030\002 \002(\001\"8\n\nIndexP" +
-      "oint\022\n\n\002id\030\001 \002(\003\022\036\n\005point\030\002 \002(\0132\017.federa" +
-      "te.Point\"8\n\021FederateTableInfo\022\020\n\010endpoin" +
-      "t\030\001 \002(\t\022\021\n\ttableName\030\002 \002(\t\"&\n\nIdMapEntry" +
-      "\022\013\n\003sid\030\001 \002(\003\022\013\n\003ids\030\002 \003(\003\"K\n\023FederateJo" +
-      "inDataSet\022\017\n\007dataSet\030\001 \002(\014\022#\n\005idMap\030\002 \003(" +
-      "\0132\024.federate.IdMapEntry\"3\n\017FederateDataS" +
-      "et\022\017\n\007results\030\001 \003(\t\022\017\n\007dataSet\030\002 \003(\014\"E\n\003" +
-      "Box\022\016\n\006lonMin\030\001 \002(\001\022\016\n\006latMin\030\002 \002(\001\022\016\n\006l" +
-      "onMax\030\003 \002(\001\022\016\n\006latMax\030\004 \002(\001\"N\n\013HeaderPro" +
-      "to\022\014\n\004name\030\001 \003(\t\022\014\n\004type\030\002 \003(\005\022\r\n\005level\030" +
-      "\003 \003(\005\022\024\n\014isPrivacyAgg\030\004 \002(\010*\303\001\n\002Op\022\007\n\003kA" +
-      "s\020\001\022\t\n\005kPlus\020\002\022\n\n\006kMinus\020\003\022\n\n\006kTimes\020\004\022\013" +
-      "\n\007kDivide\020\005\022\010\n\004kMod\020\006\022\007\n\003kGt\020\013\022\007\n\003kGe\020\014\022" +
-      "\007\n\003kLt\020\r\022\007\n\003kLe\020\016\022\007\n\003kEq\020\017\022\007\n\003kNe\020\020\022\010\n\004k" +
-      "And\020\025\022\007\n\003kOr\020\026\022\010\n\004kNot\020\027\022\010\n\004kXOr\020\030\022\017\n\013kS" +
-      "calarFunc\020e\022\014\n\010kAggFunc\020f*}\n\004Func\022\014\n\010kDW" +
-      "ithin\020\001\022\r\n\tkDistance\020\002\022\n\n\006kPoint\020\003\022\006\n\002kX" +
-      "\020\004\022\006\n\002kY\020\005\022\010\n\004kKNN\020\006\022\n\n\006kCount\020e\022\010\n\004kSum" +
-      "\020f\022\010\n\004kAvg\020g\022\010\n\004kMax\020h\022\010\n\004kMin\020iB\'\n\025com." +
-      "suda.federate.rpcB\016FederateCommon"
+      "itude\030\001 \002(\001\022\021\n\tlongitude\030\002 \002(\001\")\n\007Polygo" +
+      "n\022\036\n\005point\030\001 \003(\0132\017.federate.Point\"8\n\nInd" +
+      "exPoint\022\n\n\002id\030\001 \002(\003\022\036\n\005point\030\002 \002(\0132\017.fed" +
+      "erate.Point\"8\n\021FederateTableInfo\022\020\n\010endp" +
+      "oint\030\001 \002(\t\022\021\n\ttableName\030\002 \002(\t\"&\n\nIdMapEn" +
+      "try\022\013\n\003sid\030\001 \002(\003\022\013\n\003ids\030\002 \003(\003\"K\n\023Federat" +
+      "eJoinDataSet\022\017\n\007dataSet\030\001 \002(\014\022#\n\005idMap\030\002" +
+      " \003(\0132\024.federate.IdMapEntry\"3\n\017FederateDa" +
+      "taSet\022\017\n\007results\030\001 \003(\t\022\017\n\007dataSet\030\002 \003(\014\"" +
+      "E\n\003Box\022\016\n\006lonMin\030\001 \002(\001\022\016\n\006latMin\030\002 \002(\001\022\016" +
+      "\n\006lonMax\030\003 \002(\001\022\016\n\006latMax\030\004 \002(\001\"N\n\013Header" +
+      "Proto\022\014\n\004name\030\001 \003(\t\022\014\n\004type\030\002 \003(\005\022\r\n\005lev" +
+      "el\030\003 \003(\005\022\024\n\014isPrivacyAgg\030\004 \002(\010*\303\001\n\002Op\022\007\n" +
+      "\003kAs\020\001\022\t\n\005kPlus\020\002\022\n\n\006kMinus\020\003\022\n\n\006kTimes\020" +
+      "\004\022\013\n\007kDivide\020\005\022\010\n\004kMod\020\006\022\007\n\003kGt\020\013\022\007\n\003kGe" +
+      "\020\014\022\007\n\003kLt\020\r\022\007\n\003kLe\020\016\022\007\n\003kEq\020\017\022\007\n\003kNe\020\020\022\010" +
+      "\n\004kAnd\020\025\022\007\n\003kOr\020\026\022\010\n\004kNot\020\027\022\010\n\004kXOr\020\030\022\017\n" +
+      "\013kScalarFunc\020e\022\014\n\010kAggFunc\020f*}\n\004Func\022\014\n\010" +
+      "kDWithin\020\001\022\r\n\tkDistance\020\002\022\n\n\006kPoint\020\003\022\006\n" +
+      "\002kX\020\004\022\006\n\002kY\020\005\022\010\n\004kKNN\020\006\022\n\n\006kCount\020e\022\010\n\004k" +
+      "Sum\020f\022\010\n\004kAvg\020g\022\010\n\004kMax\020h\022\010\n\004kMin\020iB\'\n\025c" +
+      "om.suda.federate.rpcB\016FederateCommon"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -7129,44 +7931,50 @@ public final class FederateCommon {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_federate_Point_descriptor,
         new java.lang.String[] { "Latitude", "Longitude", });
-    internal_static_federate_IndexPoint_descriptor =
+    internal_static_federate_Polygon_descriptor =
       getDescriptor().getMessageTypes().get(1);
+    internal_static_federate_Polygon_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_federate_Polygon_descriptor,
+        new java.lang.String[] { "Point", });
+    internal_static_federate_IndexPoint_descriptor =
+      getDescriptor().getMessageTypes().get(2);
     internal_static_federate_IndexPoint_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_federate_IndexPoint_descriptor,
         new java.lang.String[] { "Id", "Point", });
     internal_static_federate_FederateTableInfo_descriptor =
-      getDescriptor().getMessageTypes().get(2);
+      getDescriptor().getMessageTypes().get(3);
     internal_static_federate_FederateTableInfo_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_federate_FederateTableInfo_descriptor,
         new java.lang.String[] { "Endpoint", "TableName", });
     internal_static_federate_IdMapEntry_descriptor =
-      getDescriptor().getMessageTypes().get(3);
+      getDescriptor().getMessageTypes().get(4);
     internal_static_federate_IdMapEntry_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_federate_IdMapEntry_descriptor,
         new java.lang.String[] { "Sid", "Ids", });
     internal_static_federate_FederateJoinDataSet_descriptor =
-      getDescriptor().getMessageTypes().get(4);
+      getDescriptor().getMessageTypes().get(5);
     internal_static_federate_FederateJoinDataSet_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_federate_FederateJoinDataSet_descriptor,
         new java.lang.String[] { "DataSet", "IdMap", });
     internal_static_federate_FederateDataSet_descriptor =
-      getDescriptor().getMessageTypes().get(5);
+      getDescriptor().getMessageTypes().get(6);
     internal_static_federate_FederateDataSet_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_federate_FederateDataSet_descriptor,
         new java.lang.String[] { "Results", "DataSet", });
     internal_static_federate_Box_descriptor =
-      getDescriptor().getMessageTypes().get(6);
+      getDescriptor().getMessageTypes().get(7);
     internal_static_federate_Box_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_federate_Box_descriptor,
         new java.lang.String[] { "LonMin", "LatMin", "LonMax", "LatMax", });
     internal_static_federate_HeaderProto_descriptor =
-      getDescriptor().getMessageTypes().get(7);
+      getDescriptor().getMessageTypes().get(8);
     internal_static_federate_HeaderProto_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_federate_HeaderProto_descriptor,

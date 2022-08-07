@@ -7,7 +7,6 @@ import com.suda.federate.rpc.FederateService;
 import com.suda.federate.security.sha.SiloCache;
 import com.suda.federate.silo.FederateDBServer;
 import com.suda.federate.silo.FederateDBService;
-import com.suda.federate.utils.ENUM;
 import com.suda.federate.utils.FederateUtils;
 import io.grpc.ServerBuilder;
 import io.grpc.stub.StreamObserver;
@@ -30,7 +29,6 @@ public class PostgresqlServer extends FederateDBServer {
         private static final org.apache.logging.log4j.Logger LOG = LogManager.getLogger(FederatePostgresqlService.class);
         private DatabaseMetaData metaData;
         private Connection conn;
-        private ENUM.DATABASE databaseType;
 
         FederatePostgresqlService(DbConfig config) {
             try {
@@ -41,7 +39,6 @@ public class PostgresqlServer extends FederateDBServer {
         }
 
         public void init(DbConfig config) throws ClassNotFoundException, SQLException {
-            databaseType = ENUM.DATABASE.POSTGRESQL;//TODO
             Class.forName(config.getDriver());
             conn = DriverManager.getConnection(config.getUrl(), config.getUser(), config.getPassword());
 
@@ -422,15 +419,16 @@ public class PostgresqlServer extends FederateDBServer {
             responseObserver.onNext(replyList.build());
             responseObserver.onCompleted();
         }
+
         @Override
         public void privacyPolygonRangeQuery(FederateService.PolygonRequest request, StreamObserver<FederateService.Status> responseObserver) {
             System.out.println("收到的信息：" + request.getFunction());
             FederateService.Status status;
             try {
-                List<FederateCommon.Point> res = localPolyonRangeQuery(request.getPolygonList(), FederateCommon.Point.class);
-                List<Pair<Double,Double>> resPairs = new ArrayList<>();
+                List<FederateCommon.Point> res = localPolygonRangeQuery(request.getPolygon(), FederateCommon.Point.class);
+                List<Pair<Double, Double>> resPairs = new ArrayList<>();
                 for (FederateCommon.Point point : res) {
-                    resPairs.add(Pair.of(point.getLongitude(),point.getLatitude()));
+                    resPairs.add(Pair.of(point.getLongitude(), point.getLatitude()));
                 }
                 SiloCache siloCache = new SiloCache(resPairs);
                 buffer.set(request.getUuid(), siloCache);
@@ -442,6 +440,7 @@ public class PostgresqlServer extends FederateDBServer {
             }
 
         }
+
         @Override
         public void knnRadiusQuery(FederateService.SQLExpression request, StreamObserver<FederateService.KnnRadiusQueryResponse> responseObserver) {
             System.out.println("收到的信息：" + request.getFunction());
@@ -458,12 +457,13 @@ public class PostgresqlServer extends FederateDBServer {
             responseObserver.onNext(reply);
             responseObserver.onCompleted();
         }
+
         @Override
         public void polygonRangeQuery(FederateService.PolygonRequest request, StreamObserver<FederateService.SQLReplyList> responseObserver) {
             System.out.println("收到的信息：" + request.getFunction());
             FederateService.SQLReplyList.Builder replyList = null;
             try {
-                List<FederateCommon.Point> res =localPolyonRangeQuery(request.getPolygonList(),FederateCommon.Point.class);
+                List<FederateCommon.Point> res = localPolygonRangeQuery(request.getPolygon(), FederateCommon.Point.class);
                 replyList = FederateService.SQLReplyList.newBuilder()
                         .addAllMessage(res);
             } catch (Exception e) {
@@ -474,18 +474,20 @@ public class PostgresqlServer extends FederateDBServer {
             responseObserver.onNext(replyList.build());
             responseObserver.onCompleted();
         }
-        private <T> List<T> localPolyonRangeQuery(List<String> polygon,Class<T> resultClass) throws SQLException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {//select * 获取knn结果
+
+        private <T> List<T> localPolygonRangeQuery(FederateCommon.Polygon polygon, Class<T> resultClass) throws SQLException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {//select * 获取knn结果
 
             // 生成 SQL
-            String sql = SQLGenerator.generatePolygonRangeQuerySQL(polygon, databaseType);
-            LOGGER.info(String.format("\n%s Target SQL: ", "Mysql") + sql);
+            String sql = SQLGenerator.generatePolygonRangeQuerySQL(polygon);
+            LOGGER.info(String.format("\n%s Target SQL: ", "PostGis") + sql);
             // 执行 SQL
             List<T> pointList = executeSql(sql, resultClass);
 
-            LOGGER.info(String.format("\n%s PolyonRangeQuery Result:", "Mysql") + pointList.toString());
+            LOGGER.info(String.format("\n%s PolyonRangeQuery Result:", "PostGis") + pointList.toString());
 
             return pointList;
         }
+
         /**
          * query: select RangeCounting (P, radius) from table_name;
          * result: Integer，The number of points whose distance from P < radius in table_name.
@@ -499,7 +501,7 @@ public class PostgresqlServer extends FederateDBServer {
             // TODO: plaintext query
 
             // 生成目标 SQL
-            String sql = SQLGenerator.generateRangeCountingSQL(point, tableName, radius, databaseType);
+            String sql = SQLGenerator.generateRangeCountingSQL(point, tableName, radius);
             LOGGER.info(String.format("\n%s Target SQL: ", "postgresql") + sql);
             // 执行 SQL
             Integer ans = executeSql(sql, Integer.class, false);
@@ -513,7 +515,7 @@ public class PostgresqlServer extends FederateDBServer {
         public Double localKnnRadiusQuery(FederateCommon.Point point, String tableName, Integer k) throws SQLException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {//knn主函数
             Double minRadius = Double.MAX_VALUE;
             // 初始化查询半径
-            String sql = SQLGenerator.generateKnnRadiusQuerySQL(point, tableName, k, databaseType);
+            String sql = SQLGenerator.generateKnnRadiusQuerySQL(point, tableName, k);
             Double ans = executeSql(sql, Double.class, false);
             return ans;
         }
@@ -528,7 +530,7 @@ public class PostgresqlServer extends FederateDBServer {
          */
         private <T> List<T> localRangeQuery(FederateCommon.Point point, Double radius, Class<T> resultClass) throws SQLException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {//select * 获取knn结果
             // 生成 SQL
-            String sql = SQLGenerator.generateRangeQuerySQL(point, radius, databaseType);
+            String sql = SQLGenerator.generateRangeQuerySQL(point, radius);
             LOGGER.info(String.format("\n%s Target SQL: ", "postgresql") + sql);
             // 执行 SQL
             List<T> pointList = executeSql(sql, resultClass);
@@ -573,15 +575,20 @@ public class PostgresqlServer extends FederateDBServer {
 
 
     public static void main(String[] args) throws Exception {
-        String configFile = "config.json";
-        DbConfig config = FederateUtils.configInitialization(configFile).get(0);
 
-        int grpcPort = 8887;
-        System.out.println("666");
-        PostgresqlServer server = new PostgresqlServer(config, grpcPort);
+        try {
+            String configFile = "config.json";
+            DbConfig config = FederateUtils.configInitialization(configFile).get(0);
 
-        server.start();
-        server.blockUntilShutdown();
+            int grpcPort = 8887;
+            System.out.println("666");
+            PostgresqlServer server = new PostgresqlServer(config, grpcPort);
+
+            server.start();
+            server.blockUntilShutdown();
+        } catch (Exception e) {
+            LOGGER.error(buildErrorMessage(e));
+        }
     }
 
 
