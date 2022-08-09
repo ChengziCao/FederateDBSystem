@@ -177,6 +177,17 @@ public final class FederateService {
     double getLiteral();
 
     /**
+     * <code>optional int32 t = 4;</code>
+     * @return Whether the t field is set.
+     */
+    boolean hasT();
+    /**
+     * <code>optional int32 t = 4;</code>
+     * @return The t.
+     */
+    int getT();
+
+    /**
      * <pre>
      *-----------
      * </pre>
@@ -213,32 +224,15 @@ public final class FederateService {
     int getIdList(int index);
 
     /**
-     * <code>optional int32 t = 4;</code>
-     * @return Whether the t field is set.
-     */
-    boolean hasT();
-    /**
-     * <code>optional int32 t = 4;</code>
-     * @return The t.
-     */
-    int getT();
-
-    /**
-     * <code>required string function = 5;</code>
+     * <code>required .federate.SQLExpression.Function function = 5;</code>
      * @return Whether the function field is set.
      */
     boolean hasFunction();
     /**
-     * <code>required string function = 5;</code>
+     * <code>required .federate.SQLExpression.Function function = 5;</code>
      * @return The function.
      */
-    java.lang.String getFunction();
-    /**
-     * <code>required string function = 5;</code>
-     * @return The bytes for function.
-     */
-    com.google.protobuf.ByteString
-        getFunctionBytes();
+    com.suda.federate.rpc.FederateService.SQLExpression.Function getFunction();
 
     /**
      * <code>required string table = 6;</code>
@@ -341,7 +335,7 @@ public final class FederateService {
     }
     private SQLExpression() {
       idList_ = emptyIntList();
-      function_ = "";
+      function_ = 0;
       table_ = "";
       order_ = com.google.protobuf.LazyStringArrayList.EMPTY;
       groupby_ = "";
@@ -393,14 +387,14 @@ public final class FederateService {
               break;
             }
             case 16: {
-              bitField0_ |= 0x00000008;
+              bitField0_ |= 0x00000010;
               id_ = input.readInt32();
               break;
             }
             case 24: {
-              if (!((mutable_bitField0_ & 0x00000010) != 0)) {
+              if (!((mutable_bitField0_ & 0x00000020) != 0)) {
                 idList_ = newIntList();
-                mutable_bitField0_ |= 0x00000010;
+                mutable_bitField0_ |= 0x00000020;
               }
               idList_.addInt(input.readInt32());
               break;
@@ -408,9 +402,9 @@ public final class FederateService {
             case 26: {
               int length = input.readRawVarint32();
               int limit = input.pushLimit(length);
-              if (!((mutable_bitField0_ & 0x00000010) != 0) && input.getBytesUntilLimit() > 0) {
+              if (!((mutable_bitField0_ & 0x00000020) != 0) && input.getBytesUntilLimit() > 0) {
                 idList_ = newIntList();
-                mutable_bitField0_ |= 0x00000010;
+                mutable_bitField0_ |= 0x00000020;
               }
               while (input.getBytesUntilLimit() > 0) {
                 idList_.addInt(input.readInt32());
@@ -419,14 +413,20 @@ public final class FederateService {
               break;
             }
             case 32: {
-              bitField0_ |= 0x00000010;
+              bitField0_ |= 0x00000008;
               t_ = input.readInt32();
               break;
             }
-            case 42: {
-              com.google.protobuf.ByteString bs = input.readBytes();
-              bitField0_ |= 0x00000020;
-              function_ = bs;
+            case 40: {
+              int rawValue = input.readEnum();
+                @SuppressWarnings("deprecation")
+              com.suda.federate.rpc.FederateService.SQLExpression.Function value = com.suda.federate.rpc.FederateService.SQLExpression.Function.valueOf(rawValue);
+              if (value == null) {
+                unknownFields.mergeVarintField(5, rawValue);
+              } else {
+                bitField0_ |= 0x00000020;
+                function_ = rawValue;
+              }
               break;
             }
             case 50: {
@@ -494,7 +494,7 @@ public final class FederateService {
         throw new com.google.protobuf.InvalidProtocolBufferException(
             e).setUnfinishedMessage(this);
       } finally {
-        if (((mutable_bitField0_ & 0x00000010) != 0)) {
+        if (((mutable_bitField0_ & 0x00000020) != 0)) {
           idList_.makeImmutable(); // C
         }
         if (((mutable_bitField0_ & 0x00000200) != 0)) {
@@ -515,6 +515,120 @@ public final class FederateService {
       return com.suda.federate.rpc.FederateService.internal_static_federate_SQLExpression_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               com.suda.federate.rpc.FederateService.SQLExpression.class, com.suda.federate.rpc.FederateService.SQLExpression.Builder.class);
+    }
+
+    /**
+     * Protobuf enum {@code federate.SQLExpression.Function}
+     */
+    public enum Function
+        implements com.google.protobuf.ProtocolMessageEnum {
+      /**
+       * <code>RANGE_COUNT = 0;</code>
+       */
+      RANGE_COUNT(0),
+      /**
+       * <code>RANGE_QUERY = 1;</code>
+       */
+      RANGE_QUERY(1),
+      /**
+       * <code>POLYGON_RANGE_QUERY = 2;</code>
+       */
+      POLYGON_RANGE_QUERY(2),
+      /**
+       * <code>KNN = 3;</code>
+       */
+      KNN(3),
+      ;
+
+      /**
+       * <code>RANGE_COUNT = 0;</code>
+       */
+      public static final int RANGE_COUNT_VALUE = 0;
+      /**
+       * <code>RANGE_QUERY = 1;</code>
+       */
+      public static final int RANGE_QUERY_VALUE = 1;
+      /**
+       * <code>POLYGON_RANGE_QUERY = 2;</code>
+       */
+      public static final int POLYGON_RANGE_QUERY_VALUE = 2;
+      /**
+       * <code>KNN = 3;</code>
+       */
+      public static final int KNN_VALUE = 3;
+
+
+      public final int getNumber() {
+        return value;
+      }
+
+      /**
+       * @param value The numeric wire value of the corresponding enum entry.
+       * @return The enum associated with the given numeric wire value.
+       * @deprecated Use {@link #forNumber(int)} instead.
+       */
+      @java.lang.Deprecated
+      public static Function valueOf(int value) {
+        return forNumber(value);
+      }
+
+      /**
+       * @param value The numeric wire value of the corresponding enum entry.
+       * @return The enum associated with the given numeric wire value.
+       */
+      public static Function forNumber(int value) {
+        switch (value) {
+          case 0: return RANGE_COUNT;
+          case 1: return RANGE_QUERY;
+          case 2: return POLYGON_RANGE_QUERY;
+          case 3: return KNN;
+          default: return null;
+        }
+      }
+
+      public static com.google.protobuf.Internal.EnumLiteMap<Function>
+          internalGetValueMap() {
+        return internalValueMap;
+      }
+      private static final com.google.protobuf.Internal.EnumLiteMap<
+          Function> internalValueMap =
+            new com.google.protobuf.Internal.EnumLiteMap<Function>() {
+              public Function findValueByNumber(int number) {
+                return Function.forNumber(number);
+              }
+            };
+
+      public final com.google.protobuf.Descriptors.EnumValueDescriptor
+          getValueDescriptor() {
+        return getDescriptor().getValues().get(ordinal());
+      }
+      public final com.google.protobuf.Descriptors.EnumDescriptor
+          getDescriptorForType() {
+        return getDescriptor();
+      }
+      public static final com.google.protobuf.Descriptors.EnumDescriptor
+          getDescriptor() {
+        return com.suda.federate.rpc.FederateService.SQLExpression.getDescriptor().getEnumTypes().get(0);
+      }
+
+      private static final Function[] VALUES = values();
+
+      public static Function valueOf(
+          com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
+        if (desc.getType() != getDescriptor()) {
+          throw new java.lang.IllegalArgumentException(
+            "EnumValueDescriptor is not for this type.");
+        }
+        return VALUES[desc.getIndex()];
+      }
+
+      private final int value;
+
+      private Function(int value) {
+        this.value = value;
+      }
+
+      // @@protoc_insertion_point(enum_scope:federate.SQLExpression.Function)
     }
 
     private int bitField0_;
@@ -601,6 +715,25 @@ public final class FederateService {
       return literal_;
     }
 
+    public static final int T_FIELD_NUMBER = 4;
+    private int t_;
+    /**
+     * <code>optional int32 t = 4;</code>
+     * @return Whether the t field is set.
+     */
+    @java.lang.Override
+    public boolean hasT() {
+      return ((bitField0_ & 0x00000008) != 0);
+    }
+    /**
+     * <code>optional int32 t = 4;</code>
+     * @return The t.
+     */
+    @java.lang.Override
+    public int getT() {
+      return t_;
+    }
+
     public static final int ID_FIELD_NUMBER = 2;
     private int id_;
     /**
@@ -613,7 +746,7 @@ public final class FederateService {
      */
     @java.lang.Override
     public boolean hasId() {
-      return ((bitField0_ & 0x00000008) != 0);
+      return ((bitField0_ & 0x00000010) != 0);
     }
     /**
      * <pre>
@@ -655,71 +788,23 @@ public final class FederateService {
       return idList_.getInt(index);
     }
 
-    public static final int T_FIELD_NUMBER = 4;
-    private int t_;
-    /**
-     * <code>optional int32 t = 4;</code>
-     * @return Whether the t field is set.
-     */
-    @java.lang.Override
-    public boolean hasT() {
-      return ((bitField0_ & 0x00000010) != 0);
-    }
-    /**
-     * <code>optional int32 t = 4;</code>
-     * @return The t.
-     */
-    @java.lang.Override
-    public int getT() {
-      return t_;
-    }
-
     public static final int FUNCTION_FIELD_NUMBER = 5;
-    private volatile java.lang.Object function_;
+    private int function_;
     /**
-     * <code>required string function = 5;</code>
+     * <code>required .federate.SQLExpression.Function function = 5;</code>
      * @return Whether the function field is set.
      */
-    @java.lang.Override
-    public boolean hasFunction() {
+    @java.lang.Override public boolean hasFunction() {
       return ((bitField0_ & 0x00000020) != 0);
     }
     /**
-     * <code>required string function = 5;</code>
+     * <code>required .federate.SQLExpression.Function function = 5;</code>
      * @return The function.
      */
-    @java.lang.Override
-    public java.lang.String getFunction() {
-      java.lang.Object ref = function_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        if (bs.isValidUtf8()) {
-          function_ = s;
-        }
-        return s;
-      }
-    }
-    /**
-     * <code>required string function = 5;</code>
-     * @return The bytes for function.
-     */
-    @java.lang.Override
-    public com.google.protobuf.ByteString
-        getFunctionBytes() {
-      java.lang.Object ref = function_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        function_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+    @java.lang.Override public com.suda.federate.rpc.FederateService.SQLExpression.Function getFunction() {
+      @SuppressWarnings("deprecation")
+      com.suda.federate.rpc.FederateService.SQLExpression.Function result = com.suda.federate.rpc.FederateService.SQLExpression.Function.valueOf(function_);
+      return result == null ? com.suda.federate.rpc.FederateService.SQLExpression.Function.RANGE_COUNT : result;
     }
 
     public static final int TABLE_FIELD_NUMBER = 6;
@@ -957,17 +1042,17 @@ public final class FederateService {
       if (((bitField0_ & 0x00000001) != 0)) {
         output.writeMessage(1, getPoint());
       }
-      if (((bitField0_ & 0x00000008) != 0)) {
+      if (((bitField0_ & 0x00000010) != 0)) {
         output.writeInt32(2, id_);
       }
       for (int i = 0; i < idList_.size(); i++) {
         output.writeInt32(3, idList_.getInt(i));
       }
-      if (((bitField0_ & 0x00000010) != 0)) {
+      if (((bitField0_ & 0x00000008) != 0)) {
         output.writeInt32(4, t_);
       }
       if (((bitField0_ & 0x00000020) != 0)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 5, function_);
+        output.writeEnum(5, function_);
       }
       if (((bitField0_ & 0x00000040) != 0)) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 6, table_);
@@ -1003,7 +1088,7 @@ public final class FederateService {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(1, getPoint());
       }
-      if (((bitField0_ & 0x00000008) != 0)) {
+      if (((bitField0_ & 0x00000010) != 0)) {
         size += com.google.protobuf.CodedOutputStream
           .computeInt32Size(2, id_);
       }
@@ -1016,12 +1101,13 @@ public final class FederateService {
         size += dataSize;
         size += 1 * getIdListList().size();
       }
-      if (((bitField0_ & 0x00000010) != 0)) {
+      if (((bitField0_ & 0x00000008) != 0)) {
         size += com.google.protobuf.CodedOutputStream
           .computeInt32Size(4, t_);
       }
       if (((bitField0_ & 0x00000020) != 0)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, function_);
+        size += com.google.protobuf.CodedOutputStream
+          .computeEnumSize(5, function_);
       }
       if (((bitField0_ & 0x00000040) != 0)) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(6, table_);
@@ -1083,6 +1169,11 @@ public final class FederateService {
             != java.lang.Double.doubleToLongBits(
                 other.getLiteral())) return false;
       }
+      if (hasT() != other.hasT()) return false;
+      if (hasT()) {
+        if (getT()
+            != other.getT()) return false;
+      }
       if (hasId() != other.hasId()) return false;
       if (hasId()) {
         if (getId()
@@ -1090,15 +1181,9 @@ public final class FederateService {
       }
       if (!getIdListList()
           .equals(other.getIdListList())) return false;
-      if (hasT() != other.hasT()) return false;
-      if (hasT()) {
-        if (getT()
-            != other.getT()) return false;
-      }
       if (hasFunction() != other.hasFunction()) return false;
       if (hasFunction()) {
-        if (!getFunction()
-            .equals(other.getFunction())) return false;
+        if (function_ != other.function_) return false;
       }
       if (hasTable() != other.hasTable()) return false;
       if (hasTable()) {
@@ -1146,6 +1231,10 @@ public final class FederateService {
         hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
             java.lang.Double.doubleToLongBits(getLiteral()));
       }
+      if (hasT()) {
+        hash = (37 * hash) + T_FIELD_NUMBER;
+        hash = (53 * hash) + getT();
+      }
       if (hasId()) {
         hash = (37 * hash) + ID_FIELD_NUMBER;
         hash = (53 * hash) + getId();
@@ -1154,13 +1243,9 @@ public final class FederateService {
         hash = (37 * hash) + IDLIST_FIELD_NUMBER;
         hash = (53 * hash) + getIdListList().hashCode();
       }
-      if (hasT()) {
-        hash = (37 * hash) + T_FIELD_NUMBER;
-        hash = (53 * hash) + getT();
-      }
       if (hasFunction()) {
         hash = (37 * hash) + FUNCTION_FIELD_NUMBER;
-        hash = (53 * hash) + getFunction().hashCode();
+        hash = (53 * hash) + function_;
       }
       if (hasTable()) {
         hash = (37 * hash) + TABLE_FIELD_NUMBER;
@@ -1331,13 +1416,13 @@ public final class FederateService {
         bitField0_ = (bitField0_ & ~0x00000002);
         literal_ = 0D;
         bitField0_ = (bitField0_ & ~0x00000004);
-        id_ = 0;
-        bitField0_ = (bitField0_ & ~0x00000008);
-        idList_ = emptyIntList();
-        bitField0_ = (bitField0_ & ~0x00000010);
         t_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000008);
+        id_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000010);
+        idList_ = emptyIntList();
         bitField0_ = (bitField0_ & ~0x00000020);
-        function_ = "";
+        function_ = 0;
         bitField0_ = (bitField0_ & ~0x00000040);
         table_ = "";
         bitField0_ = (bitField0_ & ~0x00000080);
@@ -1398,18 +1483,18 @@ public final class FederateService {
           to_bitField0_ |= 0x00000004;
         }
         if (((from_bitField0_ & 0x00000008) != 0)) {
-          result.id_ = id_;
+          result.t_ = t_;
           to_bitField0_ |= 0x00000008;
         }
-        if (((bitField0_ & 0x00000010) != 0)) {
-          idList_.makeImmutable();
-          bitField0_ = (bitField0_ & ~0x00000010);
-        }
-        result.idList_ = idList_;
-        if (((from_bitField0_ & 0x00000020) != 0)) {
-          result.t_ = t_;
+        if (((from_bitField0_ & 0x00000010) != 0)) {
+          result.id_ = id_;
           to_bitField0_ |= 0x00000010;
         }
+        if (((bitField0_ & 0x00000020) != 0)) {
+          idList_.makeImmutable();
+          bitField0_ = (bitField0_ & ~0x00000020);
+        }
+        result.idList_ = idList_;
         if (((from_bitField0_ & 0x00000040) != 0)) {
           to_bitField0_ |= 0x00000020;
         }
@@ -1493,26 +1578,24 @@ public final class FederateService {
         if (other.hasLiteral()) {
           setLiteral(other.getLiteral());
         }
+        if (other.hasT()) {
+          setT(other.getT());
+        }
         if (other.hasId()) {
           setId(other.getId());
         }
         if (!other.idList_.isEmpty()) {
           if (idList_.isEmpty()) {
             idList_ = other.idList_;
-            bitField0_ = (bitField0_ & ~0x00000010);
+            bitField0_ = (bitField0_ & ~0x00000020);
           } else {
             ensureIdListIsMutable();
             idList_.addAll(other.idList_);
           }
           onChanged();
         }
-        if (other.hasT()) {
-          setT(other.getT());
-        }
         if (other.hasFunction()) {
-          bitField0_ |= 0x00000040;
-          function_ = other.function_;
-          onChanged();
+          setFunction(other.getFunction());
         }
         if (other.hasTable()) {
           bitField0_ |= 0x00000080;
@@ -1903,6 +1986,45 @@ public final class FederateService {
         return this;
       }
 
+      private int t_ ;
+      /**
+       * <code>optional int32 t = 4;</code>
+       * @return Whether the t field is set.
+       */
+      @java.lang.Override
+      public boolean hasT() {
+        return ((bitField0_ & 0x00000008) != 0);
+      }
+      /**
+       * <code>optional int32 t = 4;</code>
+       * @return The t.
+       */
+      @java.lang.Override
+      public int getT() {
+        return t_;
+      }
+      /**
+       * <code>optional int32 t = 4;</code>
+       * @param value The t to set.
+       * @return This builder for chaining.
+       */
+      public Builder setT(int value) {
+        bitField0_ |= 0x00000008;
+        t_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional int32 t = 4;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearT() {
+        bitField0_ = (bitField0_ & ~0x00000008);
+        t_ = 0;
+        onChanged();
+        return this;
+      }
+
       private int id_ ;
       /**
        * <pre>
@@ -1914,7 +2036,7 @@ public final class FederateService {
        */
       @java.lang.Override
       public boolean hasId() {
-        return ((bitField0_ & 0x00000008) != 0);
+        return ((bitField0_ & 0x00000010) != 0);
       }
       /**
        * <pre>
@@ -1938,7 +2060,7 @@ public final class FederateService {
        * @return This builder for chaining.
        */
       public Builder setId(int value) {
-        bitField0_ |= 0x00000008;
+        bitField0_ |= 0x00000010;
         id_ = value;
         onChanged();
         return this;
@@ -1952,7 +2074,7 @@ public final class FederateService {
        * @return This builder for chaining.
        */
       public Builder clearId() {
-        bitField0_ = (bitField0_ & ~0x00000008);
+        bitField0_ = (bitField0_ & ~0x00000010);
         id_ = 0;
         onChanged();
         return this;
@@ -1960,9 +2082,9 @@ public final class FederateService {
 
       private com.google.protobuf.Internal.IntList idList_ = emptyIntList();
       private void ensureIdListIsMutable() {
-        if (!((bitField0_ & 0x00000010) != 0)) {
+        if (!((bitField0_ & 0x00000020) != 0)) {
           idList_ = mutableCopy(idList_);
-          bitField0_ |= 0x00000010;
+          bitField0_ |= 0x00000020;
          }
       }
       /**
@@ -1971,7 +2093,7 @@ public final class FederateService {
        */
       public java.util.List<java.lang.Integer>
           getIdListList() {
-        return ((bitField0_ & 0x00000010) != 0) ?
+        return ((bitField0_ & 0x00000020) != 0) ?
                  java.util.Collections.unmodifiableList(idList_) : idList_;
       }
       /**
@@ -2032,130 +2154,50 @@ public final class FederateService {
        */
       public Builder clearIdList() {
         idList_ = emptyIntList();
-        bitField0_ = (bitField0_ & ~0x00000010);
-        onChanged();
-        return this;
-      }
-
-      private int t_ ;
-      /**
-       * <code>optional int32 t = 4;</code>
-       * @return Whether the t field is set.
-       */
-      @java.lang.Override
-      public boolean hasT() {
-        return ((bitField0_ & 0x00000020) != 0);
-      }
-      /**
-       * <code>optional int32 t = 4;</code>
-       * @return The t.
-       */
-      @java.lang.Override
-      public int getT() {
-        return t_;
-      }
-      /**
-       * <code>optional int32 t = 4;</code>
-       * @param value The t to set.
-       * @return This builder for chaining.
-       */
-      public Builder setT(int value) {
-        bitField0_ |= 0x00000020;
-        t_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>optional int32 t = 4;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearT() {
         bitField0_ = (bitField0_ & ~0x00000020);
-        t_ = 0;
         onChanged();
         return this;
       }
 
-      private java.lang.Object function_ = "";
+      private int function_ = 0;
       /**
-       * <code>required string function = 5;</code>
+       * <code>required .federate.SQLExpression.Function function = 5;</code>
        * @return Whether the function field is set.
        */
-      public boolean hasFunction() {
+      @java.lang.Override public boolean hasFunction() {
         return ((bitField0_ & 0x00000040) != 0);
       }
       /**
-       * <code>required string function = 5;</code>
+       * <code>required .federate.SQLExpression.Function function = 5;</code>
        * @return The function.
        */
-      public java.lang.String getFunction() {
-        java.lang.Object ref = function_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            function_ = s;
-          }
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
+      @java.lang.Override
+      public com.suda.federate.rpc.FederateService.SQLExpression.Function getFunction() {
+        @SuppressWarnings("deprecation")
+        com.suda.federate.rpc.FederateService.SQLExpression.Function result = com.suda.federate.rpc.FederateService.SQLExpression.Function.valueOf(function_);
+        return result == null ? com.suda.federate.rpc.FederateService.SQLExpression.Function.RANGE_COUNT : result;
       }
       /**
-       * <code>required string function = 5;</code>
-       * @return The bytes for function.
-       */
-      public com.google.protobuf.ByteString
-          getFunctionBytes() {
-        java.lang.Object ref = function_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          function_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <code>required string function = 5;</code>
+       * <code>required .federate.SQLExpression.Function function = 5;</code>
        * @param value The function to set.
        * @return This builder for chaining.
        */
-      public Builder setFunction(
-          java.lang.String value) {
+      public Builder setFunction(com.suda.federate.rpc.FederateService.SQLExpression.Function value) {
         if (value == null) {
-    throw new NullPointerException();
-  }
-  bitField0_ |= 0x00000040;
-        function_ = value;
+          throw new NullPointerException();
+        }
+        bitField0_ |= 0x00000040;
+        function_ = value.getNumber();
         onChanged();
         return this;
       }
       /**
-       * <code>required string function = 5;</code>
+       * <code>required .federate.SQLExpression.Function function = 5;</code>
        * @return This builder for chaining.
        */
       public Builder clearFunction() {
         bitField0_ = (bitField0_ & ~0x00000040);
-        function_ = getDefaultInstance().getFunction();
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>required string function = 5;</code>
-       * @param value The bytes for function to set.
-       * @return This builder for chaining.
-       */
-      public Builder setFunctionBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  bitField0_ |= 0x00000040;
-        function_ = value;
+        function_ = 0;
         onChanged();
         return this;
       }
@@ -10959,49 +11001,52 @@ public final class FederateService {
   static {
     java.lang.String[] descriptorData = {
       "\n\rservice.proto\022\010federate\032\033google/protob" +
-      "uf/empty.proto\032\014common.proto\"\354\001\n\rSQLExpr" +
+      "uf/empty.proto\032\014common.proto\"\336\002\n\rSQLExpr" +
       "ession\022\036\n\005point\030\001 \001(\0132\017.federate.Point\022\"" +
       "\n\007polygon\030\014 \001(\0132\021.federate.Polygon\022\017\n\007li" +
-      "teral\030\007 \001(\001\022\n\n\002id\030\002 \001(\005\022\016\n\006idList\030\003 \003(\005\022" +
-      "\t\n\001t\030\004 \001(\005\022\020\n\010function\030\005 \002(\t\022\r\n\005table\030\006 " +
-      "\002(\t\022\020\n\005fetch\030\010 \001(\005:\0010\022\r\n\005order\030\t \003(\t\022\017\n\007" +
-      "groupby\030\n \001(\t\022\014\n\004uuid\030\013 \001(\t\"\027\n\007CacheID\022\014" +
-      "\n\004uuid\030\001 \002(\t\"(\n\026KnnRadiusQueryResponse\022\016" +
-      "\n\006radius\030\001 \002(\001\"o\n\014UnionRequest\022\036\n\005point\030" +
-      "\001 \003(\0132\017.federate.Point\022\014\n\004loop\030\002 \002(\005\022\020\n\005" +
-      "index\030\003 \002(\005:\0010\022\021\n\tendpoints\030\004 \003(\t\022\014\n\004uui" +
-      "d\030\005 \002(\t\"p\n\rUnionResponse\022\036\n\005point\030\001 \003(\0132" +
+      "teral\030\007 \001(\001\022\t\n\001t\030\004 \001(\005\022\n\n\002id\030\002 \001(\005\022\016\n\006id" +
+      "List\030\003 \003(\005\0222\n\010function\030\005 \002(\0162 .federate." +
+      "SQLExpression.Function\022\r\n\005table\030\006 \002(\t\022\020\n" +
+      "\005fetch\030\010 \001(\005:\0010\022\r\n\005order\030\t \003(\t\022\017\n\007groupb" +
+      "y\030\n \001(\t\022\014\n\004uuid\030\013 \001(\t\"N\n\010Function\022\017\n\013RAN" +
+      "GE_COUNT\020\000\022\017\n\013RANGE_QUERY\020\001\022\027\n\023POLYGON_R" +
+      "ANGE_QUERY\020\002\022\007\n\003KNN\020\003\"\027\n\007CacheID\022\014\n\004uuid" +
+      "\030\001 \002(\t\"(\n\026KnnRadiusQueryResponse\022\016\n\006radi" +
+      "us\030\001 \002(\001\"o\n\014UnionRequest\022\036\n\005point\030\001 \003(\0132" +
       "\017.federate.Point\022\014\n\004loop\030\002 \002(\005\022\020\n\005index\030" +
       "\003 \002(\005:\0010\022\021\n\tendpoints\030\004 \003(\t\022\014\n\004uuid\030\005 \002(" +
-      "\t\"<\n\006Status\022!\n\004code\030\001 \002(\0162\016.federate.Cod" +
-      "e:\003kOk\022\017\n\003msg\030\002 \002(\t:\002ok\"$\n\020AddClientRequ" +
-      "est\022\020\n\010endpoint\030\001 \002(\t\"3\n\017GeneralResponse" +
-      "\022 \n\006status\030\001 \002(\0132\020.federate.Status\"\031\n\nSQ" +
-      "LRequest\022\013\n\003sql\030\001 \002(\t\"1\n\010SQLReply\022\024\n\014fak" +
-      "eLocalSum\030\002 \003(\005\022\017\n\007message\030\001 \002(\001\"0\n\014SQLR" +
-      "eplyList\022 \n\007message\030\001 \003(\0132\017.federate.Poi" +
-      "nt*9\n\004Code\022\007\n\003kOk\020\001\022\024\n\020kAddClientFailed\020" +
-      "\002\022\022\n\016kCacheNotExist\020\0032\347\005\n\010Federate\022B\n\tAd" +
-      "dClient\022\032.federate.AddClientRequest\032\031.fe" +
-      "derate.GeneralResponse\022:\n\tGetResult\022\027.fe" +
-      "derate.SQLExpression\032\022.federate.SQLReply" +
-      "\"\000\022;\n\nRangeCount\022\027.federate.SQLExpressio" +
-      "n\032\022.federate.SQLReply\"\000\022?\n\nRangeQuery\022\027." +
-      "federate.SQLExpression\032\026.federate.SQLRep" +
-      "lyList\"\000\022F\n\021PolygonRangeQuery\022\027.federate" +
-      ".SQLExpression\032\026.federate.SQLReplyList\"\000" +
-      "\022@\n\021privacyRangeQuery\022\027.federate.SQLExpr" +
-      "ession\032\020.federate.Status\"\000\022G\n\030privacyPol" +
-      "ygonRangeQuery\022\027.federate.SQLExpression\032" +
-      "\020.federate.Status\"\000\022M\n\016KnnRadiusQuery\022\027." +
-      "federate.SQLExpression\032 .federate.KnnRad" +
-      "iusQueryResponse\"\000\022A\n\014privacyUnion\022\026.fed" +
-      "erate.UnionRequest\032\027.federate.UnionRespo" +
-      "nse\"\000\022?\n\nlocalUnion\022\026.federate.UnionRequ" +
-      "est\032\027.federate.UnionResponse\"\000\0227\n\nClearC" +
-      "ache\022\021.federate.CacheID\032\026.google.protobu" +
-      "f.EmptyB*\n\025com.suda.federate.rpcB\017Federa" +
-      "teServiceP\000"
+      "\t\"p\n\rUnionResponse\022\036\n\005point\030\001 \003(\0132\017.fede" +
+      "rate.Point\022\014\n\004loop\030\002 \002(\005\022\020\n\005index\030\003 \002(\005:" +
+      "\0010\022\021\n\tendpoints\030\004 \003(\t\022\014\n\004uuid\030\005 \002(\t\"<\n\006S" +
+      "tatus\022!\n\004code\030\001 \002(\0162\016.federate.Code:\003kOk" +
+      "\022\017\n\003msg\030\002 \002(\t:\002ok\"$\n\020AddClientRequest\022\020\n" +
+      "\010endpoint\030\001 \002(\t\"3\n\017GeneralResponse\022 \n\006st" +
+      "atus\030\001 \002(\0132\020.federate.Status\"\031\n\nSQLReque" +
+      "st\022\013\n\003sql\030\001 \002(\t\"1\n\010SQLReply\022\024\n\014fakeLocal" +
+      "Sum\030\002 \003(\005\022\017\n\007message\030\001 \002(\001\"0\n\014SQLReplyLi" +
+      "st\022 \n\007message\030\001 \003(\0132\017.federate.Point*9\n\004" +
+      "Code\022\007\n\003kOk\020\001\022\024\n\020kAddClientFailed\020\002\022\022\n\016k" +
+      "CacheNotExist\020\0032\347\005\n\010Federate\022B\n\tAddClien" +
+      "t\022\032.federate.AddClientRequest\032\031.federate" +
+      ".GeneralResponse\022:\n\tGetResult\022\027.federate" +
+      ".SQLExpression\032\022.federate.SQLReply\"\000\022;\n\n" +
+      "RangeCount\022\027.federate.SQLExpression\032\022.fe" +
+      "derate.SQLReply\"\000\022?\n\nRangeQuery\022\027.federa" +
+      "te.SQLExpression\032\026.federate.SQLReplyList" +
+      "\"\000\022F\n\021PolygonRangeQuery\022\027.federate.SQLEx" +
+      "pression\032\026.federate.SQLReplyList\"\000\022@\n\021pr" +
+      "ivacyRangeQuery\022\027.federate.SQLExpression" +
+      "\032\020.federate.Status\"\000\022G\n\030privacyPolygonRa" +
+      "ngeQuery\022\027.federate.SQLExpression\032\020.fede" +
+      "rate.Status\"\000\022M\n\016KnnRadiusQuery\022\027.federa" +
+      "te.SQLExpression\032 .federate.KnnRadiusQue" +
+      "ryResponse\"\000\022A\n\014privacyUnion\022\026.federate." +
+      "UnionRequest\032\027.federate.UnionResponse\"\000\022" +
+      "?\n\nlocalUnion\022\026.federate.UnionRequest\032\027." +
+      "federate.UnionResponse\"\000\0227\n\nClearCache\022\021" +
+      ".federate.CacheID\032\026.google.protobuf.Empt" +
+      "yB*\n\025com.suda.federate.rpcB\017FederateServ" +
+      "iceP\000"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -11014,7 +11059,7 @@ public final class FederateService {
     internal_static_federate_SQLExpression_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_federate_SQLExpression_descriptor,
-        new java.lang.String[] { "Point", "Polygon", "Literal", "Id", "IdList", "T", "Function", "Table", "Fetch", "Order", "Groupby", "Uuid", });
+        new java.lang.String[] { "Point", "Polygon", "Literal", "T", "Id", "IdList", "Function", "Table", "Fetch", "Order", "Groupby", "Uuid", });
     internal_static_federate_CacheID_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_federate_CacheID_fieldAccessorTable = new

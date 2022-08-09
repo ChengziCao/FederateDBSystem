@@ -1,57 +1,53 @@
 [
   {
-    "function":"RangeCount",
+    "function": "RangeCount",
     "table": "osm_sh",
-    "params":[
+    "params": [
       {
-        "type":"point",
-        "value":"121.456107 31.253359"
+        "type": "point",
+        "value": "121.456107 31.253359"
       },
       {
-        "type":"Double",
-        "value":2500
+        "type": "Double",
+        "value": 2500
       }
     ]
   },
   {
-    "function":"RangeQuery",
+    "function": "RangeQuery",
     "table": "osm_sh",
-    "params":[
+    "params": [
       {
-        "type":"point",
-        "value":"121.456107 31.253359"
+        "type": "point",
+        "value": "121.456107 31.253359"
       },
       {
-        "type":"Double",
-        "value":2500
+        "type": "Double",
+        "value": 2500
       }
     ]
   },
   {
-    "function":"PolygonRangeQuery",
+    "function": "PolygonRangeQuery",
     "table": "osm_sh",
-    "params":[
+    "params": [
       {
-        "type":"polygon",
-        "value":"121.456107 31.253359 "
-      },
-      {
-        "type":"Double",
-        "value":2500
+        "type": "polygon",
+        "value": "121 31, 122 31, 122 31.5, 121 31"
       }
     ]
   },
   {
-    "function":"Knn",
+    "function": "Knn",
     "table": "osm_sh",
-    "params":[
+    "params": [
       {
-        "type":"point",
-        "value":"121.456107 31.253359"
+        "type": "point",
+        "value": "121.456107 31.253359"
       },
       {
-        "type":"int",
-        "value":20
+        "type": "int",
+        "value": 20
       }
     ]
   }

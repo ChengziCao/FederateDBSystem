@@ -6,6 +6,8 @@ import com.alibaba.fastjson2.JSONObject;
 import com.alibaba.fastjson2.TypeReference;
 import com.suda.federate.config.DbConfig;
 import com.suda.federate.config.ModelConfig;
+import com.suda.federate.query.SpatialFunctions;
+import com.suda.federate.rpc.FederateService;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,6 +21,8 @@ import java.sql.SQLException;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static com.suda.federate.utils.ENUM.str2FUNCTION;
 
 public class FederateUtils {
 
@@ -44,6 +48,44 @@ public class FederateUtils {
             configList.add(jsonObject.to(DbConfig.class));
         }
         return configList;
+    }
+
+    /**
+     * query.json --> SQLExpression
+     * @param queryFile
+     * @return
+     * @throws Exception
+     */
+    public static List<FederateService.SQLExpression> parseSQLExpression(String queryFile) throws Exception {
+        String queryPath = FederateUtils.getRealPath(queryFile);
+
+        List<FederateService.SQLExpression> sqlExpressionList = new ArrayList<>();
+        String jsonString = new String(Files.readAllBytes(Paths.get(queryPath)));
+        // 处理query.json多个查询
+        if (jsonString.charAt(0) == '{') jsonString = '[' + jsonString + ']';
+        JSONArray queryJsonArray = JSONArray.parseArray(jsonString);
+        // 处理一条SQL语句
+        for (int i = 0; i < queryJsonArray.size(); i++) {
+            FederateService.SQLExpression.Builder expression = FederateService.SQLExpression.newBuilder();
+            JSONObject queryJson = queryJsonArray.getJSONObject(i);
+            expression.setFunction(str2FUNCTION(queryJson.getString("function")));
+            expression.setTable(queryJson.getString("table"));
+            // 保存 params
+            for (Object varObj : queryJson.getJSONArray("params")) {
+                JSONObject var = (JSONObject) varObj;
+                String type = var.getString("type");
+                String value = var.getString("value");
+                if ("point".equals(type)) {
+                    expression.setPoint(SpatialFunctions.PointFromText(value));
+                } else if ("polygon".equals(type)) {//TODO 简化
+                    expression.setPolygon(SpatialFunctions.PolygonFromText(value));
+                } else {
+                    expression.setLiteral(Double.parseDouble(value));
+                }
+            }
+            sqlExpressionList.add(expression.build());
+        }
+        return sqlExpressionList;
     }
 
     public static String getOneResult(ResultSet rs) throws SQLException {
@@ -165,4 +207,6 @@ public class FederateUtils {
 
         return result;
     }
+
+
 }

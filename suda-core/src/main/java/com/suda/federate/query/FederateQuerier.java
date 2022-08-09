@@ -15,8 +15,8 @@ import java.util.concurrent.*;
 import static com.suda.federate.security.sha.SecretSum.computeS;
 import static com.suda.federate.security.sha.SecretSum.lag;
 
-public class FederateQuery {
-    public static final Logger LOGGER = LoggerFactory.getLogger(FederateQuery.class);
+public class FederateQuerier {
+    public static final Logger LOGGER = LoggerFactory.getLogger(FederateQuerier.class);
 
     public static Map<String, FederateDBClient> federateDBClients = new HashMap<>();
     public static final Map<String, Map<String, String>> tableMap = new HashMap<>();
@@ -70,6 +70,30 @@ public class FederateQuery {
         }
     }
 
+
+    /**
+     * federate query packaging
+     * @param expression
+     * @param privacyFlag
+     */
+    public static void query(FederateService.SQLExpression expression, boolean privacyFlag) {
+        if (expression.getFunction().equals(FederateService.SQLExpression.Function.RANGE_COUNT)) {
+            FederateQuerier.federateRangeCount(expression);
+//                    FederateQuery.federateRangeQuery(expression);
+        } else if (expression.getFunction().equals(FederateService.SQLExpression.Function.RANGE_QUERY)) {
+            FederateQuerier.federateRangeQuery(expression);
+//                    federatePrivacyRangeQuery(expression.toBuilder().setUuid(UUID.randomUUID().toString()).build());
+        } else if (expression.getFunction().equals(FederateService.SQLExpression.Function.KNN)) {
+//                    federateKnn(expression);
+//                    federatePrivacyKnn(expression.toBuilder().setUuid(UUID.randomUUID().toString()).build());
+        } else if (expression.getFunction().equals(FederateService.SQLExpression.Function.POLYGON_RANGE_QUERY)) {
+            federatePolygonRangeQuery(expression);
+//                    federatePrivacyPolygonRangeQuery(expression.toBuilder().setUuid(UUID.randomUUID().toString()).build());
+        } else {
+            return;
+        }
+    }
+
     public static void federateRangeQuery(FederateService.SQLExpression expression) {
         List<Callable<Boolean>> tasks = new ArrayList<>();
         StreamingIterator<FederateService.SQLReplyList> iterator = new StreamingIterator<>(federateDBClients.size());
@@ -111,7 +135,6 @@ public class FederateQuery {
             System.out.println(r);
         }
         System.out.println("public range query count:" + result.size());
-
     }
 
     public static void federatePrivacyRangeQuery(FederateService.SQLExpression expression) {

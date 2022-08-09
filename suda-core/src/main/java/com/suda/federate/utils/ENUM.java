@@ -1,11 +1,13 @@
 package com.suda.federate.utils;
 
+import com.suda.federate.rpc.FederateService;
+
 public class ENUM {
     public enum DATABASE {MYSQL, POSTGRESQL}
 
     public enum DATA_TYPE {POINT, LINESTRING, INT, DOUBLE, STRING, POLYGON}
 
-    public enum FUNCTION {KNN, RANGE_COUNT, RANGE_QUERY}
+
 
     public static DATABASE str2DATABASE(String str) {
         if (str.equalsIgnoreCase("mysql"))
@@ -16,14 +18,16 @@ public class ENUM {
             return null;
     }
 
-    public static FUNCTION str2FUNCTION(String str) {
+    public static FederateService.SQLExpression.Function str2FUNCTION(String str) {
         if (str.equalsIgnoreCase("RANGE_COUNT") || str.equalsIgnoreCase("RangeCount"))
-            return FUNCTION.RANGE_COUNT;
+            return FederateService.SQLExpression.Function.RANGE_COUNT;
         else if (str.equalsIgnoreCase("RANGE_QUERY") || str.equalsIgnoreCase("RangeQuery"))
-            return FUNCTION.RANGE_QUERY;
+            return FederateService.SQLExpression.Function.RANGE_QUERY;
         else if (str.equalsIgnoreCase("KNN"))
-            return FUNCTION.KNN;
-        else
+            return FederateService.SQLExpression.Function.KNN;
+        else if (str.equalsIgnoreCase("PolygonRangeQuery") || str.equalsIgnoreCase("Polygon_Range_Query")) {
+            return FederateService.SQLExpression.Function.POLYGON_RANGE_QUERY;
+        } else
             return null;
     }
 

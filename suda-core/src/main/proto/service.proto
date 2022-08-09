@@ -19,13 +19,17 @@ message SQLExpression{
   /*-----------*/
   optional int32 id = 2;
   repeated int32 idList = 3;
-  required string function = 5;
+  required Function function = 5;
   required string table = 6;
 
   optional int32 fetch = 8 [default = 0];
   repeated string order = 9;
   optional string groupby = 10;
   optional string uuid = 11;
+
+  enum Function{
+    RANGE_COUNT = 0; RANGE_QUERY = 1; POLYGON_RANGE_QUERY = 2;KNN = 3;
+  }
 }
 
 // The greeting service definition.
