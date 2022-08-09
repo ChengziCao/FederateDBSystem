@@ -11,45 +11,33 @@ option java_outer_classname = "FederateService";
 
 
 message SQLExpression{
-  optional Point point=1;
-  optional int32 id =2;
-  repeated int32 idList=3;
-  optional int32 t=4;
-  required string function=5;
-  required string table=6;
-  required double literal =7;
+  /*---params---*/
+  optional Point point = 1;
+  optional Polygon polygon = 12;
+  optional double literal = 7;
+  optional int32 t = 4;
+  /*-----------*/
+  optional int32 id = 2;
+  repeated int32 idList = 3;
+  required string function = 5;
+  required string table = 6;
+
   optional int32 fetch = 8 [default = 0];
   repeated string order = 9;
-  optional string groupby=10;
+  optional string groupby = 10;
   optional string uuid = 11;
 }
 
 // The greeting service definition.
 
-message PolygonRequest{
-  required Polygon polygon =1;// POLYGON((P1.X P1.Y, P2.X P2.Y, ...)) => WHERE ST_Contains(ST_GEOMFROMTEXT('POLYGON(polygon)'), location);
-  optional int32 id =2;
-  repeated int32 idList=3;
-  optional int32 t=4;
-  required string function=5;
-  required string table=6;
-  optional double literal =7;
-  optional int32 fetch = 8 [default = 0];
-  repeated string order = 9;
-  optional string groupby=10;
-  optional string uuid = 11;
-}
-
 service Federate {
-
-
   rpc AddClient(AddClientRequest) returns (GeneralResponse);// 打招呼，打通了说明add成功了，更稳妥，还没做
   rpc GetResult (SQLExpression) returns (SQLReply) {}
   rpc RangeCount (SQLExpression) returns (SQLReply) {}
-  rpc RangeQuery (SQLExpression) returns ( SQLReplyList) {}
-  rpc PolygonRangeQuery(PolygonRequest) returns ( SQLReplyList) {}
+  rpc RangeQuery (SQLExpression) returns (SQLReplyList) {}
+  rpc PolygonRangeQuery(SQLExpression) returns (SQLReplyList) {}
   rpc privacyRangeQuery (SQLExpression) returns (Status) {}
-  rpc privacyPolygonRangeQuery(PolygonRequest) returns ( Status) {}
+  rpc privacyPolygonRangeQuery(SQLExpression) returns (Status) {}
   rpc KnnRadiusQuery (SQLExpression) returns (KnnRadiusQueryResponse) {}
   rpc privacyUnion (UnionRequest) returns (UnionResponse){}
   rpc localUnion (UnionRequest) returns (UnionResponse){}
@@ -63,17 +51,17 @@ message KnnRadiusQueryResponse {
   required double radius = 1;
 }
 message UnionRequest{
-  repeated Point point=1;
-  required int32 loop=2;// loop=0,1 0:add; 1:del
-  required int32 index=3 [default=0];
-  repeated string endpoints=4;//RangeQuery时就把id发出去，endpoints[index]，各silo和master一样，也保存一份federateClientMap
+  repeated Point point = 1;
+  required int32 loop = 2;// loop=0,1 0:add; 1:del
+  required int32 index = 3 [default = 0];
+  repeated string endpoints = 4;//RangeQuery时就把id发出去，endpoints[index]，各silo和master一样，也保存一份federateClientMap
   required string uuid = 5;
 }
 message UnionResponse{
-  repeated Point point=1;
-  required int32 loop=2;
-  required int32 index=3 [default=0];
-  repeated string endpoints=4;//RangeQuery时就把id发出去，endpoints[index]，各silo和master一样，也保存一份federateClientMap
+  repeated Point point = 1;
+  required int32 loop = 2;
+  required int32 index = 3 [default = 0];
+  repeated string endpoints = 4;//RangeQuery时就把id发出去，endpoints[index]，各silo和master一样，也保存一份federateClientMap
   required string uuid = 5;
 
 }
@@ -97,13 +85,13 @@ message GeneralResponse {
 }
 
 message SQLRequest {
-  required string sql=1;
+  required string sql = 1;
 }
 
 // The response message containing the greetings
 
 message SQLReply {
-  repeated int32 fakeLocalSum =2;
+  repeated int32 fakeLocalSum = 2;
   required double message = 1;
 
 }

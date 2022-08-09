@@ -71,7 +71,7 @@ public class FederateUtils {
         List<T> list = new ArrayList<>();
         String pattern = "\\d*[.]\\d*";
         Pattern r = Pattern.compile(pattern);
-        // 现在创建 matcher 对象
+        // 创建 matcher 对象
         Matcher m = r.matcher(content);
         while (m.find()) {
             list.add(clazz.getConstructor(String.class).newInstance(m.group()));
@@ -132,5 +132,37 @@ public class FederateUtils {
         // File.separator 是/（斜杠）与\（反斜杠），Windows下是\（反斜杠），Linux下是/（斜杠）。
         int lastIndex = decodedPath.lastIndexOf(File.separator) + 1;
         return decodedPath.substring(0, lastIndex) + fileName;
+    }
+
+
+    public static String getStackTraceString(Throwable ex) {//(Exception ex) {
+        StackTraceElement[] traceElements = ex.getStackTrace();
+
+        StringBuilder traceBuilder = new StringBuilder();
+
+        if (traceElements != null && traceElements.length > 0) {
+            for (StackTraceElement traceElement : traceElements) {
+                traceBuilder.append("\t").append(traceElement.toString());
+                traceBuilder.append("\n");
+            }
+        }
+        return traceBuilder.toString();
+    }
+
+    /**
+     * 构造异常堆栈信息
+     * @param ex
+     * @return
+     */
+    public static String buildErrorMessage(Exception ex) {
+
+        String result;
+        String stackTrace = getStackTraceString(ex);
+        String exceptionType = ex.toString();
+        String exceptionMessage = ex.getMessage();
+
+        result = String.format("%s : %s \r\n %s", exceptionType, exceptionMessage, stackTrace);
+
+        return result;
     }
 }

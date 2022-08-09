@@ -2,8 +2,6 @@ package com.suda.federate.utils;
 
 import com.suda.federate.rpc.FederateCommon;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.stream.Collectors;
 
 public class SQLGenerator {

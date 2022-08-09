@@ -71,7 +71,7 @@ public class FederateQuery {
     }
 
     public static void federateRangeQuery(FederateService.SQLExpression expression) {
-        List<Callable<Boolean>> tasks = new ArrayList<Callable<Boolean>>();
+        List<Callable<Boolean>> tasks = new ArrayList<>();
         StreamingIterator<FederateService.SQLReplyList> iterator = new StreamingIterator<>(federateDBClients.size());
 
         for (Map.Entry<String, FederateDBClient> entry : federateDBClients.entrySet()) {
@@ -81,16 +81,9 @@ public class FederateQuery {
                     String endpoint = federateDBClient.getEndpoint();
                     String siloTableName = tableMap.get(expression.getTable()).get(endpoint);
                     FederateService.SQLExpression queryExpression = expression.toBuilder().setTable(siloTableName).build();//TODO 添加更多功能
-
-                    try {
-                        FederateService.SQLReplyList replylist = federateDBClient.rangeQuery(queryExpression);
-//                        System.out.println(endpoint+" 服务器返回信息："+ replylist.getMessageList());
-                        iterator.add(replylist);
-                    } catch (StatusRuntimeException e) {
-                        System.out.println("RPC调用失败：" + e.getMessage());
-                        return false;
-                    }
-
+                    FederateService.SQLReplyList replyList = federateDBClient.rangeQuery(queryExpression);
+//                        System.out.println(endpoint+" 服务器返回信息："+ replyList.getMessageList());
+                    iterator.add(replyList);
                     return true;
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -177,7 +170,7 @@ public class FederateQuery {
 
     }
 
-    public static void federatePolygonRangeQuery(FederateService.PolygonRequest polygonRequest) {
+    public static void federatePolygonRangeQuery(FederateService.SQLExpression expression) {
         List<Callable<Boolean>> tasks = new ArrayList<Callable<Boolean>>();
         StreamingIterator<FederateService.SQLReplyList> iterator = new StreamingIterator<>(federateDBClients.size());
 
@@ -186,8 +179,8 @@ public class FederateQuery {
                 try {
                     FederateDBClient federateDBClient = entry.getValue();
                     String endpoint = federateDBClient.getEndpoint();
-                    String siloTableName = tableMap.get(polygonRequest.getTable()).get(endpoint);
-                    FederateService.PolygonRequest queryExpression = polygonRequest.toBuilder().setTable(siloTableName).build();//TODO 添加更多功能
+                    String siloTableName = tableMap.get(expression.getTable()).get(endpoint);
+                    FederateService.SQLExpression queryExpression = expression.toBuilder().setTable(siloTableName).build();//TODO 添加更多功能
 
                     try {
                         FederateService.SQLReplyList replylist = federateDBClient.polygonRangeQuery(queryExpression);
@@ -228,17 +221,17 @@ public class FederateQuery {
 
     }
 
-    public static void federatePrivacyPolygonRangeQuery(FederateService.PolygonRequest polygonRequest) {
+    public static void federatePrivacyPolygonRangeQuery(FederateService.SQLExpression expression) {
         List<Callable<Boolean>> tasks = new ArrayList<Callable<Boolean>>();
         StreamingIterator<Boolean> iterator = new StreamingIterator<>(federateDBClients.size());
-        String uuid = polygonRequest.getUuid();
+        String uuid = expression.getUuid();
         for (Map.Entry<String, FederateDBClient> entry : federateDBClients.entrySet()) {
             tasks.add(() -> {
                 try {
                     FederateDBClient federateDBClient = entry.getValue();
                     String endpoint = federateDBClient.getEndpoint();
-                    String siloTableName = tableMap.get(polygonRequest.getTable()).get(endpoint);
-                    FederateService.PolygonRequest queryExpression = polygonRequest.toBuilder().setTable(siloTableName).build();//TODO 添加更多功能
+                    String siloTableName = tableMap.get(expression.getTable()).get(endpoint);
+                    FederateService.SQLExpression queryExpression = expression.toBuilder().setTable(siloTableName).build();//TODO 添加更多功能
                     try {
                         boolean status = federateDBClient.privacyPolygonRangeQuery(queryExpression);
                         System.out.println(endpoint + " 服务器返回信息：" + status);

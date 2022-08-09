@@ -30,54 +30,41 @@ com.suda.federate.application.Main.main()
 
 ### workflow
 
-简单流程如下（较为复杂的 KNN 查询过程，存在多次生成目标SQL语句并执行的过程）
-
-- 从 query.json 中读取查询方法 function 和参数 params，生成 SQLExperssion
-- SQLExpression --> FD_Function --> SQLGenerator，生成目标数据库查询 SQL
-
-- 遍历所有 data silos，执行查询
-
-- 查询结果做 summation、union 等。
+<img src="assets/proto-demo.jpg" style="zoom:30%;" />
 
 ```mermaid
-graph TD
-    start([开始])
-    start-->d1_input2
+%% graph TD
+%%     start([开始])
+%%     start-->d1_input2
 
-d1_input2[/query.json/]    
-d1_input2-->|json string|d1_expresssion[SQL Expression]
-d1_expresssion-->|"Function and Variables"|d1_generator[SQL Generator]
+%% d1_input2[/query.json/]    
+%% d1_input2-->|json string|d1_expresssion[SQL Expression]
+%% d1_expresssion-->|"Function and Variables"|d1_generator[SQL Generator]
 
-d1_generator-->|target sql|DB_A[(Database A)]
-d1_generator-->|target sql|DB_B[(Database A)]
-d1_generator-->|target sql|DB_C[(Database A)]
+%% d1_generator-->|target sql|DB_A[(Database A)]
+%% d1_generator-->|target sql|DB_B[(Database A)]
+%% d1_generator-->|target sql|DB_C[(Database A)]
 
-subgraph node1
-    DB_A[(Database A)]
-end
+%% subgraph node1
+%%     DB_A[(Database A)]
+%% end
 
-subgraph node2
-    DB_B[(Database B)]
-end
+%% subgraph node2
+%%     DB_B[(Database B)]
+%% end
 
-subgraph node3
-    DB_C[(Database C)]
-end
+%% subgraph node3
+%%     DB_C[(Database C)]
+%% end
 
-memger[SetUnion or Summation]
-DB_A-->|local result|memger
-DB_B-->|local result|memger
-DB_C-->|local result|memger
+%% memger[SetUnion or Summation]
+%% DB_A-->|local result|memger
+%% DB_B-->|local result|memger
+%% DB_C-->|local result|memger
 
-memger-->final_resulat[/Final Result/]
-final_resulat-->end_([结束])
+%% memger-->final_resulat[/Final Result/]
+%% final_resulat-->end_([结束])
 ```
-
-### Type
-
-- `FD_Point`：二维空间上的一个坐标，使用空格隔开： `"value":"121.456107 31.253359"`
-- `FD_LineString`：多个 FD_Point 构成的集合，使用逗号隔开：`"value":"121.43 31.20, 121.46 31.20, 121.46 31.23, 121.43 31.20"`
-- `FD_Polygon`：多个 FD_Point 构成的集合，使用逗号隔开：`"value":"121.43 31.20, 121.46 31.20, 121.46 31.23, 121.43 31.20"`
 
 ## Function
 
@@ -181,10 +168,6 @@ query.json
     ]
 }
 ```
-
-### RKnn
-
-
 
 ## GRPC
 
@@ -308,20 +291,6 @@ query.json
 
 - 对应client端`blockingStub.rangeCount(expression);` 
 - 和 server端的 `@Override public void rangeCount(FederateService.SQLExpression request, StreamObserver<FederateService.SQLReply> responseObserver)` 
-
-### 流程图
-
-<img src="assets/proto-demo.jpg" style="zoom:30%;" />
-
-
-
-
-
-
-
-
-
-
 
 
 ## 相关规范说明

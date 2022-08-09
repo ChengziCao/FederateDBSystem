@@ -9,12 +9,16 @@ import com.suda.federate.rpc.FederateService;
 import com.suda.federate.security.dp.Laplace;
 import com.suda.federate.security.sha.SiloCache;
 import com.suda.federate.utils.ConcurrentBuffer;
+import com.suda.federate.utils.FederateUtils;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.stub.StreamObserver;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.lang.reflect.InvocationTargetException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.*;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
@@ -417,5 +421,43 @@ public abstract class FederateDBService extends FederateGrpc.FederateImplBase {
 //            return res;
 //        }
 //    }
+
+
+    public static <T> List<T> resultSet2List(ResultSet resultSet, Class<T> clazz) throws
+            SQLException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
+        List<T> resultList = new ArrayList<>();
+        while (resultSet.next()) {
+            T t = resultSet2Object(resultSet, clazz);
+            resultList.add(t);
+        }
+        return resultList;
+    }
+
+    public static <T> T resultSet2Object(ResultSet resultSet, Class<T> clazz) throws
+            SQLException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
+        if (resultSet.isBeforeFirst()) {
+            // 跳过头指针
+            resultSet.next();
+        }
+        if (clazz == Integer.class || clazz == Double.class || clazz == String.class) {
+            return clazz.getConstructor(String.class).newInstance(resultSet.getObject(1).toString());
+        } else if (clazz == FederateCommon.Point.class) {
+            String content = resultSet.getObject(1).toString();
+
+            List<Float> temp = FederateUtils.parseNumFromString(content, Float.class);
+            FederateCommon.Point point = FederateCommon.Point.newBuilder()
+                    .setLongitude(temp.get(0)).setLatitude(temp.get(1)).build();//TODO check 顺序
+            return (T)point;
+        } else if (clazz == HashMap.class) {
+            Map<String, Object> mmap = new HashMap<>();
+            int count = resultSet.getMetaData().getColumnCount();
+            for (int i = 1; i <= count; i++) {
+                mmap.put(resultSet.getMetaData().getColumnLabel(i), resultSet.getObject(i));
+            }
+            return clazz.getConstructor(Map.class).newInstance(mmap);
+        } else {
+            return null;
+        }
+    }
 
 }
