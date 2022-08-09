@@ -1,7 +1,7 @@
-package com.suda.federate.driver;
+package com.suda.federate;
 
 import com.suda.federate.config.DbConfig;
-import com.suda.federate.driver.utils.SQLGenerator;
+import com.suda.federate.utils.SQLGenerator;
 import com.suda.federate.rpc.FederateCommon;
 import com.suda.federate.rpc.FederateService;
 import com.suda.federate.security.sha.SiloCache;

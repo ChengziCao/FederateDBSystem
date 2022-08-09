@@ -1,4 +1,4 @@
-package com.suda.federate.driver.utils;
+package com.suda.federate.utils;
 
 import com.suda.federate.rpc.FederateCommon;
 
