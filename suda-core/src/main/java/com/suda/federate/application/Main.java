@@ -13,11 +13,12 @@ public class Main {
     public static void main(String[] args) {
         try {
             String queryFile = "query.json";
+            String modelFile = "model.json";
+            FederateQuerier querier = new FederateQuerier(modelFile);
             List<SQLExpression> sqlExpressions = parseSQLExpression(queryFile);
-
             for (SQLExpression expression : sqlExpressions) {
                 System.out.printf("====================== NO.%d query statement =============================%n", sqlExpressions.indexOf(expression));
-                FederateQuerier.query(expression, false);
+                querier.query(expression, false);
                 System.out.println("===========================================================================");
             }
         } catch (Exception e) {

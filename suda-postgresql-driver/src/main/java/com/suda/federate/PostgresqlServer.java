@@ -24,7 +24,7 @@ public class PostgresqlServer extends FederateDBServer {
 
         try {
             String configFile = "config.json";
-            DbConfig config = FederateUtils.configInitialization(configFile).get(0);
+            DbConfig config = FederateUtils.parseDbConfig(configFile).get(0);
 
             int grpcPort = 8887;
             System.out.println("666");

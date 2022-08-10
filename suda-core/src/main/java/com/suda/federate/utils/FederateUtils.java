@@ -3,7 +3,6 @@ package com.suda.federate.utils;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
-import com.alibaba.fastjson2.TypeReference;
 import com.suda.federate.config.DbConfig;
 import com.suda.federate.config.ModelConfig;
 import com.suda.federate.query.SpatialFunctions;
@@ -26,9 +25,8 @@ import static com.suda.federate.utils.ENUM.str2FUNCTION;
 
 public class FederateUtils {
 
-    public static ModelConfig modelConfigInitialization(String configFile) throws IOException, SQLException, ClassNotFoundException {
+    public static ModelConfig parseModelConfig(String configFile) throws IOException {
         String configPath = FederateUtils.getRealPath(configFile);
-        List<DbConfig> configList = new ArrayList<>();
         String jsonString = new String(Files.readAllBytes(Paths.get(configPath)));
         // 可能有多个数据源，写成 json array 格式
         ModelConfig obj = JSONObject.parseObject(jsonString, ModelConfig.class);
@@ -36,7 +34,7 @@ public class FederateUtils {
     }
 
 
-    public static List<DbConfig> configInitialization(String configFile) throws IOException, SQLException, ClassNotFoundException {
+    public static List<DbConfig> parseDbConfig(String configFile) throws IOException {
         String configPath = FederateUtils.getRealPath(configFile);
         List<DbConfig> configList = new ArrayList<>();
         String jsonString = new String(Files.readAllBytes(Paths.get(configPath)));

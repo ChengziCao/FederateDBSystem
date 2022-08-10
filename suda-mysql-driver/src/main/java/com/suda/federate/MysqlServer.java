@@ -19,7 +19,7 @@ public class MysqlServer extends FederateDBServer {
 
     public static void main(String[] args) throws Exception {
         String configFile = "config.json";
-        DbConfig config = FederateUtils.configInitialization(configFile).get(0);
+        DbConfig config = FederateUtils.parseDbConfig(configFile).get(0);
         int grpcPort = 8886;
         System.out.println("666");
         MysqlServer server = new MysqlServer(config, grpcPort);

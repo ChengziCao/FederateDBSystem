@@ -44,9 +44,8 @@ public class FederatePostgresqlService extends FederateDBService {
             FederateService.SQLReply reply = setSummation(request, result);
             responseObserver.onNext(reply);
             responseObserver.onCompleted();
-        } catch (SQLException | InvocationTargetException | NoSuchMethodException | InstantiationException | IllegalAccessException e) {
+        } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("eror" + e.getMessage());
         }
     }
 

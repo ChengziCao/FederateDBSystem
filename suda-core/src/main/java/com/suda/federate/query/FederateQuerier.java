@@ -9,6 +9,8 @@ import io.grpc.StatusRuntimeException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.*;
 import java.util.concurrent.*;
 
@@ -16,43 +18,33 @@ import static com.suda.federate.security.sha.SecretSum.computeS;
 import static com.suda.federate.security.sha.SecretSum.lag;
 
 public class FederateQuerier {
-    public static final Logger LOGGER = LoggerFactory.getLogger(FederateQuerier.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(FederateQuerier.class);
+    private Map<String, FederateDBClient> federateDBClients = new HashMap<>();
+    private final Map<String, Map<String, String>> tableMap = new HashMap<>();
+    private final ExecutorService executorService;
+    private final Map<String, Integer> endpoint2Id = new HashMap<>();//secure sum id
+    private final List<Integer> idList;//secure sum id list
+    private final Integer t;//secure sum t
 
-    public static Map<String, FederateDBClient> federateDBClients = new HashMap<>();
-    public static final Map<String, Map<String, String>> tableMap = new HashMap<>();
-    public static final ExecutorService executorService;
-    public static final Map<String, Integer> endpoint2Id = new HashMap<>();//secure sum id
-    public static final List<Integer> idList;//secure sum id list
-
-    public static final Integer t;//secure sum t
-
-    static {
-        String modelFile = "model.json";
-        ModelConfig modelConfig = null;
-        try {
-            modelConfig = FederateUtils.modelConfigInitialization(modelFile);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public FederateQuerier(String modelFile) throws IOException {
+        ModelConfig modelConfig = FederateUtils.parseModelConfig(modelFile);
         ModelConfig.Schemas schema = modelConfig.getSchemas().get(0);
         List<ModelConfig.Tables> tables = schema.getTables();
         for (ModelConfig.Tables table : tables) {
             String federateTableName = table.getName();
             ModelConfig.Operand operand = table.getOperand();
             List<ModelConfig.Feds> siloTables = operand.getFeds();
+
             Map<String, String> oneTableMap = new HashMap<>();
             for (ModelConfig.Feds feds : siloTables) {
                 String endpoint = feds.getEndpoint();
                 String siloTableName = feds.getName();
-                String es[] = endpoint.split(":");
+                String[] es = endpoint.split(":");
                 String ip = es[0];
                 int port = Integer.parseInt(es[1]);
                 oneTableMap.put(endpoint, siloTableName);
                 //TODO .put(feds)
-                if (federateDBClients.containsKey(endpoint)) {
-                    continue;
-                }
-                federateDBClients.put(endpoint, new FederateDBClient(ip, port));
+                federateDBClients.putIfAbsent(endpoint, new FederateDBClient(ip, port));
             }
             tableMap.put(federateTableName, oneTableMap);
         }
@@ -70,18 +62,18 @@ public class FederateQuerier {
         }
     }
 
-
     /**
      * federate query packaging
+     *
      * @param expression
      * @param privacyFlag
      */
-    public static void query(FederateService.SQLExpression expression, boolean privacyFlag) {
+    public void query(FederateService.SQLExpression expression, boolean privacyFlag) throws ExecutionException, InterruptedException {
         if (expression.getFunction().equals(FederateService.SQLExpression.Function.RANGE_COUNT)) {
-            FederateQuerier.federateRangeCount(expression);
+            federateRangeCount(expression);
 //                    FederateQuery.federateRangeQuery(expression);
         } else if (expression.getFunction().equals(FederateService.SQLExpression.Function.RANGE_QUERY)) {
-            FederateQuerier.federateRangeQuery(expression);
+            federateRangeQuery(expression);
 //                    federatePrivacyRangeQuery(expression.toBuilder().setUuid(UUID.randomUUID().toString()).build());
         } else if (expression.getFunction().equals(FederateService.SQLExpression.Function.KNN)) {
 //                    federateKnn(expression);
@@ -94,7 +86,7 @@ public class FederateQuerier {
         }
     }
 
-    public static void federateRangeQuery(FederateService.SQLExpression expression) {
+    public void federateRangeQuery(FederateService.SQLExpression expression) throws InterruptedException {
         List<Callable<Boolean>> tasks = new ArrayList<>();
         StreamingIterator<FederateService.SQLReplyList> iterator = new StreamingIterator<>(federateDBClients.size());
 
@@ -106,10 +98,11 @@ public class FederateQuerier {
                     String siloTableName = tableMap.get(expression.getTable()).get(endpoint);
                     FederateService.SQLExpression queryExpression = expression.toBuilder().setTable(siloTableName).build();//TODO 添加更多功能
                     FederateService.SQLReplyList replyList = federateDBClient.rangeQuery(queryExpression);
-//                        System.out.println(endpoint+" 服务器返回信息："+ replyList.getMessageList());
+                    System.out.println(endpoint + " 服务器返回信息：" + replyList.getMessageList());
                     iterator.add(replyList);
                     return true;
                 } catch (Exception e) {
+                    // LOGGER.error("RPC调用失败：" + "error in fedSpatialPublicQuery" + e.getMessage());
                     e.printStackTrace();
                     return false;
                 } finally {
@@ -127,6 +120,7 @@ public class FederateQuerier {
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
+
         List<FederateCommon.Point> result = new ArrayList<>();
         while (iterator.hasNext()) {
             result.addAll(iterator.next().getMessageList());
@@ -137,7 +131,7 @@ public class FederateQuerier {
         System.out.println("public range query count:" + result.size());
     }
 
-    public static void federatePrivacyRangeQuery(FederateService.SQLExpression expression) {
+    public void federatePrivacyRangeQuery(FederateService.SQLExpression expression) {
         List<Callable<Boolean>> tasks = new ArrayList<Callable<Boolean>>();
         StreamingIterator<Boolean> iterator = new StreamingIterator<>(federateDBClients.size());
         String uuid = expression.getUuid();
@@ -146,7 +140,6 @@ public class FederateQuerier {
                 try {
                     FederateDBClient federateDBClient = entry.getValue();
                     String endpoint = federateDBClient.getEndpoint();
-
                     try {
                         boolean reply = federateDBClient.privacyRangeQuery(expression);
                         System.out.println(endpoint + " 服务器返回信息：privacyRangeQuery " + reply);
@@ -155,7 +148,6 @@ public class FederateQuerier {
                         System.out.println("RPC调用失败：" + e.getMessage());
                         return false;
                     }
-
                     return true;
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -193,7 +185,7 @@ public class FederateQuerier {
 
     }
 
-    public static void federatePolygonRangeQuery(FederateService.SQLExpression expression) {
+    public void federatePolygonRangeQuery(FederateService.SQLExpression expression) throws ExecutionException, InterruptedException {
         List<Callable<Boolean>> tasks = new ArrayList<Callable<Boolean>>();
         StreamingIterator<FederateService.SQLReplyList> iterator = new StreamingIterator<>(federateDBClients.size());
 
@@ -244,7 +236,7 @@ public class FederateQuerier {
 
     }
 
-    public static void federatePrivacyPolygonRangeQuery(FederateService.SQLExpression expression) {
+    public void federatePrivacyPolygonRangeQuery(FederateService.SQLExpression expression) {
         List<Callable<Boolean>> tasks = new ArrayList<Callable<Boolean>>();
         StreamingIterator<Boolean> iterator = new StreamingIterator<>(federateDBClients.size());
         String uuid = expression.getUuid();
@@ -300,7 +292,7 @@ public class FederateQuerier {
 
     }
 
-    public static StreamingIterator<Double> federateKnnRadiusQuery(FederateService.SQLExpression expression) {
+    private StreamingIterator<Double> federateKnnRadiusQuery(FederateService.SQLExpression expression) throws InterruptedException, ExecutionException {
 
         List<Callable<Boolean>> tasks = new ArrayList<Callable<Boolean>>();
         StreamingIterator<Double> iterator = new StreamingIterator<>(federateDBClients.size());
@@ -331,6 +323,7 @@ public class FederateQuerier {
                 }
             });
         }
+
         try {
             List<Future<Boolean>> statusList = executorService.invokeAll(tasks);
             for (Future<Boolean> status : statusList) {
@@ -341,16 +334,13 @@ public class FederateQuerier {
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
-
         return iterator;
 
     }
 
-
-    public static Integer federateRangeCount(FederateService.SQLExpression expression) {
-        List<Callable<Boolean>> tasks = new ArrayList<Callable<Boolean>>();
+    public Integer federateRangeCount(FederateService.SQLExpression expression) throws InterruptedException {
+        List<Callable<Boolean>> tasks = new ArrayList<>();
         StreamingIterator<FederateService.SQLReply> iterator = new StreamingIterator<>(federateDBClients.size());
-
 
         for (Map.Entry<String, FederateDBClient> entry : federateDBClients.entrySet()) {
             tasks.add(() -> {
@@ -358,7 +348,6 @@ public class FederateQuerier {
                     FederateDBClient federateDBClient = entry.getValue();
                     String endpoint = federateDBClient.getEndpoint();
                     String siloTableName = tableMap.get(expression.getTable()).get(endpoint);
-
                     try {
 
                         FederateService.SQLReply reply = federateDBClient.rangeCount(expression.toBuilder()
@@ -370,7 +359,6 @@ public class FederateQuerier {
                         System.out.println("RPC调用失败：" + e.getMessage());
                         return false;
                     }
-
                     return true;
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -380,6 +368,7 @@ public class FederateQuerier {
                 }
             });
         }
+
         try {
             List<Future<Boolean>> statusList = executorService.invokeAll(tasks);
             for (Future<Boolean> status : statusList) {
@@ -393,26 +382,24 @@ public class FederateQuerier {
         //TODO beautify
         int count = 0;
         int i = 0;
-        int[][] fakeLocalSumList = new int[t][];
+        List<List<Integer>> fakeLocalSumList = new ArrayList<>();
         while (iterator.hasNext()) {
             FederateService.SQLReply reply = iterator.next();
             count += reply.getMessage();
+            // 有可能返回超过t个？
             if (i < t) {
-                fakeLocalSumList[i] = reply.getFakeLocalSumList().stream().mapToInt(Integer::intValue).toArray();
+                fakeLocalSumList.add(reply.getFakeLocalSumList());
             }
             i += 1;
-            System.out.println();
         }
-        int[] tempS = computeS(fakeLocalSumList);
-        int[] s = Arrays.copyOfRange(tempS, 1, t + 1);
-        int secureSum = lag(idList.stream().mapToInt(Integer::intValue).toArray(), s, 0);
-        System.out.println("secure count " + secureSum);
+        List<Integer> S = computeS(fakeLocalSumList);
+        int secureSum = lag(idList, S, 0);
+        System.out.println("secure count: " + secureSum);
         return count;
-
 
     }
 
-    public static void clearCache(String uuid) {
+    public void clearCache(String uuid) {
         for (FederateDBClient client : federateDBClients.values()) {
             client.clearCache(uuid);
         }
