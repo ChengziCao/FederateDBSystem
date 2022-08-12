@@ -1,26 +1,17 @@
 package com.suda.federate.silo;
 
-import com.suda.federate.rpc.FederateCommon;
 import com.suda.federate.rpc.FederateGrpc;
-import com.suda.federate.utils.ENUM.DATABASE;
-import com.suda.federate.utils.FederateUtils;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 public class FederateDBServer {
-    private static final Logger LOG = LogManager.getLogger(FederateDBServer.class);
+    public static final Logger LOG = LoggerFactory.getLogger(FederateDBServer.class);
     protected final int port;
     protected final Server server;
 

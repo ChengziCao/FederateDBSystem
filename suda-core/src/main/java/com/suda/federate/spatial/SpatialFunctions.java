@@ -1,4 +1,4 @@
-package com.suda.federate.query;
+package com.suda.federate.spatial;
 
 import com.esri.core.geometry.GeometryEngine;
 import com.suda.federate.rpc.FederateCommon;

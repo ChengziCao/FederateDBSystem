@@ -37,14 +37,20 @@ message SQLExpression{
 service Federate {
   rpc AddClient(AddClientRequest) returns (GeneralResponse);// 打招呼，打通了说明add成功了，更稳妥，还没做
   rpc GetResult (SQLExpression) returns (SQLReply) {}
-  rpc RangeCount (SQLExpression) returns (SQLReply) {}
-  rpc RangeQuery (SQLExpression) returns (SQLReplyList) {}
-  rpc PolygonRangeQuery(SQLExpression) returns (SQLReplyList) {}
+
+  rpc publicRangeCount (SQLExpression) returns (SQLReply) {}
+  rpc publicRangeQuery (SQLExpression) returns (SQLReply) {}
+  rpc publicPolygonRangeQuery(SQLExpression) returns (SQLReply) {}
+  rpc privacyRangeCount (SQLExpression) returns (Status) {}
   rpc privacyRangeQuery (SQLExpression) returns (Status) {}
   rpc privacyPolygonRangeQuery(SQLExpression) returns (Status) {}
   rpc KnnRadiusQuery (SQLExpression) returns (KnnRadiusQueryResponse) {}
+
+  rpc privacySummation(SummationRequest)returns(SummationResponse){}
+  rpc localSummation(SummationRequest) returns(SummationResponse){}
   rpc privacyUnion (UnionRequest) returns (UnionResponse){}
   rpc localUnion (UnionRequest) returns (UnionResponse){}
+
   rpc ClearCache(CacheID) returns (google.protobuf.Empty);
 
 }
@@ -54,6 +60,25 @@ message CacheID {
 message KnnRadiusQueryResponse {
   required double radius = 1;
 }
+
+message SummationRequest{
+  required int32 siloSize = 1;
+  repeated int32 idList = 2;
+  required string uuid = 3;
+  repeated string endpoints = 4;
+  required int32 index = 5;
+  required SummationResponse response = 6;
+}
+message SummationResponse{
+
+  repeated FakeLocalSum fakeLocalSum = 1;
+  optional int32 count = 2;
+
+  message FakeLocalSum{
+    repeated int32 num = 1;
+  }
+}
+
 message UnionRequest{
   repeated Point point = 1;
   required int32 loop = 2;// loop=0,1 0:add; 1:del
@@ -95,14 +120,9 @@ message SQLRequest {
 // The response message containing the greetings
 
 message SQLReply {
-  repeated int32 fakeLocalSum = 2;
-  required double message = 1;
-
-}
-message SQLReplyList {
-
-  repeated Point message = 1;
-
+  optional double num = 1;
+  repeated Point point = 2;
+  repeated int32 fakeLocalSum = 3;
 }
 
 //TODO 使用Steam 流 返回rangeQuery结果，为join操作打下基础

@@ -114,17 +114,17 @@ public class SecretSum {
 
         //TODO: hide ans (setMessage(0))
         //构造返回
-        FederateService.SQLReply reply = FederateService.SQLReply.newBuilder().setMessage(ans).addAllFakeLocalSum(fakeLocalSum).build();
+        FederateService.SQLReply reply = FederateService.SQLReply.newBuilder().setNum(ans).addAllFakeLocalSum(fakeLocalSum).build();
         return reply;
     }
 
     public static void main(String[] args) {
         //各方id：id = i + 1
-        List<Integer> u = Arrays.asList(1, 2, 3);
+        List<Integer> u = Arrays.asList(1, 2);
         //各方的本地和
-        int[] v = {100, 150, 200};
+        int[] v = {28, 5};
         //阈值t，解密的至少人数
-        int t = 3;
+        int t = 2;
 
         List<List<Integer>> fakeLocalSumList = new ArrayList<>();
 

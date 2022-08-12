@@ -3799,6 +3799,2944 @@ public final class FederateService {
 
   }
 
+  public interface SummationRequestOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:federate.SummationRequest)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>required int32 siloSize = 1;</code>
+     * @return Whether the siloSize field is set.
+     */
+    boolean hasSiloSize();
+    /**
+     * <code>required int32 siloSize = 1;</code>
+     * @return The siloSize.
+     */
+    int getSiloSize();
+
+    /**
+     * <code>repeated int32 idList = 2;</code>
+     * @return A list containing the idList.
+     */
+    java.util.List<java.lang.Integer> getIdListList();
+    /**
+     * <code>repeated int32 idList = 2;</code>
+     * @return The count of idList.
+     */
+    int getIdListCount();
+    /**
+     * <code>repeated int32 idList = 2;</code>
+     * @param index The index of the element to return.
+     * @return The idList at the given index.
+     */
+    int getIdList(int index);
+
+    /**
+     * <code>required string uuid = 3;</code>
+     * @return Whether the uuid field is set.
+     */
+    boolean hasUuid();
+    /**
+     * <code>required string uuid = 3;</code>
+     * @return The uuid.
+     */
+    java.lang.String getUuid();
+    /**
+     * <code>required string uuid = 3;</code>
+     * @return The bytes for uuid.
+     */
+    com.google.protobuf.ByteString
+        getUuidBytes();
+
+    /**
+     * <code>repeated string endpoints = 4;</code>
+     * @return A list containing the endpoints.
+     */
+    java.util.List<java.lang.String>
+        getEndpointsList();
+    /**
+     * <code>repeated string endpoints = 4;</code>
+     * @return The count of endpoints.
+     */
+    int getEndpointsCount();
+    /**
+     * <code>repeated string endpoints = 4;</code>
+     * @param index The index of the element to return.
+     * @return The endpoints at the given index.
+     */
+    java.lang.String getEndpoints(int index);
+    /**
+     * <code>repeated string endpoints = 4;</code>
+     * @param index The index of the value to return.
+     * @return The bytes of the endpoints at the given index.
+     */
+    com.google.protobuf.ByteString
+        getEndpointsBytes(int index);
+
+    /**
+     * <code>required int32 index = 5;</code>
+     * @return Whether the index field is set.
+     */
+    boolean hasIndex();
+    /**
+     * <code>required int32 index = 5;</code>
+     * @return The index.
+     */
+    int getIndex();
+
+    /**
+     * <code>required .federate.SummationResponse response = 6;</code>
+     * @return Whether the response field is set.
+     */
+    boolean hasResponse();
+    /**
+     * <code>required .federate.SummationResponse response = 6;</code>
+     * @return The response.
+     */
+    com.suda.federate.rpc.FederateService.SummationResponse getResponse();
+    /**
+     * <code>required .federate.SummationResponse response = 6;</code>
+     */
+    com.suda.federate.rpc.FederateService.SummationResponseOrBuilder getResponseOrBuilder();
+  }
+  /**
+   * Protobuf type {@code federate.SummationRequest}
+   */
+  public static final class SummationRequest extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:federate.SummationRequest)
+      SummationRequestOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use SummationRequest.newBuilder() to construct.
+    private SummationRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private SummationRequest() {
+      idList_ = emptyIntList();
+      uuid_ = "";
+      endpoints_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new SummationRequest();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private SummationRequest(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 8: {
+              bitField0_ |= 0x00000001;
+              siloSize_ = input.readInt32();
+              break;
+            }
+            case 16: {
+              if (!((mutable_bitField0_ & 0x00000002) != 0)) {
+                idList_ = newIntList();
+                mutable_bitField0_ |= 0x00000002;
+              }
+              idList_.addInt(input.readInt32());
+              break;
+            }
+            case 18: {
+              int length = input.readRawVarint32();
+              int limit = input.pushLimit(length);
+              if (!((mutable_bitField0_ & 0x00000002) != 0) && input.getBytesUntilLimit() > 0) {
+                idList_ = newIntList();
+                mutable_bitField0_ |= 0x00000002;
+              }
+              while (input.getBytesUntilLimit() > 0) {
+                idList_.addInt(input.readInt32());
+              }
+              input.popLimit(limit);
+              break;
+            }
+            case 26: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00000002;
+              uuid_ = bs;
+              break;
+            }
+            case 34: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              if (!((mutable_bitField0_ & 0x00000008) != 0)) {
+                endpoints_ = new com.google.protobuf.LazyStringArrayList();
+                mutable_bitField0_ |= 0x00000008;
+              }
+              endpoints_.add(bs);
+              break;
+            }
+            case 40: {
+              bitField0_ |= 0x00000004;
+              index_ = input.readInt32();
+              break;
+            }
+            case 50: {
+              com.suda.federate.rpc.FederateService.SummationResponse.Builder subBuilder = null;
+              if (((bitField0_ & 0x00000008) != 0)) {
+                subBuilder = response_.toBuilder();
+              }
+              response_ = input.readMessage(com.suda.federate.rpc.FederateService.SummationResponse.PARSER, extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(response_);
+                response_ = subBuilder.buildPartial();
+              }
+              bitField0_ |= 0x00000008;
+              break;
+            }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        if (((mutable_bitField0_ & 0x00000002) != 0)) {
+          idList_.makeImmutable(); // C
+        }
+        if (((mutable_bitField0_ & 0x00000008) != 0)) {
+          endpoints_ = endpoints_.getUnmodifiableView();
+        }
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.suda.federate.rpc.FederateService.internal_static_federate_SummationRequest_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.suda.federate.rpc.FederateService.internal_static_federate_SummationRequest_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.suda.federate.rpc.FederateService.SummationRequest.class, com.suda.federate.rpc.FederateService.SummationRequest.Builder.class);
+    }
+
+    private int bitField0_;
+    public static final int SILOSIZE_FIELD_NUMBER = 1;
+    private int siloSize_;
+    /**
+     * <code>required int32 siloSize = 1;</code>
+     * @return Whether the siloSize field is set.
+     */
+    @java.lang.Override
+    public boolean hasSiloSize() {
+      return ((bitField0_ & 0x00000001) != 0);
+    }
+    /**
+     * <code>required int32 siloSize = 1;</code>
+     * @return The siloSize.
+     */
+    @java.lang.Override
+    public int getSiloSize() {
+      return siloSize_;
+    }
+
+    public static final int IDLIST_FIELD_NUMBER = 2;
+    private com.google.protobuf.Internal.IntList idList_;
+    /**
+     * <code>repeated int32 idList = 2;</code>
+     * @return A list containing the idList.
+     */
+    @java.lang.Override
+    public java.util.List<java.lang.Integer>
+        getIdListList() {
+      return idList_;
+    }
+    /**
+     * <code>repeated int32 idList = 2;</code>
+     * @return The count of idList.
+     */
+    public int getIdListCount() {
+      return idList_.size();
+    }
+    /**
+     * <code>repeated int32 idList = 2;</code>
+     * @param index The index of the element to return.
+     * @return The idList at the given index.
+     */
+    public int getIdList(int index) {
+      return idList_.getInt(index);
+    }
+
+    public static final int UUID_FIELD_NUMBER = 3;
+    private volatile java.lang.Object uuid_;
+    /**
+     * <code>required string uuid = 3;</code>
+     * @return Whether the uuid field is set.
+     */
+    @java.lang.Override
+    public boolean hasUuid() {
+      return ((bitField0_ & 0x00000002) != 0);
+    }
+    /**
+     * <code>required string uuid = 3;</code>
+     * @return The uuid.
+     */
+    @java.lang.Override
+    public java.lang.String getUuid() {
+      java.lang.Object ref = uuid_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          uuid_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <code>required string uuid = 3;</code>
+     * @return The bytes for uuid.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString
+        getUuidBytes() {
+      java.lang.Object ref = uuid_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        uuid_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int ENDPOINTS_FIELD_NUMBER = 4;
+    private com.google.protobuf.LazyStringList endpoints_;
+    /**
+     * <code>repeated string endpoints = 4;</code>
+     * @return A list containing the endpoints.
+     */
+    public com.google.protobuf.ProtocolStringList
+        getEndpointsList() {
+      return endpoints_;
+    }
+    /**
+     * <code>repeated string endpoints = 4;</code>
+     * @return The count of endpoints.
+     */
+    public int getEndpointsCount() {
+      return endpoints_.size();
+    }
+    /**
+     * <code>repeated string endpoints = 4;</code>
+     * @param index The index of the element to return.
+     * @return The endpoints at the given index.
+     */
+    public java.lang.String getEndpoints(int index) {
+      return endpoints_.get(index);
+    }
+    /**
+     * <code>repeated string endpoints = 4;</code>
+     * @param index The index of the value to return.
+     * @return The bytes of the endpoints at the given index.
+     */
+    public com.google.protobuf.ByteString
+        getEndpointsBytes(int index) {
+      return endpoints_.getByteString(index);
+    }
+
+    public static final int INDEX_FIELD_NUMBER = 5;
+    private int index_;
+    /**
+     * <code>required int32 index = 5;</code>
+     * @return Whether the index field is set.
+     */
+    @java.lang.Override
+    public boolean hasIndex() {
+      return ((bitField0_ & 0x00000004) != 0);
+    }
+    /**
+     * <code>required int32 index = 5;</code>
+     * @return The index.
+     */
+    @java.lang.Override
+    public int getIndex() {
+      return index_;
+    }
+
+    public static final int RESPONSE_FIELD_NUMBER = 6;
+    private com.suda.federate.rpc.FederateService.SummationResponse response_;
+    /**
+     * <code>required .federate.SummationResponse response = 6;</code>
+     * @return Whether the response field is set.
+     */
+    @java.lang.Override
+    public boolean hasResponse() {
+      return ((bitField0_ & 0x00000008) != 0);
+    }
+    /**
+     * <code>required .federate.SummationResponse response = 6;</code>
+     * @return The response.
+     */
+    @java.lang.Override
+    public com.suda.federate.rpc.FederateService.SummationResponse getResponse() {
+      return response_ == null ? com.suda.federate.rpc.FederateService.SummationResponse.getDefaultInstance() : response_;
+    }
+    /**
+     * <code>required .federate.SummationResponse response = 6;</code>
+     */
+    @java.lang.Override
+    public com.suda.federate.rpc.FederateService.SummationResponseOrBuilder getResponseOrBuilder() {
+      return response_ == null ? com.suda.federate.rpc.FederateService.SummationResponse.getDefaultInstance() : response_;
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      if (!hasSiloSize()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasUuid()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasIndex()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasResponse()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (((bitField0_ & 0x00000001) != 0)) {
+        output.writeInt32(1, siloSize_);
+      }
+      for (int i = 0; i < idList_.size(); i++) {
+        output.writeInt32(2, idList_.getInt(i));
+      }
+      if (((bitField0_ & 0x00000002) != 0)) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 3, uuid_);
+      }
+      for (int i = 0; i < endpoints_.size(); i++) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 4, endpoints_.getRaw(i));
+      }
+      if (((bitField0_ & 0x00000004) != 0)) {
+        output.writeInt32(5, index_);
+      }
+      if (((bitField0_ & 0x00000008) != 0)) {
+        output.writeMessage(6, getResponse());
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (((bitField0_ & 0x00000001) != 0)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(1, siloSize_);
+      }
+      {
+        int dataSize = 0;
+        for (int i = 0; i < idList_.size(); i++) {
+          dataSize += com.google.protobuf.CodedOutputStream
+            .computeInt32SizeNoTag(idList_.getInt(i));
+        }
+        size += dataSize;
+        size += 1 * getIdListList().size();
+      }
+      if (((bitField0_ & 0x00000002) != 0)) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, uuid_);
+      }
+      {
+        int dataSize = 0;
+        for (int i = 0; i < endpoints_.size(); i++) {
+          dataSize += computeStringSizeNoTag(endpoints_.getRaw(i));
+        }
+        size += dataSize;
+        size += 1 * getEndpointsList().size();
+      }
+      if (((bitField0_ & 0x00000004) != 0)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(5, index_);
+      }
+      if (((bitField0_ & 0x00000008) != 0)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(6, getResponse());
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof com.suda.federate.rpc.FederateService.SummationRequest)) {
+        return super.equals(obj);
+      }
+      com.suda.federate.rpc.FederateService.SummationRequest other = (com.suda.federate.rpc.FederateService.SummationRequest) obj;
+
+      if (hasSiloSize() != other.hasSiloSize()) return false;
+      if (hasSiloSize()) {
+        if (getSiloSize()
+            != other.getSiloSize()) return false;
+      }
+      if (!getIdListList()
+          .equals(other.getIdListList())) return false;
+      if (hasUuid() != other.hasUuid()) return false;
+      if (hasUuid()) {
+        if (!getUuid()
+            .equals(other.getUuid())) return false;
+      }
+      if (!getEndpointsList()
+          .equals(other.getEndpointsList())) return false;
+      if (hasIndex() != other.hasIndex()) return false;
+      if (hasIndex()) {
+        if (getIndex()
+            != other.getIndex()) return false;
+      }
+      if (hasResponse() != other.hasResponse()) return false;
+      if (hasResponse()) {
+        if (!getResponse()
+            .equals(other.getResponse())) return false;
+      }
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      if (hasSiloSize()) {
+        hash = (37 * hash) + SILOSIZE_FIELD_NUMBER;
+        hash = (53 * hash) + getSiloSize();
+      }
+      if (getIdListCount() > 0) {
+        hash = (37 * hash) + IDLIST_FIELD_NUMBER;
+        hash = (53 * hash) + getIdListList().hashCode();
+      }
+      if (hasUuid()) {
+        hash = (37 * hash) + UUID_FIELD_NUMBER;
+        hash = (53 * hash) + getUuid().hashCode();
+      }
+      if (getEndpointsCount() > 0) {
+        hash = (37 * hash) + ENDPOINTS_FIELD_NUMBER;
+        hash = (53 * hash) + getEndpointsList().hashCode();
+      }
+      if (hasIndex()) {
+        hash = (37 * hash) + INDEX_FIELD_NUMBER;
+        hash = (53 * hash) + getIndex();
+      }
+      if (hasResponse()) {
+        hash = (37 * hash) + RESPONSE_FIELD_NUMBER;
+        hash = (53 * hash) + getResponse().hashCode();
+      }
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static com.suda.federate.rpc.FederateService.SummationRequest parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.suda.federate.rpc.FederateService.SummationRequest parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.suda.federate.rpc.FederateService.SummationRequest parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.suda.federate.rpc.FederateService.SummationRequest parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.suda.federate.rpc.FederateService.SummationRequest parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.suda.federate.rpc.FederateService.SummationRequest parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.suda.federate.rpc.FederateService.SummationRequest parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.suda.federate.rpc.FederateService.SummationRequest parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.suda.federate.rpc.FederateService.SummationRequest parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static com.suda.federate.rpc.FederateService.SummationRequest parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.suda.federate.rpc.FederateService.SummationRequest parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.suda.federate.rpc.FederateService.SummationRequest parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(com.suda.federate.rpc.FederateService.SummationRequest prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code federate.SummationRequest}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:federate.SummationRequest)
+        com.suda.federate.rpc.FederateService.SummationRequestOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.suda.federate.rpc.FederateService.internal_static_federate_SummationRequest_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.suda.federate.rpc.FederateService.internal_static_federate_SummationRequest_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.suda.federate.rpc.FederateService.SummationRequest.class, com.suda.federate.rpc.FederateService.SummationRequest.Builder.class);
+      }
+
+      // Construct using com.suda.federate.rpc.FederateService.SummationRequest.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+          getResponseFieldBuilder();
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        siloSize_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000001);
+        idList_ = emptyIntList();
+        bitField0_ = (bitField0_ & ~0x00000002);
+        uuid_ = "";
+        bitField0_ = (bitField0_ & ~0x00000004);
+        endpoints_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+        bitField0_ = (bitField0_ & ~0x00000008);
+        index_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000010);
+        if (responseBuilder_ == null) {
+          response_ = null;
+        } else {
+          responseBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000020);
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.suda.federate.rpc.FederateService.internal_static_federate_SummationRequest_descriptor;
+      }
+
+      @java.lang.Override
+      public com.suda.federate.rpc.FederateService.SummationRequest getDefaultInstanceForType() {
+        return com.suda.federate.rpc.FederateService.SummationRequest.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public com.suda.federate.rpc.FederateService.SummationRequest build() {
+        com.suda.federate.rpc.FederateService.SummationRequest result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public com.suda.federate.rpc.FederateService.SummationRequest buildPartial() {
+        com.suda.federate.rpc.FederateService.SummationRequest result = new com.suda.federate.rpc.FederateService.SummationRequest(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        if (((from_bitField0_ & 0x00000001) != 0)) {
+          result.siloSize_ = siloSize_;
+          to_bitField0_ |= 0x00000001;
+        }
+        if (((bitField0_ & 0x00000002) != 0)) {
+          idList_.makeImmutable();
+          bitField0_ = (bitField0_ & ~0x00000002);
+        }
+        result.idList_ = idList_;
+        if (((from_bitField0_ & 0x00000004) != 0)) {
+          to_bitField0_ |= 0x00000002;
+        }
+        result.uuid_ = uuid_;
+        if (((bitField0_ & 0x00000008) != 0)) {
+          endpoints_ = endpoints_.getUnmodifiableView();
+          bitField0_ = (bitField0_ & ~0x00000008);
+        }
+        result.endpoints_ = endpoints_;
+        if (((from_bitField0_ & 0x00000010) != 0)) {
+          result.index_ = index_;
+          to_bitField0_ |= 0x00000004;
+        }
+        if (((from_bitField0_ & 0x00000020) != 0)) {
+          if (responseBuilder_ == null) {
+            result.response_ = response_;
+          } else {
+            result.response_ = responseBuilder_.build();
+          }
+          to_bitField0_ |= 0x00000008;
+        }
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.suda.federate.rpc.FederateService.SummationRequest) {
+          return mergeFrom((com.suda.federate.rpc.FederateService.SummationRequest)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.suda.federate.rpc.FederateService.SummationRequest other) {
+        if (other == com.suda.federate.rpc.FederateService.SummationRequest.getDefaultInstance()) return this;
+        if (other.hasSiloSize()) {
+          setSiloSize(other.getSiloSize());
+        }
+        if (!other.idList_.isEmpty()) {
+          if (idList_.isEmpty()) {
+            idList_ = other.idList_;
+            bitField0_ = (bitField0_ & ~0x00000002);
+          } else {
+            ensureIdListIsMutable();
+            idList_.addAll(other.idList_);
+          }
+          onChanged();
+        }
+        if (other.hasUuid()) {
+          bitField0_ |= 0x00000004;
+          uuid_ = other.uuid_;
+          onChanged();
+        }
+        if (!other.endpoints_.isEmpty()) {
+          if (endpoints_.isEmpty()) {
+            endpoints_ = other.endpoints_;
+            bitField0_ = (bitField0_ & ~0x00000008);
+          } else {
+            ensureEndpointsIsMutable();
+            endpoints_.addAll(other.endpoints_);
+          }
+          onChanged();
+        }
+        if (other.hasIndex()) {
+          setIndex(other.getIndex());
+        }
+        if (other.hasResponse()) {
+          mergeResponse(other.getResponse());
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        if (!hasSiloSize()) {
+          return false;
+        }
+        if (!hasUuid()) {
+          return false;
+        }
+        if (!hasIndex()) {
+          return false;
+        }
+        if (!hasResponse()) {
+          return false;
+        }
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.suda.federate.rpc.FederateService.SummationRequest parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.suda.federate.rpc.FederateService.SummationRequest) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      private int bitField0_;
+
+      private int siloSize_ ;
+      /**
+       * <code>required int32 siloSize = 1;</code>
+       * @return Whether the siloSize field is set.
+       */
+      @java.lang.Override
+      public boolean hasSiloSize() {
+        return ((bitField0_ & 0x00000001) != 0);
+      }
+      /**
+       * <code>required int32 siloSize = 1;</code>
+       * @return The siloSize.
+       */
+      @java.lang.Override
+      public int getSiloSize() {
+        return siloSize_;
+      }
+      /**
+       * <code>required int32 siloSize = 1;</code>
+       * @param value The siloSize to set.
+       * @return This builder for chaining.
+       */
+      public Builder setSiloSize(int value) {
+        bitField0_ |= 0x00000001;
+        siloSize_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required int32 siloSize = 1;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearSiloSize() {
+        bitField0_ = (bitField0_ & ~0x00000001);
+        siloSize_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private com.google.protobuf.Internal.IntList idList_ = emptyIntList();
+      private void ensureIdListIsMutable() {
+        if (!((bitField0_ & 0x00000002) != 0)) {
+          idList_ = mutableCopy(idList_);
+          bitField0_ |= 0x00000002;
+         }
+      }
+      /**
+       * <code>repeated int32 idList = 2;</code>
+       * @return A list containing the idList.
+       */
+      public java.util.List<java.lang.Integer>
+          getIdListList() {
+        return ((bitField0_ & 0x00000002) != 0) ?
+                 java.util.Collections.unmodifiableList(idList_) : idList_;
+      }
+      /**
+       * <code>repeated int32 idList = 2;</code>
+       * @return The count of idList.
+       */
+      public int getIdListCount() {
+        return idList_.size();
+      }
+      /**
+       * <code>repeated int32 idList = 2;</code>
+       * @param index The index of the element to return.
+       * @return The idList at the given index.
+       */
+      public int getIdList(int index) {
+        return idList_.getInt(index);
+      }
+      /**
+       * <code>repeated int32 idList = 2;</code>
+       * @param index The index to set the value at.
+       * @param value The idList to set.
+       * @return This builder for chaining.
+       */
+      public Builder setIdList(
+          int index, int value) {
+        ensureIdListIsMutable();
+        idList_.setInt(index, value);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated int32 idList = 2;</code>
+       * @param value The idList to add.
+       * @return This builder for chaining.
+       */
+      public Builder addIdList(int value) {
+        ensureIdListIsMutable();
+        idList_.addInt(value);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated int32 idList = 2;</code>
+       * @param values The idList to add.
+       * @return This builder for chaining.
+       */
+      public Builder addAllIdList(
+          java.lang.Iterable<? extends java.lang.Integer> values) {
+        ensureIdListIsMutable();
+        com.google.protobuf.AbstractMessageLite.Builder.addAll(
+            values, idList_);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated int32 idList = 2;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearIdList() {
+        idList_ = emptyIntList();
+        bitField0_ = (bitField0_ & ~0x00000002);
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object uuid_ = "";
+      /**
+       * <code>required string uuid = 3;</code>
+       * @return Whether the uuid field is set.
+       */
+      public boolean hasUuid() {
+        return ((bitField0_ & 0x00000004) != 0);
+      }
+      /**
+       * <code>required string uuid = 3;</code>
+       * @return The uuid.
+       */
+      public java.lang.String getUuid() {
+        java.lang.Object ref = uuid_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            uuid_ = s;
+          }
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>required string uuid = 3;</code>
+       * @return The bytes for uuid.
+       */
+      public com.google.protobuf.ByteString
+          getUuidBytes() {
+        java.lang.Object ref = uuid_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          uuid_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>required string uuid = 3;</code>
+       * @param value The uuid to set.
+       * @return This builder for chaining.
+       */
+      public Builder setUuid(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000004;
+        uuid_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required string uuid = 3;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearUuid() {
+        bitField0_ = (bitField0_ & ~0x00000004);
+        uuid_ = getDefaultInstance().getUuid();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required string uuid = 3;</code>
+       * @param value The bytes for uuid to set.
+       * @return This builder for chaining.
+       */
+      public Builder setUuidBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000004;
+        uuid_ = value;
+        onChanged();
+        return this;
+      }
+
+      private com.google.protobuf.LazyStringList endpoints_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      private void ensureEndpointsIsMutable() {
+        if (!((bitField0_ & 0x00000008) != 0)) {
+          endpoints_ = new com.google.protobuf.LazyStringArrayList(endpoints_);
+          bitField0_ |= 0x00000008;
+         }
+      }
+      /**
+       * <code>repeated string endpoints = 4;</code>
+       * @return A list containing the endpoints.
+       */
+      public com.google.protobuf.ProtocolStringList
+          getEndpointsList() {
+        return endpoints_.getUnmodifiableView();
+      }
+      /**
+       * <code>repeated string endpoints = 4;</code>
+       * @return The count of endpoints.
+       */
+      public int getEndpointsCount() {
+        return endpoints_.size();
+      }
+      /**
+       * <code>repeated string endpoints = 4;</code>
+       * @param index The index of the element to return.
+       * @return The endpoints at the given index.
+       */
+      public java.lang.String getEndpoints(int index) {
+        return endpoints_.get(index);
+      }
+      /**
+       * <code>repeated string endpoints = 4;</code>
+       * @param index The index of the value to return.
+       * @return The bytes of the endpoints at the given index.
+       */
+      public com.google.protobuf.ByteString
+          getEndpointsBytes(int index) {
+        return endpoints_.getByteString(index);
+      }
+      /**
+       * <code>repeated string endpoints = 4;</code>
+       * @param index The index to set the value at.
+       * @param value The endpoints to set.
+       * @return This builder for chaining.
+       */
+      public Builder setEndpoints(
+          int index, java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  ensureEndpointsIsMutable();
+        endpoints_.set(index, value);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string endpoints = 4;</code>
+       * @param value The endpoints to add.
+       * @return This builder for chaining.
+       */
+      public Builder addEndpoints(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  ensureEndpointsIsMutable();
+        endpoints_.add(value);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string endpoints = 4;</code>
+       * @param values The endpoints to add.
+       * @return This builder for chaining.
+       */
+      public Builder addAllEndpoints(
+          java.lang.Iterable<java.lang.String> values) {
+        ensureEndpointsIsMutable();
+        com.google.protobuf.AbstractMessageLite.Builder.addAll(
+            values, endpoints_);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string endpoints = 4;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearEndpoints() {
+        endpoints_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+        bitField0_ = (bitField0_ & ~0x00000008);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string endpoints = 4;</code>
+       * @param value The bytes of the endpoints to add.
+       * @return This builder for chaining.
+       */
+      public Builder addEndpointsBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  ensureEndpointsIsMutable();
+        endpoints_.add(value);
+        onChanged();
+        return this;
+      }
+
+      private int index_ ;
+      /**
+       * <code>required int32 index = 5;</code>
+       * @return Whether the index field is set.
+       */
+      @java.lang.Override
+      public boolean hasIndex() {
+        return ((bitField0_ & 0x00000010) != 0);
+      }
+      /**
+       * <code>required int32 index = 5;</code>
+       * @return The index.
+       */
+      @java.lang.Override
+      public int getIndex() {
+        return index_;
+      }
+      /**
+       * <code>required int32 index = 5;</code>
+       * @param value The index to set.
+       * @return This builder for chaining.
+       */
+      public Builder setIndex(int value) {
+        bitField0_ |= 0x00000010;
+        index_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required int32 index = 5;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearIndex() {
+        bitField0_ = (bitField0_ & ~0x00000010);
+        index_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private com.suda.federate.rpc.FederateService.SummationResponse response_;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.suda.federate.rpc.FederateService.SummationResponse, com.suda.federate.rpc.FederateService.SummationResponse.Builder, com.suda.federate.rpc.FederateService.SummationResponseOrBuilder> responseBuilder_;
+      /**
+       * <code>required .federate.SummationResponse response = 6;</code>
+       * @return Whether the response field is set.
+       */
+      public boolean hasResponse() {
+        return ((bitField0_ & 0x00000020) != 0);
+      }
+      /**
+       * <code>required .federate.SummationResponse response = 6;</code>
+       * @return The response.
+       */
+      public com.suda.federate.rpc.FederateService.SummationResponse getResponse() {
+        if (responseBuilder_ == null) {
+          return response_ == null ? com.suda.federate.rpc.FederateService.SummationResponse.getDefaultInstance() : response_;
+        } else {
+          return responseBuilder_.getMessage();
+        }
+      }
+      /**
+       * <code>required .federate.SummationResponse response = 6;</code>
+       */
+      public Builder setResponse(com.suda.federate.rpc.FederateService.SummationResponse value) {
+        if (responseBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          response_ = value;
+          onChanged();
+        } else {
+          responseBuilder_.setMessage(value);
+        }
+        bitField0_ |= 0x00000020;
+        return this;
+      }
+      /**
+       * <code>required .federate.SummationResponse response = 6;</code>
+       */
+      public Builder setResponse(
+          com.suda.federate.rpc.FederateService.SummationResponse.Builder builderForValue) {
+        if (responseBuilder_ == null) {
+          response_ = builderForValue.build();
+          onChanged();
+        } else {
+          responseBuilder_.setMessage(builderForValue.build());
+        }
+        bitField0_ |= 0x00000020;
+        return this;
+      }
+      /**
+       * <code>required .federate.SummationResponse response = 6;</code>
+       */
+      public Builder mergeResponse(com.suda.federate.rpc.FederateService.SummationResponse value) {
+        if (responseBuilder_ == null) {
+          if (((bitField0_ & 0x00000020) != 0) &&
+              response_ != null &&
+              response_ != com.suda.federate.rpc.FederateService.SummationResponse.getDefaultInstance()) {
+            response_ =
+              com.suda.federate.rpc.FederateService.SummationResponse.newBuilder(response_).mergeFrom(value).buildPartial();
+          } else {
+            response_ = value;
+          }
+          onChanged();
+        } else {
+          responseBuilder_.mergeFrom(value);
+        }
+        bitField0_ |= 0x00000020;
+        return this;
+      }
+      /**
+       * <code>required .federate.SummationResponse response = 6;</code>
+       */
+      public Builder clearResponse() {
+        if (responseBuilder_ == null) {
+          response_ = null;
+          onChanged();
+        } else {
+          responseBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000020);
+        return this;
+      }
+      /**
+       * <code>required .federate.SummationResponse response = 6;</code>
+       */
+      public com.suda.federate.rpc.FederateService.SummationResponse.Builder getResponseBuilder() {
+        bitField0_ |= 0x00000020;
+        onChanged();
+        return getResponseFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>required .federate.SummationResponse response = 6;</code>
+       */
+      public com.suda.federate.rpc.FederateService.SummationResponseOrBuilder getResponseOrBuilder() {
+        if (responseBuilder_ != null) {
+          return responseBuilder_.getMessageOrBuilder();
+        } else {
+          return response_ == null ?
+              com.suda.federate.rpc.FederateService.SummationResponse.getDefaultInstance() : response_;
+        }
+      }
+      /**
+       * <code>required .federate.SummationResponse response = 6;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.suda.federate.rpc.FederateService.SummationResponse, com.suda.federate.rpc.FederateService.SummationResponse.Builder, com.suda.federate.rpc.FederateService.SummationResponseOrBuilder> 
+          getResponseFieldBuilder() {
+        if (responseBuilder_ == null) {
+          responseBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              com.suda.federate.rpc.FederateService.SummationResponse, com.suda.federate.rpc.FederateService.SummationResponse.Builder, com.suda.federate.rpc.FederateService.SummationResponseOrBuilder>(
+                  getResponse(),
+                  getParentForChildren(),
+                  isClean());
+          response_ = null;
+        }
+        return responseBuilder_;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:federate.SummationRequest)
+    }
+
+    // @@protoc_insertion_point(class_scope:federate.SummationRequest)
+    private static final com.suda.federate.rpc.FederateService.SummationRequest DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new com.suda.federate.rpc.FederateService.SummationRequest();
+    }
+
+    public static com.suda.federate.rpc.FederateService.SummationRequest getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    @java.lang.Deprecated public static final com.google.protobuf.Parser<SummationRequest>
+        PARSER = new com.google.protobuf.AbstractParser<SummationRequest>() {
+      @java.lang.Override
+      public SummationRequest parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new SummationRequest(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<SummationRequest> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<SummationRequest> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.suda.federate.rpc.FederateService.SummationRequest getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface SummationResponseOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:federate.SummationResponse)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>repeated .federate.SummationResponse.FakeLocalSum fakeLocalSum = 1;</code>
+     */
+    java.util.List<com.suda.federate.rpc.FederateService.SummationResponse.FakeLocalSum> 
+        getFakeLocalSumList();
+    /**
+     * <code>repeated .federate.SummationResponse.FakeLocalSum fakeLocalSum = 1;</code>
+     */
+    com.suda.federate.rpc.FederateService.SummationResponse.FakeLocalSum getFakeLocalSum(int index);
+    /**
+     * <code>repeated .federate.SummationResponse.FakeLocalSum fakeLocalSum = 1;</code>
+     */
+    int getFakeLocalSumCount();
+    /**
+     * <code>repeated .federate.SummationResponse.FakeLocalSum fakeLocalSum = 1;</code>
+     */
+    java.util.List<? extends com.suda.federate.rpc.FederateService.SummationResponse.FakeLocalSumOrBuilder> 
+        getFakeLocalSumOrBuilderList();
+    /**
+     * <code>repeated .federate.SummationResponse.FakeLocalSum fakeLocalSum = 1;</code>
+     */
+    com.suda.federate.rpc.FederateService.SummationResponse.FakeLocalSumOrBuilder getFakeLocalSumOrBuilder(
+        int index);
+
+    /**
+     * <code>optional int32 count = 2;</code>
+     * @return Whether the count field is set.
+     */
+    boolean hasCount();
+    /**
+     * <code>optional int32 count = 2;</code>
+     * @return The count.
+     */
+    int getCount();
+  }
+  /**
+   * Protobuf type {@code federate.SummationResponse}
+   */
+  public static final class SummationResponse extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:federate.SummationResponse)
+      SummationResponseOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use SummationResponse.newBuilder() to construct.
+    private SummationResponse(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private SummationResponse() {
+      fakeLocalSum_ = java.util.Collections.emptyList();
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new SummationResponse();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private SummationResponse(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 10: {
+              if (!((mutable_bitField0_ & 0x00000001) != 0)) {
+                fakeLocalSum_ = new java.util.ArrayList<com.suda.federate.rpc.FederateService.SummationResponse.FakeLocalSum>();
+                mutable_bitField0_ |= 0x00000001;
+              }
+              fakeLocalSum_.add(
+                  input.readMessage(com.suda.federate.rpc.FederateService.SummationResponse.FakeLocalSum.PARSER, extensionRegistry));
+              break;
+            }
+            case 16: {
+              bitField0_ |= 0x00000001;
+              count_ = input.readInt32();
+              break;
+            }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        if (((mutable_bitField0_ & 0x00000001) != 0)) {
+          fakeLocalSum_ = java.util.Collections.unmodifiableList(fakeLocalSum_);
+        }
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.suda.federate.rpc.FederateService.internal_static_federate_SummationResponse_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.suda.federate.rpc.FederateService.internal_static_federate_SummationResponse_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.suda.federate.rpc.FederateService.SummationResponse.class, com.suda.federate.rpc.FederateService.SummationResponse.Builder.class);
+    }
+
+    public interface FakeLocalSumOrBuilder extends
+        // @@protoc_insertion_point(interface_extends:federate.SummationResponse.FakeLocalSum)
+        com.google.protobuf.MessageOrBuilder {
+
+      /**
+       * <code>repeated int32 num = 1;</code>
+       * @return A list containing the num.
+       */
+      java.util.List<java.lang.Integer> getNumList();
+      /**
+       * <code>repeated int32 num = 1;</code>
+       * @return The count of num.
+       */
+      int getNumCount();
+      /**
+       * <code>repeated int32 num = 1;</code>
+       * @param index The index of the element to return.
+       * @return The num at the given index.
+       */
+      int getNum(int index);
+    }
+    /**
+     * Protobuf type {@code federate.SummationResponse.FakeLocalSum}
+     */
+    public static final class FakeLocalSum extends
+        com.google.protobuf.GeneratedMessageV3 implements
+        // @@protoc_insertion_point(message_implements:federate.SummationResponse.FakeLocalSum)
+        FakeLocalSumOrBuilder {
+    private static final long serialVersionUID = 0L;
+      // Use FakeLocalSum.newBuilder() to construct.
+      private FakeLocalSum(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+        super(builder);
+      }
+      private FakeLocalSum() {
+        num_ = emptyIntList();
+      }
+
+      @java.lang.Override
+      @SuppressWarnings({"unused"})
+      protected java.lang.Object newInstance(
+          UnusedPrivateParameter unused) {
+        return new FakeLocalSum();
+      }
+
+      @java.lang.Override
+      public final com.google.protobuf.UnknownFieldSet
+      getUnknownFields() {
+        return this.unknownFields;
+      }
+      private FakeLocalSum(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        this();
+        if (extensionRegistry == null) {
+          throw new java.lang.NullPointerException();
+        }
+        int mutable_bitField0_ = 0;
+        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+            com.google.protobuf.UnknownFieldSet.newBuilder();
+        try {
+          boolean done = false;
+          while (!done) {
+            int tag = input.readTag();
+            switch (tag) {
+              case 0:
+                done = true;
+                break;
+              case 8: {
+                if (!((mutable_bitField0_ & 0x00000001) != 0)) {
+                  num_ = newIntList();
+                  mutable_bitField0_ |= 0x00000001;
+                }
+                num_.addInt(input.readInt32());
+                break;
+              }
+              case 10: {
+                int length = input.readRawVarint32();
+                int limit = input.pushLimit(length);
+                if (!((mutable_bitField0_ & 0x00000001) != 0) && input.getBytesUntilLimit() > 0) {
+                  num_ = newIntList();
+                  mutable_bitField0_ |= 0x00000001;
+                }
+                while (input.getBytesUntilLimit() > 0) {
+                  num_.addInt(input.readInt32());
+                }
+                input.popLimit(limit);
+                break;
+              }
+              default: {
+                if (!parseUnknownField(
+                    input, unknownFields, extensionRegistry, tag)) {
+                  done = true;
+                }
+                break;
+              }
+            }
+          }
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.setUnfinishedMessage(this);
+        } catch (java.io.IOException e) {
+          throw new com.google.protobuf.InvalidProtocolBufferException(
+              e).setUnfinishedMessage(this);
+        } finally {
+          if (((mutable_bitField0_ & 0x00000001) != 0)) {
+            num_.makeImmutable(); // C
+          }
+          this.unknownFields = unknownFields.build();
+          makeExtensionsImmutable();
+        }
+      }
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.suda.federate.rpc.FederateService.internal_static_federate_SummationResponse_FakeLocalSum_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.suda.federate.rpc.FederateService.internal_static_federate_SummationResponse_FakeLocalSum_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.suda.federate.rpc.FederateService.SummationResponse.FakeLocalSum.class, com.suda.federate.rpc.FederateService.SummationResponse.FakeLocalSum.Builder.class);
+      }
+
+      public static final int NUM_FIELD_NUMBER = 1;
+      private com.google.protobuf.Internal.IntList num_;
+      /**
+       * <code>repeated int32 num = 1;</code>
+       * @return A list containing the num.
+       */
+      @java.lang.Override
+      public java.util.List<java.lang.Integer>
+          getNumList() {
+        return num_;
+      }
+      /**
+       * <code>repeated int32 num = 1;</code>
+       * @return The count of num.
+       */
+      public int getNumCount() {
+        return num_.size();
+      }
+      /**
+       * <code>repeated int32 num = 1;</code>
+       * @param index The index of the element to return.
+       * @return The num at the given index.
+       */
+      public int getNum(int index) {
+        return num_.getInt(index);
+      }
+
+      private byte memoizedIsInitialized = -1;
+      @java.lang.Override
+      public final boolean isInitialized() {
+        byte isInitialized = memoizedIsInitialized;
+        if (isInitialized == 1) return true;
+        if (isInitialized == 0) return false;
+
+        memoizedIsInitialized = 1;
+        return true;
+      }
+
+      @java.lang.Override
+      public void writeTo(com.google.protobuf.CodedOutputStream output)
+                          throws java.io.IOException {
+        for (int i = 0; i < num_.size(); i++) {
+          output.writeInt32(1, num_.getInt(i));
+        }
+        unknownFields.writeTo(output);
+      }
+
+      @java.lang.Override
+      public int getSerializedSize() {
+        int size = memoizedSize;
+        if (size != -1) return size;
+
+        size = 0;
+        {
+          int dataSize = 0;
+          for (int i = 0; i < num_.size(); i++) {
+            dataSize += com.google.protobuf.CodedOutputStream
+              .computeInt32SizeNoTag(num_.getInt(i));
+          }
+          size += dataSize;
+          size += 1 * getNumList().size();
+        }
+        size += unknownFields.getSerializedSize();
+        memoizedSize = size;
+        return size;
+      }
+
+      @java.lang.Override
+      public boolean equals(final java.lang.Object obj) {
+        if (obj == this) {
+         return true;
+        }
+        if (!(obj instanceof com.suda.federate.rpc.FederateService.SummationResponse.FakeLocalSum)) {
+          return super.equals(obj);
+        }
+        com.suda.federate.rpc.FederateService.SummationResponse.FakeLocalSum other = (com.suda.federate.rpc.FederateService.SummationResponse.FakeLocalSum) obj;
+
+        if (!getNumList()
+            .equals(other.getNumList())) return false;
+        if (!unknownFields.equals(other.unknownFields)) return false;
+        return true;
+      }
+
+      @java.lang.Override
+      public int hashCode() {
+        if (memoizedHashCode != 0) {
+          return memoizedHashCode;
+        }
+        int hash = 41;
+        hash = (19 * hash) + getDescriptor().hashCode();
+        if (getNumCount() > 0) {
+          hash = (37 * hash) + NUM_FIELD_NUMBER;
+          hash = (53 * hash) + getNumList().hashCode();
+        }
+        hash = (29 * hash) + unknownFields.hashCode();
+        memoizedHashCode = hash;
+        return hash;
+      }
+
+      public static com.suda.federate.rpc.FederateService.SummationResponse.FakeLocalSum parseFrom(
+          java.nio.ByteBuffer data)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data);
+      }
+      public static com.suda.federate.rpc.FederateService.SummationResponse.FakeLocalSum parseFrom(
+          java.nio.ByteBuffer data,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data, extensionRegistry);
+      }
+      public static com.suda.federate.rpc.FederateService.SummationResponse.FakeLocalSum parseFrom(
+          com.google.protobuf.ByteString data)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data);
+      }
+      public static com.suda.federate.rpc.FederateService.SummationResponse.FakeLocalSum parseFrom(
+          com.google.protobuf.ByteString data,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data, extensionRegistry);
+      }
+      public static com.suda.federate.rpc.FederateService.SummationResponse.FakeLocalSum parseFrom(byte[] data)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data);
+      }
+      public static com.suda.federate.rpc.FederateService.SummationResponse.FakeLocalSum parseFrom(
+          byte[] data,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data, extensionRegistry);
+      }
+      public static com.suda.federate.rpc.FederateService.SummationResponse.FakeLocalSum parseFrom(java.io.InputStream input)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseWithIOException(PARSER, input);
+      }
+      public static com.suda.federate.rpc.FederateService.SummationResponse.FakeLocalSum parseFrom(
+          java.io.InputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseWithIOException(PARSER, input, extensionRegistry);
+      }
+      public static com.suda.federate.rpc.FederateService.SummationResponse.FakeLocalSum parseDelimitedFrom(java.io.InputStream input)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseDelimitedWithIOException(PARSER, input);
+      }
+      public static com.suda.federate.rpc.FederateService.SummationResponse.FakeLocalSum parseDelimitedFrom(
+          java.io.InputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+      }
+      public static com.suda.federate.rpc.FederateService.SummationResponse.FakeLocalSum parseFrom(
+          com.google.protobuf.CodedInputStream input)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseWithIOException(PARSER, input);
+      }
+      public static com.suda.federate.rpc.FederateService.SummationResponse.FakeLocalSum parseFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseWithIOException(PARSER, input, extensionRegistry);
+      }
+
+      @java.lang.Override
+      public Builder newBuilderForType() { return newBuilder(); }
+      public static Builder newBuilder() {
+        return DEFAULT_INSTANCE.toBuilder();
+      }
+      public static Builder newBuilder(com.suda.federate.rpc.FederateService.SummationResponse.FakeLocalSum prototype) {
+        return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+      }
+      @java.lang.Override
+      public Builder toBuilder() {
+        return this == DEFAULT_INSTANCE
+            ? new Builder() : new Builder().mergeFrom(this);
+      }
+
+      @java.lang.Override
+      protected Builder newBuilderForType(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        Builder builder = new Builder(parent);
+        return builder;
+      }
+      /**
+       * Protobuf type {@code federate.SummationResponse.FakeLocalSum}
+       */
+      public static final class Builder extends
+          com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+          // @@protoc_insertion_point(builder_implements:federate.SummationResponse.FakeLocalSum)
+          com.suda.federate.rpc.FederateService.SummationResponse.FakeLocalSumOrBuilder {
+        public static final com.google.protobuf.Descriptors.Descriptor
+            getDescriptor() {
+          return com.suda.federate.rpc.FederateService.internal_static_federate_SummationResponse_FakeLocalSum_descriptor;
+        }
+
+        @java.lang.Override
+        protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+            internalGetFieldAccessorTable() {
+          return com.suda.federate.rpc.FederateService.internal_static_federate_SummationResponse_FakeLocalSum_fieldAccessorTable
+              .ensureFieldAccessorsInitialized(
+                  com.suda.federate.rpc.FederateService.SummationResponse.FakeLocalSum.class, com.suda.federate.rpc.FederateService.SummationResponse.FakeLocalSum.Builder.class);
+        }
+
+        // Construct using com.suda.federate.rpc.FederateService.SummationResponse.FakeLocalSum.newBuilder()
+        private Builder() {
+          maybeForceBuilderInitialization();
+        }
+
+        private Builder(
+            com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+          super(parent);
+          maybeForceBuilderInitialization();
+        }
+        private void maybeForceBuilderInitialization() {
+          if (com.google.protobuf.GeneratedMessageV3
+                  .alwaysUseFieldBuilders) {
+          }
+        }
+        @java.lang.Override
+        public Builder clear() {
+          super.clear();
+          num_ = emptyIntList();
+          bitField0_ = (bitField0_ & ~0x00000001);
+          return this;
+        }
+
+        @java.lang.Override
+        public com.google.protobuf.Descriptors.Descriptor
+            getDescriptorForType() {
+          return com.suda.federate.rpc.FederateService.internal_static_federate_SummationResponse_FakeLocalSum_descriptor;
+        }
+
+        @java.lang.Override
+        public com.suda.federate.rpc.FederateService.SummationResponse.FakeLocalSum getDefaultInstanceForType() {
+          return com.suda.federate.rpc.FederateService.SummationResponse.FakeLocalSum.getDefaultInstance();
+        }
+
+        @java.lang.Override
+        public com.suda.federate.rpc.FederateService.SummationResponse.FakeLocalSum build() {
+          com.suda.federate.rpc.FederateService.SummationResponse.FakeLocalSum result = buildPartial();
+          if (!result.isInitialized()) {
+            throw newUninitializedMessageException(result);
+          }
+          return result;
+        }
+
+        @java.lang.Override
+        public com.suda.federate.rpc.FederateService.SummationResponse.FakeLocalSum buildPartial() {
+          com.suda.federate.rpc.FederateService.SummationResponse.FakeLocalSum result = new com.suda.federate.rpc.FederateService.SummationResponse.FakeLocalSum(this);
+          int from_bitField0_ = bitField0_;
+          if (((bitField0_ & 0x00000001) != 0)) {
+            num_.makeImmutable();
+            bitField0_ = (bitField0_ & ~0x00000001);
+          }
+          result.num_ = num_;
+          onBuilt();
+          return result;
+        }
+
+        @java.lang.Override
+        public Builder clone() {
+          return super.clone();
+        }
+        @java.lang.Override
+        public Builder setField(
+            com.google.protobuf.Descriptors.FieldDescriptor field,
+            java.lang.Object value) {
+          return super.setField(field, value);
+        }
+        @java.lang.Override
+        public Builder clearField(
+            com.google.protobuf.Descriptors.FieldDescriptor field) {
+          return super.clearField(field);
+        }
+        @java.lang.Override
+        public Builder clearOneof(
+            com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+          return super.clearOneof(oneof);
+        }
+        @java.lang.Override
+        public Builder setRepeatedField(
+            com.google.protobuf.Descriptors.FieldDescriptor field,
+            int index, java.lang.Object value) {
+          return super.setRepeatedField(field, index, value);
+        }
+        @java.lang.Override
+        public Builder addRepeatedField(
+            com.google.protobuf.Descriptors.FieldDescriptor field,
+            java.lang.Object value) {
+          return super.addRepeatedField(field, value);
+        }
+        @java.lang.Override
+        public Builder mergeFrom(com.google.protobuf.Message other) {
+          if (other instanceof com.suda.federate.rpc.FederateService.SummationResponse.FakeLocalSum) {
+            return mergeFrom((com.suda.federate.rpc.FederateService.SummationResponse.FakeLocalSum)other);
+          } else {
+            super.mergeFrom(other);
+            return this;
+          }
+        }
+
+        public Builder mergeFrom(com.suda.federate.rpc.FederateService.SummationResponse.FakeLocalSum other) {
+          if (other == com.suda.federate.rpc.FederateService.SummationResponse.FakeLocalSum.getDefaultInstance()) return this;
+          if (!other.num_.isEmpty()) {
+            if (num_.isEmpty()) {
+              num_ = other.num_;
+              bitField0_ = (bitField0_ & ~0x00000001);
+            } else {
+              ensureNumIsMutable();
+              num_.addAll(other.num_);
+            }
+            onChanged();
+          }
+          this.mergeUnknownFields(other.unknownFields);
+          onChanged();
+          return this;
+        }
+
+        @java.lang.Override
+        public final boolean isInitialized() {
+          return true;
+        }
+
+        @java.lang.Override
+        public Builder mergeFrom(
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws java.io.IOException {
+          com.suda.federate.rpc.FederateService.SummationResponse.FakeLocalSum parsedMessage = null;
+          try {
+            parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+            parsedMessage = (com.suda.federate.rpc.FederateService.SummationResponse.FakeLocalSum) e.getUnfinishedMessage();
+            throw e.unwrapIOException();
+          } finally {
+            if (parsedMessage != null) {
+              mergeFrom(parsedMessage);
+            }
+          }
+          return this;
+        }
+        private int bitField0_;
+
+        private com.google.protobuf.Internal.IntList num_ = emptyIntList();
+        private void ensureNumIsMutable() {
+          if (!((bitField0_ & 0x00000001) != 0)) {
+            num_ = mutableCopy(num_);
+            bitField0_ |= 0x00000001;
+           }
+        }
+        /**
+         * <code>repeated int32 num = 1;</code>
+         * @return A list containing the num.
+         */
+        public java.util.List<java.lang.Integer>
+            getNumList() {
+          return ((bitField0_ & 0x00000001) != 0) ?
+                   java.util.Collections.unmodifiableList(num_) : num_;
+        }
+        /**
+         * <code>repeated int32 num = 1;</code>
+         * @return The count of num.
+         */
+        public int getNumCount() {
+          return num_.size();
+        }
+        /**
+         * <code>repeated int32 num = 1;</code>
+         * @param index The index of the element to return.
+         * @return The num at the given index.
+         */
+        public int getNum(int index) {
+          return num_.getInt(index);
+        }
+        /**
+         * <code>repeated int32 num = 1;</code>
+         * @param index The index to set the value at.
+         * @param value The num to set.
+         * @return This builder for chaining.
+         */
+        public Builder setNum(
+            int index, int value) {
+          ensureNumIsMutable();
+          num_.setInt(index, value);
+          onChanged();
+          return this;
+        }
+        /**
+         * <code>repeated int32 num = 1;</code>
+         * @param value The num to add.
+         * @return This builder for chaining.
+         */
+        public Builder addNum(int value) {
+          ensureNumIsMutable();
+          num_.addInt(value);
+          onChanged();
+          return this;
+        }
+        /**
+         * <code>repeated int32 num = 1;</code>
+         * @param values The num to add.
+         * @return This builder for chaining.
+         */
+        public Builder addAllNum(
+            java.lang.Iterable<? extends java.lang.Integer> values) {
+          ensureNumIsMutable();
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, num_);
+          onChanged();
+          return this;
+        }
+        /**
+         * <code>repeated int32 num = 1;</code>
+         * @return This builder for chaining.
+         */
+        public Builder clearNum() {
+          num_ = emptyIntList();
+          bitField0_ = (bitField0_ & ~0x00000001);
+          onChanged();
+          return this;
+        }
+        @java.lang.Override
+        public final Builder setUnknownFields(
+            final com.google.protobuf.UnknownFieldSet unknownFields) {
+          return super.setUnknownFields(unknownFields);
+        }
+
+        @java.lang.Override
+        public final Builder mergeUnknownFields(
+            final com.google.protobuf.UnknownFieldSet unknownFields) {
+          return super.mergeUnknownFields(unknownFields);
+        }
+
+
+        // @@protoc_insertion_point(builder_scope:federate.SummationResponse.FakeLocalSum)
+      }
+
+      // @@protoc_insertion_point(class_scope:federate.SummationResponse.FakeLocalSum)
+      private static final com.suda.federate.rpc.FederateService.SummationResponse.FakeLocalSum DEFAULT_INSTANCE;
+      static {
+        DEFAULT_INSTANCE = new com.suda.federate.rpc.FederateService.SummationResponse.FakeLocalSum();
+      }
+
+      public static com.suda.federate.rpc.FederateService.SummationResponse.FakeLocalSum getDefaultInstance() {
+        return DEFAULT_INSTANCE;
+      }
+
+      @java.lang.Deprecated public static final com.google.protobuf.Parser<FakeLocalSum>
+          PARSER = new com.google.protobuf.AbstractParser<FakeLocalSum>() {
+        @java.lang.Override
+        public FakeLocalSum parsePartialFrom(
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws com.google.protobuf.InvalidProtocolBufferException {
+          return new FakeLocalSum(input, extensionRegistry);
+        }
+      };
+
+      public static com.google.protobuf.Parser<FakeLocalSum> parser() {
+        return PARSER;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Parser<FakeLocalSum> getParserForType() {
+        return PARSER;
+      }
+
+      @java.lang.Override
+      public com.suda.federate.rpc.FederateService.SummationResponse.FakeLocalSum getDefaultInstanceForType() {
+        return DEFAULT_INSTANCE;
+      }
+
+    }
+
+    private int bitField0_;
+    public static final int FAKELOCALSUM_FIELD_NUMBER = 1;
+    private java.util.List<com.suda.federate.rpc.FederateService.SummationResponse.FakeLocalSum> fakeLocalSum_;
+    /**
+     * <code>repeated .federate.SummationResponse.FakeLocalSum fakeLocalSum = 1;</code>
+     */
+    @java.lang.Override
+    public java.util.List<com.suda.federate.rpc.FederateService.SummationResponse.FakeLocalSum> getFakeLocalSumList() {
+      return fakeLocalSum_;
+    }
+    /**
+     * <code>repeated .federate.SummationResponse.FakeLocalSum fakeLocalSum = 1;</code>
+     */
+    @java.lang.Override
+    public java.util.List<? extends com.suda.federate.rpc.FederateService.SummationResponse.FakeLocalSumOrBuilder> 
+        getFakeLocalSumOrBuilderList() {
+      return fakeLocalSum_;
+    }
+    /**
+     * <code>repeated .federate.SummationResponse.FakeLocalSum fakeLocalSum = 1;</code>
+     */
+    @java.lang.Override
+    public int getFakeLocalSumCount() {
+      return fakeLocalSum_.size();
+    }
+    /**
+     * <code>repeated .federate.SummationResponse.FakeLocalSum fakeLocalSum = 1;</code>
+     */
+    @java.lang.Override
+    public com.suda.federate.rpc.FederateService.SummationResponse.FakeLocalSum getFakeLocalSum(int index) {
+      return fakeLocalSum_.get(index);
+    }
+    /**
+     * <code>repeated .federate.SummationResponse.FakeLocalSum fakeLocalSum = 1;</code>
+     */
+    @java.lang.Override
+    public com.suda.federate.rpc.FederateService.SummationResponse.FakeLocalSumOrBuilder getFakeLocalSumOrBuilder(
+        int index) {
+      return fakeLocalSum_.get(index);
+    }
+
+    public static final int COUNT_FIELD_NUMBER = 2;
+    private int count_;
+    /**
+     * <code>optional int32 count = 2;</code>
+     * @return Whether the count field is set.
+     */
+    @java.lang.Override
+    public boolean hasCount() {
+      return ((bitField0_ & 0x00000001) != 0);
+    }
+    /**
+     * <code>optional int32 count = 2;</code>
+     * @return The count.
+     */
+    @java.lang.Override
+    public int getCount() {
+      return count_;
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      for (int i = 0; i < fakeLocalSum_.size(); i++) {
+        output.writeMessage(1, fakeLocalSum_.get(i));
+      }
+      if (((bitField0_ & 0x00000001) != 0)) {
+        output.writeInt32(2, count_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      for (int i = 0; i < fakeLocalSum_.size(); i++) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(1, fakeLocalSum_.get(i));
+      }
+      if (((bitField0_ & 0x00000001) != 0)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(2, count_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof com.suda.federate.rpc.FederateService.SummationResponse)) {
+        return super.equals(obj);
+      }
+      com.suda.federate.rpc.FederateService.SummationResponse other = (com.suda.federate.rpc.FederateService.SummationResponse) obj;
+
+      if (!getFakeLocalSumList()
+          .equals(other.getFakeLocalSumList())) return false;
+      if (hasCount() != other.hasCount()) return false;
+      if (hasCount()) {
+        if (getCount()
+            != other.getCount()) return false;
+      }
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      if (getFakeLocalSumCount() > 0) {
+        hash = (37 * hash) + FAKELOCALSUM_FIELD_NUMBER;
+        hash = (53 * hash) + getFakeLocalSumList().hashCode();
+      }
+      if (hasCount()) {
+        hash = (37 * hash) + COUNT_FIELD_NUMBER;
+        hash = (53 * hash) + getCount();
+      }
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static com.suda.federate.rpc.FederateService.SummationResponse parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.suda.federate.rpc.FederateService.SummationResponse parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.suda.federate.rpc.FederateService.SummationResponse parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.suda.federate.rpc.FederateService.SummationResponse parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.suda.federate.rpc.FederateService.SummationResponse parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.suda.federate.rpc.FederateService.SummationResponse parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.suda.federate.rpc.FederateService.SummationResponse parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.suda.federate.rpc.FederateService.SummationResponse parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.suda.federate.rpc.FederateService.SummationResponse parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static com.suda.federate.rpc.FederateService.SummationResponse parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.suda.federate.rpc.FederateService.SummationResponse parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.suda.federate.rpc.FederateService.SummationResponse parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(com.suda.federate.rpc.FederateService.SummationResponse prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code federate.SummationResponse}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:federate.SummationResponse)
+        com.suda.federate.rpc.FederateService.SummationResponseOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.suda.federate.rpc.FederateService.internal_static_federate_SummationResponse_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.suda.federate.rpc.FederateService.internal_static_federate_SummationResponse_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.suda.federate.rpc.FederateService.SummationResponse.class, com.suda.federate.rpc.FederateService.SummationResponse.Builder.class);
+      }
+
+      // Construct using com.suda.federate.rpc.FederateService.SummationResponse.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+          getFakeLocalSumFieldBuilder();
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        if (fakeLocalSumBuilder_ == null) {
+          fakeLocalSum_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000001);
+        } else {
+          fakeLocalSumBuilder_.clear();
+        }
+        count_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000002);
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.suda.federate.rpc.FederateService.internal_static_federate_SummationResponse_descriptor;
+      }
+
+      @java.lang.Override
+      public com.suda.federate.rpc.FederateService.SummationResponse getDefaultInstanceForType() {
+        return com.suda.federate.rpc.FederateService.SummationResponse.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public com.suda.federate.rpc.FederateService.SummationResponse build() {
+        com.suda.federate.rpc.FederateService.SummationResponse result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public com.suda.federate.rpc.FederateService.SummationResponse buildPartial() {
+        com.suda.federate.rpc.FederateService.SummationResponse result = new com.suda.federate.rpc.FederateService.SummationResponse(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        if (fakeLocalSumBuilder_ == null) {
+          if (((bitField0_ & 0x00000001) != 0)) {
+            fakeLocalSum_ = java.util.Collections.unmodifiableList(fakeLocalSum_);
+            bitField0_ = (bitField0_ & ~0x00000001);
+          }
+          result.fakeLocalSum_ = fakeLocalSum_;
+        } else {
+          result.fakeLocalSum_ = fakeLocalSumBuilder_.build();
+        }
+        if (((from_bitField0_ & 0x00000002) != 0)) {
+          result.count_ = count_;
+          to_bitField0_ |= 0x00000001;
+        }
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.suda.federate.rpc.FederateService.SummationResponse) {
+          return mergeFrom((com.suda.federate.rpc.FederateService.SummationResponse)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.suda.federate.rpc.FederateService.SummationResponse other) {
+        if (other == com.suda.federate.rpc.FederateService.SummationResponse.getDefaultInstance()) return this;
+        if (fakeLocalSumBuilder_ == null) {
+          if (!other.fakeLocalSum_.isEmpty()) {
+            if (fakeLocalSum_.isEmpty()) {
+              fakeLocalSum_ = other.fakeLocalSum_;
+              bitField0_ = (bitField0_ & ~0x00000001);
+            } else {
+              ensureFakeLocalSumIsMutable();
+              fakeLocalSum_.addAll(other.fakeLocalSum_);
+            }
+            onChanged();
+          }
+        } else {
+          if (!other.fakeLocalSum_.isEmpty()) {
+            if (fakeLocalSumBuilder_.isEmpty()) {
+              fakeLocalSumBuilder_.dispose();
+              fakeLocalSumBuilder_ = null;
+              fakeLocalSum_ = other.fakeLocalSum_;
+              bitField0_ = (bitField0_ & ~0x00000001);
+              fakeLocalSumBuilder_ = 
+                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
+                   getFakeLocalSumFieldBuilder() : null;
+            } else {
+              fakeLocalSumBuilder_.addAllMessages(other.fakeLocalSum_);
+            }
+          }
+        }
+        if (other.hasCount()) {
+          setCount(other.getCount());
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.suda.federate.rpc.FederateService.SummationResponse parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.suda.federate.rpc.FederateService.SummationResponse) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      private int bitField0_;
+
+      private java.util.List<com.suda.federate.rpc.FederateService.SummationResponse.FakeLocalSum> fakeLocalSum_ =
+        java.util.Collections.emptyList();
+      private void ensureFakeLocalSumIsMutable() {
+        if (!((bitField0_ & 0x00000001) != 0)) {
+          fakeLocalSum_ = new java.util.ArrayList<com.suda.federate.rpc.FederateService.SummationResponse.FakeLocalSum>(fakeLocalSum_);
+          bitField0_ |= 0x00000001;
+         }
+      }
+
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          com.suda.federate.rpc.FederateService.SummationResponse.FakeLocalSum, com.suda.federate.rpc.FederateService.SummationResponse.FakeLocalSum.Builder, com.suda.federate.rpc.FederateService.SummationResponse.FakeLocalSumOrBuilder> fakeLocalSumBuilder_;
+
+      /**
+       * <code>repeated .federate.SummationResponse.FakeLocalSum fakeLocalSum = 1;</code>
+       */
+      public java.util.List<com.suda.federate.rpc.FederateService.SummationResponse.FakeLocalSum> getFakeLocalSumList() {
+        if (fakeLocalSumBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(fakeLocalSum_);
+        } else {
+          return fakeLocalSumBuilder_.getMessageList();
+        }
+      }
+      /**
+       * <code>repeated .federate.SummationResponse.FakeLocalSum fakeLocalSum = 1;</code>
+       */
+      public int getFakeLocalSumCount() {
+        if (fakeLocalSumBuilder_ == null) {
+          return fakeLocalSum_.size();
+        } else {
+          return fakeLocalSumBuilder_.getCount();
+        }
+      }
+      /**
+       * <code>repeated .federate.SummationResponse.FakeLocalSum fakeLocalSum = 1;</code>
+       */
+      public com.suda.federate.rpc.FederateService.SummationResponse.FakeLocalSum getFakeLocalSum(int index) {
+        if (fakeLocalSumBuilder_ == null) {
+          return fakeLocalSum_.get(index);
+        } else {
+          return fakeLocalSumBuilder_.getMessage(index);
+        }
+      }
+      /**
+       * <code>repeated .federate.SummationResponse.FakeLocalSum fakeLocalSum = 1;</code>
+       */
+      public Builder setFakeLocalSum(
+          int index, com.suda.federate.rpc.FederateService.SummationResponse.FakeLocalSum value) {
+        if (fakeLocalSumBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureFakeLocalSumIsMutable();
+          fakeLocalSum_.set(index, value);
+          onChanged();
+        } else {
+          fakeLocalSumBuilder_.setMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .federate.SummationResponse.FakeLocalSum fakeLocalSum = 1;</code>
+       */
+      public Builder setFakeLocalSum(
+          int index, com.suda.federate.rpc.FederateService.SummationResponse.FakeLocalSum.Builder builderForValue) {
+        if (fakeLocalSumBuilder_ == null) {
+          ensureFakeLocalSumIsMutable();
+          fakeLocalSum_.set(index, builderForValue.build());
+          onChanged();
+        } else {
+          fakeLocalSumBuilder_.setMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .federate.SummationResponse.FakeLocalSum fakeLocalSum = 1;</code>
+       */
+      public Builder addFakeLocalSum(com.suda.federate.rpc.FederateService.SummationResponse.FakeLocalSum value) {
+        if (fakeLocalSumBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureFakeLocalSumIsMutable();
+          fakeLocalSum_.add(value);
+          onChanged();
+        } else {
+          fakeLocalSumBuilder_.addMessage(value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .federate.SummationResponse.FakeLocalSum fakeLocalSum = 1;</code>
+       */
+      public Builder addFakeLocalSum(
+          int index, com.suda.federate.rpc.FederateService.SummationResponse.FakeLocalSum value) {
+        if (fakeLocalSumBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureFakeLocalSumIsMutable();
+          fakeLocalSum_.add(index, value);
+          onChanged();
+        } else {
+          fakeLocalSumBuilder_.addMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .federate.SummationResponse.FakeLocalSum fakeLocalSum = 1;</code>
+       */
+      public Builder addFakeLocalSum(
+          com.suda.federate.rpc.FederateService.SummationResponse.FakeLocalSum.Builder builderForValue) {
+        if (fakeLocalSumBuilder_ == null) {
+          ensureFakeLocalSumIsMutable();
+          fakeLocalSum_.add(builderForValue.build());
+          onChanged();
+        } else {
+          fakeLocalSumBuilder_.addMessage(builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .federate.SummationResponse.FakeLocalSum fakeLocalSum = 1;</code>
+       */
+      public Builder addFakeLocalSum(
+          int index, com.suda.federate.rpc.FederateService.SummationResponse.FakeLocalSum.Builder builderForValue) {
+        if (fakeLocalSumBuilder_ == null) {
+          ensureFakeLocalSumIsMutable();
+          fakeLocalSum_.add(index, builderForValue.build());
+          onChanged();
+        } else {
+          fakeLocalSumBuilder_.addMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .federate.SummationResponse.FakeLocalSum fakeLocalSum = 1;</code>
+       */
+      public Builder addAllFakeLocalSum(
+          java.lang.Iterable<? extends com.suda.federate.rpc.FederateService.SummationResponse.FakeLocalSum> values) {
+        if (fakeLocalSumBuilder_ == null) {
+          ensureFakeLocalSumIsMutable();
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, fakeLocalSum_);
+          onChanged();
+        } else {
+          fakeLocalSumBuilder_.addAllMessages(values);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .federate.SummationResponse.FakeLocalSum fakeLocalSum = 1;</code>
+       */
+      public Builder clearFakeLocalSum() {
+        if (fakeLocalSumBuilder_ == null) {
+          fakeLocalSum_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000001);
+          onChanged();
+        } else {
+          fakeLocalSumBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .federate.SummationResponse.FakeLocalSum fakeLocalSum = 1;</code>
+       */
+      public Builder removeFakeLocalSum(int index) {
+        if (fakeLocalSumBuilder_ == null) {
+          ensureFakeLocalSumIsMutable();
+          fakeLocalSum_.remove(index);
+          onChanged();
+        } else {
+          fakeLocalSumBuilder_.remove(index);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .federate.SummationResponse.FakeLocalSum fakeLocalSum = 1;</code>
+       */
+      public com.suda.federate.rpc.FederateService.SummationResponse.FakeLocalSum.Builder getFakeLocalSumBuilder(
+          int index) {
+        return getFakeLocalSumFieldBuilder().getBuilder(index);
+      }
+      /**
+       * <code>repeated .federate.SummationResponse.FakeLocalSum fakeLocalSum = 1;</code>
+       */
+      public com.suda.federate.rpc.FederateService.SummationResponse.FakeLocalSumOrBuilder getFakeLocalSumOrBuilder(
+          int index) {
+        if (fakeLocalSumBuilder_ == null) {
+          return fakeLocalSum_.get(index);  } else {
+          return fakeLocalSumBuilder_.getMessageOrBuilder(index);
+        }
+      }
+      /**
+       * <code>repeated .federate.SummationResponse.FakeLocalSum fakeLocalSum = 1;</code>
+       */
+      public java.util.List<? extends com.suda.federate.rpc.FederateService.SummationResponse.FakeLocalSumOrBuilder> 
+           getFakeLocalSumOrBuilderList() {
+        if (fakeLocalSumBuilder_ != null) {
+          return fakeLocalSumBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(fakeLocalSum_);
+        }
+      }
+      /**
+       * <code>repeated .federate.SummationResponse.FakeLocalSum fakeLocalSum = 1;</code>
+       */
+      public com.suda.federate.rpc.FederateService.SummationResponse.FakeLocalSum.Builder addFakeLocalSumBuilder() {
+        return getFakeLocalSumFieldBuilder().addBuilder(
+            com.suda.federate.rpc.FederateService.SummationResponse.FakeLocalSum.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .federate.SummationResponse.FakeLocalSum fakeLocalSum = 1;</code>
+       */
+      public com.suda.federate.rpc.FederateService.SummationResponse.FakeLocalSum.Builder addFakeLocalSumBuilder(
+          int index) {
+        return getFakeLocalSumFieldBuilder().addBuilder(
+            index, com.suda.federate.rpc.FederateService.SummationResponse.FakeLocalSum.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .federate.SummationResponse.FakeLocalSum fakeLocalSum = 1;</code>
+       */
+      public java.util.List<com.suda.federate.rpc.FederateService.SummationResponse.FakeLocalSum.Builder> 
+           getFakeLocalSumBuilderList() {
+        return getFakeLocalSumFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          com.suda.federate.rpc.FederateService.SummationResponse.FakeLocalSum, com.suda.federate.rpc.FederateService.SummationResponse.FakeLocalSum.Builder, com.suda.federate.rpc.FederateService.SummationResponse.FakeLocalSumOrBuilder> 
+          getFakeLocalSumFieldBuilder() {
+        if (fakeLocalSumBuilder_ == null) {
+          fakeLocalSumBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+              com.suda.federate.rpc.FederateService.SummationResponse.FakeLocalSum, com.suda.federate.rpc.FederateService.SummationResponse.FakeLocalSum.Builder, com.suda.federate.rpc.FederateService.SummationResponse.FakeLocalSumOrBuilder>(
+                  fakeLocalSum_,
+                  ((bitField0_ & 0x00000001) != 0),
+                  getParentForChildren(),
+                  isClean());
+          fakeLocalSum_ = null;
+        }
+        return fakeLocalSumBuilder_;
+      }
+
+      private int count_ ;
+      /**
+       * <code>optional int32 count = 2;</code>
+       * @return Whether the count field is set.
+       */
+      @java.lang.Override
+      public boolean hasCount() {
+        return ((bitField0_ & 0x00000002) != 0);
+      }
+      /**
+       * <code>optional int32 count = 2;</code>
+       * @return The count.
+       */
+      @java.lang.Override
+      public int getCount() {
+        return count_;
+      }
+      /**
+       * <code>optional int32 count = 2;</code>
+       * @param value The count to set.
+       * @return This builder for chaining.
+       */
+      public Builder setCount(int value) {
+        bitField0_ |= 0x00000002;
+        count_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional int32 count = 2;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearCount() {
+        bitField0_ = (bitField0_ & ~0x00000002);
+        count_ = 0;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:federate.SummationResponse)
+    }
+
+    // @@protoc_insertion_point(class_scope:federate.SummationResponse)
+    private static final com.suda.federate.rpc.FederateService.SummationResponse DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new com.suda.federate.rpc.FederateService.SummationResponse();
+    }
+
+    public static com.suda.federate.rpc.FederateService.SummationResponse getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    @java.lang.Deprecated public static final com.google.protobuf.Parser<SummationResponse>
+        PARSER = new com.google.protobuf.AbstractParser<SummationResponse>() {
+      @java.lang.Override
+      public SummationResponse parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new SummationResponse(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<SummationResponse> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<SummationResponse> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.suda.federate.rpc.FederateService.SummationResponse getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
   public interface UnionRequestOrBuilder extends
       // @@protoc_insertion_point(interface_extends:federate.UnionRequest)
       com.google.protobuf.MessageOrBuilder {
@@ -9422,32 +12360,56 @@ public final class FederateService {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>repeated int32 fakeLocalSum = 2;</code>
+     * <code>optional double num = 1;</code>
+     * @return Whether the num field is set.
+     */
+    boolean hasNum();
+    /**
+     * <code>optional double num = 1;</code>
+     * @return The num.
+     */
+    double getNum();
+
+    /**
+     * <code>repeated .federate.Point point = 2;</code>
+     */
+    java.util.List<com.suda.federate.rpc.FederateCommon.Point> 
+        getPointList();
+    /**
+     * <code>repeated .federate.Point point = 2;</code>
+     */
+    com.suda.federate.rpc.FederateCommon.Point getPoint(int index);
+    /**
+     * <code>repeated .federate.Point point = 2;</code>
+     */
+    int getPointCount();
+    /**
+     * <code>repeated .federate.Point point = 2;</code>
+     */
+    java.util.List<? extends com.suda.federate.rpc.FederateCommon.PointOrBuilder> 
+        getPointOrBuilderList();
+    /**
+     * <code>repeated .federate.Point point = 2;</code>
+     */
+    com.suda.federate.rpc.FederateCommon.PointOrBuilder getPointOrBuilder(
+        int index);
+
+    /**
+     * <code>repeated int32 fakeLocalSum = 3;</code>
      * @return A list containing the fakeLocalSum.
      */
     java.util.List<java.lang.Integer> getFakeLocalSumList();
     /**
-     * <code>repeated int32 fakeLocalSum = 2;</code>
+     * <code>repeated int32 fakeLocalSum = 3;</code>
      * @return The count of fakeLocalSum.
      */
     int getFakeLocalSumCount();
     /**
-     * <code>repeated int32 fakeLocalSum = 2;</code>
+     * <code>repeated int32 fakeLocalSum = 3;</code>
      * @param index The index of the element to return.
      * @return The fakeLocalSum at the given index.
      */
     int getFakeLocalSum(int index);
-
-    /**
-     * <code>required double message = 1;</code>
-     * @return Whether the message field is set.
-     */
-    boolean hasMessage();
-    /**
-     * <code>required double message = 1;</code>
-     * @return The message.
-     */
-    double getMessage();
   }
   /**
    * Protobuf type {@code federate.SQLReply}
@@ -9462,6 +12424,7 @@ public final class FederateService {
       super(builder);
     }
     private SQLReply() {
+      point_ = java.util.Collections.emptyList();
       fakeLocalSum_ = emptyIntList();
     }
 
@@ -9498,23 +12461,32 @@ public final class FederateService {
               break;
             case 9: {
               bitField0_ |= 0x00000001;
-              message_ = input.readDouble();
+              num_ = input.readDouble();
               break;
             }
-            case 16: {
-              if (!((mutable_bitField0_ & 0x00000001) != 0)) {
+            case 18: {
+              if (!((mutable_bitField0_ & 0x00000002) != 0)) {
+                point_ = new java.util.ArrayList<com.suda.federate.rpc.FederateCommon.Point>();
+                mutable_bitField0_ |= 0x00000002;
+              }
+              point_.add(
+                  input.readMessage(com.suda.federate.rpc.FederateCommon.Point.PARSER, extensionRegistry));
+              break;
+            }
+            case 24: {
+              if (!((mutable_bitField0_ & 0x00000004) != 0)) {
                 fakeLocalSum_ = newIntList();
-                mutable_bitField0_ |= 0x00000001;
+                mutable_bitField0_ |= 0x00000004;
               }
               fakeLocalSum_.addInt(input.readInt32());
               break;
             }
-            case 18: {
+            case 26: {
               int length = input.readRawVarint32();
               int limit = input.pushLimit(length);
-              if (!((mutable_bitField0_ & 0x00000001) != 0) && input.getBytesUntilLimit() > 0) {
+              if (!((mutable_bitField0_ & 0x00000004) != 0) && input.getBytesUntilLimit() > 0) {
                 fakeLocalSum_ = newIntList();
-                mutable_bitField0_ |= 0x00000001;
+                mutable_bitField0_ |= 0x00000004;
               }
               while (input.getBytesUntilLimit() > 0) {
                 fakeLocalSum_.addInt(input.readInt32());
@@ -9537,7 +12509,10 @@ public final class FederateService {
         throw new com.google.protobuf.InvalidProtocolBufferException(
             e).setUnfinishedMessage(this);
       } finally {
-        if (((mutable_bitField0_ & 0x00000001) != 0)) {
+        if (((mutable_bitField0_ & 0x00000002) != 0)) {
+          point_ = java.util.Collections.unmodifiableList(point_);
+        }
+        if (((mutable_bitField0_ & 0x00000004) != 0)) {
           fakeLocalSum_.makeImmutable(); // C
         }
         this.unknownFields = unknownFields.build();
@@ -9558,10 +12533,69 @@ public final class FederateService {
     }
 
     private int bitField0_;
-    public static final int FAKELOCALSUM_FIELD_NUMBER = 2;
+    public static final int NUM_FIELD_NUMBER = 1;
+    private double num_;
+    /**
+     * <code>optional double num = 1;</code>
+     * @return Whether the num field is set.
+     */
+    @java.lang.Override
+    public boolean hasNum() {
+      return ((bitField0_ & 0x00000001) != 0);
+    }
+    /**
+     * <code>optional double num = 1;</code>
+     * @return The num.
+     */
+    @java.lang.Override
+    public double getNum() {
+      return num_;
+    }
+
+    public static final int POINT_FIELD_NUMBER = 2;
+    private java.util.List<com.suda.federate.rpc.FederateCommon.Point> point_;
+    /**
+     * <code>repeated .federate.Point point = 2;</code>
+     */
+    @java.lang.Override
+    public java.util.List<com.suda.federate.rpc.FederateCommon.Point> getPointList() {
+      return point_;
+    }
+    /**
+     * <code>repeated .federate.Point point = 2;</code>
+     */
+    @java.lang.Override
+    public java.util.List<? extends com.suda.federate.rpc.FederateCommon.PointOrBuilder> 
+        getPointOrBuilderList() {
+      return point_;
+    }
+    /**
+     * <code>repeated .federate.Point point = 2;</code>
+     */
+    @java.lang.Override
+    public int getPointCount() {
+      return point_.size();
+    }
+    /**
+     * <code>repeated .federate.Point point = 2;</code>
+     */
+    @java.lang.Override
+    public com.suda.federate.rpc.FederateCommon.Point getPoint(int index) {
+      return point_.get(index);
+    }
+    /**
+     * <code>repeated .federate.Point point = 2;</code>
+     */
+    @java.lang.Override
+    public com.suda.federate.rpc.FederateCommon.PointOrBuilder getPointOrBuilder(
+        int index) {
+      return point_.get(index);
+    }
+
+    public static final int FAKELOCALSUM_FIELD_NUMBER = 3;
     private com.google.protobuf.Internal.IntList fakeLocalSum_;
     /**
-     * <code>repeated int32 fakeLocalSum = 2;</code>
+     * <code>repeated int32 fakeLocalSum = 3;</code>
      * @return A list containing the fakeLocalSum.
      */
     @java.lang.Override
@@ -9570,38 +12604,19 @@ public final class FederateService {
       return fakeLocalSum_;
     }
     /**
-     * <code>repeated int32 fakeLocalSum = 2;</code>
+     * <code>repeated int32 fakeLocalSum = 3;</code>
      * @return The count of fakeLocalSum.
      */
     public int getFakeLocalSumCount() {
       return fakeLocalSum_.size();
     }
     /**
-     * <code>repeated int32 fakeLocalSum = 2;</code>
+     * <code>repeated int32 fakeLocalSum = 3;</code>
      * @param index The index of the element to return.
      * @return The fakeLocalSum at the given index.
      */
     public int getFakeLocalSum(int index) {
       return fakeLocalSum_.getInt(index);
-    }
-
-    public static final int MESSAGE_FIELD_NUMBER = 1;
-    private double message_;
-    /**
-     * <code>required double message = 1;</code>
-     * @return Whether the message field is set.
-     */
-    @java.lang.Override
-    public boolean hasMessage() {
-      return ((bitField0_ & 0x00000001) != 0);
-    }
-    /**
-     * <code>required double message = 1;</code>
-     * @return The message.
-     */
-    @java.lang.Override
-    public double getMessage() {
-      return message_;
     }
 
     private byte memoizedIsInitialized = -1;
@@ -9611,9 +12626,11 @@ public final class FederateService {
       if (isInitialized == 1) return true;
       if (isInitialized == 0) return false;
 
-      if (!hasMessage()) {
-        memoizedIsInitialized = 0;
-        return false;
+      for (int i = 0; i < getPointCount(); i++) {
+        if (!getPoint(i).isInitialized()) {
+          memoizedIsInitialized = 0;
+          return false;
+        }
       }
       memoizedIsInitialized = 1;
       return true;
@@ -9623,10 +12640,13 @@ public final class FederateService {
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       if (((bitField0_ & 0x00000001) != 0)) {
-        output.writeDouble(1, message_);
+        output.writeDouble(1, num_);
+      }
+      for (int i = 0; i < point_.size(); i++) {
+        output.writeMessage(2, point_.get(i));
       }
       for (int i = 0; i < fakeLocalSum_.size(); i++) {
-        output.writeInt32(2, fakeLocalSum_.getInt(i));
+        output.writeInt32(3, fakeLocalSum_.getInt(i));
       }
       unknownFields.writeTo(output);
     }
@@ -9639,7 +12659,11 @@ public final class FederateService {
       size = 0;
       if (((bitField0_ & 0x00000001) != 0)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeDoubleSize(1, message_);
+          .computeDoubleSize(1, num_);
+      }
+      for (int i = 0; i < point_.size(); i++) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(2, point_.get(i));
       }
       {
         int dataSize = 0;
@@ -9665,14 +12689,16 @@ public final class FederateService {
       }
       com.suda.federate.rpc.FederateService.SQLReply other = (com.suda.federate.rpc.FederateService.SQLReply) obj;
 
+      if (hasNum() != other.hasNum()) return false;
+      if (hasNum()) {
+        if (java.lang.Double.doubleToLongBits(getNum())
+            != java.lang.Double.doubleToLongBits(
+                other.getNum())) return false;
+      }
+      if (!getPointList()
+          .equals(other.getPointList())) return false;
       if (!getFakeLocalSumList()
           .equals(other.getFakeLocalSumList())) return false;
-      if (hasMessage() != other.hasMessage()) return false;
-      if (hasMessage()) {
-        if (java.lang.Double.doubleToLongBits(getMessage())
-            != java.lang.Double.doubleToLongBits(
-                other.getMessage())) return false;
-      }
       if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
     }
@@ -9684,14 +12710,18 @@ public final class FederateService {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
+      if (hasNum()) {
+        hash = (37 * hash) + NUM_FIELD_NUMBER;
+        hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+            java.lang.Double.doubleToLongBits(getNum()));
+      }
+      if (getPointCount() > 0) {
+        hash = (37 * hash) + POINT_FIELD_NUMBER;
+        hash = (53 * hash) + getPointList().hashCode();
+      }
       if (getFakeLocalSumCount() > 0) {
         hash = (37 * hash) + FAKELOCALSUM_FIELD_NUMBER;
         hash = (53 * hash) + getFakeLocalSumList().hashCode();
-      }
-      if (hasMessage()) {
-        hash = (37 * hash) + MESSAGE_FIELD_NUMBER;
-        hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
-            java.lang.Double.doubleToLongBits(getMessage()));
       }
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
@@ -9821,15 +12851,22 @@ public final class FederateService {
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessageV3
                 .alwaysUseFieldBuilders) {
+          getPointFieldBuilder();
         }
       }
       @java.lang.Override
       public Builder clear() {
         super.clear();
-        fakeLocalSum_ = emptyIntList();
+        num_ = 0D;
         bitField0_ = (bitField0_ & ~0x00000001);
-        message_ = 0D;
-        bitField0_ = (bitField0_ & ~0x00000002);
+        if (pointBuilder_ == null) {
+          point_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000002);
+        } else {
+          pointBuilder_.clear();
+        }
+        fakeLocalSum_ = emptyIntList();
+        bitField0_ = (bitField0_ & ~0x00000004);
         return this;
       }
 
@@ -9858,15 +12895,24 @@ public final class FederateService {
         com.suda.federate.rpc.FederateService.SQLReply result = new com.suda.federate.rpc.FederateService.SQLReply(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
-        if (((bitField0_ & 0x00000001) != 0)) {
-          fakeLocalSum_.makeImmutable();
-          bitField0_ = (bitField0_ & ~0x00000001);
-        }
-        result.fakeLocalSum_ = fakeLocalSum_;
-        if (((from_bitField0_ & 0x00000002) != 0)) {
-          result.message_ = message_;
+        if (((from_bitField0_ & 0x00000001) != 0)) {
+          result.num_ = num_;
           to_bitField0_ |= 0x00000001;
         }
+        if (pointBuilder_ == null) {
+          if (((bitField0_ & 0x00000002) != 0)) {
+            point_ = java.util.Collections.unmodifiableList(point_);
+            bitField0_ = (bitField0_ & ~0x00000002);
+          }
+          result.point_ = point_;
+        } else {
+          result.point_ = pointBuilder_.build();
+        }
+        if (((bitField0_ & 0x00000004) != 0)) {
+          fakeLocalSum_.makeImmutable();
+          bitField0_ = (bitField0_ & ~0x00000004);
+        }
+        result.fakeLocalSum_ = fakeLocalSum_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -9916,18 +12962,44 @@ public final class FederateService {
 
       public Builder mergeFrom(com.suda.federate.rpc.FederateService.SQLReply other) {
         if (other == com.suda.federate.rpc.FederateService.SQLReply.getDefaultInstance()) return this;
+        if (other.hasNum()) {
+          setNum(other.getNum());
+        }
+        if (pointBuilder_ == null) {
+          if (!other.point_.isEmpty()) {
+            if (point_.isEmpty()) {
+              point_ = other.point_;
+              bitField0_ = (bitField0_ & ~0x00000002);
+            } else {
+              ensurePointIsMutable();
+              point_.addAll(other.point_);
+            }
+            onChanged();
+          }
+        } else {
+          if (!other.point_.isEmpty()) {
+            if (pointBuilder_.isEmpty()) {
+              pointBuilder_.dispose();
+              pointBuilder_ = null;
+              point_ = other.point_;
+              bitField0_ = (bitField0_ & ~0x00000002);
+              pointBuilder_ = 
+                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
+                   getPointFieldBuilder() : null;
+            } else {
+              pointBuilder_.addAllMessages(other.point_);
+            }
+          }
+        }
         if (!other.fakeLocalSum_.isEmpty()) {
           if (fakeLocalSum_.isEmpty()) {
             fakeLocalSum_ = other.fakeLocalSum_;
-            bitField0_ = (bitField0_ & ~0x00000001);
+            bitField0_ = (bitField0_ & ~0x00000004);
           } else {
             ensureFakeLocalSumIsMutable();
             fakeLocalSum_.addAll(other.fakeLocalSum_);
           }
           onChanged();
-        }
-        if (other.hasMessage()) {
-          setMessage(other.getMessage());
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -9936,8 +13008,10 @@ public final class FederateService {
 
       @java.lang.Override
       public final boolean isInitialized() {
-        if (!hasMessage()) {
-          return false;
+        for (int i = 0; i < getPointCount(); i++) {
+          if (!getPoint(i).isInitialized()) {
+            return false;
+          }
         }
         return true;
       }
@@ -9962,31 +13036,310 @@ public final class FederateService {
       }
       private int bitField0_;
 
+      private double num_ ;
+      /**
+       * <code>optional double num = 1;</code>
+       * @return Whether the num field is set.
+       */
+      @java.lang.Override
+      public boolean hasNum() {
+        return ((bitField0_ & 0x00000001) != 0);
+      }
+      /**
+       * <code>optional double num = 1;</code>
+       * @return The num.
+       */
+      @java.lang.Override
+      public double getNum() {
+        return num_;
+      }
+      /**
+       * <code>optional double num = 1;</code>
+       * @param value The num to set.
+       * @return This builder for chaining.
+       */
+      public Builder setNum(double value) {
+        bitField0_ |= 0x00000001;
+        num_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional double num = 1;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearNum() {
+        bitField0_ = (bitField0_ & ~0x00000001);
+        num_ = 0D;
+        onChanged();
+        return this;
+      }
+
+      private java.util.List<com.suda.federate.rpc.FederateCommon.Point> point_ =
+        java.util.Collections.emptyList();
+      private void ensurePointIsMutable() {
+        if (!((bitField0_ & 0x00000002) != 0)) {
+          point_ = new java.util.ArrayList<com.suda.federate.rpc.FederateCommon.Point>(point_);
+          bitField0_ |= 0x00000002;
+         }
+      }
+
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          com.suda.federate.rpc.FederateCommon.Point, com.suda.federate.rpc.FederateCommon.Point.Builder, com.suda.federate.rpc.FederateCommon.PointOrBuilder> pointBuilder_;
+
+      /**
+       * <code>repeated .federate.Point point = 2;</code>
+       */
+      public java.util.List<com.suda.federate.rpc.FederateCommon.Point> getPointList() {
+        if (pointBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(point_);
+        } else {
+          return pointBuilder_.getMessageList();
+        }
+      }
+      /**
+       * <code>repeated .federate.Point point = 2;</code>
+       */
+      public int getPointCount() {
+        if (pointBuilder_ == null) {
+          return point_.size();
+        } else {
+          return pointBuilder_.getCount();
+        }
+      }
+      /**
+       * <code>repeated .federate.Point point = 2;</code>
+       */
+      public com.suda.federate.rpc.FederateCommon.Point getPoint(int index) {
+        if (pointBuilder_ == null) {
+          return point_.get(index);
+        } else {
+          return pointBuilder_.getMessage(index);
+        }
+      }
+      /**
+       * <code>repeated .federate.Point point = 2;</code>
+       */
+      public Builder setPoint(
+          int index, com.suda.federate.rpc.FederateCommon.Point value) {
+        if (pointBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensurePointIsMutable();
+          point_.set(index, value);
+          onChanged();
+        } else {
+          pointBuilder_.setMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .federate.Point point = 2;</code>
+       */
+      public Builder setPoint(
+          int index, com.suda.federate.rpc.FederateCommon.Point.Builder builderForValue) {
+        if (pointBuilder_ == null) {
+          ensurePointIsMutable();
+          point_.set(index, builderForValue.build());
+          onChanged();
+        } else {
+          pointBuilder_.setMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .federate.Point point = 2;</code>
+       */
+      public Builder addPoint(com.suda.federate.rpc.FederateCommon.Point value) {
+        if (pointBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensurePointIsMutable();
+          point_.add(value);
+          onChanged();
+        } else {
+          pointBuilder_.addMessage(value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .federate.Point point = 2;</code>
+       */
+      public Builder addPoint(
+          int index, com.suda.federate.rpc.FederateCommon.Point value) {
+        if (pointBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensurePointIsMutable();
+          point_.add(index, value);
+          onChanged();
+        } else {
+          pointBuilder_.addMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .federate.Point point = 2;</code>
+       */
+      public Builder addPoint(
+          com.suda.federate.rpc.FederateCommon.Point.Builder builderForValue) {
+        if (pointBuilder_ == null) {
+          ensurePointIsMutable();
+          point_.add(builderForValue.build());
+          onChanged();
+        } else {
+          pointBuilder_.addMessage(builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .federate.Point point = 2;</code>
+       */
+      public Builder addPoint(
+          int index, com.suda.federate.rpc.FederateCommon.Point.Builder builderForValue) {
+        if (pointBuilder_ == null) {
+          ensurePointIsMutable();
+          point_.add(index, builderForValue.build());
+          onChanged();
+        } else {
+          pointBuilder_.addMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .federate.Point point = 2;</code>
+       */
+      public Builder addAllPoint(
+          java.lang.Iterable<? extends com.suda.federate.rpc.FederateCommon.Point> values) {
+        if (pointBuilder_ == null) {
+          ensurePointIsMutable();
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, point_);
+          onChanged();
+        } else {
+          pointBuilder_.addAllMessages(values);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .federate.Point point = 2;</code>
+       */
+      public Builder clearPoint() {
+        if (pointBuilder_ == null) {
+          point_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000002);
+          onChanged();
+        } else {
+          pointBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .federate.Point point = 2;</code>
+       */
+      public Builder removePoint(int index) {
+        if (pointBuilder_ == null) {
+          ensurePointIsMutable();
+          point_.remove(index);
+          onChanged();
+        } else {
+          pointBuilder_.remove(index);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .federate.Point point = 2;</code>
+       */
+      public com.suda.federate.rpc.FederateCommon.Point.Builder getPointBuilder(
+          int index) {
+        return getPointFieldBuilder().getBuilder(index);
+      }
+      /**
+       * <code>repeated .federate.Point point = 2;</code>
+       */
+      public com.suda.federate.rpc.FederateCommon.PointOrBuilder getPointOrBuilder(
+          int index) {
+        if (pointBuilder_ == null) {
+          return point_.get(index);  } else {
+          return pointBuilder_.getMessageOrBuilder(index);
+        }
+      }
+      /**
+       * <code>repeated .federate.Point point = 2;</code>
+       */
+      public java.util.List<? extends com.suda.federate.rpc.FederateCommon.PointOrBuilder> 
+           getPointOrBuilderList() {
+        if (pointBuilder_ != null) {
+          return pointBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(point_);
+        }
+      }
+      /**
+       * <code>repeated .federate.Point point = 2;</code>
+       */
+      public com.suda.federate.rpc.FederateCommon.Point.Builder addPointBuilder() {
+        return getPointFieldBuilder().addBuilder(
+            com.suda.federate.rpc.FederateCommon.Point.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .federate.Point point = 2;</code>
+       */
+      public com.suda.federate.rpc.FederateCommon.Point.Builder addPointBuilder(
+          int index) {
+        return getPointFieldBuilder().addBuilder(
+            index, com.suda.federate.rpc.FederateCommon.Point.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .federate.Point point = 2;</code>
+       */
+      public java.util.List<com.suda.federate.rpc.FederateCommon.Point.Builder> 
+           getPointBuilderList() {
+        return getPointFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          com.suda.federate.rpc.FederateCommon.Point, com.suda.federate.rpc.FederateCommon.Point.Builder, com.suda.federate.rpc.FederateCommon.PointOrBuilder> 
+          getPointFieldBuilder() {
+        if (pointBuilder_ == null) {
+          pointBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+              com.suda.federate.rpc.FederateCommon.Point, com.suda.federate.rpc.FederateCommon.Point.Builder, com.suda.federate.rpc.FederateCommon.PointOrBuilder>(
+                  point_,
+                  ((bitField0_ & 0x00000002) != 0),
+                  getParentForChildren(),
+                  isClean());
+          point_ = null;
+        }
+        return pointBuilder_;
+      }
+
       private com.google.protobuf.Internal.IntList fakeLocalSum_ = emptyIntList();
       private void ensureFakeLocalSumIsMutable() {
-        if (!((bitField0_ & 0x00000001) != 0)) {
+        if (!((bitField0_ & 0x00000004) != 0)) {
           fakeLocalSum_ = mutableCopy(fakeLocalSum_);
-          bitField0_ |= 0x00000001;
+          bitField0_ |= 0x00000004;
          }
       }
       /**
-       * <code>repeated int32 fakeLocalSum = 2;</code>
+       * <code>repeated int32 fakeLocalSum = 3;</code>
        * @return A list containing the fakeLocalSum.
        */
       public java.util.List<java.lang.Integer>
           getFakeLocalSumList() {
-        return ((bitField0_ & 0x00000001) != 0) ?
+        return ((bitField0_ & 0x00000004) != 0) ?
                  java.util.Collections.unmodifiableList(fakeLocalSum_) : fakeLocalSum_;
       }
       /**
-       * <code>repeated int32 fakeLocalSum = 2;</code>
+       * <code>repeated int32 fakeLocalSum = 3;</code>
        * @return The count of fakeLocalSum.
        */
       public int getFakeLocalSumCount() {
         return fakeLocalSum_.size();
       }
       /**
-       * <code>repeated int32 fakeLocalSum = 2;</code>
+       * <code>repeated int32 fakeLocalSum = 3;</code>
        * @param index The index of the element to return.
        * @return The fakeLocalSum at the given index.
        */
@@ -9994,7 +13347,7 @@ public final class FederateService {
         return fakeLocalSum_.getInt(index);
       }
       /**
-       * <code>repeated int32 fakeLocalSum = 2;</code>
+       * <code>repeated int32 fakeLocalSum = 3;</code>
        * @param index The index to set the value at.
        * @param value The fakeLocalSum to set.
        * @return This builder for chaining.
@@ -10007,7 +13360,7 @@ public final class FederateService {
         return this;
       }
       /**
-       * <code>repeated int32 fakeLocalSum = 2;</code>
+       * <code>repeated int32 fakeLocalSum = 3;</code>
        * @param value The fakeLocalSum to add.
        * @return This builder for chaining.
        */
@@ -10018,7 +13371,7 @@ public final class FederateService {
         return this;
       }
       /**
-       * <code>repeated int32 fakeLocalSum = 2;</code>
+       * <code>repeated int32 fakeLocalSum = 3;</code>
        * @param values The fakeLocalSum to add.
        * @return This builder for chaining.
        */
@@ -10031,51 +13384,12 @@ public final class FederateService {
         return this;
       }
       /**
-       * <code>repeated int32 fakeLocalSum = 2;</code>
+       * <code>repeated int32 fakeLocalSum = 3;</code>
        * @return This builder for chaining.
        */
       public Builder clearFakeLocalSum() {
         fakeLocalSum_ = emptyIntList();
-        bitField0_ = (bitField0_ & ~0x00000001);
-        onChanged();
-        return this;
-      }
-
-      private double message_ ;
-      /**
-       * <code>required double message = 1;</code>
-       * @return Whether the message field is set.
-       */
-      @java.lang.Override
-      public boolean hasMessage() {
-        return ((bitField0_ & 0x00000002) != 0);
-      }
-      /**
-       * <code>required double message = 1;</code>
-       * @return The message.
-       */
-      @java.lang.Override
-      public double getMessage() {
-        return message_;
-      }
-      /**
-       * <code>required double message = 1;</code>
-       * @param value The message to set.
-       * @return This builder for chaining.
-       */
-      public Builder setMessage(double value) {
-        bitField0_ |= 0x00000002;
-        message_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>required double message = 1;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearMessage() {
-        bitField0_ = (bitField0_ & ~0x00000002);
-        message_ = 0D;
+        bitField0_ = (bitField0_ & ~0x00000004);
         onChanged();
         return this;
       }
@@ -10132,810 +13446,6 @@ public final class FederateService {
 
   }
 
-  public interface SQLReplyListOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:federate.SQLReplyList)
-      com.google.protobuf.MessageOrBuilder {
-
-    /**
-     * <code>repeated .federate.Point message = 1;</code>
-     */
-    java.util.List<com.suda.federate.rpc.FederateCommon.Point> 
-        getMessageList();
-    /**
-     * <code>repeated .federate.Point message = 1;</code>
-     */
-    com.suda.federate.rpc.FederateCommon.Point getMessage(int index);
-    /**
-     * <code>repeated .federate.Point message = 1;</code>
-     */
-    int getMessageCount();
-    /**
-     * <code>repeated .federate.Point message = 1;</code>
-     */
-    java.util.List<? extends com.suda.federate.rpc.FederateCommon.PointOrBuilder> 
-        getMessageOrBuilderList();
-    /**
-     * <code>repeated .federate.Point message = 1;</code>
-     */
-    com.suda.federate.rpc.FederateCommon.PointOrBuilder getMessageOrBuilder(
-        int index);
-  }
-  /**
-   * Protobuf type {@code federate.SQLReplyList}
-   */
-  public static final class SQLReplyList extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:federate.SQLReplyList)
-      SQLReplyListOrBuilder {
-  private static final long serialVersionUID = 0L;
-    // Use SQLReplyList.newBuilder() to construct.
-    private SQLReplyList(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-      super(builder);
-    }
-    private SQLReplyList() {
-      message_ = java.util.Collections.emptyList();
-    }
-
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(
-        UnusedPrivateParameter unused) {
-      return new SQLReplyList();
-    }
-
-    @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
-      return this.unknownFields;
-    }
-    private SQLReplyList(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      int mutable_bitField0_ = 0;
-      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder();
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 10: {
-              if (!((mutable_bitField0_ & 0x00000001) != 0)) {
-                message_ = new java.util.ArrayList<com.suda.federate.rpc.FederateCommon.Point>();
-                mutable_bitField0_ |= 0x00000001;
-              }
-              message_.add(
-                  input.readMessage(com.suda.federate.rpc.FederateCommon.Point.PARSER, extensionRegistry));
-              break;
-            }
-            default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
-          }
-        }
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
-      } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
-      } finally {
-        if (((mutable_bitField0_ & 0x00000001) != 0)) {
-          message_ = java.util.Collections.unmodifiableList(message_);
-        }
-        this.unknownFields = unknownFields.build();
-        makeExtensionsImmutable();
-      }
-    }
-    public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-      return com.suda.federate.rpc.FederateService.internal_static_federate_SQLReplyList_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.suda.federate.rpc.FederateService.internal_static_federate_SQLReplyList_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.suda.federate.rpc.FederateService.SQLReplyList.class, com.suda.federate.rpc.FederateService.SQLReplyList.Builder.class);
-    }
-
-    public static final int MESSAGE_FIELD_NUMBER = 1;
-    private java.util.List<com.suda.federate.rpc.FederateCommon.Point> message_;
-    /**
-     * <code>repeated .federate.Point message = 1;</code>
-     */
-    @java.lang.Override
-    public java.util.List<com.suda.federate.rpc.FederateCommon.Point> getMessageList() {
-      return message_;
-    }
-    /**
-     * <code>repeated .federate.Point message = 1;</code>
-     */
-    @java.lang.Override
-    public java.util.List<? extends com.suda.federate.rpc.FederateCommon.PointOrBuilder> 
-        getMessageOrBuilderList() {
-      return message_;
-    }
-    /**
-     * <code>repeated .federate.Point message = 1;</code>
-     */
-    @java.lang.Override
-    public int getMessageCount() {
-      return message_.size();
-    }
-    /**
-     * <code>repeated .federate.Point message = 1;</code>
-     */
-    @java.lang.Override
-    public com.suda.federate.rpc.FederateCommon.Point getMessage(int index) {
-      return message_.get(index);
-    }
-    /**
-     * <code>repeated .federate.Point message = 1;</code>
-     */
-    @java.lang.Override
-    public com.suda.federate.rpc.FederateCommon.PointOrBuilder getMessageOrBuilder(
-        int index) {
-      return message_.get(index);
-    }
-
-    private byte memoizedIsInitialized = -1;
-    @java.lang.Override
-    public final boolean isInitialized() {
-      byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
-
-      for (int i = 0; i < getMessageCount(); i++) {
-        if (!getMessage(i).isInitialized()) {
-          memoizedIsInitialized = 0;
-          return false;
-        }
-      }
-      memoizedIsInitialized = 1;
-      return true;
-    }
-
-    @java.lang.Override
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      for (int i = 0; i < message_.size(); i++) {
-        output.writeMessage(1, message_.get(i));
-      }
-      unknownFields.writeTo(output);
-    }
-
-    @java.lang.Override
-    public int getSerializedSize() {
-      int size = memoizedSize;
-      if (size != -1) return size;
-
-      size = 0;
-      for (int i = 0; i < message_.size(); i++) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(1, message_.get(i));
-      }
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
-      return size;
-    }
-
-    @java.lang.Override
-    public boolean equals(final java.lang.Object obj) {
-      if (obj == this) {
-       return true;
-      }
-      if (!(obj instanceof com.suda.federate.rpc.FederateService.SQLReplyList)) {
-        return super.equals(obj);
-      }
-      com.suda.federate.rpc.FederateService.SQLReplyList other = (com.suda.federate.rpc.FederateService.SQLReplyList) obj;
-
-      if (!getMessageList()
-          .equals(other.getMessageList())) return false;
-      if (!unknownFields.equals(other.unknownFields)) return false;
-      return true;
-    }
-
-    @java.lang.Override
-    public int hashCode() {
-      if (memoizedHashCode != 0) {
-        return memoizedHashCode;
-      }
-      int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      if (getMessageCount() > 0) {
-        hash = (37 * hash) + MESSAGE_FIELD_NUMBER;
-        hash = (53 * hash) + getMessageList().hashCode();
-      }
-      hash = (29 * hash) + unknownFields.hashCode();
-      memoizedHashCode = hash;
-      return hash;
-    }
-
-    public static com.suda.federate.rpc.FederateService.SQLReplyList parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static com.suda.federate.rpc.FederateService.SQLReplyList parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static com.suda.federate.rpc.FederateService.SQLReplyList parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static com.suda.federate.rpc.FederateService.SQLReplyList parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static com.suda.federate.rpc.FederateService.SQLReplyList parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static com.suda.federate.rpc.FederateService.SQLReplyList parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static com.suda.federate.rpc.FederateService.SQLReplyList parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static com.suda.federate.rpc.FederateService.SQLReplyList parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static com.suda.federate.rpc.FederateService.SQLReplyList parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
-    }
-    public static com.suda.federate.rpc.FederateService.SQLReplyList parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static com.suda.federate.rpc.FederateService.SQLReplyList parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static com.suda.federate.rpc.FederateService.SQLReplyList parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    @java.lang.Override
-    public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
-    public static Builder newBuilder(com.suda.federate.rpc.FederateService.SQLReplyList prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
-    }
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
-
-    @java.lang.Override
-    protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      Builder builder = new Builder(parent);
-      return builder;
-    }
-    /**
-     * Protobuf type {@code federate.SQLReplyList}
-     */
-    public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:federate.SQLReplyList)
-        com.suda.federate.rpc.FederateService.SQLReplyListOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor
-          getDescriptor() {
-        return com.suda.federate.rpc.FederateService.internal_static_federate_SQLReplyList_descriptor;
-      }
-
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return com.suda.federate.rpc.FederateService.internal_static_federate_SQLReplyList_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                com.suda.federate.rpc.FederateService.SQLReplyList.class, com.suda.federate.rpc.FederateService.SQLReplyList.Builder.class);
-      }
-
-      // Construct using com.suda.federate.rpc.FederateService.SQLReplyList.newBuilder()
-      private Builder() {
-        maybeForceBuilderInitialization();
-      }
-
-      private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-        super(parent);
-        maybeForceBuilderInitialization();
-      }
-      private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
-          getMessageFieldBuilder();
-        }
-      }
-      @java.lang.Override
-      public Builder clear() {
-        super.clear();
-        if (messageBuilder_ == null) {
-          message_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000001);
-        } else {
-          messageBuilder_.clear();
-        }
-        return this;
-      }
-
-      @java.lang.Override
-      public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
-        return com.suda.federate.rpc.FederateService.internal_static_federate_SQLReplyList_descriptor;
-      }
-
-      @java.lang.Override
-      public com.suda.federate.rpc.FederateService.SQLReplyList getDefaultInstanceForType() {
-        return com.suda.federate.rpc.FederateService.SQLReplyList.getDefaultInstance();
-      }
-
-      @java.lang.Override
-      public com.suda.federate.rpc.FederateService.SQLReplyList build() {
-        com.suda.federate.rpc.FederateService.SQLReplyList result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(result);
-        }
-        return result;
-      }
-
-      @java.lang.Override
-      public com.suda.federate.rpc.FederateService.SQLReplyList buildPartial() {
-        com.suda.federate.rpc.FederateService.SQLReplyList result = new com.suda.federate.rpc.FederateService.SQLReplyList(this);
-        int from_bitField0_ = bitField0_;
-        if (messageBuilder_ == null) {
-          if (((bitField0_ & 0x00000001) != 0)) {
-            message_ = java.util.Collections.unmodifiableList(message_);
-            bitField0_ = (bitField0_ & ~0x00000001);
-          }
-          result.message_ = message_;
-        } else {
-          result.message_ = messageBuilder_.build();
-        }
-        onBuilt();
-        return result;
-      }
-
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-      @java.lang.Override
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof com.suda.federate.rpc.FederateService.SQLReplyList) {
-          return mergeFrom((com.suda.federate.rpc.FederateService.SQLReplyList)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-
-      public Builder mergeFrom(com.suda.federate.rpc.FederateService.SQLReplyList other) {
-        if (other == com.suda.federate.rpc.FederateService.SQLReplyList.getDefaultInstance()) return this;
-        if (messageBuilder_ == null) {
-          if (!other.message_.isEmpty()) {
-            if (message_.isEmpty()) {
-              message_ = other.message_;
-              bitField0_ = (bitField0_ & ~0x00000001);
-            } else {
-              ensureMessageIsMutable();
-              message_.addAll(other.message_);
-            }
-            onChanged();
-          }
-        } else {
-          if (!other.message_.isEmpty()) {
-            if (messageBuilder_.isEmpty()) {
-              messageBuilder_.dispose();
-              messageBuilder_ = null;
-              message_ = other.message_;
-              bitField0_ = (bitField0_ & ~0x00000001);
-              messageBuilder_ = 
-                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
-                   getMessageFieldBuilder() : null;
-            } else {
-              messageBuilder_.addAllMessages(other.message_);
-            }
-          }
-        }
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
-        return this;
-      }
-
-      @java.lang.Override
-      public final boolean isInitialized() {
-        for (int i = 0; i < getMessageCount(); i++) {
-          if (!getMessage(i).isInitialized()) {
-            return false;
-          }
-        }
-        return true;
-      }
-
-      @java.lang.Override
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        com.suda.federate.rpc.FederateService.SQLReplyList parsedMessage = null;
-        try {
-          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (com.suda.federate.rpc.FederateService.SQLReplyList) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
-        } finally {
-          if (parsedMessage != null) {
-            mergeFrom(parsedMessage);
-          }
-        }
-        return this;
-      }
-      private int bitField0_;
-
-      private java.util.List<com.suda.federate.rpc.FederateCommon.Point> message_ =
-        java.util.Collections.emptyList();
-      private void ensureMessageIsMutable() {
-        if (!((bitField0_ & 0x00000001) != 0)) {
-          message_ = new java.util.ArrayList<com.suda.federate.rpc.FederateCommon.Point>(message_);
-          bitField0_ |= 0x00000001;
-         }
-      }
-
-      private com.google.protobuf.RepeatedFieldBuilderV3<
-          com.suda.federate.rpc.FederateCommon.Point, com.suda.federate.rpc.FederateCommon.Point.Builder, com.suda.federate.rpc.FederateCommon.PointOrBuilder> messageBuilder_;
-
-      /**
-       * <code>repeated .federate.Point message = 1;</code>
-       */
-      public java.util.List<com.suda.federate.rpc.FederateCommon.Point> getMessageList() {
-        if (messageBuilder_ == null) {
-          return java.util.Collections.unmodifiableList(message_);
-        } else {
-          return messageBuilder_.getMessageList();
-        }
-      }
-      /**
-       * <code>repeated .federate.Point message = 1;</code>
-       */
-      public int getMessageCount() {
-        if (messageBuilder_ == null) {
-          return message_.size();
-        } else {
-          return messageBuilder_.getCount();
-        }
-      }
-      /**
-       * <code>repeated .federate.Point message = 1;</code>
-       */
-      public com.suda.federate.rpc.FederateCommon.Point getMessage(int index) {
-        if (messageBuilder_ == null) {
-          return message_.get(index);
-        } else {
-          return messageBuilder_.getMessage(index);
-        }
-      }
-      /**
-       * <code>repeated .federate.Point message = 1;</code>
-       */
-      public Builder setMessage(
-          int index, com.suda.federate.rpc.FederateCommon.Point value) {
-        if (messageBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          ensureMessageIsMutable();
-          message_.set(index, value);
-          onChanged();
-        } else {
-          messageBuilder_.setMessage(index, value);
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .federate.Point message = 1;</code>
-       */
-      public Builder setMessage(
-          int index, com.suda.federate.rpc.FederateCommon.Point.Builder builderForValue) {
-        if (messageBuilder_ == null) {
-          ensureMessageIsMutable();
-          message_.set(index, builderForValue.build());
-          onChanged();
-        } else {
-          messageBuilder_.setMessage(index, builderForValue.build());
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .federate.Point message = 1;</code>
-       */
-      public Builder addMessage(com.suda.federate.rpc.FederateCommon.Point value) {
-        if (messageBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          ensureMessageIsMutable();
-          message_.add(value);
-          onChanged();
-        } else {
-          messageBuilder_.addMessage(value);
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .federate.Point message = 1;</code>
-       */
-      public Builder addMessage(
-          int index, com.suda.federate.rpc.FederateCommon.Point value) {
-        if (messageBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          ensureMessageIsMutable();
-          message_.add(index, value);
-          onChanged();
-        } else {
-          messageBuilder_.addMessage(index, value);
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .federate.Point message = 1;</code>
-       */
-      public Builder addMessage(
-          com.suda.federate.rpc.FederateCommon.Point.Builder builderForValue) {
-        if (messageBuilder_ == null) {
-          ensureMessageIsMutable();
-          message_.add(builderForValue.build());
-          onChanged();
-        } else {
-          messageBuilder_.addMessage(builderForValue.build());
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .federate.Point message = 1;</code>
-       */
-      public Builder addMessage(
-          int index, com.suda.federate.rpc.FederateCommon.Point.Builder builderForValue) {
-        if (messageBuilder_ == null) {
-          ensureMessageIsMutable();
-          message_.add(index, builderForValue.build());
-          onChanged();
-        } else {
-          messageBuilder_.addMessage(index, builderForValue.build());
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .federate.Point message = 1;</code>
-       */
-      public Builder addAllMessage(
-          java.lang.Iterable<? extends com.suda.federate.rpc.FederateCommon.Point> values) {
-        if (messageBuilder_ == null) {
-          ensureMessageIsMutable();
-          com.google.protobuf.AbstractMessageLite.Builder.addAll(
-              values, message_);
-          onChanged();
-        } else {
-          messageBuilder_.addAllMessages(values);
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .federate.Point message = 1;</code>
-       */
-      public Builder clearMessage() {
-        if (messageBuilder_ == null) {
-          message_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000001);
-          onChanged();
-        } else {
-          messageBuilder_.clear();
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .federate.Point message = 1;</code>
-       */
-      public Builder removeMessage(int index) {
-        if (messageBuilder_ == null) {
-          ensureMessageIsMutable();
-          message_.remove(index);
-          onChanged();
-        } else {
-          messageBuilder_.remove(index);
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .federate.Point message = 1;</code>
-       */
-      public com.suda.federate.rpc.FederateCommon.Point.Builder getMessageBuilder(
-          int index) {
-        return getMessageFieldBuilder().getBuilder(index);
-      }
-      /**
-       * <code>repeated .federate.Point message = 1;</code>
-       */
-      public com.suda.federate.rpc.FederateCommon.PointOrBuilder getMessageOrBuilder(
-          int index) {
-        if (messageBuilder_ == null) {
-          return message_.get(index);  } else {
-          return messageBuilder_.getMessageOrBuilder(index);
-        }
-      }
-      /**
-       * <code>repeated .federate.Point message = 1;</code>
-       */
-      public java.util.List<? extends com.suda.federate.rpc.FederateCommon.PointOrBuilder> 
-           getMessageOrBuilderList() {
-        if (messageBuilder_ != null) {
-          return messageBuilder_.getMessageOrBuilderList();
-        } else {
-          return java.util.Collections.unmodifiableList(message_);
-        }
-      }
-      /**
-       * <code>repeated .federate.Point message = 1;</code>
-       */
-      public com.suda.federate.rpc.FederateCommon.Point.Builder addMessageBuilder() {
-        return getMessageFieldBuilder().addBuilder(
-            com.suda.federate.rpc.FederateCommon.Point.getDefaultInstance());
-      }
-      /**
-       * <code>repeated .federate.Point message = 1;</code>
-       */
-      public com.suda.federate.rpc.FederateCommon.Point.Builder addMessageBuilder(
-          int index) {
-        return getMessageFieldBuilder().addBuilder(
-            index, com.suda.federate.rpc.FederateCommon.Point.getDefaultInstance());
-      }
-      /**
-       * <code>repeated .federate.Point message = 1;</code>
-       */
-      public java.util.List<com.suda.federate.rpc.FederateCommon.Point.Builder> 
-           getMessageBuilderList() {
-        return getMessageFieldBuilder().getBuilderList();
-      }
-      private com.google.protobuf.RepeatedFieldBuilderV3<
-          com.suda.federate.rpc.FederateCommon.Point, com.suda.federate.rpc.FederateCommon.Point.Builder, com.suda.federate.rpc.FederateCommon.PointOrBuilder> 
-          getMessageFieldBuilder() {
-        if (messageBuilder_ == null) {
-          messageBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
-              com.suda.federate.rpc.FederateCommon.Point, com.suda.federate.rpc.FederateCommon.Point.Builder, com.suda.federate.rpc.FederateCommon.PointOrBuilder>(
-                  message_,
-                  ((bitField0_ & 0x00000001) != 0),
-                  getParentForChildren(),
-                  isClean());
-          message_ = null;
-        }
-        return messageBuilder_;
-      }
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
-
-      // @@protoc_insertion_point(builder_scope:federate.SQLReplyList)
-    }
-
-    // @@protoc_insertion_point(class_scope:federate.SQLReplyList)
-    private static final com.suda.federate.rpc.FederateService.SQLReplyList DEFAULT_INSTANCE;
-    static {
-      DEFAULT_INSTANCE = new com.suda.federate.rpc.FederateService.SQLReplyList();
-    }
-
-    public static com.suda.federate.rpc.FederateService.SQLReplyList getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    @java.lang.Deprecated public static final com.google.protobuf.Parser<SQLReplyList>
-        PARSER = new com.google.protobuf.AbstractParser<SQLReplyList>() {
-      @java.lang.Override
-      public SQLReplyList parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new SQLReplyList(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<SQLReplyList> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<SQLReplyList> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.suda.federate.rpc.FederateService.SQLReplyList getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
-  }
-
   private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_federate_SQLExpression_descriptor;
   private static final 
@@ -10951,6 +13461,21 @@ public final class FederateService {
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_federate_KnnRadiusQueryResponse_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_federate_SummationRequest_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_federate_SummationRequest_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_federate_SummationResponse_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_federate_SummationResponse_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_federate_SummationResponse_FakeLocalSum_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_federate_SummationResponse_FakeLocalSum_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_federate_UnionRequest_descriptor;
   private static final 
@@ -10986,11 +13511,6 @@ public final class FederateService {
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_federate_SQLReply_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_federate_SQLReplyList_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_federate_SQLReplyList_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -11012,41 +13532,53 @@ public final class FederateService {
       "GE_COUNT\020\000\022\017\n\013RANGE_QUERY\020\001\022\027\n\023POLYGON_R" +
       "ANGE_QUERY\020\002\022\007\n\003KNN\020\003\"\027\n\007CacheID\022\014\n\004uuid" +
       "\030\001 \002(\t\"(\n\026KnnRadiusQueryResponse\022\016\n\006radi" +
-      "us\030\001 \002(\001\"o\n\014UnionRequest\022\036\n\005point\030\001 \003(\0132" +
-      "\017.federate.Point\022\014\n\004loop\030\002 \002(\005\022\020\n\005index\030" +
-      "\003 \002(\005:\0010\022\021\n\tendpoints\030\004 \003(\t\022\014\n\004uuid\030\005 \002(" +
-      "\t\"p\n\rUnionResponse\022\036\n\005point\030\001 \003(\0132\017.fede" +
-      "rate.Point\022\014\n\004loop\030\002 \002(\005\022\020\n\005index\030\003 \002(\005:" +
-      "\0010\022\021\n\tendpoints\030\004 \003(\t\022\014\n\004uuid\030\005 \002(\t\"<\n\006S" +
-      "tatus\022!\n\004code\030\001 \002(\0162\016.federate.Code:\003kOk" +
-      "\022\017\n\003msg\030\002 \002(\t:\002ok\"$\n\020AddClientRequest\022\020\n" +
-      "\010endpoint\030\001 \002(\t\"3\n\017GeneralResponse\022 \n\006st" +
-      "atus\030\001 \002(\0132\020.federate.Status\"\031\n\nSQLReque" +
-      "st\022\013\n\003sql\030\001 \002(\t\"1\n\010SQLReply\022\024\n\014fakeLocal" +
-      "Sum\030\002 \003(\005\022\017\n\007message\030\001 \002(\001\"0\n\014SQLReplyLi" +
-      "st\022 \n\007message\030\001 \003(\0132\017.federate.Point*9\n\004" +
-      "Code\022\007\n\003kOk\020\001\022\024\n\020kAddClientFailed\020\002\022\022\n\016k" +
-      "CacheNotExist\020\0032\347\005\n\010Federate\022B\n\tAddClien" +
-      "t\022\032.federate.AddClientRequest\032\031.federate" +
-      ".GeneralResponse\022:\n\tGetResult\022\027.federate" +
-      ".SQLExpression\032\022.federate.SQLReply\"\000\022;\n\n" +
-      "RangeCount\022\027.federate.SQLExpression\032\022.fe" +
-      "derate.SQLReply\"\000\022?\n\nRangeQuery\022\027.federa" +
-      "te.SQLExpression\032\026.federate.SQLReplyList" +
-      "\"\000\022F\n\021PolygonRangeQuery\022\027.federate.SQLEx" +
-      "pression\032\026.federate.SQLReplyList\"\000\022@\n\021pr" +
-      "ivacyRangeQuery\022\027.federate.SQLExpression" +
-      "\032\020.federate.Status\"\000\022G\n\030privacyPolygonRa" +
-      "ngeQuery\022\027.federate.SQLExpression\032\020.fede" +
-      "rate.Status\"\000\022M\n\016KnnRadiusQuery\022\027.federa" +
-      "te.SQLExpression\032 .federate.KnnRadiusQue" +
-      "ryResponse\"\000\022A\n\014privacyUnion\022\026.federate." +
-      "UnionRequest\032\027.federate.UnionResponse\"\000\022" +
-      "?\n\nlocalUnion\022\026.federate.UnionRequest\032\027." +
-      "federate.UnionResponse\"\000\0227\n\nClearCache\022\021" +
-      ".federate.CacheID\032\026.google.protobuf.Empt" +
-      "yB*\n\025com.suda.federate.rpcB\017FederateServ" +
-      "iceP\000"
+      "us\030\001 \002(\001\"\223\001\n\020SummationRequest\022\020\n\010siloSiz" +
+      "e\030\001 \002(\005\022\016\n\006idList\030\002 \003(\005\022\014\n\004uuid\030\003 \002(\t\022\021\n" +
+      "\tendpoints\030\004 \003(\t\022\r\n\005index\030\005 \002(\005\022-\n\010respo" +
+      "nse\030\006 \002(\0132\033.federate.SummationResponse\"\177" +
+      "\n\021SummationResponse\022>\n\014fakeLocalSum\030\001 \003(" +
+      "\0132(.federate.SummationResponse.FakeLocal" +
+      "Sum\022\r\n\005count\030\002 \001(\005\032\033\n\014FakeLocalSum\022\013\n\003nu" +
+      "m\030\001 \003(\005\"o\n\014UnionRequest\022\036\n\005point\030\001 \003(\0132\017" +
+      ".federate.Point\022\014\n\004loop\030\002 \002(\005\022\020\n\005index\030\003" +
+      " \002(\005:\0010\022\021\n\tendpoints\030\004 \003(\t\022\014\n\004uuid\030\005 \002(\t" +
+      "\"p\n\rUnionResponse\022\036\n\005point\030\001 \003(\0132\017.feder" +
+      "ate.Point\022\014\n\004loop\030\002 \002(\005\022\020\n\005index\030\003 \002(\005:\001" +
+      "0\022\021\n\tendpoints\030\004 \003(\t\022\014\n\004uuid\030\005 \002(\t\"<\n\006St" +
+      "atus\022!\n\004code\030\001 \002(\0162\016.federate.Code:\003kOk\022" +
+      "\017\n\003msg\030\002 \002(\t:\002ok\"$\n\020AddClientRequest\022\020\n\010" +
+      "endpoint\030\001 \002(\t\"3\n\017GeneralResponse\022 \n\006sta" +
+      "tus\030\001 \002(\0132\020.federate.Status\"\031\n\nSQLReques" +
+      "t\022\013\n\003sql\030\001 \002(\t\"M\n\010SQLReply\022\013\n\003num\030\001 \001(\001\022" +
+      "\036\n\005point\030\002 \003(\0132\017.federate.Point\022\024\n\014fakeL" +
+      "ocalSum\030\003 \003(\005*9\n\004Code\022\007\n\003kOk\020\001\022\024\n\020kAddCl" +
+      "ientFailed\020\002\022\022\n\016kCacheNotExist\020\0032\317\007\n\010Fed" +
+      "erate\022B\n\tAddClient\022\032.federate.AddClientR" +
+      "equest\032\031.federate.GeneralResponse\022:\n\tGet" +
+      "Result\022\027.federate.SQLExpression\032\022.federa" +
+      "te.SQLReply\"\000\022A\n\020publicRangeCount\022\027.fede" +
+      "rate.SQLExpression\032\022.federate.SQLReply\"\000" +
+      "\022A\n\020publicRangeQuery\022\027.federate.SQLExpre" +
+      "ssion\032\022.federate.SQLReply\"\000\022H\n\027publicPol" +
+      "ygonRangeQuery\022\027.federate.SQLExpression\032" +
+      "\022.federate.SQLReply\"\000\022@\n\021privacyRangeCou" +
+      "nt\022\027.federate.SQLExpression\032\020.federate.S" +
+      "tatus\"\000\022@\n\021privacyRangeQuery\022\027.federate." +
+      "SQLExpression\032\020.federate.Status\"\000\022G\n\030pri" +
+      "vacyPolygonRangeQuery\022\027.federate.SQLExpr" +
+      "ession\032\020.federate.Status\"\000\022M\n\016KnnRadiusQ" +
+      "uery\022\027.federate.SQLExpression\032 .federate" +
+      ".KnnRadiusQueryResponse\"\000\022M\n\020privacySumm" +
+      "ation\022\032.federate.SummationRequest\032\033.fede" +
+      "rate.SummationResponse\"\000\022K\n\016localSummati" +
+      "on\022\032.federate.SummationRequest\032\033.federat" +
+      "e.SummationResponse\"\000\022A\n\014privacyUnion\022\026." +
+      "federate.UnionRequest\032\027.federate.UnionRe" +
+      "sponse\"\000\022?\n\nlocalUnion\022\026.federate.UnionR" +
+      "equest\032\027.federate.UnionResponse\"\000\0227\n\nCle" +
+      "arCache\022\021.federate.CacheID\032\026.google.prot" +
+      "obuf.EmptyB*\n\025com.suda.federate.rpcB\017Fed" +
+      "erateServiceP\000"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -11072,54 +13604,66 @@ public final class FederateService {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_federate_KnnRadiusQueryResponse_descriptor,
         new java.lang.String[] { "Radius", });
-    internal_static_federate_UnionRequest_descriptor =
+    internal_static_federate_SummationRequest_descriptor =
       getDescriptor().getMessageTypes().get(3);
+    internal_static_federate_SummationRequest_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_federate_SummationRequest_descriptor,
+        new java.lang.String[] { "SiloSize", "IdList", "Uuid", "Endpoints", "Index", "Response", });
+    internal_static_federate_SummationResponse_descriptor =
+      getDescriptor().getMessageTypes().get(4);
+    internal_static_federate_SummationResponse_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_federate_SummationResponse_descriptor,
+        new java.lang.String[] { "FakeLocalSum", "Count", });
+    internal_static_federate_SummationResponse_FakeLocalSum_descriptor =
+      internal_static_federate_SummationResponse_descriptor.getNestedTypes().get(0);
+    internal_static_federate_SummationResponse_FakeLocalSum_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_federate_SummationResponse_FakeLocalSum_descriptor,
+        new java.lang.String[] { "Num", });
+    internal_static_federate_UnionRequest_descriptor =
+      getDescriptor().getMessageTypes().get(5);
     internal_static_federate_UnionRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_federate_UnionRequest_descriptor,
         new java.lang.String[] { "Point", "Loop", "Index", "Endpoints", "Uuid", });
     internal_static_federate_UnionResponse_descriptor =
-      getDescriptor().getMessageTypes().get(4);
+      getDescriptor().getMessageTypes().get(6);
     internal_static_federate_UnionResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_federate_UnionResponse_descriptor,
         new java.lang.String[] { "Point", "Loop", "Index", "Endpoints", "Uuid", });
     internal_static_federate_Status_descriptor =
-      getDescriptor().getMessageTypes().get(5);
+      getDescriptor().getMessageTypes().get(7);
     internal_static_federate_Status_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_federate_Status_descriptor,
         new java.lang.String[] { "Code", "Msg", });
     internal_static_federate_AddClientRequest_descriptor =
-      getDescriptor().getMessageTypes().get(6);
+      getDescriptor().getMessageTypes().get(8);
     internal_static_federate_AddClientRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_federate_AddClientRequest_descriptor,
         new java.lang.String[] { "Endpoint", });
     internal_static_federate_GeneralResponse_descriptor =
-      getDescriptor().getMessageTypes().get(7);
+      getDescriptor().getMessageTypes().get(9);
     internal_static_federate_GeneralResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_federate_GeneralResponse_descriptor,
         new java.lang.String[] { "Status", });
     internal_static_federate_SQLRequest_descriptor =
-      getDescriptor().getMessageTypes().get(8);
+      getDescriptor().getMessageTypes().get(10);
     internal_static_federate_SQLRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_federate_SQLRequest_descriptor,
         new java.lang.String[] { "Sql", });
     internal_static_federate_SQLReply_descriptor =
-      getDescriptor().getMessageTypes().get(9);
+      getDescriptor().getMessageTypes().get(11);
     internal_static_federate_SQLReply_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_federate_SQLReply_descriptor,
-        new java.lang.String[] { "FakeLocalSum", "Message", });
-    internal_static_federate_SQLReplyList_descriptor =
-      getDescriptor().getMessageTypes().get(10);
-    internal_static_federate_SQLReplyList_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_federate_SQLReplyList_descriptor,
-        new java.lang.String[] { "Message", });
+        new java.lang.String[] { "Num", "Point", "FakeLocalSum", });
     com.google.protobuf.EmptyProto.getDescriptor();
     com.suda.federate.rpc.FederateCommon.getDescriptor();
   }

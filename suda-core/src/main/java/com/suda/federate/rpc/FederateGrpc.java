@@ -90,96 +90,127 @@ public final class FederateGrpc {
   }
 
   private static volatile io.grpc.MethodDescriptor<com.suda.federate.rpc.FederateService.SQLExpression,
-      com.suda.federate.rpc.FederateService.SQLReply> getRangeCountMethod;
+      com.suda.federate.rpc.FederateService.SQLReply> getPublicRangeCountMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
-      fullMethodName = SERVICE_NAME + '/' + "RangeCount",
+      fullMethodName = SERVICE_NAME + '/' + "publicRangeCount",
       requestType = com.suda.federate.rpc.FederateService.SQLExpression.class,
       responseType = com.suda.federate.rpc.FederateService.SQLReply.class,
       methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
   public static io.grpc.MethodDescriptor<com.suda.federate.rpc.FederateService.SQLExpression,
-      com.suda.federate.rpc.FederateService.SQLReply> getRangeCountMethod() {
-    io.grpc.MethodDescriptor<com.suda.federate.rpc.FederateService.SQLExpression, com.suda.federate.rpc.FederateService.SQLReply> getRangeCountMethod;
-    if ((getRangeCountMethod = FederateGrpc.getRangeCountMethod) == null) {
+      com.suda.federate.rpc.FederateService.SQLReply> getPublicRangeCountMethod() {
+    io.grpc.MethodDescriptor<com.suda.federate.rpc.FederateService.SQLExpression, com.suda.federate.rpc.FederateService.SQLReply> getPublicRangeCountMethod;
+    if ((getPublicRangeCountMethod = FederateGrpc.getPublicRangeCountMethod) == null) {
       synchronized (FederateGrpc.class) {
-        if ((getRangeCountMethod = FederateGrpc.getRangeCountMethod) == null) {
-          FederateGrpc.getRangeCountMethod = getRangeCountMethod =
+        if ((getPublicRangeCountMethod = FederateGrpc.getPublicRangeCountMethod) == null) {
+          FederateGrpc.getPublicRangeCountMethod = getPublicRangeCountMethod =
               io.grpc.MethodDescriptor.<com.suda.federate.rpc.FederateService.SQLExpression, com.suda.federate.rpc.FederateService.SQLReply>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
-              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "RangeCount"))
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "publicRangeCount"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
                   com.suda.federate.rpc.FederateService.SQLExpression.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
                   com.suda.federate.rpc.FederateService.SQLReply.getDefaultInstance()))
-              .setSchemaDescriptor(new FederateMethodDescriptorSupplier("RangeCount"))
+              .setSchemaDescriptor(new FederateMethodDescriptorSupplier("publicRangeCount"))
               .build();
         }
       }
     }
-    return getRangeCountMethod;
+    return getPublicRangeCountMethod;
   }
 
   private static volatile io.grpc.MethodDescriptor<com.suda.federate.rpc.FederateService.SQLExpression,
-      com.suda.federate.rpc.FederateService.SQLReplyList> getRangeQueryMethod;
+      com.suda.federate.rpc.FederateService.SQLReply> getPublicRangeQueryMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
-      fullMethodName = SERVICE_NAME + '/' + "RangeQuery",
+      fullMethodName = SERVICE_NAME + '/' + "publicRangeQuery",
       requestType = com.suda.federate.rpc.FederateService.SQLExpression.class,
-      responseType = com.suda.federate.rpc.FederateService.SQLReplyList.class,
+      responseType = com.suda.federate.rpc.FederateService.SQLReply.class,
       methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
   public static io.grpc.MethodDescriptor<com.suda.federate.rpc.FederateService.SQLExpression,
-      com.suda.federate.rpc.FederateService.SQLReplyList> getRangeQueryMethod() {
-    io.grpc.MethodDescriptor<com.suda.federate.rpc.FederateService.SQLExpression, com.suda.federate.rpc.FederateService.SQLReplyList> getRangeQueryMethod;
-    if ((getRangeQueryMethod = FederateGrpc.getRangeQueryMethod) == null) {
+      com.suda.federate.rpc.FederateService.SQLReply> getPublicRangeQueryMethod() {
+    io.grpc.MethodDescriptor<com.suda.federate.rpc.FederateService.SQLExpression, com.suda.federate.rpc.FederateService.SQLReply> getPublicRangeQueryMethod;
+    if ((getPublicRangeQueryMethod = FederateGrpc.getPublicRangeQueryMethod) == null) {
       synchronized (FederateGrpc.class) {
-        if ((getRangeQueryMethod = FederateGrpc.getRangeQueryMethod) == null) {
-          FederateGrpc.getRangeQueryMethod = getRangeQueryMethod =
-              io.grpc.MethodDescriptor.<com.suda.federate.rpc.FederateService.SQLExpression, com.suda.federate.rpc.FederateService.SQLReplyList>newBuilder()
+        if ((getPublicRangeQueryMethod = FederateGrpc.getPublicRangeQueryMethod) == null) {
+          FederateGrpc.getPublicRangeQueryMethod = getPublicRangeQueryMethod =
+              io.grpc.MethodDescriptor.<com.suda.federate.rpc.FederateService.SQLExpression, com.suda.federate.rpc.FederateService.SQLReply>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
-              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "RangeQuery"))
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "publicRangeQuery"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
                   com.suda.federate.rpc.FederateService.SQLExpression.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.suda.federate.rpc.FederateService.SQLReplyList.getDefaultInstance()))
-              .setSchemaDescriptor(new FederateMethodDescriptorSupplier("RangeQuery"))
+                  com.suda.federate.rpc.FederateService.SQLReply.getDefaultInstance()))
+              .setSchemaDescriptor(new FederateMethodDescriptorSupplier("publicRangeQuery"))
               .build();
         }
       }
     }
-    return getRangeQueryMethod;
+    return getPublicRangeQueryMethod;
   }
 
   private static volatile io.grpc.MethodDescriptor<com.suda.federate.rpc.FederateService.SQLExpression,
-      com.suda.federate.rpc.FederateService.SQLReplyList> getPolygonRangeQueryMethod;
+      com.suda.federate.rpc.FederateService.SQLReply> getPublicPolygonRangeQueryMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
-      fullMethodName = SERVICE_NAME + '/' + "PolygonRangeQuery",
+      fullMethodName = SERVICE_NAME + '/' + "publicPolygonRangeQuery",
       requestType = com.suda.federate.rpc.FederateService.SQLExpression.class,
-      responseType = com.suda.federate.rpc.FederateService.SQLReplyList.class,
+      responseType = com.suda.federate.rpc.FederateService.SQLReply.class,
       methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
   public static io.grpc.MethodDescriptor<com.suda.federate.rpc.FederateService.SQLExpression,
-      com.suda.federate.rpc.FederateService.SQLReplyList> getPolygonRangeQueryMethod() {
-    io.grpc.MethodDescriptor<com.suda.federate.rpc.FederateService.SQLExpression, com.suda.federate.rpc.FederateService.SQLReplyList> getPolygonRangeQueryMethod;
-    if ((getPolygonRangeQueryMethod = FederateGrpc.getPolygonRangeQueryMethod) == null) {
+      com.suda.federate.rpc.FederateService.SQLReply> getPublicPolygonRangeQueryMethod() {
+    io.grpc.MethodDescriptor<com.suda.federate.rpc.FederateService.SQLExpression, com.suda.federate.rpc.FederateService.SQLReply> getPublicPolygonRangeQueryMethod;
+    if ((getPublicPolygonRangeQueryMethod = FederateGrpc.getPublicPolygonRangeQueryMethod) == null) {
       synchronized (FederateGrpc.class) {
-        if ((getPolygonRangeQueryMethod = FederateGrpc.getPolygonRangeQueryMethod) == null) {
-          FederateGrpc.getPolygonRangeQueryMethod = getPolygonRangeQueryMethod =
-              io.grpc.MethodDescriptor.<com.suda.federate.rpc.FederateService.SQLExpression, com.suda.federate.rpc.FederateService.SQLReplyList>newBuilder()
+        if ((getPublicPolygonRangeQueryMethod = FederateGrpc.getPublicPolygonRangeQueryMethod) == null) {
+          FederateGrpc.getPublicPolygonRangeQueryMethod = getPublicPolygonRangeQueryMethod =
+              io.grpc.MethodDescriptor.<com.suda.federate.rpc.FederateService.SQLExpression, com.suda.federate.rpc.FederateService.SQLReply>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
-              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "PolygonRangeQuery"))
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "publicPolygonRangeQuery"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
                   com.suda.federate.rpc.FederateService.SQLExpression.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.suda.federate.rpc.FederateService.SQLReplyList.getDefaultInstance()))
-              .setSchemaDescriptor(new FederateMethodDescriptorSupplier("PolygonRangeQuery"))
+                  com.suda.federate.rpc.FederateService.SQLReply.getDefaultInstance()))
+              .setSchemaDescriptor(new FederateMethodDescriptorSupplier("publicPolygonRangeQuery"))
               .build();
         }
       }
     }
-    return getPolygonRangeQueryMethod;
+    return getPublicPolygonRangeQueryMethod;
+  }
+
+  private static volatile io.grpc.MethodDescriptor<com.suda.federate.rpc.FederateService.SQLExpression,
+      com.suda.federate.rpc.FederateService.Status> getPrivacyRangeCountMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "privacyRangeCount",
+      requestType = com.suda.federate.rpc.FederateService.SQLExpression.class,
+      responseType = com.suda.federate.rpc.FederateService.Status.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<com.suda.federate.rpc.FederateService.SQLExpression,
+      com.suda.federate.rpc.FederateService.Status> getPrivacyRangeCountMethod() {
+    io.grpc.MethodDescriptor<com.suda.federate.rpc.FederateService.SQLExpression, com.suda.federate.rpc.FederateService.Status> getPrivacyRangeCountMethod;
+    if ((getPrivacyRangeCountMethod = FederateGrpc.getPrivacyRangeCountMethod) == null) {
+      synchronized (FederateGrpc.class) {
+        if ((getPrivacyRangeCountMethod = FederateGrpc.getPrivacyRangeCountMethod) == null) {
+          FederateGrpc.getPrivacyRangeCountMethod = getPrivacyRangeCountMethod =
+              io.grpc.MethodDescriptor.<com.suda.federate.rpc.FederateService.SQLExpression, com.suda.federate.rpc.FederateService.Status>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "privacyRangeCount"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.suda.federate.rpc.FederateService.SQLExpression.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.suda.federate.rpc.FederateService.Status.getDefaultInstance()))
+              .setSchemaDescriptor(new FederateMethodDescriptorSupplier("privacyRangeCount"))
+              .build();
+        }
+      }
+    }
+    return getPrivacyRangeCountMethod;
   }
 
   private static volatile io.grpc.MethodDescriptor<com.suda.federate.rpc.FederateService.SQLExpression,
@@ -273,6 +304,68 @@ public final class FederateGrpc {
       }
     }
     return getKnnRadiusQueryMethod;
+  }
+
+  private static volatile io.grpc.MethodDescriptor<com.suda.federate.rpc.FederateService.SummationRequest,
+      com.suda.federate.rpc.FederateService.SummationResponse> getPrivacySummationMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "privacySummation",
+      requestType = com.suda.federate.rpc.FederateService.SummationRequest.class,
+      responseType = com.suda.federate.rpc.FederateService.SummationResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<com.suda.federate.rpc.FederateService.SummationRequest,
+      com.suda.federate.rpc.FederateService.SummationResponse> getPrivacySummationMethod() {
+    io.grpc.MethodDescriptor<com.suda.federate.rpc.FederateService.SummationRequest, com.suda.federate.rpc.FederateService.SummationResponse> getPrivacySummationMethod;
+    if ((getPrivacySummationMethod = FederateGrpc.getPrivacySummationMethod) == null) {
+      synchronized (FederateGrpc.class) {
+        if ((getPrivacySummationMethod = FederateGrpc.getPrivacySummationMethod) == null) {
+          FederateGrpc.getPrivacySummationMethod = getPrivacySummationMethod =
+              io.grpc.MethodDescriptor.<com.suda.federate.rpc.FederateService.SummationRequest, com.suda.federate.rpc.FederateService.SummationResponse>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "privacySummation"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.suda.federate.rpc.FederateService.SummationRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.suda.federate.rpc.FederateService.SummationResponse.getDefaultInstance()))
+              .setSchemaDescriptor(new FederateMethodDescriptorSupplier("privacySummation"))
+              .build();
+        }
+      }
+    }
+    return getPrivacySummationMethod;
+  }
+
+  private static volatile io.grpc.MethodDescriptor<com.suda.federate.rpc.FederateService.SummationRequest,
+      com.suda.federate.rpc.FederateService.SummationResponse> getLocalSummationMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "localSummation",
+      requestType = com.suda.federate.rpc.FederateService.SummationRequest.class,
+      responseType = com.suda.federate.rpc.FederateService.SummationResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<com.suda.federate.rpc.FederateService.SummationRequest,
+      com.suda.federate.rpc.FederateService.SummationResponse> getLocalSummationMethod() {
+    io.grpc.MethodDescriptor<com.suda.federate.rpc.FederateService.SummationRequest, com.suda.federate.rpc.FederateService.SummationResponse> getLocalSummationMethod;
+    if ((getLocalSummationMethod = FederateGrpc.getLocalSummationMethod) == null) {
+      synchronized (FederateGrpc.class) {
+        if ((getLocalSummationMethod = FederateGrpc.getLocalSummationMethod) == null) {
+          FederateGrpc.getLocalSummationMethod = getLocalSummationMethod =
+              io.grpc.MethodDescriptor.<com.suda.federate.rpc.FederateService.SummationRequest, com.suda.federate.rpc.FederateService.SummationResponse>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "localSummation"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.suda.federate.rpc.FederateService.SummationRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.suda.federate.rpc.FederateService.SummationResponse.getDefaultInstance()))
+              .setSchemaDescriptor(new FederateMethodDescriptorSupplier("localSummation"))
+              .build();
+        }
+      }
+    }
+    return getLocalSummationMethod;
   }
 
   private static volatile io.grpc.MethodDescriptor<com.suda.federate.rpc.FederateService.UnionRequest,
@@ -435,23 +528,30 @@ public final class FederateGrpc {
 
     /**
      */
-    public void rangeCount(com.suda.federate.rpc.FederateService.SQLExpression request,
+    public void publicRangeCount(com.suda.federate.rpc.FederateService.SQLExpression request,
         io.grpc.stub.StreamObserver<com.suda.federate.rpc.FederateService.SQLReply> responseObserver) {
-      asyncUnimplementedUnaryCall(getRangeCountMethod(), responseObserver);
+      asyncUnimplementedUnaryCall(getPublicRangeCountMethod(), responseObserver);
     }
 
     /**
      */
-    public void rangeQuery(com.suda.federate.rpc.FederateService.SQLExpression request,
-        io.grpc.stub.StreamObserver<com.suda.federate.rpc.FederateService.SQLReplyList> responseObserver) {
-      asyncUnimplementedUnaryCall(getRangeQueryMethod(), responseObserver);
+    public void publicRangeQuery(com.suda.federate.rpc.FederateService.SQLExpression request,
+        io.grpc.stub.StreamObserver<com.suda.federate.rpc.FederateService.SQLReply> responseObserver) {
+      asyncUnimplementedUnaryCall(getPublicRangeQueryMethod(), responseObserver);
     }
 
     /**
      */
-    public void polygonRangeQuery(com.suda.federate.rpc.FederateService.SQLExpression request,
-        io.grpc.stub.StreamObserver<com.suda.federate.rpc.FederateService.SQLReplyList> responseObserver) {
-      asyncUnimplementedUnaryCall(getPolygonRangeQueryMethod(), responseObserver);
+    public void publicPolygonRangeQuery(com.suda.federate.rpc.FederateService.SQLExpression request,
+        io.grpc.stub.StreamObserver<com.suda.federate.rpc.FederateService.SQLReply> responseObserver) {
+      asyncUnimplementedUnaryCall(getPublicPolygonRangeQueryMethod(), responseObserver);
+    }
+
+    /**
+     */
+    public void privacyRangeCount(com.suda.federate.rpc.FederateService.SQLExpression request,
+        io.grpc.stub.StreamObserver<com.suda.federate.rpc.FederateService.Status> responseObserver) {
+      asyncUnimplementedUnaryCall(getPrivacyRangeCountMethod(), responseObserver);
     }
 
     /**
@@ -473,6 +573,20 @@ public final class FederateGrpc {
     public void knnRadiusQuery(com.suda.federate.rpc.FederateService.SQLExpression request,
         io.grpc.stub.StreamObserver<com.suda.federate.rpc.FederateService.KnnRadiusQueryResponse> responseObserver) {
       asyncUnimplementedUnaryCall(getKnnRadiusQueryMethod(), responseObserver);
+    }
+
+    /**
+     */
+    public void privacySummation(com.suda.federate.rpc.FederateService.SummationRequest request,
+        io.grpc.stub.StreamObserver<com.suda.federate.rpc.FederateService.SummationResponse> responseObserver) {
+      asyncUnimplementedUnaryCall(getPrivacySummationMethod(), responseObserver);
+    }
+
+    /**
+     */
+    public void localSummation(com.suda.federate.rpc.FederateService.SummationRequest request,
+        io.grpc.stub.StreamObserver<com.suda.federate.rpc.FederateService.SummationResponse> responseObserver) {
+      asyncUnimplementedUnaryCall(getLocalSummationMethod(), responseObserver);
     }
 
     /**
@@ -513,26 +627,33 @@ public final class FederateGrpc {
                 com.suda.federate.rpc.FederateService.SQLReply>(
                   this, METHODID_GET_RESULT)))
           .addMethod(
-            getRangeCountMethod(),
+            getPublicRangeCountMethod(),
             asyncUnaryCall(
               new MethodHandlers<
                 com.suda.federate.rpc.FederateService.SQLExpression,
                 com.suda.federate.rpc.FederateService.SQLReply>(
-                  this, METHODID_RANGE_COUNT)))
+                  this, METHODID_PUBLIC_RANGE_COUNT)))
           .addMethod(
-            getRangeQueryMethod(),
+            getPublicRangeQueryMethod(),
             asyncUnaryCall(
               new MethodHandlers<
                 com.suda.federate.rpc.FederateService.SQLExpression,
-                com.suda.federate.rpc.FederateService.SQLReplyList>(
-                  this, METHODID_RANGE_QUERY)))
+                com.suda.federate.rpc.FederateService.SQLReply>(
+                  this, METHODID_PUBLIC_RANGE_QUERY)))
           .addMethod(
-            getPolygonRangeQueryMethod(),
+            getPublicPolygonRangeQueryMethod(),
             asyncUnaryCall(
               new MethodHandlers<
                 com.suda.federate.rpc.FederateService.SQLExpression,
-                com.suda.federate.rpc.FederateService.SQLReplyList>(
-                  this, METHODID_POLYGON_RANGE_QUERY)))
+                com.suda.federate.rpc.FederateService.SQLReply>(
+                  this, METHODID_PUBLIC_POLYGON_RANGE_QUERY)))
+          .addMethod(
+            getPrivacyRangeCountMethod(),
+            asyncUnaryCall(
+              new MethodHandlers<
+                com.suda.federate.rpc.FederateService.SQLExpression,
+                com.suda.federate.rpc.FederateService.Status>(
+                  this, METHODID_PRIVACY_RANGE_COUNT)))
           .addMethod(
             getPrivacyRangeQueryMethod(),
             asyncUnaryCall(
@@ -554,6 +675,20 @@ public final class FederateGrpc {
                 com.suda.federate.rpc.FederateService.SQLExpression,
                 com.suda.federate.rpc.FederateService.KnnRadiusQueryResponse>(
                   this, METHODID_KNN_RADIUS_QUERY)))
+          .addMethod(
+            getPrivacySummationMethod(),
+            asyncUnaryCall(
+              new MethodHandlers<
+                com.suda.federate.rpc.FederateService.SummationRequest,
+                com.suda.federate.rpc.FederateService.SummationResponse>(
+                  this, METHODID_PRIVACY_SUMMATION)))
+          .addMethod(
+            getLocalSummationMethod(),
+            asyncUnaryCall(
+              new MethodHandlers<
+                com.suda.federate.rpc.FederateService.SummationRequest,
+                com.suda.federate.rpc.FederateService.SummationResponse>(
+                  this, METHODID_LOCAL_SUMMATION)))
           .addMethod(
             getPrivacyUnionMethod(),
             asyncUnaryCall(
@@ -614,26 +749,34 @@ public final class FederateGrpc {
 
     /**
      */
-    public void rangeCount(com.suda.federate.rpc.FederateService.SQLExpression request,
+    public void publicRangeCount(com.suda.federate.rpc.FederateService.SQLExpression request,
         io.grpc.stub.StreamObserver<com.suda.federate.rpc.FederateService.SQLReply> responseObserver) {
       asyncUnaryCall(
-          getChannel().newCall(getRangeCountMethod(), getCallOptions()), request, responseObserver);
+          getChannel().newCall(getPublicRangeCountMethod(), getCallOptions()), request, responseObserver);
     }
 
     /**
      */
-    public void rangeQuery(com.suda.federate.rpc.FederateService.SQLExpression request,
-        io.grpc.stub.StreamObserver<com.suda.federate.rpc.FederateService.SQLReplyList> responseObserver) {
+    public void publicRangeQuery(com.suda.federate.rpc.FederateService.SQLExpression request,
+        io.grpc.stub.StreamObserver<com.suda.federate.rpc.FederateService.SQLReply> responseObserver) {
       asyncUnaryCall(
-          getChannel().newCall(getRangeQueryMethod(), getCallOptions()), request, responseObserver);
+          getChannel().newCall(getPublicRangeQueryMethod(), getCallOptions()), request, responseObserver);
     }
 
     /**
      */
-    public void polygonRangeQuery(com.suda.federate.rpc.FederateService.SQLExpression request,
-        io.grpc.stub.StreamObserver<com.suda.federate.rpc.FederateService.SQLReplyList> responseObserver) {
+    public void publicPolygonRangeQuery(com.suda.federate.rpc.FederateService.SQLExpression request,
+        io.grpc.stub.StreamObserver<com.suda.federate.rpc.FederateService.SQLReply> responseObserver) {
       asyncUnaryCall(
-          getChannel().newCall(getPolygonRangeQueryMethod(), getCallOptions()), request, responseObserver);
+          getChannel().newCall(getPublicPolygonRangeQueryMethod(), getCallOptions()), request, responseObserver);
+    }
+
+    /**
+     */
+    public void privacyRangeCount(com.suda.federate.rpc.FederateService.SQLExpression request,
+        io.grpc.stub.StreamObserver<com.suda.federate.rpc.FederateService.Status> responseObserver) {
+      asyncUnaryCall(
+          getChannel().newCall(getPrivacyRangeCountMethod(), getCallOptions()), request, responseObserver);
     }
 
     /**
@@ -658,6 +801,22 @@ public final class FederateGrpc {
         io.grpc.stub.StreamObserver<com.suda.federate.rpc.FederateService.KnnRadiusQueryResponse> responseObserver) {
       asyncUnaryCall(
           getChannel().newCall(getKnnRadiusQueryMethod(), getCallOptions()), request, responseObserver);
+    }
+
+    /**
+     */
+    public void privacySummation(com.suda.federate.rpc.FederateService.SummationRequest request,
+        io.grpc.stub.StreamObserver<com.suda.federate.rpc.FederateService.SummationResponse> responseObserver) {
+      asyncUnaryCall(
+          getChannel().newCall(getPrivacySummationMethod(), getCallOptions()), request, responseObserver);
+    }
+
+    /**
+     */
+    public void localSummation(com.suda.federate.rpc.FederateService.SummationRequest request,
+        io.grpc.stub.StreamObserver<com.suda.federate.rpc.FederateService.SummationResponse> responseObserver) {
+      asyncUnaryCall(
+          getChannel().newCall(getLocalSummationMethod(), getCallOptions()), request, responseObserver);
     }
 
     /**
@@ -718,23 +877,30 @@ public final class FederateGrpc {
 
     /**
      */
-    public com.suda.federate.rpc.FederateService.SQLReply rangeCount(com.suda.federate.rpc.FederateService.SQLExpression request) {
+    public com.suda.federate.rpc.FederateService.SQLReply publicRangeCount(com.suda.federate.rpc.FederateService.SQLExpression request) {
       return blockingUnaryCall(
-          getChannel(), getRangeCountMethod(), getCallOptions(), request);
+          getChannel(), getPublicRangeCountMethod(), getCallOptions(), request);
     }
 
     /**
      */
-    public com.suda.federate.rpc.FederateService.SQLReplyList rangeQuery(com.suda.federate.rpc.FederateService.SQLExpression request) {
+    public com.suda.federate.rpc.FederateService.SQLReply publicRangeQuery(com.suda.federate.rpc.FederateService.SQLExpression request) {
       return blockingUnaryCall(
-          getChannel(), getRangeQueryMethod(), getCallOptions(), request);
+          getChannel(), getPublicRangeQueryMethod(), getCallOptions(), request);
     }
 
     /**
      */
-    public com.suda.federate.rpc.FederateService.SQLReplyList polygonRangeQuery(com.suda.federate.rpc.FederateService.SQLExpression request) {
+    public com.suda.federate.rpc.FederateService.SQLReply publicPolygonRangeQuery(com.suda.federate.rpc.FederateService.SQLExpression request) {
       return blockingUnaryCall(
-          getChannel(), getPolygonRangeQueryMethod(), getCallOptions(), request);
+          getChannel(), getPublicPolygonRangeQueryMethod(), getCallOptions(), request);
+    }
+
+    /**
+     */
+    public com.suda.federate.rpc.FederateService.Status privacyRangeCount(com.suda.federate.rpc.FederateService.SQLExpression request) {
+      return blockingUnaryCall(
+          getChannel(), getPrivacyRangeCountMethod(), getCallOptions(), request);
     }
 
     /**
@@ -756,6 +922,20 @@ public final class FederateGrpc {
     public com.suda.federate.rpc.FederateService.KnnRadiusQueryResponse knnRadiusQuery(com.suda.federate.rpc.FederateService.SQLExpression request) {
       return blockingUnaryCall(
           getChannel(), getKnnRadiusQueryMethod(), getCallOptions(), request);
+    }
+
+    /**
+     */
+    public com.suda.federate.rpc.FederateService.SummationResponse privacySummation(com.suda.federate.rpc.FederateService.SummationRequest request) {
+      return blockingUnaryCall(
+          getChannel(), getPrivacySummationMethod(), getCallOptions(), request);
+    }
+
+    /**
+     */
+    public com.suda.federate.rpc.FederateService.SummationResponse localSummation(com.suda.federate.rpc.FederateService.SummationRequest request) {
+      return blockingUnaryCall(
+          getChannel(), getLocalSummationMethod(), getCallOptions(), request);
     }
 
     /**
@@ -815,26 +995,34 @@ public final class FederateGrpc {
 
     /**
      */
-    public com.google.common.util.concurrent.ListenableFuture<com.suda.federate.rpc.FederateService.SQLReply> rangeCount(
+    public com.google.common.util.concurrent.ListenableFuture<com.suda.federate.rpc.FederateService.SQLReply> publicRangeCount(
         com.suda.federate.rpc.FederateService.SQLExpression request) {
       return futureUnaryCall(
-          getChannel().newCall(getRangeCountMethod(), getCallOptions()), request);
+          getChannel().newCall(getPublicRangeCountMethod(), getCallOptions()), request);
     }
 
     /**
      */
-    public com.google.common.util.concurrent.ListenableFuture<com.suda.federate.rpc.FederateService.SQLReplyList> rangeQuery(
+    public com.google.common.util.concurrent.ListenableFuture<com.suda.federate.rpc.FederateService.SQLReply> publicRangeQuery(
         com.suda.federate.rpc.FederateService.SQLExpression request) {
       return futureUnaryCall(
-          getChannel().newCall(getRangeQueryMethod(), getCallOptions()), request);
+          getChannel().newCall(getPublicRangeQueryMethod(), getCallOptions()), request);
     }
 
     /**
      */
-    public com.google.common.util.concurrent.ListenableFuture<com.suda.federate.rpc.FederateService.SQLReplyList> polygonRangeQuery(
+    public com.google.common.util.concurrent.ListenableFuture<com.suda.federate.rpc.FederateService.SQLReply> publicPolygonRangeQuery(
         com.suda.federate.rpc.FederateService.SQLExpression request) {
       return futureUnaryCall(
-          getChannel().newCall(getPolygonRangeQueryMethod(), getCallOptions()), request);
+          getChannel().newCall(getPublicPolygonRangeQueryMethod(), getCallOptions()), request);
+    }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture<com.suda.federate.rpc.FederateService.Status> privacyRangeCount(
+        com.suda.federate.rpc.FederateService.SQLExpression request) {
+      return futureUnaryCall(
+          getChannel().newCall(getPrivacyRangeCountMethod(), getCallOptions()), request);
     }
 
     /**
@@ -859,6 +1047,22 @@ public final class FederateGrpc {
         com.suda.federate.rpc.FederateService.SQLExpression request) {
       return futureUnaryCall(
           getChannel().newCall(getKnnRadiusQueryMethod(), getCallOptions()), request);
+    }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture<com.suda.federate.rpc.FederateService.SummationResponse> privacySummation(
+        com.suda.federate.rpc.FederateService.SummationRequest request) {
+      return futureUnaryCall(
+          getChannel().newCall(getPrivacySummationMethod(), getCallOptions()), request);
+    }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture<com.suda.federate.rpc.FederateService.SummationResponse> localSummation(
+        com.suda.federate.rpc.FederateService.SummationRequest request) {
+      return futureUnaryCall(
+          getChannel().newCall(getLocalSummationMethod(), getCallOptions()), request);
     }
 
     /**
@@ -888,15 +1092,18 @@ public final class FederateGrpc {
 
   private static final int METHODID_ADD_CLIENT = 0;
   private static final int METHODID_GET_RESULT = 1;
-  private static final int METHODID_RANGE_COUNT = 2;
-  private static final int METHODID_RANGE_QUERY = 3;
-  private static final int METHODID_POLYGON_RANGE_QUERY = 4;
-  private static final int METHODID_PRIVACY_RANGE_QUERY = 5;
-  private static final int METHODID_PRIVACY_POLYGON_RANGE_QUERY = 6;
-  private static final int METHODID_KNN_RADIUS_QUERY = 7;
-  private static final int METHODID_PRIVACY_UNION = 8;
-  private static final int METHODID_LOCAL_UNION = 9;
-  private static final int METHODID_CLEAR_CACHE = 10;
+  private static final int METHODID_PUBLIC_RANGE_COUNT = 2;
+  private static final int METHODID_PUBLIC_RANGE_QUERY = 3;
+  private static final int METHODID_PUBLIC_POLYGON_RANGE_QUERY = 4;
+  private static final int METHODID_PRIVACY_RANGE_COUNT = 5;
+  private static final int METHODID_PRIVACY_RANGE_QUERY = 6;
+  private static final int METHODID_PRIVACY_POLYGON_RANGE_QUERY = 7;
+  private static final int METHODID_KNN_RADIUS_QUERY = 8;
+  private static final int METHODID_PRIVACY_SUMMATION = 9;
+  private static final int METHODID_LOCAL_SUMMATION = 10;
+  private static final int METHODID_PRIVACY_UNION = 11;
+  private static final int METHODID_LOCAL_UNION = 12;
+  private static final int METHODID_CLEAR_CACHE = 13;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -923,17 +1130,21 @@ public final class FederateGrpc {
           serviceImpl.getResult((com.suda.federate.rpc.FederateService.SQLExpression) request,
               (io.grpc.stub.StreamObserver<com.suda.federate.rpc.FederateService.SQLReply>) responseObserver);
           break;
-        case METHODID_RANGE_COUNT:
-          serviceImpl.rangeCount((com.suda.federate.rpc.FederateService.SQLExpression) request,
+        case METHODID_PUBLIC_RANGE_COUNT:
+          serviceImpl.publicRangeCount((com.suda.federate.rpc.FederateService.SQLExpression) request,
               (io.grpc.stub.StreamObserver<com.suda.federate.rpc.FederateService.SQLReply>) responseObserver);
           break;
-        case METHODID_RANGE_QUERY:
-          serviceImpl.rangeQuery((com.suda.federate.rpc.FederateService.SQLExpression) request,
-              (io.grpc.stub.StreamObserver<com.suda.federate.rpc.FederateService.SQLReplyList>) responseObserver);
+        case METHODID_PUBLIC_RANGE_QUERY:
+          serviceImpl.publicRangeQuery((com.suda.federate.rpc.FederateService.SQLExpression) request,
+              (io.grpc.stub.StreamObserver<com.suda.federate.rpc.FederateService.SQLReply>) responseObserver);
           break;
-        case METHODID_POLYGON_RANGE_QUERY:
-          serviceImpl.polygonRangeQuery((com.suda.federate.rpc.FederateService.SQLExpression) request,
-              (io.grpc.stub.StreamObserver<com.suda.federate.rpc.FederateService.SQLReplyList>) responseObserver);
+        case METHODID_PUBLIC_POLYGON_RANGE_QUERY:
+          serviceImpl.publicPolygonRangeQuery((com.suda.federate.rpc.FederateService.SQLExpression) request,
+              (io.grpc.stub.StreamObserver<com.suda.federate.rpc.FederateService.SQLReply>) responseObserver);
+          break;
+        case METHODID_PRIVACY_RANGE_COUNT:
+          serviceImpl.privacyRangeCount((com.suda.federate.rpc.FederateService.SQLExpression) request,
+              (io.grpc.stub.StreamObserver<com.suda.federate.rpc.FederateService.Status>) responseObserver);
           break;
         case METHODID_PRIVACY_RANGE_QUERY:
           serviceImpl.privacyRangeQuery((com.suda.federate.rpc.FederateService.SQLExpression) request,
@@ -946,6 +1157,14 @@ public final class FederateGrpc {
         case METHODID_KNN_RADIUS_QUERY:
           serviceImpl.knnRadiusQuery((com.suda.federate.rpc.FederateService.SQLExpression) request,
               (io.grpc.stub.StreamObserver<com.suda.federate.rpc.FederateService.KnnRadiusQueryResponse>) responseObserver);
+          break;
+        case METHODID_PRIVACY_SUMMATION:
+          serviceImpl.privacySummation((com.suda.federate.rpc.FederateService.SummationRequest) request,
+              (io.grpc.stub.StreamObserver<com.suda.federate.rpc.FederateService.SummationResponse>) responseObserver);
+          break;
+        case METHODID_LOCAL_SUMMATION:
+          serviceImpl.localSummation((com.suda.federate.rpc.FederateService.SummationRequest) request,
+              (io.grpc.stub.StreamObserver<com.suda.federate.rpc.FederateService.SummationResponse>) responseObserver);
           break;
         case METHODID_PRIVACY_UNION:
           serviceImpl.privacyUnion((com.suda.federate.rpc.FederateService.UnionRequest) request,
@@ -1022,12 +1241,15 @@ public final class FederateGrpc {
               .setSchemaDescriptor(new FederateFileDescriptorSupplier())
               .addMethod(getAddClientMethod())
               .addMethod(getGetResultMethod())
-              .addMethod(getRangeCountMethod())
-              .addMethod(getRangeQueryMethod())
-              .addMethod(getPolygonRangeQueryMethod())
+              .addMethod(getPublicRangeCountMethod())
+              .addMethod(getPublicRangeQueryMethod())
+              .addMethod(getPublicPolygonRangeQueryMethod())
+              .addMethod(getPrivacyRangeCountMethod())
               .addMethod(getPrivacyRangeQueryMethod())
               .addMethod(getPrivacyPolygonRangeQueryMethod())
               .addMethod(getKnnRadiusQueryMethod())
+              .addMethod(getPrivacySummationMethod())
+              .addMethod(getLocalSummationMethod())
               .addMethod(getPrivacyUnionMethod())
               .addMethod(getLocalUnionMethod())
               .addMethod(getClearCacheMethod())

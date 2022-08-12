@@ -5,10 +5,11 @@ import com.suda.federate.rpc.FederateCommon;
 import com.suda.federate.rpc.FederateService;
 import com.suda.federate.security.sha.SiloCache;
 import com.suda.federate.silo.FederateDBService;
+import com.suda.federate.utils.FederateUtils;
+import com.suda.federate.utils.LogUtils;
 import com.suda.federate.utils.SQLGenerator;
 import io.grpc.stub.StreamObserver;
 import org.apache.commons.lang3.tuple.Pair;
-import org.apache.logging.log4j.LogManager;
 
 import java.lang.reflect.InvocationTargetException;
 import java.sql.*;
@@ -37,18 +38,33 @@ public class FederateMysqlService extends FederateDBService {
     }
 
     @Override
-    public void rangeCount(FederateService.SQLExpression request, StreamObserver<FederateService.SQLReply> responseObserver) {
+    public void publicRangeCount(FederateService.SQLExpression request, StreamObserver<FederateService.SQLReply> responseObserver) {
         System.out.println("收到的信息：" + request.getFunction());
         Integer result = 0;
         try {
-
             result = localRangeCount(request.getPoint(), request.getTable(), request.getLiteral());
             //构造返回
-            FederateService.SQLReply reply = setSummation(request, result);
+            FederateService.SQLReply reply = FederateService.SQLReply.newBuilder().setNum(result).build();
             responseObserver.onNext(reply);
             responseObserver.onCompleted();
         } catch (SQLException | InvocationTargetException | NoSuchMethodException | InstantiationException |
                  IllegalAccessException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void privacyRangeCount(FederateService.SQLExpression request, StreamObserver<FederateService.Status> responseObserver) {
+        System.out.println("收到的信息：" + request.getFunction());
+        FederateService.Status status;
+        try {
+            Integer result = localRangeCount(request.getPoint(), request.getTable(), request.getLiteral());
+            //FederateService.SQLReply reply = setSummation(request, result);
+            buffer.set(request.getUuid(), result);
+            status = FederateService.Status.newBuilder().setCode(FederateService.Code.kOk).setMsg("ok").build();
+            responseObserver.onNext(status);
+            responseObserver.onCompleted();
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -202,13 +218,13 @@ public class FederateMysqlService extends FederateDBService {
     }
 
     @Override
-    public void rangeQuery(FederateService.SQLExpression request, StreamObserver<FederateService.SQLReplyList> responseObserver) {
+    public void publicRangeQuery(FederateService.SQLExpression request, StreamObserver<FederateService.SQLReply> responseObserver) {
         System.out.println("收到的信息：" + request.getFunction());
-        FederateService.SQLReplyList.Builder replyList = null;
+        FederateService.SQLReply.Builder replyList = null;
         try {
             List<FederateCommon.Point> res = localRangeQuery(request.getPoint(), request.getLiteral(), FederateCommon.Point.class);
-            replyList = FederateService.SQLReplyList.newBuilder()
-                    .addAllMessage(res);
+            replyList = FederateService.SQLReply.newBuilder()
+                    .setNum(res.size()).addAllPoint(res);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -237,13 +253,13 @@ public class FederateMysqlService extends FederateDBService {
     }
 
     @Override
-    public void polygonRangeQuery(FederateService.SQLExpression request, StreamObserver<FederateService.SQLReplyList> responseObserver) {
+    public void publicPolygonRangeQuery(FederateService.SQLExpression request, StreamObserver<FederateService.SQLReply> responseObserver) {
         System.out.println("收到的信息：" + request.getFunction());
-        FederateService.SQLReplyList.Builder replyList = null;
+        FederateService.SQLReply.Builder replyList = null;
         try {
             List<FederateCommon.Point> res = localPolygonRangeQuery(request.getPolygon(), FederateCommon.Point.class);
-            replyList = FederateService.SQLReplyList.newBuilder()
-                    .addAllMessage(res);
+            replyList = FederateService.SQLReply.newBuilder()
+                    .setNum(res.size()).addAllPoint(res);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -261,19 +277,12 @@ public class FederateMysqlService extends FederateDBService {
      * @param radius range count radius
      */
     public Integer localRangeCount(FederateCommon.Point point, String tableName, Double radius) throws SQLException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-        List<Integer> ansList = new ArrayList<>();
-        // 读取参数
-        // TODO: plaintext query
-
         // 生成目标 SQL
         String sql = SQLGenerator.generateRangeCountingSQL(point, tableName, radius);
-//        LOGGER.info(String.format("\n%s Target SQL: ", "Mysql") + sql);
+        LogUtils.debug(String.format("\n%s Target SQL: ", "Mysql") + sql);
         // 执行 SQL
         Integer ans = executeSql(sql, Integer.class, false);
-
-//        LOGGER.info(String.format("\n%s RangeCount Result: ", "Mysql") + ans);
-
-        // TODO: secure summation
+        LogUtils.debug(String.format("\n%s RangeCount Result: ", "Mysql") + ans);
         return ans;
     }
 
@@ -295,29 +304,22 @@ public class FederateMysqlService extends FederateDBService {
      * @param radius range count radius
      */
     private <T> List<T> localRangeQuery(FederateCommon.Point point, Double radius, Class<T> resultClass) throws SQLException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {//select * 获取knn结果
-
         // 生成 SQL
         String sql = SQLGenerator.generateRangeQuerySQL(point, radius);
-//        LOGGER.info(String.format("\n%s Target SQL: ", "Mysql") + sql);
+        LogUtils.debug(String.format("\n%s Target SQL: ", "Mysql") + sql);
         // 执行 SQL
         List<T> pointList = executeSql(sql, resultClass);
-
-//        LOGGER.info(String.format("\n%s RangeQuery Result:", "Mysql") + pointList.toString());
-
+        LogUtils.debug(String.format("\n%s RangeQuery Result:", "Mysql") + FederateUtils.flatPointList(pointList));
         return pointList;
     }
 
     private <T> List<T> localPolygonRangeQuery(FederateCommon.Polygon polygon, Class<T> resultClass) throws SQLException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {//select * 获取knn结果
-
         // 生成 SQL
         String sql = SQLGenerator.generatePolygonRangeQuerySQL(polygon);
-
-//        LOGGER.info(String.format("\n%s Target SQL: ", "Mysql") + sql);
+        LogUtils.debug(String.format("\n%s Target SQL: ", "Mysql") + sql);
         // 执行 SQL
         List<T> pointList = executeSql(sql, resultClass);
-
-//        LOGGER.info(String.format("\n%s PolyonRangeQuery Result:", "Mysql") + pointList.toString());
-
+        LogUtils.debug(String.format("\n%s PolyonRangeQuery Result:", "Mysql") + FederateUtils.flatPointList(pointList));
         return pointList;
     }
 
@@ -326,25 +328,6 @@ public class FederateMysqlService extends FederateDBService {
         return true;
     }
 
-
-//        public void localQuery(FederateService.SQLExpression expression) throws Exception {
-//        if (expression.getFunction() == ENUM.FUNCTION.RANGE_COUNT.name()) {
-//            FD_RangeCount rangeCounting = new FD_RangeCount(expression);
-//            Integer result = localRangeCount(rangeCounting.point, rangeCounting.radius);
-//            LOGGER.info("\nAggregation Result:" + result);
-//        } else if (expression.function == ENUM.FUNCTION.RANGE_QUERY) {
-//            FD_RangeQuery rangeQuery = new FD_RangeQuery(expression);
-//            List<FD_Point> pointList = localRangeQuery(rangeQuery.point, rangeQuery.radius);
-//            LOGGER.info("\nAggregation Result: " + pointList.toString());
-//        } else if (expression.function == ENUM.FUNCTION.KNN) {
-//            FD_Knn knnQuery = new FD_Knn(expression);
-//            List<FD_Point> pointList = localKnnQuery(knnQuery.point, knnQuery.k);
-//            assert pointList != null;
-//            LOGGER.info("\nAggregation Result: " + pointList.toString());
-//        } else {
-//            throw new Exception("type not support.");
-//        }
-//        }
 
     public <T> List<T> executeSql(String sql, Class<T> resultClass) throws SQLException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
         Statement stmt = conn.createStatement();

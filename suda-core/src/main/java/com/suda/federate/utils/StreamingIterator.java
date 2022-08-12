@@ -1,4 +1,4 @@
-package com.suda.federate.query;
+package com.suda.federate.utils;
 
 import com.suda.federate.config.FedSpatialConfig;
 import org.apache.logging.log4j.LogManager;

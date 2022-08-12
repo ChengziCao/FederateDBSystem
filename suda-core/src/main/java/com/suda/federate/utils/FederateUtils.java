@@ -5,7 +5,8 @@ import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
 import com.suda.federate.config.DbConfig;
 import com.suda.federate.config.ModelConfig;
-import com.suda.federate.query.SpatialFunctions;
+import com.suda.federate.rpc.FederateCommon;
+import com.suda.federate.spatial.SpatialFunctions;
 import com.suda.federate.rpc.FederateService;
 
 import java.io.File;
@@ -20,6 +21,7 @@ import java.sql.SQLException;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import static com.suda.federate.utils.ENUM.str2FUNCTION;
 
@@ -50,6 +52,7 @@ public class FederateUtils {
 
     /**
      * query.json --> SQLExpression
+     *
      * @param queryFile
      * @return
      * @throws Exception
@@ -68,6 +71,7 @@ public class FederateUtils {
             JSONObject queryJson = queryJsonArray.getJSONObject(i);
             expression.setFunction(str2FUNCTION(queryJson.getString("function")));
             expression.setTable(queryJson.getString("table"));
+            expression.setUuid(UUID.randomUUID().toString());
             // 保存 params
             for (Object varObj : queryJson.getJSONArray("params")) {
                 JSONObject var = (JSONObject) varObj;
@@ -191,6 +195,7 @@ public class FederateUtils {
 
     /**
      * 构造异常堆栈信息
+     *
      * @param ex
      * @return
      */
@@ -206,5 +211,7 @@ public class FederateUtils {
         return result;
     }
 
-
+    public static String flatPointList(List<?> result) {
+        return "[" + result.stream().map(x -> (FederateCommon.Point) x).map(x -> "[" + x.getLongitude() + " " + x.getLatitude() + "]").collect(Collectors.joining(",")) + "]";
+    }
 }

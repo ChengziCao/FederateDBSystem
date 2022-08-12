@@ -1,0 +1,16 @@
+[
+  {
+    "function": "RangeCount",
+    "table": "osm_sh",
+    "params": [
+      {
+        "type": "point",
+        "value": "121.456107 31.253359"
+      },
+      {
+        "type": "Double",
+        "value": 2500
+      }
+    ]
+  }
+]

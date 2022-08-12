@@ -21,15 +21,14 @@ Configuration后面的status，这个用于设置log4j2自身内部的信息输�
         %logger{36} 表示 Logger 名字最长36个字符
         -->
         <property name="CONSOLE_PATTERN"
-                  value="%highlight{%-5level} [%logger](%F:%L) : %msg%n"/>
+                  value="%highlight{%-5level} %msg%n"/>
 
         <property name="FILE_PATTERN"
-                  value="%d{yyyy-MM-dd HH:mm:ss.SSS} %level [%t] [%logger](%F:%L) : %msg%n"/>
+                  value="%d{yyyy-MM-dd HH:mm:ss.SSS} %level %msg%n"/>
 
         <!-- 定义日志存储的路径，不要配置相对路径 -->
-        <!-- 就不 -->
         <property name="FILE_PATH" value="./logs"/>
-        <property name="FILE_NAME" value="postgresql-server"/>
+        <property name="FILE_NAME" value="package"/>
     </Properties>
 
     <appenders>

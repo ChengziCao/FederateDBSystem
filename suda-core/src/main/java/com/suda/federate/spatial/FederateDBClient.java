@@ -1,17 +1,16 @@
-package com.suda.federate.application;
+package com.suda.federate.spatial;
 
+import com.suda.federate.rpc.FederateGrpc;
 import com.suda.federate.rpc.FederateService;
+import com.suda.federate.utils.LogUtils;
 import io.grpc.Channel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.StatusRuntimeException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import com.suda.federate.rpc.FederateGrpc;
 
 //一个silo/db 对应一个FederateDBClient，
 public final class FederateDBClient {//被edSpatialClient调用 List<String> endpoints = tableClients.keySet().stream().map(FederateDBClient::getEndpoint).collect(Collectors.toList());
-    private static final Logger LOG = LogManager.getLogger(FederateDBClient.class);
-
     private final FederateGrpc.FederateBlockingStub blockingStub; //非阻塞 AbstractBlockingStub
     //    private final FederateGrpc.FederateStub asyncStub; // extends AbstractAsyncStub 没用到？
     private String endpoint;
@@ -35,25 +34,86 @@ public final class FederateDBClient {//被edSpatialClient调用 List<String> end
 //        asyncStub = FederateGrpc.newStub(channel);
     }
 
-    public void FederateRangeCount() {
-        try {
-            FederateService.SQLReply esponse = blockingStub.getResult(null);
-        } catch (StatusRuntimeException e) {
-            LOG.error("RPC failed in dp range count: {}", e.getStatus());
-        }
-    }
+    //public void FederateRangeCount() {
+    //    try {
+    //        FederateService.SQLReply response = blockingStub.getResult(null);
+    //    } catch (StatusRuntimeException e) {
+    //        LogUtils.error(String.format("RPC failed in dp range count: %s", e.getStatus()));
+    //    }
+    //}
 
-    //客户端方法
-    public FederateService.SQLReply rangeCount(FederateService.SQLExpression expression) {
-
+    public FederateService.SQLReply fedSpatialQuery(FederateService.SQLExpression expression, String siloTableName) {
         FederateService.SQLReply response;
         try {
-            response = blockingStub.rangeCount(expression);
+            expression = expression.toBuilder().setTable(siloTableName).build();
+            switch (expression.getFunction()) {
+                case RANGE_COUNT:
+                    response = blockingStub.publicRangeCount(expression);
+                    break;
+                case RANGE_QUERY:
+                    response = blockingStub.publicRangeQuery(expression);
+                    break;
+                case KNN:
+                    response = null;
+                    break;
+                case POLYGON_RANGE_QUERY:
+                    response = blockingStub.publicPolygonRangeQuery(expression);
+                    break;
+                default:
+                    response = null;
+            }
         } catch (StatusRuntimeException e) {
             System.out.println("RPC调用失败：" + e.getMessage());
             return null;
         }
         return response;
+    }
+
+    public Boolean fedSpatialPrivacyQuery(FederateService.SQLExpression expression) {
+        FederateService.Status status = null;
+        try {
+            switch (expression.getFunction()) {
+                case RANGE_COUNT:
+                    status = blockingStub.privacyRangeCount(expression);
+                    break;
+                case RANGE_QUERY:
+                    status = blockingStub.privacyRangeQuery(expression);
+                    break;
+                case KNN:
+                    status = null;
+                    break;
+                case POLYGON_RANGE_QUERY:
+                    status = blockingStub.privacyPolygonRangeQuery(expression);
+                    break;
+                default:
+                    status = null;
+            }
+        } catch (StatusRuntimeException e) {
+            System.out.println("RPC调用失败：" + e.getMessage());
+            return null;
+        }
+        return status.getMsg().equals("ok");
+    }
+
+
+    public FederateService.SummationResponse privacySummation(FederateService.SummationRequest request) {
+        try {
+            FederateService.SummationResponse response = blockingStub.privacySummation(request);
+            return response;
+        } catch (StatusRuntimeException e) {
+            System.out.println("RPC调用失败：" + e.getMessage());
+        }
+        return null;
+    }
+
+    public FederateService.SummationResponse localSummation(FederateService.SummationRequest request) {
+        try {
+            FederateService.SummationResponse response = blockingStub.localSummation(request);
+            return response;
+        } catch (StatusRuntimeException e) {
+            System.out.println("RPC调用失败：" + e.getMessage());
+        }
+        return null;
     }
 
     public FederateService.UnionResponse privacyUnion(FederateService.UnionRequest unionRequest) {
@@ -74,54 +134,6 @@ public final class FederateDBClient {//被edSpatialClient调用 List<String> end
             System.out.println("RPC调用失败：" + e.getMessage());
         }
         return null;
-    }
-
-    public boolean privacyRangeQuery(FederateService.SQLExpression expression) {
-        try {
-            FederateService.Status status = blockingStub.privacyRangeQuery(expression);
-            return status.getMsg().equals("ok");
-        } catch (StatusRuntimeException e) {
-            System.out.println("RPC调用失败：" + e.getMessage());
-        }
-        return false;
-    }
-
-    //客户端方法
-    public FederateService.SQLReplyList rangeQuery(FederateService.SQLExpression expression) {
-
-        FederateService.SQLReplyList response;
-        try {
-            response = blockingStub.rangeQuery(expression);
-        } catch (StatusRuntimeException e) {
-            System.out.println("RPC调用失败：" + e.getMessage());
-            return FederateService.SQLReplyList.newBuilder().build();
-        }
-        return response;
-    }
-
-    //客户端方法
-    public FederateService.SQLReplyList polygonRangeQuery(FederateService.SQLExpression expression) {
-
-        FederateService.SQLReplyList response;
-        try {
-            response = blockingStub.polygonRangeQuery(expression);
-        } catch (StatusRuntimeException e) {
-            System.out.println("RPC调用失败：" + e.getMessage());
-            return FederateService.SQLReplyList.newBuilder().build();
-        }
-        return response;
-    }
-
-    public boolean privacyPolygonRangeQuery(FederateService.SQLExpression expression) {
-
-        FederateService.Status status;
-        try {
-            status = blockingStub.privacyPolygonRangeQuery(expression);
-            return status.getMsg().equals("ok");
-        } catch (StatusRuntimeException e) {
-            System.out.println("RPC调用失败：" + e.getMessage());
-            return false;
-        }
     }
 
     public Double knnRadiusQuery(FederateService.SQLExpression expression) {
@@ -175,10 +187,8 @@ public final class FederateDBClient {//被edSpatialClient调用 List<String> end
     public void clearCache(String uuid) {
         try {
             blockingStub.clearCache(FederateService.CacheID.newBuilder().setUuid(uuid).build());
-            return;
         } catch (StatusRuntimeException e) {
-            LOG.error("RPC failed in clear cache: {}", e.getStatus());
-            return;
+            LogUtils.error("RPC failed in clear cache: " + e.getStatus());
         }
     }
 }
