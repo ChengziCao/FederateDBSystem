@@ -3,6 +3,7 @@ package com.suda.federate.spatial;
 import com.suda.federate.rpc.FederateGrpc;
 import com.suda.federate.rpc.FederateService;
 import com.suda.federate.utils.LogUtils;
+import com.suda.federate.utils.StreamingIterator;
 import io.grpc.Channel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.StatusRuntimeException;
@@ -94,7 +95,112 @@ public final class FederateDBClient {//被edSpatialClient调用 List<String> end
         }
         return status.getMsg().equals("ok");
     }
-
+//    public static StreamingIterator<Double> federateKnnRadiusQuery(FederateService.SQLExpression expression ){
+//
+//        List<Callable<Boolean>> tasks = new ArrayList<Callable<Boolean>>();
+//        StreamingIterator<Double> iterator = new StreamingIterator<>(federateDBClients.size());
+//
+//        for (Map.Entry<String,FederateDBClient> entry : federateDBClients.entrySet()) {
+//            tasks.add(() -> {
+//                try {
+//                    FederateDBClient federateDBClient = entry.getValue();
+//                    String endpoint= federateDBClient.getEndpoint();
+//                    String siloTableName =tableMap.get(expression.getTable()).get(endpoint);
+//                    SQLExpression queryExpression = expression.toBuilder().setTable(siloTableName).build();//TODO 添加更多功能
+//
+//                    try{
+//                        Double radius= federateDBClient.knnRadiusQuery(expression);//TODO 精度
+//                        System.out.println(endpoint+" 服务器返回信息：radius "+ radius);
+//                        iterator.add(radius);
+//                    }catch (StatusRuntimeException e){
+//                        System.out.println("RPC调用失败："+e.getMessage());
+//                        return false;
+//                    }
+//
+//                    return true;
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                    return false;
+//                } finally {
+//                    iterator.finish();
+//                }
+//            });
+//        }
+//        try {
+//            List<Future<Boolean>> statusList = executorService.invokeAll(tasks);
+//            for (Future<Boolean> status : statusList) {
+//                if (!status.get()) {
+//                    LOGGER.error("error in fedSpatialPublicQuery");
+//                }
+//            }
+//        } catch (InterruptedException | ExecutionException e) {
+//            e.printStackTrace();
+//        }
+//
+//        return iterator;
+//
+//    }
+//    private static void federateKnn(FederateService.SQLExpression expression) {
+//        StreamingIterator<Double> radiusIterator=federateKnnRadiusQuery(expression);
+//        double minRadius = Double.MAX_VALUE;
+//        while (radiusIterator.hasNext()){
+//            double r= radiusIterator.next();
+//            minRadius = r < minRadius ? r : minRadius;
+//        }
+//        int k =(int)expression.getLiteral();//TODO 精确度
+//        double l = 0.0, u = minRadius, e = 1e-3;
+//        double threshold = minRadius;
+//        while (u - l >= e) {//TODO 改为并发？！
+//            threshold = (l + u) / 2;
+//
+//            FederateService.SQLExpression queryExpression = expression.toBuilder().setLiteral(threshold).build();
+//
+//            int count =federateRangeCount(
+//                    queryExpression);
+//            //hufu有个        if (Math.abs(res.getKey() - k) < res.getValue()) { 提前终止，什么意思
+//            if (count > k) {
+//                u = threshold;
+//            } else if (count < k) {
+//                l = threshold;
+//            } else {
+//                federateRangeQuery(expression.toBuilder().setLiteral(threshold).build());
+//                return;
+//            }
+//        }
+//        System.out.println("out of loop! approximate query: ");
+//        federateRangeQuery(expression.toBuilder().setLiteral(minRadius).build());
+//        return;
+//    }
+//    private static void federatePrivacyKnn(SQLExpression expression) {
+//        StreamingIterator<Double> radiusIterator=federateKnnRadiusQuery(expression);
+//        double minRadius = Double.MAX_VALUE;
+//        while (radiusIterator.hasNext()){
+//            double r= radiusIterator.next();
+//            minRadius = r < minRadius ? r : minRadius;
+//        }
+//        int k =(int)expression.getLiteral();//TODO 精确度
+//        double l = 0.0, u = minRadius, e = 1e-3;
+//        double threshold = minRadius;
+//        while (u - l >= e) {//TODO 改为并发？！
+//            threshold = (l + u) / 2;
+//
+//            SQLExpression queryExpression = expression.toBuilder().setLiteral(threshold).build();
+//
+//            int count =federateRangeCount(queryExpression);//TODO secure
+//            //hufu有个        if (Math.abs(res.getKey() - k) < res.getValue()) { 提前终止，什么意思
+//            if (count > k) {
+//                u = threshold;
+//            } else if (count < k) {
+//                l = threshold;
+//            } else {
+//                federatePrivacyRangeQuery(expression.toBuilder().setLiteral(threshold).build());
+//                return;
+//            }
+//        }
+//        System.out.println("out of loop! approximate query: ");
+//        federatePrivacyRangeQuery(expression.toBuilder().setLiteral(minRadius).build());
+//        return;
+//    }
 
     public FederateService.SummationResponse privacySummation(FederateService.SummationRequest request) {
         try {

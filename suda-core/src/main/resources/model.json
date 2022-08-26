@@ -7,12 +7,17 @@
       "type": "custom",
       "endpoints": [
         "localhost:8887",
-        "localhost:8886"
+        "localhost:8886",
+        "localhost:8888"
       ],
       "tables": [
         {
           "name": "osm_sh",
           "feds": [
+            {
+              "endpoint": "localhost:8888",
+              "siloTableName": "osm_sh"
+            },
             {
               "endpoint": "localhost:8887",
               "siloTableName": "osm_sh"

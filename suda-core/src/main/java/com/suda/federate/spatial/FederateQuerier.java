@@ -7,12 +7,13 @@ import com.suda.federate.utils.FederateUtils;
 import com.suda.federate.utils.LogUtils;
 import com.suda.federate.utils.StreamingIterator;
 import io.grpc.StatusRuntimeException;
+import org.apache.commons.lang3.tuple.Triple;
+import org.apache.commons.math3.util.Pair;
 
+import java.awt.*;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.*;
 
 public class FederateQuerier {
@@ -199,9 +200,125 @@ public class FederateQuerier {
     }
 
 
-    private void privacyKnn() {
 
-    }
+//    /**
+//     *
+//     * @param queryPoint
+//     * @param S: 参考点集合
+//     * @return: query point 与 参考点集合S各个点的垂直平分线
+//     */
+//    public static HashMap<FederateCommon.Point, Pair<Object, Double>> computeBisector(FederateCommon.Point queryPoint, List<FederateCommon.Point> S) {
+//        HashMap<FederateCommon.Point, Pair<Object, Double>> bisectorDict = new HashMap<>();
+//
+//        //MyPoint q = new MyPoint(queryPoint.x(), queryPoint.y());
+//
+//        Object k, b;
+//
+//        for(FederateCommon.Point s : S) {
+//            if (doubleEqual(queryPoint.getLongitude(), s.getLongitude())) {  //垂直平分线平行于y轴
+//                k = null;
+//                b = (queryPoint.getLatitude() + s.getLatitude()) / 2;
+//            } else if (doubleEqual(queryPoint.getLatitude(), s.getLatitude())) { //垂直平分线平行于x轴
+//                k = 0;
+//                b = (queryPoint.getLongitude() + s.getLongitude()) / 2;
+//            } else {
+//                Pair<Double, Double> middlePoint = new Pair<>((s.getLatitude()  + queryPoint.getLatitude()) /2, (s.getLongitude() + queryPoint.getLongitude()) / 2);
+//                k = -1 / ((queryPoint.getLongitude() - s.getLongitude()) / (queryPoint.getLatitude()  - s.getLatitude()));
+//                b = middlePoint.getSecond() - (double)k * middlePoint.getFirst();
+//            }
+//            bisectorDict.put(s, new Pair<>(k, (double)b));
+//        }
+//        return bisectorDict;
+//    }
+//    /**
+//     *
+//     * @param bisectorDict: 字典：<s: 垂直平分线>, s in S
+//     * @return: 字典：<垂直平分线交点, <p1, p2, 0>>, 其中p1和p2分别是垂直平分线l1和l2对应的参考点，这里的0是为了计算每个交点level值初始化
+//     */
+//    public static HashMap<FederateCommon.Point, Triple<FederateCommon.Point,FederateCommon.Point, Integer>> computeIntersections(HashMap<FederateCommon.Point, Pair<Object, Double>> bisectorDict) {
+//        HashMap<FederateCommon.Point, Triple<FederateCommon.Point,FederateCommon.Point, Integer>> intersectionSetDict = new HashMap<>();
+//        for (FederateCommon.Point p1 : bisectorDict.keySet()) {
+//            for (FederateCommon.Point p2 : bisectorDict.keySet()) {
+//                if (p1.equals(p2)) {
+//                    continue;
+//                } else {
+//                    Pair<Object, Object> intersectionPointTmp = computeIntersection(bisectorDict.get(p1), bisectorDict.get(p2));
+//                    if (intersectionPointTmp.equals(new Pair<>(null, null))) {
+//                        continue;
+//                    } else {
+//                        FederateCommon.Point intersectionPoint = FederateCommon.Point.newBuilder()
+//                                .setLatitude((double)intersectionPointTmp.getFirst())
+//                                        .setLongitude((double)intersectionPointTmp.getSecond())
+//                                                .build();
+//                        intersectionSetDict.put(intersectionPoint, Triple.of(p1, p2,0));
+//                    }
+//                }
+//            }
+//        }
+//        return intersectionSetDict;
+//    }
+//    /**
+//     *
+//     * @param l1: y = k1*x + b1
+//     * @param l2: y = k2*x + b2
+//     * @return: l1和l2的交点
+//     */
+//    public static Pair<Object, Object> computeIntersection(Pair<Object, Double> l1, Pair<Object, Double> l2) {
+//        if (l1.getFirst() == null) {
+//            if (l2.getFirst() == null) {
+//                return new Pair<>(null, null);
+//            } else if ((double) l2.getFirst() == 0.0) {
+//                return new Pair<>(l1.getSecond(), l2.getSecond());
+//            } else {
+//                double y = (double) l2.getFirst() * l1.getSecond() + l2.getSecond();
+//                return new Pair<>(l1.getSecond(), y);
+//            }
+//        } else if (l2.getFirst() == null) {
+//            if (l1.getFirst() == null) {
+//                return new Pair<>(null, null);
+//            } else if ((double) l1.getFirst() == 0.0) {
+//                return new Pair<>(l2.getSecond(), l1.getSecond());
+//            } else {
+//                double y = (double) l1.getFirst() * l2.getSecond() + l1.getSecond();
+//                return new Pair<>(l2.getSecond(), y);
+//            }
+//        } else if (l2.getFirst().equals(l1.getFirst())) {
+//            return new Pair<>(null, null);
+//        } else {
+//            double x = (l1.getSecond() - l2.getSecond()) / ((double) l2.getFirst() - (double) l1.getFirst());
+//            double y = ((double) l2.getFirst() * l1.getSecond() - (double) l1.getFirst() * l2.getSecond()) / ((double) l2.getFirst() - (double) l1.getFirst());
+//            return new Pair<>(x, y);
+//        }
+//    }
+//    public static boolean doubleEqual(double a, double b) {
+//        return (a - b > -0.000001) && (a - b) < 0.000001;
+//    }
+//    //TODO
+//    private void federatePublicRkNN(FederateService.SQLExpression expression){
+//
+//        //step1 ------ 联邦KNN查询，注意，查询KNN时k+1 -> setLiteral(expression.getLiteral()+1)
+//
+//        List<FederateCommon.Point> S = federateKnn(expression.toBuilder().setLiteral(expression.getLiteral()+1));
+//        for (FederateCommon.Point p : S) {
+//            System.out.println(p);
+//        }
+//
+//        //step2 ------ 就搁着计算
+//        // 对q和S里每一个点 求垂直平分线
+//        FederateCommon.Point queryPoint = expression.getPoint();
+//        HashMap<FederateCommon.Point, Pair<Object, Double>> bisectorDict = computeBisector(queryPoint, S);
+//        // 计算所有垂直平分线的交点 : HashMap<Point, Triple<Point, Point, Integer>> intersectionSetDict = computeIntersections(bisectorDict);
+//        // 计算各个交点的level值
+//        HashMap<Point, Triple<Point, Point, Integer>> intersectionSetDict = computeLevel(computeIntersections(bisectorDict), queryPoint, S);
+//        // 筛选交点中level<k的点
+//        List<Point>res = legalIntersections(intersectionSetDict, K);
+//        // 建立凸包
+//        List<Point> CH = convexHull(res);
+//
+//        //step3 ------ 发CH到 silo 完成RkNN
+//        expression=expression.toBuilder().clearPolygon().setPolygon(FederateCommon.Polygon.newBuilder().addAllPoint(CH).build()).build();
+//        publicPolygonRangeQuery(expression);
+//    }
 
     private StreamingIterator<Double> federateKnnRadiusQuery(FederateService.SQLExpression expression) throws InterruptedException, ExecutionException {
 

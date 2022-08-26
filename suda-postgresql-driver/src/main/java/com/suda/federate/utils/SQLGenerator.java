@@ -13,10 +13,10 @@ public class SQLGenerator {
      * @param radius
      * @return
      */
-    public static String generateRangeQuerySQL(FederateCommon.Point point, Double radius) {
+    public static String generateRangeQuerySQL(FederateCommon.Point point,String tableName, Double radius) {
         //WARNING must set <= instead of <
-        String template = "select st_astext(location) from osm_sh where st_distance( st_geographyfromtext('POINT(%f %f)'), location ) <= %f limit 10000;";
-        return String.format(template, point.getLongitude(), point.getLatitude(), radius);
+        String template = "select st_astext(location) from %s where st_distance( st_geographyfromtext('POINT(%f %f)'), location ) <= %f limit 10000;";
+        return String.format(template, tableName,point.getLongitude(), point.getLatitude(), radius);
     }
 
     /**
@@ -25,11 +25,11 @@ public class SQLGenerator {
      * @param polygon
      * @return
      */
-    public static String generatePolygonRangeQuerySQL(FederateCommon.Polygon polygon) {//TODO debug
+    public static String generatePolygonRangeQuerySQL(FederateCommon.Polygon polygon,String tableName) {//TODO debug
         String template;
         String polygonString = polygon.getPointList().stream().map(x -> x.getLongitude() + " " + x.getLatitude()).collect(Collectors.joining(","));
-        template = "select st_astext(location) from osm_sh where ST_Contains(GeomFromText('POLYGON((%s))',st_srid(location)),location) limit 10000;";
-        return String.format(template, polygonString);
+        template = "select st_astext(location) from %s where ST_Contains(GeomFromText('POLYGON((%s))',st_srid(location)),location) limit 10000;";
+        return String.format(template,tableName, polygonString);
     }
 
     /**

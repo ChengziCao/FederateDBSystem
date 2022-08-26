@@ -180,7 +180,7 @@ public class FederateMysqlService extends FederateDBService {
         System.out.println("收到的信息：" + request.getFunction());
         FederateService.Status status;
         try {
-            List<FederateCommon.Point> res = localPolygonRangeQuery(request.getPolygon(), FederateCommon.Point.class);
+            List<FederateCommon.Point> res = localPolygonRangeQuery(request.getPolygon(), request.getTable(), FederateCommon.Point.class);
             List<Pair<Double, Double>> resPairs = new ArrayList<>();
             for (FederateCommon.Point point : res) {
                 resPairs.add(Pair.of(point.getLongitude(), point.getLatitude()));
@@ -201,7 +201,7 @@ public class FederateMysqlService extends FederateDBService {
         System.out.println("收到的信息：" + request.getFunction());
         FederateService.Status status;
         try {
-            List<FederateCommon.Point> res = localRangeQuery(request.getPoint(), request.getLiteral(), FederateCommon.Point.class);
+            List<FederateCommon.Point> res = localRangeQuery(request.getPoint(),request.getTable(), request.getLiteral(), FederateCommon.Point.class);
             List<Pair<Double, Double>> resPairs = new ArrayList<>();
             for (FederateCommon.Point point : res) {
                 resPairs.add(Pair.of(point.getLongitude(), point.getLatitude()));
@@ -222,7 +222,7 @@ public class FederateMysqlService extends FederateDBService {
         System.out.println("收到的信息：" + request.getFunction());
         FederateService.SQLReply.Builder replyList = null;
         try {
-            List<FederateCommon.Point> res = localRangeQuery(request.getPoint(), request.getLiteral(), FederateCommon.Point.class);
+            List<FederateCommon.Point> res = localRangeQuery(request.getPoint(), request.getTable(), request.getLiteral(), FederateCommon.Point.class);
             replyList = FederateService.SQLReply.newBuilder()
                     .setNum(res.size()).addAllPoint(res);
         } catch (Exception e) {
@@ -257,7 +257,7 @@ public class FederateMysqlService extends FederateDBService {
         System.out.println("收到的信息：" + request.getFunction());
         FederateService.SQLReply.Builder replyList = null;
         try {
-            List<FederateCommon.Point> res = localPolygonRangeQuery(request.getPolygon(), FederateCommon.Point.class);
+            List<FederateCommon.Point> res = localPolygonRangeQuery(request.getPolygon(),request.getTable(), FederateCommon.Point.class);
             replyList = FederateService.SQLReply.newBuilder()
                     .setNum(res.size()).addAllPoint(res);
         } catch (Exception e) {
@@ -303,9 +303,9 @@ public class FederateMysqlService extends FederateDBService {
      * @param point  query location
      * @param radius range count radius
      */
-    private <T> List<T> localRangeQuery(FederateCommon.Point point, Double radius, Class<T> resultClass) throws SQLException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {//select * 获取knn结果
+    private <T> List<T> localRangeQuery(FederateCommon.Point point, String tableName,  Double radius, Class<T> resultClass) throws SQLException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {//select * 获取knn结果
         // 生成 SQL
-        String sql = SQLGenerator.generateRangeQuerySQL(point, radius);
+        String sql = SQLGenerator.generateRangeQuerySQL(point,tableName, radius);
         LogUtils.debug(String.format("\n%s Target SQL: ", "Mysql") + sql);
         // 执行 SQL
         List<T> pointList = executeSql(sql, resultClass);
@@ -313,9 +313,9 @@ public class FederateMysqlService extends FederateDBService {
         return pointList;
     }
 
-    private <T> List<T> localPolygonRangeQuery(FederateCommon.Polygon polygon, Class<T> resultClass) throws SQLException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {//select * 获取knn结果
+    private <T> List<T> localPolygonRangeQuery(FederateCommon.Polygon polygon,String tableName, Class<T> resultClass) throws SQLException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {//select * 获取knn结果
         // 生成 SQL
-        String sql = SQLGenerator.generatePolygonRangeQuerySQL(polygon);
+        String sql = SQLGenerator.generatePolygonRangeQuerySQL(polygon,tableName);
         LogUtils.debug(String.format("\n%s Target SQL: ", "Mysql") + sql);
         // 执行 SQL
         List<T> pointList = executeSql(sql, resultClass);
