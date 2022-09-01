@@ -55,7 +55,6 @@ public class SecretSum {
     /**
      * f_{i}(x)=(\sum_{k=1}^{n-1} a_{i k} x^{k})+v_{i}
      *
-     *
      * @param t        silos
      * @param localSum vi the local counting result of silo F_i
      * @param idList   n different public parameters
@@ -76,7 +75,7 @@ public class SecretSum {
 
     /**
      * 输入一个t*(t+1)矩阵fakeLocalSumList 按列求和
-     *
+     * <p>
      * [
      * [ f1(x1), f1(x2), ..., f1(xt)],
      * [ f2(x1), f2(x2), ..., f2(xt)],
@@ -100,18 +99,19 @@ public class SecretSum {
     }
 
     //decryption
-    public static FederateService.SQLReply getSummation(List<FederateService.SQLReply> replyList) {
-        return null;
-    }
-
-    public static FederateService.SQLReply setSummation(FederateService.SQLExpression request, Integer ans) {
-        List<Integer> fakeLocalSum = localClient(request.getT(), ans, request.getIdListList());
-
-        //TODO: hide ans (setMessage(0))
-        //构造返回
-        FederateService.SQLReply reply = FederateService.SQLReply.newBuilder().setNum(ans).addAllFakeLocalSum(fakeLocalSum).build();
-        return reply;
-    }
+//    public static FederateService.SQLReply getSummation(List<FederateService.SQLReply> replyList) {
+//        return null;
+//    }
+//
+//    public static FederateService.SQLReply setSummation(FederateService.SQLExpression request, Integer ans) {
+//        List<Integer> fakeLocalSum = localClient(request.getT(), ans, request.getIdListList());
+//
+//        //TODO: hide ans (setMessage(0))
+//        //构造返回
+//        FederateService.SQLReply reply =
+//                FederateService.SQLReply.newBuilder().setIntegerNumber(ans).addAllFakeLocalSum(fakeLocalSum).build();
+//        return reply;
+//    }
 
     public static void main(String[] args) {
         int n = 7;

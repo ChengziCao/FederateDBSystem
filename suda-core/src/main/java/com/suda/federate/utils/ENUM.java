@@ -25,6 +25,8 @@ public class ENUM {
             return FederateService.SQLExpression.Function.RANGE_QUERY;
         else if (str.equalsIgnoreCase("KNN"))
             return FederateService.SQLExpression.Function.KNN;
+        else if (str.equalsIgnoreCase("RKNN"))
+            return FederateService.SQLExpression.Function.RKNN;
         else if (str.equalsIgnoreCase("PolygonRangeQuery") || str.equalsIgnoreCase("Polygon_Range_Query")) {
             return FederateService.SQLExpression.Function.POLYGON_RANGE_QUERY;
         } else

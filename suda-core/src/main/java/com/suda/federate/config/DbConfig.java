@@ -11,13 +11,24 @@ public class DbConfig {
     String url;
     DATABASE type;
 
-    public DbConfig(String name, String driver, String user, String password, String url, String type) {
+    Integer grpcPort;
+
+    public DbConfig(String name, String driver, String user, String password, String url, DATABASE type, Integer grpcPort) {
         this.name = name;
         this.driver = driver;
         this.user = user;
         this.password = password;
         this.url = url;
-        this.type = ENUM.str2DATABASE(type);
+        this.type = type;
+        this.grpcPort = grpcPort;
+    }
+
+    public Integer getGrpcPort() {
+        return grpcPort;
+    }
+
+    public void setGrpcPort(Integer grpcPort) {
+        this.grpcPort = grpcPort;
     }
 
     public String getName() {

@@ -6,7 +6,6 @@ import com.alibaba.fastjson2.JSONObject;
 import com.suda.federate.config.DbConfig;
 import com.suda.federate.config.ModelConfig;
 import com.suda.federate.rpc.FederateCommon;
-import com.suda.federate.spatial.SpatialFunctions;
 import com.suda.federate.rpc.FederateService;
 
 import java.io.File;
@@ -36,18 +35,17 @@ public class FederateUtils {
     }
 
 
-    public static List<DbConfig> parseDbConfig(String configFile) throws IOException {
+    public static DbConfig parseDbConfig(String configFile) throws IOException {
         String configPath = FederateUtils.getRealPath(configFile);
-        List<DbConfig> configList = new ArrayList<>();
+//        List<DbConfig> configList = new ArrayList<>();
         String jsonString = new String(Files.readAllBytes(Paths.get(configPath)));
         // 可能有多个数据源，写成 json array 格式
-        if (jsonString.charAt(0) == '{') jsonString = '[' + jsonString + ']';
-        JSONArray jsonArray = JSON.parseArray(jsonString);
-        for (Object object : jsonArray) {
-            JSONObject jsonObject = (JSONObject) object;
-            configList.add(jsonObject.to(DbConfig.class));
-        }
-        return configList;
+//        if (jsonString.charAt(0) == '{') jsonString = '[' + jsonString + ']';
+//        JSONArray jsonArray = JSON.parseArray(jsonString);
+//        JSONObject jsonObject = JSONObject.parseObject(jsonString);
+        return JSONObject.parseObject(jsonString, DbConfig.class);
+
+//        return configList;
     }
 
     /**
@@ -77,12 +75,16 @@ public class FederateUtils {
                 JSONObject var = (JSONObject) varObj;
                 String type = var.getString("type");
                 String value = var.getString("value");
-                if ("point".equals(type)) {
+                if ("point".equalsIgnoreCase(type)) {
                     expression.setPoint(SpatialFunctions.PointFromText(value));
-                } else if ("polygon".equals(type)) {//TODO 简化
+                } else if ("polygon".equalsIgnoreCase(type)) {
                     expression.setPolygon(SpatialFunctions.PolygonFromText(value));
+                } else if ("Double".equalsIgnoreCase(type)) {
+                    expression.setDoubleNumber(Double.parseDouble(value));
+                } else if ("int".equalsIgnoreCase(type) || "integer".equalsIgnoreCase(type)) {
+                    expression.setIntegerNumber(Integer.parseInt(value));
                 } else {
-                    expression.setLiteral(Double.parseDouble(value));
+                    throw new Exception("query.json config error.");
                 }
             }
             sqlExpressionList.add(expression.build());

@@ -3,6 +3,7 @@ package com.suda.federate;
 import com.suda.federate.config.DbConfig;
 import com.suda.federate.silo.FederateDBServer;
 import com.suda.federate.utils.FederateUtils;
+import com.suda.federate.utils.LogUtils;
 import io.grpc.ServerBuilder;
 import org.apache.logging.log4j.LogManager;
 
@@ -21,15 +22,12 @@ public class PostgresqlServer extends FederateDBServer {
 
 
     public static void main(String[] args) throws Exception {
-
         try {
             String configFile = "config.json";
-            DbConfig config = FederateUtils.parseDbConfig(configFile).get(0);
-
-            int grpcPort = 8887;
-            System.out.println("666");
+            DbConfig config = FederateUtils.parseDbConfig(configFile);
+            int grpcPort = config.getGrpcPort();
             PostgresqlServer server = new PostgresqlServer(config, grpcPort);
-
+            LogUtils.debug("PostgresqlServer started...");
             server.start();
             server.blockUntilShutdown();
         } catch (Exception e) {

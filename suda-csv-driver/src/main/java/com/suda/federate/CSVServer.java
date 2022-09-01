@@ -24,7 +24,7 @@ public class CSVServer extends FederateDBServer {
 
         try {
             String configFile = "config.json";
-            DbConfig config = FederateUtils.parseDbConfig(configFile).get(0);
+            DbConfig config = FederateUtils.parseDbConfig(configFile);
 
             int grpcPort = 8888;
             System.out.println("666");

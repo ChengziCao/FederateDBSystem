@@ -1,10 +1,9 @@
-[
-  {
-    "name": "csv_db",
-    "driver": "null",
-    "user": "null",
-    "password": "null",
-    "url": "data.csv",
-    "type": "null"
-  }
-]
+{
+  "name": "csv_db",
+  "driver": "null",
+  "user": "null",
+  "password": "null",
+  "url": "data.csv",
+  "type": "null"
+}
+

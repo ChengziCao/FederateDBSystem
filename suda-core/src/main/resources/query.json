@@ -36,5 +36,19 @@
         "value": "121 31, 122 31, 122 31.5, 121 31"
       }
     ]
+  },
+  {
+    "function": "Knn",
+    "table": "osm_sh",
+    "params": [
+      {
+        "type": "int",
+        "value": 10
+      },
+      {
+        "type": "point",
+        "value": "121 31"
+      }
+    ]
   }
 ]

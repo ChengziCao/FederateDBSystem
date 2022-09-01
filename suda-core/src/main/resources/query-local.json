@@ -1,15 +1,15 @@
 [
   {
-    "function": "RangeCount",
+    "function": "RKnn",
     "table": "osm_sh",
     "params": [
       {
-        "type": "point",
-        "value": "121.456107 31.253359"
+        "type": "int",
+        "value": 10
       },
       {
-        "type": "Double",
-        "value": 2500
+        "type": "point",
+        "value": "121 31"
       }
     ]
   }

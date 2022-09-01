@@ -13,10 +13,10 @@ public class SQLGenerator {
      * @param radius
      * @return
      */
-    public static String generateRangeQuerySQL(FederateCommon.Point point,String tableName, Double radius) {
+    public static String generateRangeQuerySQL(FederateCommon.Point point, String tableName, Double radius) {
         //WARNING must set <= instead of <
         String template = "select st_astext(location) from %s where st_distance( st_geographyfromtext('POINT(%f %f)'), location ) <= %f limit 10000;";
-        return String.format(template, tableName,point.getLongitude(), point.getLatitude(), radius);
+        return String.format(template, tableName, point.getLongitude(), point.getLatitude(), radius);
     }
 
     /**
@@ -25,11 +25,12 @@ public class SQLGenerator {
      * @param polygon
      * @return
      */
-    public static String generatePolygonRangeQuerySQL(FederateCommon.Polygon polygon,String tableName) {//TODO debug
+    public static String generatePolygonRangeQuerySQL(FederateCommon.Polygon polygon, String tableName) {//TODO debug
         String template;
         String polygonString = polygon.getPointList().stream().map(x -> x.getLongitude() + " " + x.getLatitude()).collect(Collectors.joining(","));
         template = "select st_astext(location) from %s where ST_Contains(GeomFromText('POLYGON((%s))',st_srid(location)),location) limit 10000;";
-        return String.format(template,tableName, polygonString);
+        return String.format(template, tableName, polygonString);
+
     }
 
     /**
@@ -44,6 +45,11 @@ public class SQLGenerator {
     public static String generateRangeCountingSQL(FederateCommon.Point point, String tableName, Double radius) {
         String template = "select count(1) from %s where st_distance( st_geographyfromtext('POINT(%f %f)'), location) <= %f;";
         return String.format(template, tableName, point.getLongitude(), point.getLatitude(), radius);
+    }
+
+    public static String generateKNNSQL(FederateCommon.Point point, String tableName, Integer k) {
+        String template = "select ST_AsText(location) from %s order by ST_distance(ST_GeographyFromText('POINT(%f %f)'), location) limit %d;";
+        return String.format(template, tableName, point.getLongitude(), point.getLatitude(), k);
     }
 
     public static String generateKnnRadiusQuerySQL(FederateCommon.Point point, String tableName, Integer k) {

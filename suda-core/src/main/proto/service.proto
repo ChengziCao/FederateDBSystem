@@ -11,14 +11,16 @@ option java_outer_classname = "FederateService";
 
 
 message SQLExpression{
-  /*---params---*/
+  /*---optional params---*/
   optional Point point = 1;
   optional Polygon polygon = 12;
-  optional double literal = 7;
-  optional int32 t = 4;
+  optional double doubleNumber = 7;
+  optional int32 integerNumber = 13;
+  // for
+//  optional int32 t = 4;
   /*-----------*/
-  optional int32 id = 2;
-  repeated int32 idList = 3;
+//  optional int32 id = 2;
+//  repeated int32 idList = 3;
   required Function function = 5;
   required string table = 6;
 
@@ -28,7 +30,7 @@ message SQLExpression{
   optional string uuid = 11;
 
   enum Function{
-    RANGE_COUNT = 0; RANGE_QUERY = 1; POLYGON_RANGE_QUERY = 2;KNN = 3;
+    RANGE_COUNT = 0; RANGE_QUERY = 1; POLYGON_RANGE_QUERY = 2;KNN = 3;RKNN = 4;
   }
 }
 
@@ -37,15 +39,20 @@ message SQLExpression{
 service Federate {
   rpc AddClient(AddClientRequest) returns (GeneralResponse);// 打招呼，打通了说明add成功了，更稳妥，还没做
   rpc GetResult (SQLExpression) returns (SQLReply) {}
-
+  // public query
   rpc publicRangeCount (SQLExpression) returns (SQLReply) {}
   rpc publicRangeQuery (SQLExpression) returns (SQLReply) {}
   rpc publicPolygonRangeQuery(SQLExpression) returns (SQLReply) {}
+  rpc publicKNN(SQLExpression) returns (SQLReply) {}
+  rpc KnnRadiusQuery (SQLExpression) returns (SQLReply) {}
+
+  // privacy query
   rpc privacyRangeCount (SQLExpression) returns (Status) {}
   rpc privacyRangeQuery (SQLExpression) returns (Status) {}
   rpc privacyPolygonRangeQuery(SQLExpression) returns (Status) {}
-  rpc KnnRadiusQuery (SQLExpression) returns (KnnRadiusQueryResponse) {}
+  //  rpc privacyKNN (SQLExpression) returns (Status) {}
 
+  // secure operator
   rpc privacySummation(SummationRequest)returns(SummationResponse){}
   rpc localSummation(SummationRequest) returns(SummationResponse){}
   rpc privacyUnion (UnionRequest) returns (UnionResponse){}
@@ -120,7 +127,8 @@ message SQLRequest {
 // The response message containing the greetings
 
 message SQLReply {
-  optional double num = 1;
+  optional double doubleNumber = 1;
+  optional int64 integerNumber = 4;
   repeated Point point = 2;
   repeated int32 fakeLocalSum = 3;
 }
