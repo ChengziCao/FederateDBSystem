@@ -6,3 +6,6 @@
 *.log
 suda-core/src/main/resources/query-local.json
 suda-core/src/main/resources/model-local.json
+*.out
+*.iml
+pid
