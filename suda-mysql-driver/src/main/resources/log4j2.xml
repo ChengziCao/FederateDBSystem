@@ -27,7 +27,7 @@ Configuration后面的status，这个用于设置log4j2自身内部的信息输�
                   value="%d{yyyy-MM-dd HH:mm:ss.SSS} %level %msg%n"/>
 
         <!-- 定义日志存储的路径，不要配置相对路径 -->
-        <property name="FILE_PATH" value="./logs"/>
+        <property name="FILE_PATH" value="./"/>
         <property name="FILE_NAME" value="package"/>
     </Properties>
 
