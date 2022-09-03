@@ -30,77 +30,131 @@ com.suda.federate.application.Main.main()
 
 ### workflow
 
-<img src="assets/proto-demo.jpg" style="zoom:30%;" />
+- query phase
 
 ```mermaid
-%% graph TD
-%%     start([开始])
-%%     start-->d1_input2
+graph TD
+    start([开始])
+    start-->d1_input2
 
-%% d1_input2[/query.json/]    
-%% d1_input2-->|json string|d1_expresssion[SQL Expression]
-%% d1_expresssion-->|"Function and Variables"|d1_generator[SQL Generator]
+d1_input2[/query.json/]    
+d1_input2-->|json string|d1_expresssion[SQL Expression]
 
-%% d1_generator-->|target sql|DB_A[(Database A)]
-%% d1_generator-->|target sql|DB_B[(Database A)]
-%% d1_generator-->|target sql|DB_C[(Database A)]
+d1_expresssion-->|"Function and Variables"|Driver_A[(Database A)]
+d1_expresssion-->|"Function and Variables"|Driver_B[(Database A)]
+d1_expresssion-->|"Function and Variables"|Driver_C[(Database A)]
 
-%% subgraph node1
-%%     DB_A[(Database A)]
-%% end
 
-%% subgraph node2
-%%     DB_B[(Database B)]
-%% end
+subgraph silo3
+    Driver_A[PostGis Driver] -->|local query| DB_A[(Postgresql)]
+    DB_A -->|local result| cache_A[/cache/]
+   
+end
 
-%% subgraph node3
-%%     DB_C[(Database C)]
-%% end
+subgraph silo2
+    Driver_B[MySQL Driver] -->|local query| DB_B[(MySQL)]
+   DB_B -->|local result| cache_B[/cache/]
+end
 
-%% memger[SetUnion or Summation]
-%% DB_A-->|local result|memger
-%% DB_B-->|local result|memger
-%% DB_C-->|local result|memger
+subgraph silo1
+    Driver_C[CSV Driver] -->|local query| DB_C[(csv)]
+    DB_C -->|local result| cache_C[/cache/]
+end
+```
 
-%% memger-->final_resulat[/Final Result/]
-%% final_resulat-->end_([结束])
+- merge phase
+
+```mermaid
+graph TD
+    start([开始])
+    input[/leader client/]
+    start-->input
+
+input --> op1
+subgraph silo1
+    op1[secure operator]
+    cache_A[/cache/]
+    cache_A --> op1
+end
+op1 --> op2
+subgraph silo2
+    op2[secure operator]
+   cache_B[/cache/]
+   cache_B --> op2
+end
+
+op2 --> op3
+
+subgraph silo3
+    op3[secure operator]
+    cache_C[/cache/]
+    cache_C --> op3
+end
+
+op3-->final_resulat[/Final Result/]
+final_resulat-->end_([结束])
 ```
 
 ## Function
-
-当前支持三种查询，RangeCount，RangeQuery，KNN
 
 ### RangCount
 
 函数原型
 
 ```java
-/**
- * query: select RangeCounting (P, radius) from table_name;
- * result: Integer，The number of points whose distance from P < radius in. table_name.
- *
- * @param point  query location
- * @param radius range count radius
- */
-Integer RangeCount(FD_Point point, Double radius)l
+public class FederateRangeCount{
+    /**
+     * query: select RangeCounting (P, radius) from table_name;
+     * @param expression query expression (point, radius)
+     * @return Integer，The number of points whose distance from P < radius in. table_name.
+     */
+    public static Integer publicQuery(SQLExpression expression)
+    /**
+     * query: select RangeCounting (P, radius) from table_name;
+     * result: Integer，The number of points whose distance from P < radius in. table_name.
+     *
+     * @param point  query location
+     * @param radius range count radius
+     */
+    public static Integer publicQuery(String tableName, Double radius, Point point);
+    
+    /**
+     * query: select RangeCounting (P, radius) from table_name;
+     * @param expression query expression (point, radius)
+     * @return Integer，The number of points whose distance from P < radius in. table_name.
+     */
+    public static Integer privacyQuery(SQLExpression expression)
+        
+    /**
+     * query: select RangeCounting (P, radius) from table_name;
+     * @param tableName tableName target table name
+     * @param radius range count query radius
+     * @param point query location point
+     * @param uuid identify this query
+     * @return Integer，The number of points whose distance from P < radius in. table_name.
+     */
+    public static Integer privacyQuery(String tableName, Double radius, Point point, String uuid);
+}
+
 ```
 
 query.json
 
 ```json
 {
-    "function":"RangeCount",
-    "params":[
-        {
-            "type":"point",
-            "value":"121.456107 31.253359"
-        },
-        {
-            "type":"Double",
-            "value":5000
-        }
+    "function": "RangeCount",
+    "table": "osm_sh",
+    "params": [
+      {
+        "type": "point",
+        "value": "121.456107 31.253359"
+      },
+      {
+        "type": "Double",
+        "value": 2500
+      }
     ]
-}
+  }
 ```
 
 ### RangeQuery
@@ -108,32 +162,57 @@ query.json
 函数原型
 
 ```java
-/**
- * query: select RangeQuery (P, radius) from table_name;
- * result: List<Point>，points whose distance from P < radius in table_name.
- *
- * @param point  query location
- * @param radius range count radius
- */
-List<FD_Point> RangeQuery(FD_Point point, Double radius);
+public class FederateRangeQuery{
+        /**
+     * query: select RangeQuery (P, radius) from table_name
+     * @param expression query expression
+     * @return List<Point>，points whose distance from P < radius in table_name.
+     */
+    public static List<Point> publicQuery(SQLExpression expression);
+    
+    /**
+     * query: select RangeQuery (P, radius) from table_name
+     * @param tableName tableName target table name
+     * @param radius range count query radius
+     * @param point query location point
+     * @return List<Point>，points whose distance from P < radius in table_name.
+     */
+    public static List<Point> publicQuery(String tableName, Double radius, Point point);
+     /**
+     * query: select RangeQuery (P, radius) from table_name
+     * @param expression query expression
+     * @return List<Point>，points whose distance from P < radius in table_name.
+     */
+    public static List<Point> privacyQuery(SQLExpression expression);
+        /**
+     * query: select RangeQuery (P, radius) from table_name
+     * @param tableName tableName target table name
+     * @param radius range count query radius
+     * @param point query location point
+     * @param uuid identify this query
+     * @return List<Point>，points whose distance from P < radius in table_name.
+     */
+    public static List<Point> privacyQuery(String tableName, Double radius, Point point, String uuid);
+}
 ```
 
 query.json
 
 ```json
 {
-    "function":"RangeQuery",
-    "params":[
-        {
-            "type":"point",
-            "value":"121.456107 31.253359"
-        },
-        {
-            "type":"Double",
-            "value":5000
-        }
+    "function": "RangeQuery",
+    "table": "osm_sh",
+    "params": [
+      {
+        "type": "point",
+        "value": "121.456107 31.253359"
+      },
+      {
+        "type": "Double",
+        "value": 2500
+      }
     ]
-}
+  }
 ```
 
 ### Knn
@@ -141,97 +220,120 @@ query.json
 函数原型
 
 ```java
-/**
- * query: select Knn (P, K) from table_name;
- * result: List<Point>，The K nearest neighbors of point P in table_name.
- *
- * @param point query location
- * @param k "K" nearest neighbors
- */
-List<FD_Point> Knn (FD_Point point, Integer K);
+public class FederateKNN{
+    
+    /**
+     * query: select publicKnn (P, K) from table_name;
+     * @param expression query expression
+     * @return List<Point>, The K nearest neighbors of point P in table_name.
+     */
+     public static List<Point> publicQuery(SQLExpression expression);
+     /**
+     * query: select public Knn (P, K) from table_name;
+     * @param tableName target table name
+     * @param k "K" nearest neighbors
+     * @param point query location point
+     * @return List<Point>, The K nearest neighbors of point P in table_name.
+     */
+	public static List<Point> publicQuery(String tableName, Integer k, Point point);
+    /**
+     * query: select privacy Knn (P, K) from table_name;
+     * @param expression query expression
+     * @return List<Point>, The K nearest neighbors of point P in table_name.
+     */
+    public static List<Point> privacyQuery(SQLExpression expression);
+	/**
+     * query: select privacy Knn (P, K) from table_name;
+     * @param tableName target table name
+     * @param k "K" nearest neighbors
+     * @param point query location point
+     * @param uuid identify this query
+     * @return List<Point>, The K nearest neighbors of point P in table_name.
+     */
+	public static List<Point> privacyQuery(String tableName, Integer k, Point point, String uuid);
+}
 ```
 
 query.json
 
 ```json
 {
-    "function":"Knn",
-    "params":[
-        {
-            "type":"point",
-            "value":"121.456107 31.253359"
-        },
-        {
-            "type":"int",
-            "value":10
-        }
+    "function": "Knn",
+    "table": "osm_sh",
+    "params": [
+      {
+        "type": "int",
+        "value": 10
+      },
+      {
+        "type": "point",
+        "value": "121 31"
+      }
     ]
-}
+  }
 ```
 
 ## GRPC
 
 ### 编写步骤
 
-1. 编写.proto文件
+- 编写.proto文件
 
-   1. 创建service 
+创建 service 
 
-      ```protobuf
-      service Federate {
-      	rpc RangeCount (SQLExpression) returns (SQLReply) {}
-      }
-      ```
+```protobuf
+service Federate {
+	rpc RangeCount (SQLExpression) returns (SQLReply) {}
+}
+```
 
-      
+创建request message
 
-   2. 创建request message
+```protobuf
+message SQLExpression{
+  optional int32 id =9;
+  repeated int32 idList=10;
+  ....
+}
+```
 
-      ```protobuf
-      message SQLExpression{
-        optional int32 id =9;
-        repeated int32 idList=10;
-        ....
-      }
-      ```
+创建response message
 
-   3. 创建response message
+```protobuf
+message SQLReply {
+  repeated int32 fakeLocalSum =2;
+  required double message = 1;
+}
+```
 
-      ```protobuf
-      message SQLReply {
-        repeated int32 fakeLocalSum =2;
-        required double message = 1;
-      }
-      ```
-   
-2. maven编译
+- maven编译
 
-   1. 配置proto编译后生成java路径
+配置proto编译后生成java路径
 
-   ```xml
-      <configuration>
-                          <protocArtifact>com.google.protobuf:protoc:${protoc.version}:exe:${os.detected.classifier}</protocArtifact>
-                          <pluginId>grpc-java</pluginId>
-      <!--                    <&#45;&#45; 指定输出的base基础路径->-->
-                          <outputDirectory>src/main/java</outputDirectory>
-      <!--                    是否清除输出目录下的文件，默认为true，表示会将指定的输出路径下的全部文件都进行清空-->
-      <!--                    如果自己配置了outputDirectory，请将这项配置改为false&ndash;&gt;-->
-                          <clearOutputDirectory>false</clearOutputDirectory>
-                      <pluginArtifact>io.grpc:protoc-gen-grpc-java:${grpc.version}:exe:${os.detected.classifier}</pluginArtifact>
-                      </configuration>
-   ```
-   
-   2. 运行maven，生成如下文件(rpc目录)
-   
-      ```java
-      package com.suda.federate.rpc;
-      
-      public final class FederateService {
-      	...
-      }
-      ```
-   
-      
+```xml
+   <configuration>
+                       <protocArtifact>com.google.protobuf:protoc:${protoc.version}:exe:${os.detected.classifier}</protocArtifact>
+                       <pluginId>grpc-java</pluginId>
+   <!--                    <&#45;&#45; 指定输出的base基础路径->-->
+                       <outputDirectory>src/main/java</outputDirectory>
+   <!--                    是否清除输出目录下的文件，默认为true，表示会将指定的输出路径下的全部文件都进行清空-->
+   <!--                    如果自己配置了outputDirectory，请将这项配置改为false&ndash;&gt;-->
+                       <clearOutputDirectory>false</clearOutputDirectory>
+                   <pluginArtifact>io.grpc:protoc-gen-grpc-java:${grpc.version}:exe:${os.detected.classifier}</pluginArtifact>
+                   </configuration>
+```
+
+运行maven，生成如下文件(rpc目录)
+
+```java
+package com.suda.federate.rpc;
+
+public final class FederateService {
+	...
+}
+```
+
+
 
 ### 通信过程
 

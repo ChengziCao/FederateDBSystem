@@ -14,6 +14,11 @@ import java.util.concurrent.Future;
 
 public class FederateRangeQuery extends FederateQuery {
 
+    /**
+     * query: select RangeQuery (P, radius) from table_name
+     * @param expression query expression
+     * @return List<Point>，points whose distance from P < radius in table_name.
+     */
     public static List<FederateCommon.Point> publicQuery(FederateService.SQLExpression expression) throws Exception {
         List<FederateService.SQLReply> replyList = fedSpatialPublicQuery(expression);
         List<FederateCommon.Point> pointList = publicUnion(replyList);
@@ -21,6 +26,13 @@ public class FederateRangeQuery extends FederateQuery {
         return pointList;
     }
 
+    /**
+     * query: select RangeQuery (P, radius) from table_name
+     * @param tableName tableName target table name
+     * @param radius range count query radius
+     * @param point query location point
+     * @return List<Point>，points whose distance from P < radius in table_name.
+     */
     public static List<FederateCommon.Point> publicQuery(String tableName, Double radius, FederateCommon.Point point) throws Exception {
         FederateService.SQLExpression expression = FederateService.SQLExpression.newBuilder()
                 .setDoubleNumber(radius)
@@ -31,7 +43,11 @@ public class FederateRangeQuery extends FederateQuery {
         return publicQuery(expression);
     }
 
-
+    /**
+     * query: select RangeQuery (P, radius) from table_name
+     * @param expression query expression
+     * @return List<Point>，points whose distance from P < radius in table_name.
+     */
     public static List<FederateCommon.Point> privacyQuery(FederateService.SQLExpression expression) throws InterruptedException {
         List<Callable<Boolean>> tasks = new ArrayList<>();
         StreamingIterator<Boolean> iterator = new StreamingIterator<>(federateDBClients.size());
@@ -60,6 +76,14 @@ public class FederateRangeQuery extends FederateQuery {
         return pointList;
     }
 
+    /**
+     * query: select RangeQuery (P, radius) from table_name
+     * @param tableName tableName target table name
+     * @param radius range count query radius
+     * @param point query location point
+     * @param uuid identify this query
+     * @return List<Point>，points whose distance from P < radius in table_name.
+     */
     public static List<FederateCommon.Point> privacyQuery(String tableName, Double radius, FederateCommon.Point point, String uuid) throws Exception {
         FederateService.SQLExpression expression = FederateService.SQLExpression.newBuilder()
                 .setDoubleNumber(radius)

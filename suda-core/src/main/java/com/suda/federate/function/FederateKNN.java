@@ -14,6 +14,11 @@ import static com.suda.federate.utils.ENUM.str2FUNCTION;
 
 public class FederateKNN extends FederateQuery {
 
+    /**
+     * query: select publicKnn (P, K) from table_name;
+     * @param expression query expression
+     * @return List<Point>, The K nearest neighbors of point P in table_name.
+     */
     public static List<FederateCommon.Point> publicQuery(FederateService.SQLExpression expression) throws Exception {
 
         List<FederateService.SQLReply> replyList = fedSpatialPublicQuery(expression);
@@ -24,6 +29,13 @@ public class FederateKNN extends FederateQuery {
         return pointList;
     }
 
+    /**
+     * query: select public Knn (P, K) from table_name;
+     * @param tableName target table name
+     * @param k "K" nearest neighbors
+     * @param point query location point
+     * @return List<Point>, The K nearest neighbors of point P in table_name.
+     */
     public static List<FederateCommon.Point> publicQuery(String tableName, Integer k, FederateCommon.Point point) throws Exception {
         FederateService.SQLExpression expression = FederateService.SQLExpression.newBuilder()
                 .setIntegerNumber(k)
@@ -35,6 +47,11 @@ public class FederateKNN extends FederateQuery {
         return publicQuery(expression);
     }
 
+    /**
+     * query: select privacy Knn (P, K) from table_name;
+     * @param expression query expression
+     * @return List<Point>, The K nearest neighbors of point P in table_name.
+     */
     public static List<FederateCommon.Point> privacyQuery(FederateService.SQLExpression expression) throws Exception {
 
         double minRadius = Double.MAX_VALUE;
@@ -62,6 +79,14 @@ public class FederateKNN extends FederateQuery {
         return pointList;
     }
 
+    /**
+     * query: select privacy Knn (P, K) from table_name;
+     * @param tableName target table name
+     * @param k "K" nearest neighbors
+     * @param point query location point
+     * @param uuid identify this query
+     * @return List<Point>, The K nearest neighbors of point P in table_name.
+     */
     public static List<FederateCommon.Point> privacyQuery(String tableName, Integer k, FederateCommon.Point point, String uuid) throws Exception {
         FederateService.SQLExpression expression = FederateService.SQLExpression.newBuilder()
                 .setIntegerNumber(k)
