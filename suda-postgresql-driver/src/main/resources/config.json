@@ -3,7 +3,7 @@
   "driver": "org.postgresql.Driver",
   "user": "postgres",
   "password": "123465",
-  "url": "jdbc:postgresql://10.10.65.122:54322/gis",
+  "url": "jdbc:postgresql://10.10.65.122:54321/gis",
   "type": "POSTGRESQL",
-  "grpcPort": 8887
+  "grpcPort": 8886
 }

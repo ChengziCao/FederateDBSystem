@@ -169,6 +169,8 @@ public class FederateRKNN {
         } else if (l2.getFirst().equals(l1.getFirst())) {
             return new Pair<>(null, null);
         } else {
+            l1 = new Pair<>(Double.parseDouble(l1.getFirst().toString()), l1.getSecond());
+            l2 = new Pair<>(Double.parseDouble(l2.getFirst().toString()), l2.getSecond());
             double x = (l1.getSecond() - l2.getSecond()) / ((double) l2.getFirst() - (double) l1.getFirst());
             double y = ((double) l2.getFirst() * l1.getSecond() - (double) l1.getFirst() * l2.getSecond()) / ((double) l2.getFirst() - (double) l1.getFirst());
             return new Pair<>(x, y);
@@ -187,9 +189,20 @@ public class FederateRKNN {
 
 
     public static double dis(FederateCommon.Point p, FederateCommon.Point q) {
-        return Math.sqrt(Math.pow(p.getLatitude() - q.getLatitude(), 2) + Math.pow(p.getLongitude() - q.getLongitude(), 2));
+        double longitude1 = p.getLongitude(), latitude1 = p.getLatitude(), longitude2 = q.getLongitude(), latitude2 = q.getLatitude();
+        double Lat1 = rad(latitude1); // 纬度
+        double Lat2 = rad(latitude2);
+        double a = Lat1 - Lat2;//两点纬度之差
+        double b = rad(longitude1) - rad(longitude2); //经度之差
+        double s = 2 * Math.asin(Math.sqrt(Math.pow(Math.sin(a / 2), 2) + Math.cos(Lat1) * Math.cos(Lat2) * Math.pow(Math.sin(b / 2), 2)));//计算两点距离的公式
+        s = s * 6378137.0;//弧长乘地球半径（半径为米）
+        s = Math.round(s * 10000d) / 10000d;//精确距离的数值
+        return s;
     }
 
+    private static double rad(double d) {
+        return d * Math.PI / 180.00; //角度转换成弧度
+    }
     public static boolean equals(FederateCommon.Point p, FederateCommon.Point q) {
         return p.getLatitude() == q.getLatitude() && p.getLongitude() == q.getLongitude();
     }
@@ -199,8 +212,8 @@ public class FederateRKNN {
     }
 
 
-    public static double calculateBearingToPoint(double currentBearing, int currentX, int currentY,
-                                                 int targetX, int targetY) {
+    public static double calculateBearingToPoint(double currentBearing, double currentX, double currentY,
+                                                 double targetX, double targetY) {
         //计算从根部点到目标点的向量的横坐标
         double x = targetX - currentX;
         //同上，计算向量的纵坐标

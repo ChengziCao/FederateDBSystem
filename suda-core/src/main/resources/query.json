@@ -1,45 +1,35 @@
 [
   {
     "function": "RangeCount",
-    "table": "osm_sh",
+    "table": "osm_beijing",
     "params": [
       {
         "type": "point",
-        "value": "121.456107 31.253359"
+        "value": "116.3855782 39.9019869"
       },
       {
         "type": "Double",
-        "value": 2500
+        "value": 100
       }
     ]
   },
   {
     "function": "RangeQuery",
-    "table": "osm_sh",
+    "table": "osm_beijing",
     "params": [
       {
         "type": "point",
-        "value": "121.456107 31.253359"
+        "value": "116.3855782 39.9019869"
       },
       {
         "type": "Double",
-        "value": 2500
-      }
-    ]
-  },
-  {
-    "function": "PolygonRangeQuery",
-    "table": "osm_sh",
-    "params": [
-      {
-        "type": "polygon",
-        "value": "121 31, 122 31, 122 31.5, 121 31"
+        "value": 100
       }
     ]
   },
   {
     "function": "Knn",
-    "table": "osm_sh",
+    "table": "osm_beijing",
     "params": [
       {
         "type": "int",
@@ -47,7 +37,7 @@
       },
       {
         "type": "point",
-        "value": "121 31"
+        "value": "116.3855782 39.9019869"
       }
     ]
   }

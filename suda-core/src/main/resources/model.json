@@ -11,17 +11,16 @@
       ],
       "tables": [
         {
-          "name": "osm_sh",
+          "name": "osm_beijing",
           "feds": [
             {
               "endpoint": "localhost:8886",
-              "siloTableName": "osm_sh"
+              "siloTableName": "osm_beijing"
             },
             {
               "endpoint": "localhost:8887",
-              "siloTableName": "osm_sh"
+              "siloTableName": "osm_beijing"
             }
-
           ]
         }
       ]

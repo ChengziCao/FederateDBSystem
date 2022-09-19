@@ -30,68 +30,38 @@ com.suda.federate.application.Main.main()
 
 ### workflow
 
-- query phase
-
 ```mermaid
 graph TD
     start([开始])
-    start-->d1_input2
-
-d1_input2[/query.json/]    
-d1_input2-->|json string|d1_expresssion[SQL Expression]
-
-d1_expresssion-->|"Function and Variables"|Driver_A[(Database A)]
-d1_expresssion-->|"Function and Variables"|Driver_B[(Database A)]
-d1_expresssion-->|"Function and Variables"|Driver_C[(Database A)]
-
-
-subgraph silo3
-    Driver_A[PostGis Driver] -->|local query| DB_A[(Postgresql)]
-    DB_A -->|local result| cache_A[/cache/]
-   
-end
-
-subgraph silo2
-    Driver_B[MySQL Driver] -->|local query| DB_B[(MySQL)]
-   DB_B -->|local result| cache_B[/cache/]
-end
-
-subgraph silo1
-    Driver_C[CSV Driver] -->|local query| DB_C[(csv)]
-    DB_C -->|local result| cache_C[/cache/]
-end
-```
-
-- merge phase
-
-```mermaid
-graph TD
-    start([开始])
-    input[/leader client/]
     start-->input
 
-input --> op1
-subgraph silo1
-    op1[secure operator]
-    cache_A[/cache/]
-    cache_A --> op1
-end
-op1 --> op2
-subgraph silo2
-    op2[secure operator]
-   cache_B[/cache/]
-   cache_B --> op2
-end
+input[/quer plan/]    
+input-->expresssion[SQL Expression]
 
-op2 --> op3
+expresssion-->|"Function and Params"|Driver_A[(Database A)]
+expresssion-->|"Function and Params"|Driver_B[(Database A)]
+expresssion-->|"Function and Params"|Driver_C[(Database A)]
 
-subgraph silo3
-    op3[secure operator]
-    cache_C[/cache/]
-    cache_C --> op3
+
+
+op1 --> |encrypt result| op2
+subgraph data owner 2
+    Driver_B[MySQL Driver] -->|local query| DB_B[(MySQL)]
+   DB_B -->|local result| op2[secure merger]
 end
 
-op3-->final_resulat[/Final Result/]
+op2 --> |encrypt result| op3
+subgraph data owner 1
+    Driver_A[PostGis Driver] -->|local query| DB_A[(Postgresql)]
+    DB_A -->|local result| op1[secure merger]
+end
+
+subgraph data owner 3
+    Driver_C[CSV Driver] -->|local query| DB_C[(xx.csv)]
+    DB_C -->|local result|op3[secure merger]
+end
+
+op3-->|global result| final_resulat[/Final Result/]
 final_resulat-->end_([结束])
 ```
 

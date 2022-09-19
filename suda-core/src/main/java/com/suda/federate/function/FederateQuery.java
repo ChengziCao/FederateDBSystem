@@ -21,6 +21,7 @@ import java.util.stream.Collectors;
 public abstract class FederateQuery {
     public static List<FederateDBClient> federateDBClients = new ArrayList<>();
     public static List<String> endpoints = new ArrayList<>();
+    // public static Map<String, FederateDBClient> federateClientMap = new HashMap<>();
     public static ExecutorService executorService;
 
     /**

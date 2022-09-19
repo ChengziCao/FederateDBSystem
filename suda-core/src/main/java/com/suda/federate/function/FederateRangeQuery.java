@@ -72,7 +72,6 @@ public class FederateRangeQuery extends FederateQuery {
 
         List<FederateCommon.Point> pointList = privacyUnion(expression);
         LogUtils.debug("privacy range query count: " + pointList.size() + "\n" + FederateUtils.flatPointList(pointList));
-
         return pointList;
     }
 

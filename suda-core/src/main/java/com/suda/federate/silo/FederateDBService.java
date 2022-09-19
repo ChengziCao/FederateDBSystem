@@ -1,11 +1,9 @@
 package com.suda.federate.silo;
 
 import com.google.protobuf.Empty;
-import com.suda.federate.config.FedSpatialConfig;
 import com.suda.federate.rpc.FederateCommon;
 import com.suda.federate.rpc.FederateGrpc;
 import com.suda.federate.rpc.FederateService;
-import com.suda.federate.security.dp.Laplace;
 import com.suda.federate.security.sha.SiloCache;
 import com.suda.federate.utils.ConcurrentBuffer;
 import com.suda.federate.utils.FederateUtils;
@@ -17,8 +15,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 
 import static com.suda.federate.security.sha.SecretSum.*;
@@ -28,30 +24,31 @@ import static com.suda.federate.security.sha.SecretSum.*;
  */
 public abstract class FederateDBService extends FederateGrpc.FederateImplBase {
 
-    public Map<String, FederateDBClient> federateClientMap = null;
+    // public static Map<String, FederateDBClient> federateClientMap = null;
 
-    public int THREAD_POOL_SIZE = 0;
-    public ExecutorService executorService = null;
-    public Laplace lp = null;
-    public ConcurrentBuffer buffer = new ConcurrentBuffer();
+    // public static int THREAD_POOL_SIZE = 0;
+    // public static ExecutorService executorService = null;
+    // public static Laplace lp = null;
 
 
-    public void initClients(List<String> endpoints) {
-        federateClientMap = new TreeMap<>();
-        for (String endpoint : endpoints) {
-            federateClientMap.put(endpoint, new FederateDBClient(endpoint));
-        }
-        THREAD_POOL_SIZE = endpoints.size();
-        executorService = Executors.newFixedThreadPool(THREAD_POOL_SIZE);
-        lp = new Laplace(FedSpatialConfig.EPS_DP, FedSpatialConfig.SD_DP);
-    }
+    public static ConcurrentBuffer buffer = new ConcurrentBuffer();
 
-    public FederateDBClient getClient(String endpoint) {
-        if (federateClientMap.containsKey(endpoint)) {
-            return federateClientMap.get(endpoint);
-        }
-        return null;
-    }
+    // public void initClients(List<String> endpoints) {
+    //     federateClientMap = new TreeMap<>();
+    //     for (String endpoint : endpoints) {
+    //         federateClientMap.put(endpoint, new FederateDBClient(endpoint));
+    //     }
+    //     // THREAD_POOL_SIZE = endpoints.size();
+    //     // executorService = Executors.newFixedThreadPool(THREAD_POOL_SIZE);
+    //     // lp = new Laplace(FedSpatialConfig.EPS_DP, FedSpatialConfig.SD_DP);
+    // }
+    //
+    // public FederateDBClient getClient(String endpoint) {
+    //     if (federateClientMap.containsKey(endpoint)) {
+    //         return federateClientMap.get(endpoint);
+    //     }
+    //     return null;
+    // }
 
     //public FederateDBClient getClient(String endpoint,boolean used) {//没啥用
     //    return new FederateDBClient(endpoint);
@@ -90,11 +87,12 @@ public abstract class FederateDBService extends FederateGrpc.FederateImplBase {
 
     @Override
     public void privacyUnion(FederateService.UnionRequest request, StreamObserver<FederateService.UnionResponse> responseObserver) {
-        if (federateClientMap == null || federateClientMap.isEmpty()) {
-            initClients(request.getEndpointsList());//索引endpoint都初始化，一劳永逸（如果loop顺序不变，建议只初始化nextnexFederateDBClient）
-//            LogUtils.debug("init client ok");
-        }
-        FederateDBClient client = getClient(request.getEndpoints(1));
+//         if (federateClientMap == null || federateClientMap.isEmpty()) {
+//             initClients(request.getEndpointsList());//索引endpoint都初始化，一劳永逸（如果loop顺序不变，建议只初始化nextnexFederateDBClient）
+// //            LogUtils.debug("init client ok");
+//         }
+
+        FederateDBClient client = new FederateDBClient(request.getEndpoints(1));
 //        LogUtils.debug(client.getEndpoint());
         request = personalAdd(request);
         FederateService.UnionResponse response = client.localUnion(request.toBuilder().setLoop(1).setIndex(0).build());
@@ -111,10 +109,10 @@ public abstract class FederateDBService extends FederateGrpc.FederateImplBase {
 
     @Override
     public void localUnion(FederateService.UnionRequest request, StreamObserver<FederateService.UnionResponse> responseObserver) {
-        if (federateClientMap == null || federateClientMap.isEmpty()) {
-            initClients(request.getEndpointsList());//索引endpoint都初始化，一劳永逸（如果loop顺序不变，建议只初始化nextnexFederateDBClient）
-//            LogUtils.debug("init client ok");
-        }
+//         if (federateClientMap == null || federateClientMap.isEmpty()) {
+//             initClients(request.getEndpointsList());//索引endpoint都初始化，一劳永逸（如果loop顺序不变，建议只初始化nextnexFederateDBClient）
+// //            LogUtils.debug("init client ok");
+//         }
         Integer currIndex = request.getIndex();
         Integer currLoop = request.getLoop();
 
@@ -123,7 +121,7 @@ public abstract class FederateDBService extends FederateGrpc.FederateImplBase {
         int endpointIdx = finalNextIndexOfEndPoint % request.getEndpointsCount();
         String nextEndpoint = request.getEndpoints(endpointIdx);
 
-        FederateDBClient nextFederateDBClient = getClient(nextEndpoint);
+        FederateDBClient nextFederateDBClient = new FederateDBClient(nextEndpoint);
 //        LogUtils.debug(nextFederateDBClient.getEndpoint());
         SiloCache siloCache = (SiloCache) buffer.get(request.getUuid());
 //        LogUtils.debug("request " + request.getPointCount());
@@ -226,17 +224,15 @@ public abstract class FederateDBService extends FederateGrpc.FederateImplBase {
 
     @Override
     public void privacySummation(FederateService.SummationRequest request, StreamObserver<FederateService.SummationResponse> responseObserver) {
-        if (federateClientMap == null || federateClientMap.isEmpty()) {
-            initClients(request.getEndpointsList());
-            // LogUtils.debug("init client ok");
-        }
+        
         LogUtils.debug("privacy summation start.");
-        FederateDBClient leaderClient = federateClientMap.get(request.getEndpoints(request.getIndex()));
+        FederateDBClient leaderClient = new FederateDBClient(request.getEndpoints(request.getIndex()));
         FederateService.SummationResponse response = leaderClient.localSummation(request);
+        // LogUtils.debug(response.toString());
         List<List<Integer>> fakeLocalSumList = response.getFakeLocalSumList().stream().map(x -> x.getNumList()).collect(Collectors.toList());
-//         LogUtils.debug(fakeLocalSumList.toString());
+        LogUtils.debug(fakeLocalSumList.toString());
         List<Integer> S = computeS(fakeLocalSumList);
-//         LogUtils.debug(S.toString());
+        LogUtils.debug(S.toString());
         int secureSum = lag(request.getIdListList(), S, 0);
         LogUtils.debug("privacy summation finished.");
         responseObserver.onNext(response.toBuilder().setCount(secureSum).build());
@@ -245,20 +241,27 @@ public abstract class FederateDBService extends FederateGrpc.FederateImplBase {
 
     @Override
     public void localSummation(FederateService.SummationRequest request, StreamObserver<FederateService.SummationResponse> responseObserver) {
+
         FederateService.SummationResponse response = request.getResponse();
 
         Integer ans = (Integer) buffer.get(request.getUuid());
-        // LogUtils.debug(request.getSiloSize() + "," + ans + "," + request.getIdListList());
+        LogUtils.debug(request.getSiloSize() + "," + ans + "," + request.getIdListList());
         List<Integer> cryptPloy = localClient(request.getSiloSize(), ans, request.getIdListList());
-        // LogUtils.debug(cryptPloy.toString());
+        LogUtils.debug(cryptPloy.toString());
 
         response = response.toBuilder().addFakeLocalSum(FederateService.SummationResponse.FakeLocalSum.newBuilder().addAllNum(cryptPloy).build()).build();
         //response.toBuilder().addFakeLocal
-        // LogUtils.debug(response.getFakeLocalSum(request.getIndex()).toString());
+        LogUtils.debug(response.getFakeLocalSum(request.getIndex()).toString());
 
         int nextIndex = request.getIndex() + 1;
+        LogUtils.debug(Integer.toString(nextIndex));
         if (nextIndex < request.getEndpointsCount()) {
-            FederateDBClient nextClient = federateClientMap.get(request.getEndpoints(nextIndex));
+            LogUtils.debug("to next client index: " + nextIndex);
+            // LogUtils.debug(federateClientMap);
+            // LogUtils.debug(Integer.toString(federateClientMap.hashCode()));
+
+            FederateDBClient nextClient = new FederateDBClient(request.getEndpoints(nextIndex));
+            LogUtils.debug(nextClient.toString());
             response = nextClient.localSummation(request.toBuilder().setResponse(response).setIndex(nextIndex).build());
         }
 
