@@ -3510,21 +3510,21 @@ public final class FederateService {
     int getSiloSize();
 
     /**
-     * <code>repeated int32 idList = 2;</code>
-     * @return A list containing the idList.
+     * <code>repeated int32 publicKey = 2;</code>
+     * @return A list containing the publicKey.
      */
-    java.util.List<java.lang.Integer> getIdListList();
+    java.util.List<java.lang.Integer> getPublicKeyList();
     /**
-     * <code>repeated int32 idList = 2;</code>
-     * @return The count of idList.
+     * <code>repeated int32 publicKey = 2;</code>
+     * @return The count of publicKey.
      */
-    int getIdListCount();
+    int getPublicKeyCount();
     /**
-     * <code>repeated int32 idList = 2;</code>
+     * <code>repeated int32 publicKey = 2;</code>
      * @param index The index of the element to return.
-     * @return The idList at the given index.
+     * @return The publicKey at the given index.
      */
-    int getIdList(int index);
+    int getPublicKey(int index);
 
     /**
      * <code>required string uuid = 3;</code>
@@ -3569,15 +3569,26 @@ public final class FederateService {
         getEndpointsBytes(int index);
 
     /**
-     * <code>required int32 index = 5;</code>
-     * @return Whether the index field is set.
+     * <code>required int32 nowIndex = 5;</code>
+     * @return Whether the nowIndex field is set.
      */
-    boolean hasIndex();
+    boolean hasNowIndex();
     /**
-     * <code>required int32 index = 5;</code>
-     * @return The index.
+     * <code>required int32 nowIndex = 5;</code>
+     * @return The nowIndex.
      */
-    int getIndex();
+    int getNowIndex();
+
+    /**
+     * <code>required int32 endIndex = 7;</code>
+     * @return Whether the endIndex field is set.
+     */
+    boolean hasEndIndex();
+    /**
+     * <code>required int32 endIndex = 7;</code>
+     * @return The endIndex.
+     */
+    int getEndIndex();
 
     /**
      * <code>required .federate.SummationResponse response = 6;</code>
@@ -3607,7 +3618,7 @@ public final class FederateService {
       super(builder);
     }
     private SummationRequest() {
-      idList_ = emptyIntList();
+      publicKey_ = emptyIntList();
       uuid_ = "";
       endpoints_ = com.google.protobuf.LazyStringArrayList.EMPTY;
     }
@@ -3650,21 +3661,21 @@ public final class FederateService {
             }
             case 16: {
               if (!((mutable_bitField0_ & 0x00000002) != 0)) {
-                idList_ = newIntList();
+                publicKey_ = newIntList();
                 mutable_bitField0_ |= 0x00000002;
               }
-              idList_.addInt(input.readInt32());
+              publicKey_.addInt(input.readInt32());
               break;
             }
             case 18: {
               int length = input.readRawVarint32();
               int limit = input.pushLimit(length);
               if (!((mutable_bitField0_ & 0x00000002) != 0) && input.getBytesUntilLimit() > 0) {
-                idList_ = newIntList();
+                publicKey_ = newIntList();
                 mutable_bitField0_ |= 0x00000002;
               }
               while (input.getBytesUntilLimit() > 0) {
-                idList_.addInt(input.readInt32());
+                publicKey_.addInt(input.readInt32());
               }
               input.popLimit(limit);
               break;
@@ -3686,12 +3697,12 @@ public final class FederateService {
             }
             case 40: {
               bitField0_ |= 0x00000004;
-              index_ = input.readInt32();
+              nowIndex_ = input.readInt32();
               break;
             }
             case 50: {
               com.suda.federate.rpc.FederateService.SummationResponse.Builder subBuilder = null;
-              if (((bitField0_ & 0x00000008) != 0)) {
+              if (((bitField0_ & 0x00000010) != 0)) {
                 subBuilder = response_.toBuilder();
               }
               response_ = input.readMessage(com.suda.federate.rpc.FederateService.SummationResponse.PARSER, extensionRegistry);
@@ -3699,7 +3710,12 @@ public final class FederateService {
                 subBuilder.mergeFrom(response_);
                 response_ = subBuilder.buildPartial();
               }
+              bitField0_ |= 0x00000010;
+              break;
+            }
+            case 56: {
               bitField0_ |= 0x00000008;
+              endIndex_ = input.readInt32();
               break;
             }
             default: {
@@ -3718,7 +3734,7 @@ public final class FederateService {
             e).setUnfinishedMessage(this);
       } finally {
         if (((mutable_bitField0_ & 0x00000002) != 0)) {
-          idList_.makeImmutable(); // C
+          publicKey_.makeImmutable(); // C
         }
         if (((mutable_bitField0_ & 0x00000008) != 0)) {
           endpoints_ = endpoints_.getUnmodifiableView();
@@ -3760,31 +3776,31 @@ public final class FederateService {
       return siloSize_;
     }
 
-    public static final int IDLIST_FIELD_NUMBER = 2;
-    private com.google.protobuf.Internal.IntList idList_;
+    public static final int PUBLICKEY_FIELD_NUMBER = 2;
+    private com.google.protobuf.Internal.IntList publicKey_;
     /**
-     * <code>repeated int32 idList = 2;</code>
-     * @return A list containing the idList.
+     * <code>repeated int32 publicKey = 2;</code>
+     * @return A list containing the publicKey.
      */
     @java.lang.Override
     public java.util.List<java.lang.Integer>
-        getIdListList() {
-      return idList_;
+        getPublicKeyList() {
+      return publicKey_;
     }
     /**
-     * <code>repeated int32 idList = 2;</code>
-     * @return The count of idList.
+     * <code>repeated int32 publicKey = 2;</code>
+     * @return The count of publicKey.
      */
-    public int getIdListCount() {
-      return idList_.size();
+    public int getPublicKeyCount() {
+      return publicKey_.size();
     }
     /**
-     * <code>repeated int32 idList = 2;</code>
+     * <code>repeated int32 publicKey = 2;</code>
      * @param index The index of the element to return.
-     * @return The idList at the given index.
+     * @return The publicKey at the given index.
      */
-    public int getIdList(int index) {
-      return idList_.getInt(index);
+    public int getPublicKey(int index) {
+      return publicKey_.getInt(index);
     }
 
     public static final int UUID_FIELD_NUMBER = 3;
@@ -3870,23 +3886,42 @@ public final class FederateService {
       return endpoints_.getByteString(index);
     }
 
-    public static final int INDEX_FIELD_NUMBER = 5;
-    private int index_;
+    public static final int NOWINDEX_FIELD_NUMBER = 5;
+    private int nowIndex_;
     /**
-     * <code>required int32 index = 5;</code>
-     * @return Whether the index field is set.
+     * <code>required int32 nowIndex = 5;</code>
+     * @return Whether the nowIndex field is set.
      */
     @java.lang.Override
-    public boolean hasIndex() {
+    public boolean hasNowIndex() {
       return ((bitField0_ & 0x00000004) != 0);
     }
     /**
-     * <code>required int32 index = 5;</code>
-     * @return The index.
+     * <code>required int32 nowIndex = 5;</code>
+     * @return The nowIndex.
      */
     @java.lang.Override
-    public int getIndex() {
-      return index_;
+    public int getNowIndex() {
+      return nowIndex_;
+    }
+
+    public static final int ENDINDEX_FIELD_NUMBER = 7;
+    private int endIndex_;
+    /**
+     * <code>required int32 endIndex = 7;</code>
+     * @return Whether the endIndex field is set.
+     */
+    @java.lang.Override
+    public boolean hasEndIndex() {
+      return ((bitField0_ & 0x00000008) != 0);
+    }
+    /**
+     * <code>required int32 endIndex = 7;</code>
+     * @return The endIndex.
+     */
+    @java.lang.Override
+    public int getEndIndex() {
+      return endIndex_;
     }
 
     public static final int RESPONSE_FIELD_NUMBER = 6;
@@ -3897,7 +3932,7 @@ public final class FederateService {
      */
     @java.lang.Override
     public boolean hasResponse() {
-      return ((bitField0_ & 0x00000008) != 0);
+      return ((bitField0_ & 0x00000010) != 0);
     }
     /**
      * <code>required .federate.SummationResponse response = 6;</code>
@@ -3930,7 +3965,11 @@ public final class FederateService {
         memoizedIsInitialized = 0;
         return false;
       }
-      if (!hasIndex()) {
+      if (!hasNowIndex()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasEndIndex()) {
         memoizedIsInitialized = 0;
         return false;
       }
@@ -3948,8 +3987,8 @@ public final class FederateService {
       if (((bitField0_ & 0x00000001) != 0)) {
         output.writeInt32(1, siloSize_);
       }
-      for (int i = 0; i < idList_.size(); i++) {
-        output.writeInt32(2, idList_.getInt(i));
+      for (int i = 0; i < publicKey_.size(); i++) {
+        output.writeInt32(2, publicKey_.getInt(i));
       }
       if (((bitField0_ & 0x00000002) != 0)) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 3, uuid_);
@@ -3958,10 +3997,13 @@ public final class FederateService {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 4, endpoints_.getRaw(i));
       }
       if (((bitField0_ & 0x00000004) != 0)) {
-        output.writeInt32(5, index_);
+        output.writeInt32(5, nowIndex_);
+      }
+      if (((bitField0_ & 0x00000010) != 0)) {
+        output.writeMessage(6, getResponse());
       }
       if (((bitField0_ & 0x00000008) != 0)) {
-        output.writeMessage(6, getResponse());
+        output.writeInt32(7, endIndex_);
       }
       unknownFields.writeTo(output);
     }
@@ -3978,12 +4020,12 @@ public final class FederateService {
       }
       {
         int dataSize = 0;
-        for (int i = 0; i < idList_.size(); i++) {
+        for (int i = 0; i < publicKey_.size(); i++) {
           dataSize += com.google.protobuf.CodedOutputStream
-            .computeInt32SizeNoTag(idList_.getInt(i));
+            .computeInt32SizeNoTag(publicKey_.getInt(i));
         }
         size += dataSize;
-        size += 1 * getIdListList().size();
+        size += 1 * getPublicKeyList().size();
       }
       if (((bitField0_ & 0x00000002) != 0)) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, uuid_);
@@ -3998,11 +4040,15 @@ public final class FederateService {
       }
       if (((bitField0_ & 0x00000004) != 0)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(5, index_);
+          .computeInt32Size(5, nowIndex_);
+      }
+      if (((bitField0_ & 0x00000010) != 0)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(6, getResponse());
       }
       if (((bitField0_ & 0x00000008) != 0)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(6, getResponse());
+          .computeInt32Size(7, endIndex_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -4024,8 +4070,8 @@ public final class FederateService {
         if (getSiloSize()
             != other.getSiloSize()) return false;
       }
-      if (!getIdListList()
-          .equals(other.getIdListList())) return false;
+      if (!getPublicKeyList()
+          .equals(other.getPublicKeyList())) return false;
       if (hasUuid() != other.hasUuid()) return false;
       if (hasUuid()) {
         if (!getUuid()
@@ -4033,10 +4079,15 @@ public final class FederateService {
       }
       if (!getEndpointsList()
           .equals(other.getEndpointsList())) return false;
-      if (hasIndex() != other.hasIndex()) return false;
-      if (hasIndex()) {
-        if (getIndex()
-            != other.getIndex()) return false;
+      if (hasNowIndex() != other.hasNowIndex()) return false;
+      if (hasNowIndex()) {
+        if (getNowIndex()
+            != other.getNowIndex()) return false;
+      }
+      if (hasEndIndex() != other.hasEndIndex()) return false;
+      if (hasEndIndex()) {
+        if (getEndIndex()
+            != other.getEndIndex()) return false;
       }
       if (hasResponse() != other.hasResponse()) return false;
       if (hasResponse()) {
@@ -4058,9 +4109,9 @@ public final class FederateService {
         hash = (37 * hash) + SILOSIZE_FIELD_NUMBER;
         hash = (53 * hash) + getSiloSize();
       }
-      if (getIdListCount() > 0) {
-        hash = (37 * hash) + IDLIST_FIELD_NUMBER;
-        hash = (53 * hash) + getIdListList().hashCode();
+      if (getPublicKeyCount() > 0) {
+        hash = (37 * hash) + PUBLICKEY_FIELD_NUMBER;
+        hash = (53 * hash) + getPublicKeyList().hashCode();
       }
       if (hasUuid()) {
         hash = (37 * hash) + UUID_FIELD_NUMBER;
@@ -4070,9 +4121,13 @@ public final class FederateService {
         hash = (37 * hash) + ENDPOINTS_FIELD_NUMBER;
         hash = (53 * hash) + getEndpointsList().hashCode();
       }
-      if (hasIndex()) {
-        hash = (37 * hash) + INDEX_FIELD_NUMBER;
-        hash = (53 * hash) + getIndex();
+      if (hasNowIndex()) {
+        hash = (37 * hash) + NOWINDEX_FIELD_NUMBER;
+        hash = (53 * hash) + getNowIndex();
+      }
+      if (hasEndIndex()) {
+        hash = (37 * hash) + ENDINDEX_FIELD_NUMBER;
+        hash = (53 * hash) + getEndIndex();
       }
       if (hasResponse()) {
         hash = (37 * hash) + RESPONSE_FIELD_NUMBER;
@@ -4214,20 +4269,22 @@ public final class FederateService {
         super.clear();
         siloSize_ = 0;
         bitField0_ = (bitField0_ & ~0x00000001);
-        idList_ = emptyIntList();
+        publicKey_ = emptyIntList();
         bitField0_ = (bitField0_ & ~0x00000002);
         uuid_ = "";
         bitField0_ = (bitField0_ & ~0x00000004);
         endpoints_ = com.google.protobuf.LazyStringArrayList.EMPTY;
         bitField0_ = (bitField0_ & ~0x00000008);
-        index_ = 0;
+        nowIndex_ = 0;
         bitField0_ = (bitField0_ & ~0x00000010);
+        endIndex_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000020);
         if (responseBuilder_ == null) {
           response_ = null;
         } else {
           responseBuilder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00000020);
+        bitField0_ = (bitField0_ & ~0x00000040);
         return this;
       }
 
@@ -4261,10 +4318,10 @@ public final class FederateService {
           to_bitField0_ |= 0x00000001;
         }
         if (((bitField0_ & 0x00000002) != 0)) {
-          idList_.makeImmutable();
+          publicKey_.makeImmutable();
           bitField0_ = (bitField0_ & ~0x00000002);
         }
-        result.idList_ = idList_;
+        result.publicKey_ = publicKey_;
         if (((from_bitField0_ & 0x00000004) != 0)) {
           to_bitField0_ |= 0x00000002;
         }
@@ -4275,16 +4332,20 @@ public final class FederateService {
         }
         result.endpoints_ = endpoints_;
         if (((from_bitField0_ & 0x00000010) != 0)) {
-          result.index_ = index_;
+          result.nowIndex_ = nowIndex_;
           to_bitField0_ |= 0x00000004;
         }
         if (((from_bitField0_ & 0x00000020) != 0)) {
+          result.endIndex_ = endIndex_;
+          to_bitField0_ |= 0x00000008;
+        }
+        if (((from_bitField0_ & 0x00000040) != 0)) {
           if (responseBuilder_ == null) {
             result.response_ = response_;
           } else {
             result.response_ = responseBuilder_.build();
           }
-          to_bitField0_ |= 0x00000008;
+          to_bitField0_ |= 0x00000010;
         }
         result.bitField0_ = to_bitField0_;
         onBuilt();
@@ -4338,13 +4399,13 @@ public final class FederateService {
         if (other.hasSiloSize()) {
           setSiloSize(other.getSiloSize());
         }
-        if (!other.idList_.isEmpty()) {
-          if (idList_.isEmpty()) {
-            idList_ = other.idList_;
+        if (!other.publicKey_.isEmpty()) {
+          if (publicKey_.isEmpty()) {
+            publicKey_ = other.publicKey_;
             bitField0_ = (bitField0_ & ~0x00000002);
           } else {
-            ensureIdListIsMutable();
-            idList_.addAll(other.idList_);
+            ensurePublicKeyIsMutable();
+            publicKey_.addAll(other.publicKey_);
           }
           onChanged();
         }
@@ -4363,8 +4424,11 @@ public final class FederateService {
           }
           onChanged();
         }
-        if (other.hasIndex()) {
-          setIndex(other.getIndex());
+        if (other.hasNowIndex()) {
+          setNowIndex(other.getNowIndex());
+        }
+        if (other.hasEndIndex()) {
+          setEndIndex(other.getEndIndex());
         }
         if (other.hasResponse()) {
           mergeResponse(other.getResponse());
@@ -4382,7 +4446,10 @@ public final class FederateService {
         if (!hasUuid()) {
           return false;
         }
-        if (!hasIndex()) {
+        if (!hasNowIndex()) {
+          return false;
+        }
+        if (!hasEndIndex()) {
           return false;
         }
         if (!hasResponse()) {
@@ -4450,80 +4517,80 @@ public final class FederateService {
         return this;
       }
 
-      private com.google.protobuf.Internal.IntList idList_ = emptyIntList();
-      private void ensureIdListIsMutable() {
+      private com.google.protobuf.Internal.IntList publicKey_ = emptyIntList();
+      private void ensurePublicKeyIsMutable() {
         if (!((bitField0_ & 0x00000002) != 0)) {
-          idList_ = mutableCopy(idList_);
+          publicKey_ = mutableCopy(publicKey_);
           bitField0_ |= 0x00000002;
          }
       }
       /**
-       * <code>repeated int32 idList = 2;</code>
-       * @return A list containing the idList.
+       * <code>repeated int32 publicKey = 2;</code>
+       * @return A list containing the publicKey.
        */
       public java.util.List<java.lang.Integer>
-          getIdListList() {
+          getPublicKeyList() {
         return ((bitField0_ & 0x00000002) != 0) ?
-                 java.util.Collections.unmodifiableList(idList_) : idList_;
+                 java.util.Collections.unmodifiableList(publicKey_) : publicKey_;
       }
       /**
-       * <code>repeated int32 idList = 2;</code>
-       * @return The count of idList.
+       * <code>repeated int32 publicKey = 2;</code>
+       * @return The count of publicKey.
        */
-      public int getIdListCount() {
-        return idList_.size();
+      public int getPublicKeyCount() {
+        return publicKey_.size();
       }
       /**
-       * <code>repeated int32 idList = 2;</code>
+       * <code>repeated int32 publicKey = 2;</code>
        * @param index The index of the element to return.
-       * @return The idList at the given index.
+       * @return The publicKey at the given index.
        */
-      public int getIdList(int index) {
-        return idList_.getInt(index);
+      public int getPublicKey(int index) {
+        return publicKey_.getInt(index);
       }
       /**
-       * <code>repeated int32 idList = 2;</code>
+       * <code>repeated int32 publicKey = 2;</code>
        * @param index The index to set the value at.
-       * @param value The idList to set.
+       * @param value The publicKey to set.
        * @return This builder for chaining.
        */
-      public Builder setIdList(
+      public Builder setPublicKey(
           int index, int value) {
-        ensureIdListIsMutable();
-        idList_.setInt(index, value);
+        ensurePublicKeyIsMutable();
+        publicKey_.setInt(index, value);
         onChanged();
         return this;
       }
       /**
-       * <code>repeated int32 idList = 2;</code>
-       * @param value The idList to add.
+       * <code>repeated int32 publicKey = 2;</code>
+       * @param value The publicKey to add.
        * @return This builder for chaining.
        */
-      public Builder addIdList(int value) {
-        ensureIdListIsMutable();
-        idList_.addInt(value);
+      public Builder addPublicKey(int value) {
+        ensurePublicKeyIsMutable();
+        publicKey_.addInt(value);
         onChanged();
         return this;
       }
       /**
-       * <code>repeated int32 idList = 2;</code>
-       * @param values The idList to add.
+       * <code>repeated int32 publicKey = 2;</code>
+       * @param values The publicKey to add.
        * @return This builder for chaining.
        */
-      public Builder addAllIdList(
+      public Builder addAllPublicKey(
           java.lang.Iterable<? extends java.lang.Integer> values) {
-        ensureIdListIsMutable();
+        ensurePublicKeyIsMutable();
         com.google.protobuf.AbstractMessageLite.Builder.addAll(
-            values, idList_);
+            values, publicKey_);
         onChanged();
         return this;
       }
       /**
-       * <code>repeated int32 idList = 2;</code>
+       * <code>repeated int32 publicKey = 2;</code>
        * @return This builder for chaining.
        */
-      public Builder clearIdList() {
-        idList_ = emptyIntList();
+      public Builder clearPublicKey() {
+        publicKey_ = emptyIntList();
         bitField0_ = (bitField0_ & ~0x00000002);
         onChanged();
         return this;
@@ -4722,41 +4789,80 @@ public final class FederateService {
         return this;
       }
 
-      private int index_ ;
+      private int nowIndex_ ;
       /**
-       * <code>required int32 index = 5;</code>
-       * @return Whether the index field is set.
+       * <code>required int32 nowIndex = 5;</code>
+       * @return Whether the nowIndex field is set.
        */
       @java.lang.Override
-      public boolean hasIndex() {
+      public boolean hasNowIndex() {
         return ((bitField0_ & 0x00000010) != 0);
       }
       /**
-       * <code>required int32 index = 5;</code>
-       * @return The index.
+       * <code>required int32 nowIndex = 5;</code>
+       * @return The nowIndex.
        */
       @java.lang.Override
-      public int getIndex() {
-        return index_;
+      public int getNowIndex() {
+        return nowIndex_;
       }
       /**
-       * <code>required int32 index = 5;</code>
-       * @param value The index to set.
+       * <code>required int32 nowIndex = 5;</code>
+       * @param value The nowIndex to set.
        * @return This builder for chaining.
        */
-      public Builder setIndex(int value) {
+      public Builder setNowIndex(int value) {
         bitField0_ |= 0x00000010;
-        index_ = value;
+        nowIndex_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>required int32 index = 5;</code>
+       * <code>required int32 nowIndex = 5;</code>
        * @return This builder for chaining.
        */
-      public Builder clearIndex() {
+      public Builder clearNowIndex() {
         bitField0_ = (bitField0_ & ~0x00000010);
-        index_ = 0;
+        nowIndex_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int endIndex_ ;
+      /**
+       * <code>required int32 endIndex = 7;</code>
+       * @return Whether the endIndex field is set.
+       */
+      @java.lang.Override
+      public boolean hasEndIndex() {
+        return ((bitField0_ & 0x00000020) != 0);
+      }
+      /**
+       * <code>required int32 endIndex = 7;</code>
+       * @return The endIndex.
+       */
+      @java.lang.Override
+      public int getEndIndex() {
+        return endIndex_;
+      }
+      /**
+       * <code>required int32 endIndex = 7;</code>
+       * @param value The endIndex to set.
+       * @return This builder for chaining.
+       */
+      public Builder setEndIndex(int value) {
+        bitField0_ |= 0x00000020;
+        endIndex_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required int32 endIndex = 7;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearEndIndex() {
+        bitField0_ = (bitField0_ & ~0x00000020);
+        endIndex_ = 0;
         onChanged();
         return this;
       }
@@ -4769,7 +4875,7 @@ public final class FederateService {
        * @return Whether the response field is set.
        */
       public boolean hasResponse() {
-        return ((bitField0_ & 0x00000020) != 0);
+        return ((bitField0_ & 0x00000040) != 0);
       }
       /**
        * <code>required .federate.SummationResponse response = 6;</code>
@@ -4795,7 +4901,7 @@ public final class FederateService {
         } else {
           responseBuilder_.setMessage(value);
         }
-        bitField0_ |= 0x00000020;
+        bitField0_ |= 0x00000040;
         return this;
       }
       /**
@@ -4809,7 +4915,7 @@ public final class FederateService {
         } else {
           responseBuilder_.setMessage(builderForValue.build());
         }
-        bitField0_ |= 0x00000020;
+        bitField0_ |= 0x00000040;
         return this;
       }
       /**
@@ -4817,7 +4923,7 @@ public final class FederateService {
        */
       public Builder mergeResponse(com.suda.federate.rpc.FederateService.SummationResponse value) {
         if (responseBuilder_ == null) {
-          if (((bitField0_ & 0x00000020) != 0) &&
+          if (((bitField0_ & 0x00000040) != 0) &&
               response_ != null &&
               response_ != com.suda.federate.rpc.FederateService.SummationResponse.getDefaultInstance()) {
             response_ =
@@ -4829,7 +4935,7 @@ public final class FederateService {
         } else {
           responseBuilder_.mergeFrom(value);
         }
-        bitField0_ |= 0x00000020;
+        bitField0_ |= 0x00000040;
         return this;
       }
       /**
@@ -4842,14 +4948,14 @@ public final class FederateService {
         } else {
           responseBuilder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00000020);
+        bitField0_ = (bitField0_ & ~0x00000040);
         return this;
       }
       /**
        * <code>required .federate.SummationResponse response = 6;</code>
        */
       public com.suda.federate.rpc.FederateService.SummationResponse.Builder getResponseBuilder() {
-        bitField0_ |= 0x00000020;
+        bitField0_ |= 0x00000040;
         onChanged();
         return getResponseFieldBuilder().getBuilder();
       }
@@ -13327,55 +13433,53 @@ public final class FederateService {
       "\017\n\013RANGE_QUERY\020\001\022\027\n\023POLYGON_RANGE_QUERY\020" +
       "\002\022\007\n\003KNN\020\003\022\010\n\004RKNN\020\004\"\027\n\007CacheID\022\014\n\004uuid\030" +
       "\001 \002(\t\"(\n\026KnnRadiusQueryResponse\022\016\n\006radiu" +
-      "s\030\001 \002(\001\"\223\001\n\020SummationRequest\022\020\n\010siloSize" +
-      "\030\001 \002(\005\022\016\n\006idList\030\002 \003(\005\022\014\n\004uuid\030\003 \002(\t\022\021\n\t" +
-      "endpoints\030\004 \003(\t\022\r\n\005index\030\005 \002(\005\022-\n\010respon" +
-      "se\030\006 \002(\0132\033.federate.SummationResponse\"\177\n" +
-      "\021SummationResponse\022>\n\014fakeLocalSum\030\001 \003(\013" +
-      "2(.federate.SummationResponse.FakeLocalS" +
-      "um\022\r\n\005count\030\002 \001(\005\032\033\n\014FakeLocalSum\022\013\n\003num" +
-      "\030\001 \003(\005\"o\n\014UnionRequest\022\036\n\005point\030\001 \003(\0132\017." +
-      "federate.Point\022\014\n\004loop\030\002 \002(\005\022\020\n\005index\030\003 " +
-      "\002(\005:\0010\022\021\n\tendpoints\030\004 \003(\t\022\014\n\004uuid\030\005 \002(\t\"" +
-      "p\n\rUnionResponse\022\036\n\005point\030\001 \003(\0132\017.federa" +
-      "te.Point\022\014\n\004loop\030\002 \002(\005\022\020\n\005index\030\003 \002(\005:\0010" +
-      "\022\021\n\tendpoints\030\004 \003(\t\022\014\n\004uuid\030\005 \002(\t\"<\n\006Sta" +
-      "tus\022!\n\004code\030\001 \002(\0162\016.federate.Code:\003kOk\022\017" +
-      "\n\003msg\030\002 \002(\t:\002ok\"$\n\020AddClientRequest\022\020\n\010e" +
-      "ndpoint\030\001 \002(\t\"3\n\017GeneralResponse\022 \n\006stat" +
-      "us\030\001 \002(\0132\020.federate.Status\"\031\n\nSQLRequest" +
-      "\022\013\n\003sql\030\001 \002(\t\"m\n\010SQLReply\022\024\n\014doubleNumbe" +
-      "r\030\001 \001(\001\022\025\n\rintegerNumber\030\004 \001(\003\022\036\n\005point\030" +
-      "\002 \003(\0132\017.federate.Point\022\024\n\014fakeLocalSum\030\003" +
-      " \003(\005*9\n\004Code\022\007\n\003kOk\020\001\022\024\n\020kAddClientFaile" +
-      "d\020\002\022\022\n\016kCacheNotExist\020\0032\375\007\n\010Federate\022B\n\t" +
-      "AddClient\022\032.federate.AddClientRequest\032\031." +
-      "federate.GeneralResponse\022:\n\tGetResult\022\027." +
-      "federate.SQLExpression\032\022.federate.SQLRep" +
-      "ly\"\000\022A\n\020publicRangeCount\022\027.federate.SQLE" +
-      "xpression\032\022.federate.SQLReply\"\000\022A\n\020publi" +
-      "cRangeQuery\022\027.federate.SQLExpression\032\022.f" +
-      "ederate.SQLReply\"\000\022H\n\027publicPolygonRange" +
-      "Query\022\027.federate.SQLExpression\032\022.federat" +
-      "e.SQLReply\"\000\022:\n\tpublicKNN\022\027.federate.SQL" +
-      "Expression\032\022.federate.SQLReply\"\000\022?\n\016KnnR" +
-      "adiusQuery\022\027.federate.SQLExpression\032\022.fe" +
-      "derate.SQLReply\"\000\022@\n\021privacyRangeCount\022\027" +
-      ".federate.SQLExpression\032\020.federate.Statu" +
-      "s\"\000\022@\n\021privacyRangeQuery\022\027.federate.SQLE" +
-      "xpression\032\020.federate.Status\"\000\022G\n\030privacy" +
-      "PolygonRangeQuery\022\027.federate.SQLExpressi" +
-      "on\032\020.federate.Status\"\000\022M\n\020privacySummati" +
-      "on\022\032.federate.SummationRequest\032\033.federat" +
-      "e.SummationResponse\"\000\022K\n\016localSummation\022" +
-      "\032.federate.SummationRequest\032\033.federate.S" +
-      "ummationResponse\"\000\022A\n\014privacyUnion\022\026.fed" +
-      "erate.UnionRequest\032\027.federate.UnionRespo" +
-      "nse\"\000\022?\n\nlocalUnion\022\026.federate.UnionRequ" +
-      "est\032\027.federate.UnionResponse\"\000\0227\n\nClearC" +
-      "ache\022\021.federate.CacheID\032\026.google.protobu" +
-      "f.EmptyB*\n\025com.suda.federate.rpcB\017Federa" +
-      "teServiceP\000"
+      "s\030\001 \002(\001\"\253\001\n\020SummationRequest\022\020\n\010siloSize" +
+      "\030\001 \002(\005\022\021\n\tpublicKey\030\002 \003(\005\022\014\n\004uuid\030\003 \002(\t\022" +
+      "\021\n\tendpoints\030\004 \003(\t\022\020\n\010nowIndex\030\005 \002(\005\022\020\n\010" +
+      "endIndex\030\007 \002(\005\022-\n\010response\030\006 \002(\0132\033.feder" +
+      "ate.SummationResponse\"\177\n\021SummationRespon" +
+      "se\022>\n\014fakeLocalSum\030\001 \003(\0132(.federate.Summ" +
+      "ationResponse.FakeLocalSum\022\r\n\005count\030\002 \001(" +
+      "\005\032\033\n\014FakeLocalSum\022\013\n\003num\030\001 \003(\005\"o\n\014UnionR" +
+      "equest\022\036\n\005point\030\001 \003(\0132\017.federate.Point\022\014" +
+      "\n\004loop\030\002 \002(\005\022\020\n\005index\030\003 \002(\005:\0010\022\021\n\tendpoi" +
+      "nts\030\004 \003(\t\022\014\n\004uuid\030\005 \002(\t\"p\n\rUnionResponse" +
+      "\022\036\n\005point\030\001 \003(\0132\017.federate.Point\022\014\n\004loop" +
+      "\030\002 \002(\005\022\020\n\005index\030\003 \002(\005:\0010\022\021\n\tendpoints\030\004 " +
+      "\003(\t\022\014\n\004uuid\030\005 \002(\t\"<\n\006Status\022!\n\004code\030\001 \002(" +
+      "\0162\016.federate.Code:\003kOk\022\017\n\003msg\030\002 \002(\t:\002ok\"" +
+      "$\n\020AddClientRequest\022\020\n\010endpoint\030\001 \002(\t\"3\n" +
+      "\017GeneralResponse\022 \n\006status\030\001 \002(\0132\020.feder" +
+      "ate.Status\"\031\n\nSQLRequest\022\013\n\003sql\030\001 \002(\t\"m\n" +
+      "\010SQLReply\022\024\n\014doubleNumber\030\001 \001(\001\022\025\n\rinteg" +
+      "erNumber\030\004 \001(\003\022\036\n\005point\030\002 \003(\0132\017.federate" +
+      ".Point\022\024\n\014fakeLocalSum\030\003 \003(\005*9\n\004Code\022\007\n\003" +
+      "kOk\020\001\022\024\n\020kAddClientFailed\020\002\022\022\n\016kCacheNot" +
+      "Exist\020\0032\256\007\n\010Federate\022B\n\tAddClient\022\032.fede" +
+      "rate.AddClientRequest\032\031.federate.General" +
+      "Response\022:\n\tGetResult\022\027.federate.SQLExpr" +
+      "ession\032\022.federate.SQLReply\"\000\022A\n\020publicRa" +
+      "ngeCount\022\027.federate.SQLExpression\032\022.fede" +
+      "rate.SQLReply\"\000\022A\n\020publicRangeQuery\022\027.fe" +
+      "derate.SQLExpression\032\022.federate.SQLReply" +
+      "\"\000\022H\n\027publicPolygonRangeQuery\022\027.federate" +
+      ".SQLExpression\032\022.federate.SQLReply\"\000\022:\n\t" +
+      "publicKNN\022\027.federate.SQLExpression\032\022.fed" +
+      "erate.SQLReply\"\000\022?\n\016KnnRadiusQuery\022\027.fed" +
+      "erate.SQLExpression\032\022.federate.SQLReply\"" +
+      "\000\022@\n\021privacyRangeCount\022\027.federate.SQLExp" +
+      "ression\032\020.federate.Status\"\000\022@\n\021privacyRa" +
+      "ngeQuery\022\027.federate.SQLExpression\032\020.fede" +
+      "rate.Status\"\000\022G\n\030privacyPolygonRangeQuer" +
+      "y\022\027.federate.SQLExpression\032\020.federate.St" +
+      "atus\"\000\022K\n\016localSummation\022\032.federate.Summ" +
+      "ationRequest\032\033.federate.SummationRespons" +
+      "e\"\000\022A\n\014privacyUnion\022\026.federate.UnionRequ" +
+      "est\032\027.federate.UnionResponse\"\000\022?\n\nlocalU" +
+      "nion\022\026.federate.UnionRequest\032\027.federate." +
+      "UnionResponse\"\000\0227\n\nClearCache\022\021.federate" +
+      ".CacheID\032\026.google.protobuf.EmptyB*\n\025com." +
+      "suda.federate.rpcB\017FederateServiceP\000"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -13406,7 +13510,7 @@ public final class FederateService {
     internal_static_federate_SummationRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_federate_SummationRequest_descriptor,
-        new java.lang.String[] { "SiloSize", "IdList", "Uuid", "Endpoints", "Index", "Response", });
+        new java.lang.String[] { "SiloSize", "PublicKey", "Uuid", "Endpoints", "NowIndex", "EndIndex", "Response", });
     internal_static_federate_SummationResponse_descriptor =
       getDescriptor().getMessageTypes().get(4);
     internal_static_federate_SummationResponse_fieldAccessorTable = new

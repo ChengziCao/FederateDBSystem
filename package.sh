@@ -1,4 +1,4 @@
-mvn clean package -T 8 -Dmaven.test.skip=true
+mvn clean package -T 3 -Dmaven.test.skip=true
 mkdir -p release
 cp suda-core/target/core-jar-with-dependencies.jar ./release/core/FederateDB-core.jar
 #cp suda-core/target/classes/model.json ./release/core

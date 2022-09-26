@@ -9,3 +9,4 @@ suda-core/src/main/resources/model-local.json
 *.out
 *.iml
 pid
+test.*

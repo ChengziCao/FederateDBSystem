@@ -14,12 +14,12 @@ public final class FederateDBClient {
     private final FederateGrpc.FederateBlockingStub blockingStub; //非阻塞 AbstractBlockingStub
     //    private final FederateGrpc.FederateStub asyncStub; // extends AbstractAsyncStub 没用到？
     private String endpoint;
-    private Integer id;
+    private Integer siloId;
 
-    public FederateDBClient(String host, int port,Integer id) {
+    public FederateDBClient(String host, int port,Integer siloId) {
         this(ManagedChannelBuilder.forAddress(host, port).usePlaintext().maxInboundMessageSize(1024 * 1024 * 80));
         this.endpoint = String.format("%s:%d", host, port);
-        this.id = id;
+        this.siloId = siloId;
     }
 
     public FederateDBClient(String endpoint) {
@@ -101,15 +101,6 @@ public final class FederateDBClient {
         return null;
     }
 
-    public FederateService.SummationResponse privacySummation(FederateService.SummationRequest request) {
-        try {
-            FederateService.SummationResponse response = blockingStub.privacySummation(request);
-            return response;
-        } catch (StatusRuntimeException e) {
-            System.out.println("RPC调用失败：" + e.getMessage());
-        }
-        return null;
-    }
 
     public FederateService.SummationResponse localSummation(FederateService.SummationRequest request) {
         try {
@@ -159,12 +150,12 @@ public final class FederateDBClient {
         return endpoint;
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getSiloId() {
+        return siloId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setSiloId(Integer siloId) {
+        this.siloId = siloId;
     }
 
     //    public boolean addClient(String endpoint) {

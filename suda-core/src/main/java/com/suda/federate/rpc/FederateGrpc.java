@@ -338,37 +338,6 @@ public final class FederateGrpc {
   }
 
   private static volatile io.grpc.MethodDescriptor<com.suda.federate.rpc.FederateService.SummationRequest,
-      com.suda.federate.rpc.FederateService.SummationResponse> getPrivacySummationMethod;
-
-  @io.grpc.stub.annotations.RpcMethod(
-      fullMethodName = SERVICE_NAME + '/' + "privacySummation",
-      requestType = com.suda.federate.rpc.FederateService.SummationRequest.class,
-      responseType = com.suda.federate.rpc.FederateService.SummationResponse.class,
-      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
-  public static io.grpc.MethodDescriptor<com.suda.federate.rpc.FederateService.SummationRequest,
-      com.suda.federate.rpc.FederateService.SummationResponse> getPrivacySummationMethod() {
-    io.grpc.MethodDescriptor<com.suda.federate.rpc.FederateService.SummationRequest, com.suda.federate.rpc.FederateService.SummationResponse> getPrivacySummationMethod;
-    if ((getPrivacySummationMethod = FederateGrpc.getPrivacySummationMethod) == null) {
-      synchronized (FederateGrpc.class) {
-        if ((getPrivacySummationMethod = FederateGrpc.getPrivacySummationMethod) == null) {
-          FederateGrpc.getPrivacySummationMethod = getPrivacySummationMethod =
-              io.grpc.MethodDescriptor.<com.suda.federate.rpc.FederateService.SummationRequest, com.suda.federate.rpc.FederateService.SummationResponse>newBuilder()
-              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
-              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "privacySummation"))
-              .setSampledToLocalTracing(true)
-              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.suda.federate.rpc.FederateService.SummationRequest.getDefaultInstance()))
-              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.suda.federate.rpc.FederateService.SummationResponse.getDefaultInstance()))
-              .setSchemaDescriptor(new FederateMethodDescriptorSupplier("privacySummation"))
-              .build();
-        }
-      }
-    }
-    return getPrivacySummationMethod;
-  }
-
-  private static volatile io.grpc.MethodDescriptor<com.suda.federate.rpc.FederateService.SummationRequest,
       com.suda.federate.rpc.FederateService.SummationResponse> getLocalSummationMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
@@ -624,13 +593,6 @@ public final class FederateGrpc {
      * secure operator
      * </pre>
      */
-    public void privacySummation(com.suda.federate.rpc.FederateService.SummationRequest request,
-        io.grpc.stub.StreamObserver<com.suda.federate.rpc.FederateService.SummationResponse> responseObserver) {
-      asyncUnimplementedUnaryCall(getPrivacySummationMethod(), responseObserver);
-    }
-
-    /**
-     */
     public void localSummation(com.suda.federate.rpc.FederateService.SummationRequest request,
         io.grpc.stub.StreamObserver<com.suda.federate.rpc.FederateService.SummationResponse> responseObserver) {
       asyncUnimplementedUnaryCall(getLocalSummationMethod(), responseObserver);
@@ -729,13 +691,6 @@ public final class FederateGrpc {
                 com.suda.federate.rpc.FederateService.SQLExpression,
                 com.suda.federate.rpc.FederateService.Status>(
                   this, METHODID_PRIVACY_POLYGON_RANGE_QUERY)))
-          .addMethod(
-            getPrivacySummationMethod(),
-            asyncUnaryCall(
-              new MethodHandlers<
-                com.suda.federate.rpc.FederateService.SummationRequest,
-                com.suda.federate.rpc.FederateService.SummationResponse>(
-                  this, METHODID_PRIVACY_SUMMATION)))
           .addMethod(
             getLocalSummationMethod(),
             asyncUnaryCall(
@@ -876,14 +831,6 @@ public final class FederateGrpc {
      * secure operator
      * </pre>
      */
-    public void privacySummation(com.suda.federate.rpc.FederateService.SummationRequest request,
-        io.grpc.stub.StreamObserver<com.suda.federate.rpc.FederateService.SummationResponse> responseObserver) {
-      asyncUnaryCall(
-          getChannel().newCall(getPrivacySummationMethod(), getCallOptions()), request, responseObserver);
-    }
-
-    /**
-     */
     public void localSummation(com.suda.federate.rpc.FederateService.SummationRequest request,
         io.grpc.stub.StreamObserver<com.suda.federate.rpc.FederateService.SummationResponse> responseObserver) {
       asyncUnaryCall(
@@ -1012,13 +959,6 @@ public final class FederateGrpc {
      * <pre>
      * secure operator
      * </pre>
-     */
-    public com.suda.federate.rpc.FederateService.SummationResponse privacySummation(com.suda.federate.rpc.FederateService.SummationRequest request) {
-      return blockingUnaryCall(
-          getChannel(), getPrivacySummationMethod(), getCallOptions(), request);
-    }
-
-    /**
      */
     public com.suda.federate.rpc.FederateService.SummationResponse localSummation(com.suda.federate.rpc.FederateService.SummationRequest request) {
       return blockingUnaryCall(
@@ -1155,14 +1095,6 @@ public final class FederateGrpc {
      * secure operator
      * </pre>
      */
-    public com.google.common.util.concurrent.ListenableFuture<com.suda.federate.rpc.FederateService.SummationResponse> privacySummation(
-        com.suda.federate.rpc.FederateService.SummationRequest request) {
-      return futureUnaryCall(
-          getChannel().newCall(getPrivacySummationMethod(), getCallOptions()), request);
-    }
-
-    /**
-     */
     public com.google.common.util.concurrent.ListenableFuture<com.suda.federate.rpc.FederateService.SummationResponse> localSummation(
         com.suda.federate.rpc.FederateService.SummationRequest request) {
       return futureUnaryCall(
@@ -1204,11 +1136,10 @@ public final class FederateGrpc {
   private static final int METHODID_PRIVACY_RANGE_COUNT = 7;
   private static final int METHODID_PRIVACY_RANGE_QUERY = 8;
   private static final int METHODID_PRIVACY_POLYGON_RANGE_QUERY = 9;
-  private static final int METHODID_PRIVACY_SUMMATION = 10;
-  private static final int METHODID_LOCAL_SUMMATION = 11;
-  private static final int METHODID_PRIVACY_UNION = 12;
-  private static final int METHODID_LOCAL_UNION = 13;
-  private static final int METHODID_CLEAR_CACHE = 14;
+  private static final int METHODID_LOCAL_SUMMATION = 10;
+  private static final int METHODID_PRIVACY_UNION = 11;
+  private static final int METHODID_LOCAL_UNION = 12;
+  private static final int METHODID_CLEAR_CACHE = 13;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -1266,10 +1197,6 @@ public final class FederateGrpc {
         case METHODID_PRIVACY_POLYGON_RANGE_QUERY:
           serviceImpl.privacyPolygonRangeQuery((com.suda.federate.rpc.FederateService.SQLExpression) request,
               (io.grpc.stub.StreamObserver<com.suda.federate.rpc.FederateService.Status>) responseObserver);
-          break;
-        case METHODID_PRIVACY_SUMMATION:
-          serviceImpl.privacySummation((com.suda.federate.rpc.FederateService.SummationRequest) request,
-              (io.grpc.stub.StreamObserver<com.suda.federate.rpc.FederateService.SummationResponse>) responseObserver);
           break;
         case METHODID_LOCAL_SUMMATION:
           serviceImpl.localSummation((com.suda.federate.rpc.FederateService.SummationRequest) request,
@@ -1358,7 +1285,6 @@ public final class FederateGrpc {
               .addMethod(getPrivacyRangeCountMethod())
               .addMethod(getPrivacyRangeQueryMethod())
               .addMethod(getPrivacyPolygonRangeQueryMethod())
-              .addMethod(getPrivacySummationMethod())
               .addMethod(getLocalSummationMethod())
               .addMethod(getPrivacyUnionMethod())
               .addMethod(getLocalUnionMethod())

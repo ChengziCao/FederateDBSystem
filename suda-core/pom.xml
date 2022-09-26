@@ -179,12 +179,14 @@
                 <version>0.6.1</version>
                 <configuration>
                     <protocArtifact>com.google.protobuf:protoc:${protoc.version}:exe:${os.detected.classifier}</protocArtifact>
+<!--                    <protocArtifact>com.google.protobuf:protoc:${protoc.version}:exe:osx-x86_64</protocArtifact>-->
                     <pluginId>grpc-java</pluginId>
 <!--                    <&#45;&#45; 指定输出的base基础路径->-->
                     <outputDirectory>src/main/java</outputDirectory>
 <!--                    小是否清除输出目录下的文件，默认为true，表示会将指定的输出路径下的全部文件都进行清空-->
 <!--                    如果自己配置了outputDirectory，请将这项配置改为false&ndash;&gt;-->
                     <clearOutputDirectory>false</clearOutputDirectory>
+<!--                <pluginArtifact>io.grpc:protoc-gen-grpc-java:${grpc.version}:exe:osx-x86_64</pluginArtifact>-->
                 <pluginArtifact>io.grpc:protoc-gen-grpc-java:${grpc.version}:exe:${os.detected.classifier}</pluginArtifact>
                 </configuration>
                 <executions>

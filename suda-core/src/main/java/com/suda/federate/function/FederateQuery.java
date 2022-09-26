@@ -1,6 +1,5 @@
 package com.suda.federate.function;
 
-import com.suda.federate.config.ModelConfig;
 import com.suda.federate.rpc.FederateCommon;
 import com.suda.federate.rpc.FederateService;
 import com.suda.federate.silo.FederateDBClient;
@@ -9,11 +8,12 @@ import com.suda.federate.utils.LogUtils;
 import com.suda.federate.utils.StreamingIterator;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.*;
 import java.util.stream.Collectors;
+
+import static com.suda.federate.security.sha.SecretSum.computeS;
+import static com.suda.federate.security.sha.SecretSum.lag;
 
 /**
  * TODO: table name --> silo table name
@@ -75,24 +75,41 @@ public abstract class FederateQuery {
     protected static Integer privacySummation(FederateService.SQLExpression expression) {
 
         FederateService.SummationRequest.Builder requestBuilder = FederateService.SummationRequest.newBuilder();
-        List<Integer> idList = federateDBClients.stream().map(x -> x.getId()).collect(Collectors.toList());
-        int m = federateDBClients.size();
-        int leaderIndex = 0;
+        List<Integer> publicKeyList = federateDBClients.stream().map(x -> x.getSiloId()).collect(Collectors.toList());
+        int siloSize = federateDBClients.size();
 
-        requestBuilder.setIndex(leaderIndex)
-                .addAllIdList(idList)
-                .setSiloSize(m)
+        requestBuilder.addAllPublicKey(publicKeyList)
+                .setSiloSize(siloSize)
                 .setUuid(expression.getUuid())
                 .addAllEndpoints(endpoints)
                 .setResponse(FederateService.SummationResponse.newBuilder());
 
-        FederateDBClient leaderFederateDBClient = federateDBClients.get(leaderIndex);
+        int parallelNum = 2;
+        List<FederateUtils.BoundPair> boundDivide = FederateUtils.boundDivide(parallelNum, siloSize);
+//        List<FederateService.SummationResponse> responseList = new ArrayList<>();
 
-        FederateService.SummationResponse summationResponse = leaderFederateDBClient.privacySummation(requestBuilder.build());
+        List<List<Integer>> fakeLocalSumList = new ArrayList<>();
 
+        for (int i = 0; i < parallelNum; i++) {
+            // index = silo_id - 1
+            int start = boundDivide.get(i).start - 1;
+            int end = boundDivide.get(i).end - 1;
+            LogUtils.debug("start" + start + "end: " + end);
+            FederateDBClient client = federateDBClients.get(start);
+            FederateService.SummationResponse response = client.localSummation(requestBuilder.setNowIndex(start).setEndIndex(end).build());
+            // 会阻塞吗？
+            fakeLocalSumList.addAll(response.getFakeLocalSumList().stream().map(x -> x.getNumList()).collect(Collectors.toList()));
+        }
+
+        LogUtils.debug(fakeLocalSumList.toString());
+        List<Integer> S = computeS(fakeLocalSumList);
+        LogUtils.debug(S.toString());
+
+        int secureSum = lag(publicKeyList, S, 0);
+        LogUtils.debug("privacy summation finished.");
         //清理各silo垃圾
         clearCache(expression.getUuid());
-        return summationResponse.getCount();
+        return secureSum;
     }
 
     protected static List<FederateCommon.Point> privacyUnion(FederateService.SQLExpression expression) {

@@ -1,14 +1,10 @@
 package com.suda.federate.security.sha;
 
-import com.google.common.primitives.Ints;
-import com.suda.federate.rpc.FederateService;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.stream.Collectors;
 
 public class SecretSum {
 
@@ -57,13 +53,13 @@ public class SecretSum {
      *
      * @param t        silos
      * @param localSum vi the local counting result of silo F_i
-     * @param idList   n different public parameters
+     * @param publicKey   n different public parameters
      * @return [0, f(x1), f(x2), ..., f(xt)] 其中 f(x) = d + a1*x + a2*x^2 + ... +a_(t-1)*x^(t-1)
      */
-    public static List<Integer> localClient(int t, int localSum, List<Integer> idList) {
+    public static List<Integer> localEncrypt(int t, int localSum, List<Integer> publicKey) {
         int[] arr = generateRandomNum(0, 1000, t - 1);
         List<Integer> fakeLocalSum = new ArrayList<>(t);
-        for (int x : idList) {
+        for (int x : publicKey) {
             int temp = localSum;
             for (int j = 1; j < t; j++) {
                 temp += arr[j - 1] * (int) Math.pow(x, j);
@@ -98,21 +94,6 @@ public class SecretSum {
         return S;
     }
 
-    //decryption
-//    public static FederateService.SQLReply getSummation(List<FederateService.SQLReply> replyList) {
-//        return null;
-//    }
-//
-//    public static FederateService.SQLReply setSummation(FederateService.SQLExpression request, Integer ans) {
-//        List<Integer> fakeLocalSum = localClient(request.getT(), ans, request.getIdListList());
-//
-//        //TODO: hide ans (setMessage(0))
-//        //构造返回
-//        FederateService.SQLReply reply =
-//                FederateService.SQLReply.newBuilder().setIntegerNumber(ans).addAllFakeLocalSum(fakeLocalSum).build();
-//        return reply;
-//    }
-
     public static void main(String[] args) {
         int n = 7;
         //各方的本地和
@@ -124,7 +105,7 @@ public class SecretSum {
         List<List<Integer>> encryptSumList = new ArrayList<>();
 
         for (int i = 0; i < n; i++) {
-            encryptSumList.add(localClient(n, v[i], idList));
+            encryptSumList.add(localEncrypt(n, v[i], idList));
         }
 
         System.out.println(encryptSumList);

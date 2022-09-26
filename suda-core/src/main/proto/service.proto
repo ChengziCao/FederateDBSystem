@@ -50,7 +50,6 @@ service Federate {
   //  rpc privacyKNN (SQLExpression) returns (Status) {}
 
   // secure operator
-  rpc privacySummation(SummationRequest)returns(SummationResponse){}
   rpc localSummation(SummationRequest) returns(SummationResponse){}
   rpc privacyUnion (UnionRequest) returns (UnionResponse){}
   rpc localUnion (UnionRequest) returns (UnionResponse){}
@@ -67,10 +66,11 @@ message KnnRadiusQueryResponse {
 
 message SummationRequest{
   required int32 siloSize = 1;
-  repeated int32 idList = 2;
+  repeated int32 publicKey = 2;
   required string uuid = 3;
   repeated string endpoints = 4;
-  required int32 index = 5;
+  required int32 nowIndex = 5;
+  required int32 endIndex = 7;
   required SummationResponse response = 6;
 }
 message SummationResponse{

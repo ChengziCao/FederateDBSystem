@@ -26,6 +26,43 @@ import static com.suda.federate.utils.ENUM.str2FUNCTION;
 
 public class FederateUtils {
 
+    public static class BoundPair {
+        public int start;
+        public int end;
+
+        public BoundPair(int start, int end) {
+            this.start = start;
+            this.end = end;
+        }
+
+        @Override
+        public String toString() {
+            return "start=" + start + ", end=" + end;
+        }
+    }
+
+    /**
+     *
+     * @param size
+     * @param length
+     * @return
+     */
+    public static List<BoundPair> boundDivide(int size, int length) {
+        List<BoundPair> boundPairList = new ArrayList<>();
+        int batch = length / size;
+        int start = 1;
+        int end = start + batch - 1;
+        for (int rank = 0; rank < size; rank++) {
+            if (rank != 0) {
+                start = end + 1;
+                end = rank == size - 1 ? length : start + batch - 1;
+            }
+            boundPairList.add(new BoundPair(start, end));
+        }
+        return boundPairList;
+    }
+
+
     public static ModelConfig parseModelConfig(String configFile) throws IOException {
         String configPath = FederateUtils.getRealPath(configFile);
         String jsonString = new String(Files.readAllBytes(Paths.get(configPath)));
