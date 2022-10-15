@@ -5,5 +5,5 @@
   "password": "123465",
   "url": "jdbc:postgresql://10.10.65.122:54321/gis",
   "type": "POSTGRESQL",
-  "grpcPort": 8886
+  "grpcPort": 8880
 }

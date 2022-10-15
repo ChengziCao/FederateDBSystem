@@ -6,20 +6,15 @@
       "name": "points",
       "type": "custom",
       "endpoints": [
-        "localhost:8887",
-        "localhost:8886"
+        "localhost:8880"
       ],
       "tables": [
         {
-          "name": "osm_sh",
+          "name": "osm_tianjin_mapping",
           "feds": [
             {
-              "endpoint": "localhost:8887",
-              "siloTableName": "osm_sh"
-            },
-            {
-              "endpoint": "localhost:8886",
-              "siloTableName": "osm_sh"
+              "endpoint": "localhost:8880",
+              "siloTableName": "osm_tianjin_mapping"
             }
           ]
         }

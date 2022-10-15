@@ -23,8 +23,8 @@ public class Main {
 
     public static void main(String[] args) {
         try {
-            String queryFile = "query.json";
-            String modelFile = "model.json";
+            String queryFile = "query-local.json";
+            String modelFile = "model-local.json";
             // Scanner scanner = new Scanner(System.in);
             // do {
             //

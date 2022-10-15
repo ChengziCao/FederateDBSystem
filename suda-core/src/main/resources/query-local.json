@@ -1,15 +1,15 @@
 [
   {
     "function": "RKnn",
-    "table": "osm_sh",
+    "table": "osm_tianjin_mapping",
     "params": [
       {
         "type": "int",
-        "value": 10
+        "value": 3
       },
       {
         "type": "point",
-        "value": "121 31"
+        "value": "127.32 247.33"
       }
     ]
   }

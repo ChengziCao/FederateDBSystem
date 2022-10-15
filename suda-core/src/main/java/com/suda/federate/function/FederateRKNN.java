@@ -33,7 +33,7 @@ public class FederateRKNN {
 
         // 建立凸包
         List<FederateCommon.Point> CH = convexHull(res);
-        LogUtils.debug(CH.toString());
+
         //step3 ------ 发CH到 silo 完成RkNN
 //        expression = expression.toBuilder().clearPolygon().setPolygon(FederateCommon.Polygon.newBuilder().addAllPoint(CH).build()).build();
         return FederatePolygonRangeQuery.publicQuery(tableName, CH);
@@ -46,7 +46,7 @@ public class FederateRKNN {
         FederateCommon.Point queryPoint = expression.getPoint();
 
         //step1 ------ 联邦KNN查询，注意，查询KNN时k+1 -> setLiteral(expression.getLiteral()+1)
-        List<FederateCommon.Point> S = FederateKNN.privacyQuery(tableName, k + 1, queryPoint, expression.getUuid());
+        List<FederateCommon.Point> S = FederateKNN.publicQuery(tableName, k + 1, queryPoint);
         for (FederateCommon.Point p : S) {
             System.out.println(p);
         }
@@ -61,7 +61,6 @@ public class FederateRKNN {
         List<FederateCommon.Point> res = legalIntersections(intersectionSetDict, k);
         // 建立凸包
         List<FederateCommon.Point> CH = convexHull(res);
-
         //step3 ------ 发CH到 silo 完成RkNN
         expression = expression.toBuilder().clearPolygon().setPolygon(FederateCommon.Polygon.newBuilder().addAllPoint(CH).build()).build();
         return FederatePolygonRangeQuery.privacyQuery(expression);
@@ -203,6 +202,7 @@ public class FederateRKNN {
     private static double rad(double d) {
         return d * Math.PI / 180.00; //角度转换成弧度
     }
+
     public static boolean equals(FederateCommon.Point p, FederateCommon.Point q) {
         return p.getLatitude() == q.getLatitude() && p.getLongitude() == q.getLongitude();
     }
