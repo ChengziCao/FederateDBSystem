@@ -10,4 +10,3 @@ suda-core/src/main/resources/model-local.json
 *.iml
 pid
 test.*
-deploy-local.bat

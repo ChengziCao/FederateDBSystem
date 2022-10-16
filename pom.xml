@@ -10,7 +10,7 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>suda-postgresql-driver</module>
-<!--        <module>suda-mysql-driver</module>-->
+        <module>suda-mysql-driver</module>
         <module>suda-core</module>
         <!--<module>suda-csv-driver</module>-->
     </modules>
