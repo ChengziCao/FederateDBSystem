@@ -42,7 +42,6 @@ public class FederateUtils {
     }
 
     /**
-     *
      * @param size
      * @param length
      * @return
@@ -94,12 +93,15 @@ public class FederateUtils {
      */
     public static List<FederateService.SQLExpression> parseSQLExpression(String queryFile) throws Exception {
         String queryPath = FederateUtils.getRealPath(queryFile);
-
-        List<FederateService.SQLExpression> sqlExpressionList = new ArrayList<>();
         String jsonString = new String(Files.readAllBytes(Paths.get(queryPath)));
         // 处理query.json多个查询
         if (jsonString.charAt(0) == '{') jsonString = '[' + jsonString + ']';
         JSONArray queryJsonArray = JSONArray.parseArray(jsonString);
+        return parseSQLExpression(queryJsonArray);
+    }
+
+    public static List<FederateService.SQLExpression> parseSQLExpression(JSONArray queryJsonArray) throws Exception {
+        List<FederateService.SQLExpression> sqlExpressionList = new ArrayList<>();
         // 处理一条SQL语句
         for (int i = 0; i < queryJsonArray.size(); i++) {
             FederateService.SQLExpression.Builder expression = FederateService.SQLExpression.newBuilder();
