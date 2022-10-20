@@ -20,10 +20,6 @@ public class LogUtils {
             System.out.println(findCaller() + " : " + msg);
     }
 
-    public static void debug(Object obj) {
-        debug(obj.toString());
-    }
-
     public static void info(String msg) {
         if (STDOUT == 1)
             LOGGER.info(findCaller() + " : " + msg);

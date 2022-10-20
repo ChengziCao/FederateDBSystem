@@ -25,7 +25,7 @@ public class FederatePostgresqlService extends FederateDBService {
         try {
             Class.forName(config.getDriver());
             Connection conn = DriverManager.getConnection(config.getUrl(), config.getUser(), config.getPassword());
-            executor = new SQLExecutor(conn,this);
+            executor = new SQLExecutor(conn);
         } catch (Exception e) {
             e.printStackTrace();
         }

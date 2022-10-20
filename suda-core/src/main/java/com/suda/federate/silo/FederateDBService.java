@@ -180,19 +180,18 @@ public abstract class FederateDBService extends FederateGrpc.FederateImplBase {
     public void localSummation(FederateService.SummationRequest request, StreamObserver<FederateService.SummationResponse> responseObserver) {
         FederateService.SummationResponse response = request.getResponse();
         Integer ans = (Integer) buffer.get(request.getUuid());
-        LogUtils.debug(request.getSiloSize() + "," + ans + "," + request.getPublicKeyList());
+        // LogUtils.debug(request.getSiloSize() + "," + ans + "," + request.getPublicKeyList());
         List<Integer> cryptPloy = localEncrypt(request.getSiloSize(), ans, request.getPublicKeyList());
-        LogUtils.debug(cryptPloy.toString());
+        // LogUtils.debug(cryptPloy.toString());
         response = response.toBuilder().addFakeLocalSum(FederateService.SummationResponse.FakeLocalSum.newBuilder().addAllNum(cryptPloy).build()).build();
-        LogUtils.debug(response.getFakeLocalSumList());
+        // LogUtils.debug(response.getFakeLocalSumList().toString());
         int nextIndex = request.getNowIndex() + 1;
-        LogUtils.debug(Integer.toString(nextIndex));
+        // LogUtils.debug(Integer.toString(nextIndex));
         if (nextIndex <= request.getEndIndex()) {
             FederateDBClient nextClient = new FederateDBClient(request.getEndpoints(nextIndex));
-            LogUtils.debug(nextClient.toString());
+            // LogUtils.debug(nextClient.toString());
             response = nextClient.localSummation(request.toBuilder().setResponse(response).setNowIndex(nextIndex).build());
         }
-
         responseObserver.onNext(response);
         responseObserver.onCompleted();
     }
@@ -222,39 +221,5 @@ public abstract class FederateDBService extends FederateGrpc.FederateImplBase {
 //    }
 
 
-    public <T> List<T> resultSet2List(ResultSet resultSet, Class<T> clazz) throws
-            SQLException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
-        List<T> resultList = new ArrayList<>();
-        while (resultSet.next()) {
-            T t = resultSet2Object(resultSet, clazz);
-            resultList.add(t);
-        }
-        return resultList;
-    }
 
-    public <T> T resultSet2Object(ResultSet resultSet, Class<T> clazz) throws
-            SQLException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
-        if (resultSet.isBeforeFirst()) {
-            // 跳过头指针
-            resultSet.next();
-        }
-        if (clazz == Integer.class || clazz == Double.class || clazz == String.class) {
-            return clazz.getConstructor(String.class).newInstance(resultSet.getObject(1).toString());
-        } else if (clazz == FederateCommon.Point.class) {
-            String content = resultSet.getObject(1).toString();
-            List<Float> temp = FederateUtils.parseNumFromString(content, Float.class);
-            FederateCommon.Point point = FederateCommon.Point.newBuilder()
-                    .setLongitude(temp.get(0)).setLatitude(temp.get(1)).build(); //TODO check 顺序
-            return (T) point;
-        } else if (clazz == HashMap.class) {
-            Map<String, Object> mmap = new HashMap<>();
-            int count = resultSet.getMetaData().getColumnCount();
-            for (int i = 1; i <= count; i++) {
-                mmap.put(resultSet.getMetaData().getColumnLabel(i), resultSet.getObject(i));
-            }
-            return clazz.getConstructor(Map.class).newInstance(mmap);
-        } else {
-            return null;
-        }
-    }
 }

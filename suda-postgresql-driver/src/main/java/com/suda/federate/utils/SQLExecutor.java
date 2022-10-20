@@ -10,12 +10,13 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
+import static com.suda.federate.utils.FederateUtils.resultSet2List;
+import static com.suda.federate.utils.FederateUtils.resultSet2Object;
+
 public class SQLExecutor {
-    private FederateDBService service;
     private Connection conn;
 
-    public SQLExecutor(Connection conn, FederateDBService service) {
-        this.service = service;
+    public SQLExecutor(Connection conn) {
         this.conn = conn;
     }
 
@@ -88,7 +89,7 @@ public class SQLExecutor {
     public <T> List<T> executeSql(String sql, Class<T> resultClass) throws SQLException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
         Statement stmt = conn.createStatement();
         ResultSet resultSet = stmt.executeQuery(sql);
-        return service.resultSet2List(resultSet, resultClass);
+        return resultSet2List(resultSet, resultClass);
     }
 
     public <T> T executeSql(String sql, Class<T> resultClass, Boolean listFlag) throws SQLException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
@@ -98,7 +99,7 @@ public class SQLExecutor {
         } else {
             Statement stmt = conn.createStatement();
             ResultSet resultSet = stmt.executeQuery(sql);
-            return service.resultSet2Object(resultSet, resultClass);
+            return resultSet2Object(resultSet, resultClass);
         }
     }
 

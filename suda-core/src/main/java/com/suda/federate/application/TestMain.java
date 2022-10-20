@@ -22,12 +22,38 @@ import static com.suda.federate.utils.FederateUtils.buildErrorMessage;
 import static com.suda.federate.utils.FederateUtils.parseSQLExpression;
 
 
-public class TestRKNN {
+public class TestMain {
     // x: longitude, y: latitude
     private static final Integer k = 10;
     private static final Integer siloNumber = 3;
-    private static final Integer testNum = 5;
+    private static final Integer testNum = 1;
     private static final String tableName = "osm_tianjin";
+
+    public static void main(String[] args) {
+        afterFunction();
+    }
+
+    @Test
+    public void testKNN() {
+        try {
+            JSONArray jsonArray = generateKNNTestQueryJsonArray(tableName, k, testNum);
+            List<FederateService.SQLExpression> sqlExpressions = parseSQLExpression(jsonArray);
+
+            for (FederateService.SQLExpression expression : sqlExpressions) {
+                System.out.printf("====================== NO.%d privacy query statement =============================%n", sqlExpressions.indexOf(expression));
+                if (expression.getFunction().equals(FederateService.SQLExpression.Function.KNN)) {
+                    FederateKNN.publicQuery(expression);
+                    FederateKNN.privacyQuery(expression);
+                }
+                System.out.println("===========================================================================");
+            }
+        } catch (Exception e) {
+            LogUtils.debug(buildErrorMessage(e));
+        } finally {
+            afterFunction();
+            System.exit(0);
+        }
+    }
 
     @Test
     public void testRKNN() {
@@ -39,6 +65,7 @@ public class TestRKNN {
                 System.out.printf("====================== NO.%d privacy query statement =============================%n", sqlExpressions.indexOf(expression));
                 if (expression.getFunction().equals(FederateService.SQLExpression.Function.RKNN)) {
                     FederateRKNN.privacyQuery(expression);
+                    // FederateRKNN.publicQuery(expression);
                 }
                 System.out.println("===========================================================================");
             }
@@ -60,17 +87,17 @@ public class TestRKNN {
                 executive(String.format("docker start postgis%d", i + 1));
                 tempList.add(String.valueOf(i + 1));
             }
-            TimeUnit.SECONDS.sleep(5);
+            TimeUnit.SECONDS.sleep(4);
             LogUtils.debug("start container completed.");
             // TODO: run driver
             executive(String.format("docker exec -d spatial bash -c \"cd root &&  ./start-driver.sh %s\"", String.join(" ", tempList)));
-            TimeUnit.SECONDS.sleep(2);
+            TimeUnit.SECONDS.sleep(4);
             LogUtils.debug("driver has started.");
 
             // TODO: parse config
             String modelFile = "model-local.json";
-
             initialization(modelFile);
+
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -79,25 +106,55 @@ public class TestRKNN {
     @AfterAll
     public static void afterFunction() {
         for (int i = 0; i < siloNumber; i++) {
-            executive(String.format("docker stop postgis%d", i + 1));
+            executive(String.format("docker kill postgis%d", i + 1));
         }
         executive("docker exec -d spatial bash -c \"cd root &&  ./stop-all.sh\"");
+        executive("docker kill spatial");
         LogUtils.debug("container has stopped.");
     }
 
-
-    public static JSONArray generateRkNNTestQueryJsonArray(String tableName, Integer k, Integer testNum) {
-        Double[][] queryPoints = {{117.7148943, 38.9838106}, {117.57336, 38.9964499}};
+    public static JSONArray generateKNNTestQueryJsonArray(String tableName, Integer k, Integer testNum) {
+        Double[][] queryPoints = {{117.7418942, 38.984194}};
         Random random = new Random();
         List<Map<String, Object>> listMap = new ArrayList<>();
         for (int i = 0; i < testNum; i++) {
             int tempIndex = random.nextInt(queryPoints.length);
-            listMap.add(generateMap(tableName, k, queryPoints[tempIndex][0], queryPoints[tempIndex][1]));
+            listMap.add(generateKNNMap(tableName, k, queryPoints[tempIndex][0], queryPoints[tempIndex][1]));
         }
         return new JSONArray(listMap);
     }
 
-    public static Map<String, Object> generateMap(String tableName, Integer k, Double x, Double y) {
+    public static JSONArray generateRkNNTestQueryJsonArray(String tableName, Integer k, Integer testNum) {
+        Double[][] queryPoints = {{117.7418942, 38.984194}};
+        Random random = new Random();
+        List<Map<String, Object>> listMap = new ArrayList<>();
+        for (int i = 0; i < testNum; i++) {
+            int tempIndex = random.nextInt(queryPoints.length);
+            listMap.add(generateRKNNMap(tableName, k, queryPoints[tempIndex][0], queryPoints[tempIndex][1]));
+        }
+        return new JSONArray(listMap);
+    }
+
+    public static Map<String, Object> generateKNNMap(String tableName, Integer k, Double x, Double y) {
+        JSONArray params = new JSONArray();
+        JSONObject param1 = new JSONObject();
+        param1.put("type", "int");
+        param1.put("value", k);
+        JSONObject param2 = new JSONObject();
+        param2.put("type", "point");
+        param2.put("value", String.format("%s %s", x.toString(), y.toString()));
+
+        params.add(param1);
+        params.add(param2);
+
+        return new HashMap<String, Object>() {{
+            put("function", "Knn");
+            put("table", tableName);
+            put("params", params);
+        }};
+    }
+
+    public static Map<String, Object> generateRKNNMap(String tableName, Integer k, Double x, Double y) {
         JSONArray params = new JSONArray();
         JSONObject param1 = new JSONObject();
         param1.put("type", "int");
@@ -122,15 +179,15 @@ public class TestRKNN {
      * @param stmt 要执行的命令
      */
     public static void executive(String stmt) {
-        Runtime runtime = Runtime.getRuntime();  //获取Runtime实例
-        //执行命令
+        Runtime runtime = Runtime.getRuntime();  // 获取Runtime实例
+        // 执行命令
         try {
             String[] command = {"cmd", "/c", stmt};
             Process process = runtime.exec(command);
             // 标准输入流（必须写在 waitFor 之前）
             String inStr = consumeInputStream(process.getInputStream());
             // 标准错误流（必须写在 waitFor 之前）
-            String errStr = consumeInputStream(process.getErrorStream()); //若有错误信息则输出
+            String errStr = consumeInputStream(process.getErrorStream()); // 若有错误信息则输出
             int proc = process.waitFor();
 
 //            if (proc == 0) {

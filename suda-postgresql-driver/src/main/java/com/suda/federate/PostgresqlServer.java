@@ -13,15 +13,13 @@ import static com.suda.federate.utils.FederateUtils.buildErrorMessage;
 
 public class PostgresqlServer extends FederateDBServer {
     private static final org.apache.logging.log4j.Logger LOGGER = LogManager.getLogger(PostgresqlServer.class);
-    private static boolean isLeader = false;
-
 
     public PostgresqlServer(DbConfig config, int port) throws IOException {
         super(ServerBuilder.forPort(port), port, new FederatePostgresqlService(config));
     }
 
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         try {
             String configFile = "config.json";
             DbConfig config = FederateUtils.parseDbConfig(configFile);

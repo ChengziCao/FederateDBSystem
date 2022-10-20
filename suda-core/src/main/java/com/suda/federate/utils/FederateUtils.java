@@ -145,6 +145,42 @@ public class FederateUtils {
     }
 
 
+    public  static  <T> List<T> resultSet2List(ResultSet resultSet, Class<T> clazz) throws
+            SQLException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
+        List<T> resultList = new ArrayList<>();
+        while (resultSet.next()) {
+            T t = resultSet2Object(resultSet, clazz);
+            resultList.add(t);
+        }
+        return resultList;
+    }
+
+    public static  <T> T resultSet2Object(ResultSet resultSet, Class<T> clazz) throws
+            SQLException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
+        if (resultSet.isBeforeFirst()) {
+            // 跳过头指针
+            resultSet.next();
+        }
+        if (clazz == Integer.class || clazz == Double.class || clazz == String.class) {
+            return clazz.getConstructor(String.class).newInstance(resultSet.getObject(1).toString());
+        } else if (clazz == FederateCommon.Point.class) {
+            String content = resultSet.getObject(1).toString();
+            List<Float> temp = FederateUtils.parseNumFromString(content, Float.class);
+            FederateCommon.Point point = FederateCommon.Point.newBuilder()
+                    .setLongitude(temp.get(0)).setLatitude(temp.get(1)).build(); //TODO check 顺序
+            return (T) point;
+        } else if (clazz == HashMap.class) {
+            Map<String, Object> mmap = new HashMap<>();
+            int count = resultSet.getMetaData().getColumnCount();
+            for (int i = 1; i <= count; i++) {
+                mmap.put(resultSet.getMetaData().getColumnLabel(i), resultSet.getObject(i));
+            }
+            return clazz.getConstructor(Map.class).newInstance(mmap);
+        } else {
+            return null;
+        }
+    }
+
     /**
      * parse num (float or integer) from string
      * content: "POINT(121.4593425 31.2326237)" --> List [121.4593425, 31.2326237]

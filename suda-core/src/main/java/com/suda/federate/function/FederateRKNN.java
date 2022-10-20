@@ -3,13 +3,16 @@ package com.suda.federate.function;
 import com.suda.federate.rpc.FederateCommon;
 import com.suda.federate.rpc.FederateService;
 import com.github.davidmoten.rtree.geometry.Rectangle;
+import com.suda.federate.utils.FederateUtils;
 import com.suda.federate.utils.LogUtils;
+import com.suda.federate.utils.SpatialFunctions;
 import org.apache.commons.math3.util.Pair;
 import org.apache.commons.lang3.tuple.Triple;
 
 import java.util.*;
 
 import static com.github.davidmoten.rtree.geometry.Geometries.rectangle;
+import static com.suda.federate.utils.SpatialFunctions.dis;
 
 public class FederateRKNN {
     public static List<FederateCommon.Point> publicQuery(FederateService.SQLExpression expression) throws Exception {
@@ -17,54 +20,91 @@ public class FederateRKNN {
         int k = expression.getIntegerNumber();
         FederateCommon.Point queryPoint = expression.getPoint();
 
-        //step1 ------ 联邦KNN查询，注意，查询KNN时k+1 -> setLiteral(expression.getLiteral()+1)
+        // step1 ------ 联邦KNN查询，注意，查询KNN时k+1 -> setLiteral(expression.getLiteral()+1)
 
         List<FederateCommon.Point> S = FederateKNN.publicQuery(tableName, k + 1, queryPoint);
-
-        //step2 ------ 就搁着计算
+        List<FederateCommon.Point> candidateSet = new ArrayList<>();
+        candidateSet.addAll(S);
+        LogUtils.debug(FederateUtils.flatPointList(S));
+        // step2 ------ 就搁着计算
         // 对q和S里每一个点 求垂直平分线
         HashMap<FederateCommon.Point, Pair<Object, Double>> bisectorDict = computeBisector(queryPoint, S);
         // 计算所有垂直平分线的交点 : HashMap<Point, Triple<Point, Point, Integer>> intersectionSetDict = computeIntersections(bisectorDict);
         // 计算各个交点的level值
+        LogUtils.debug(bisectorDict.toString());
         HashMap<FederateCommon.Point, Triple<FederateCommon.Point, FederateCommon.Point, Integer>> intersectionSetDict =
                 computeLevel(computeIntersections(bisectorDict), queryPoint, S);
         // 筛选交点中level<k的点
         List<FederateCommon.Point> res = legalIntersections(intersectionSetDict, k);
+        LogUtils.debug(FederateUtils.flatPointList(res));
 
         // 建立凸包
         List<FederateCommon.Point> CH = convexHull(res);
-        LogUtils.debug(CH.toString());
-        //step3 ------ 发CH到 silo 完成RkNN
+        if (CH.size() > 2) {
+            CH.add(CH.get(0));
+            candidateSet.addAll(FederatePolygonRangeQuery.publicQuery(tableName, CH));
+        }
+        // LogUtils.debug(CH.toString());
+        // step3 ------ 发CH到 silo 完成RkNN
 //        expression = expression.toBuilder().clearPolygon().setPolygon(FederateCommon.Polygon.newBuilder().addAllPoint(CH).build()).build();
-        return FederatePolygonRangeQuery.publicQuery(tableName, CH);
+        List<FederateCommon.Point> pointResultSet = new ArrayList<>();
+        for (FederateCommon.Point point : candidateSet) {
+            Double radius = dis(queryPoint, point);
+            Integer count = FederateRangeCount.publicQuery(tableName, radius, point);
+            if (count < k) {
+                pointResultSet.add(point);
+            }
+        }
+
+        LogUtils.debug("public RKNN query count:" + pointResultSet.size() + "\n" + FederateUtils.flatPointList(pointResultSet));
+
+        return pointResultSet;
     }
 
 
-    public static List<FederateCommon.Point> privacyQuery(FederateService.SQLExpression expression) throws Exception {
+    public static List<FederateCommon.Point> privacyQuery(FederateService.SQLExpression expression) throws
+            Exception {
         String tableName = expression.getTable();
         int k = expression.getIntegerNumber();
         FederateCommon.Point queryPoint = expression.getPoint();
 
-        //step1 ------ 联邦KNN查询，注意，查询KNN时k+1 -> setLiteral(expression.getLiteral()+1)
+        // step1 ------ 联邦KNN查询，注意，查询KNN时k+1 -> setLiteral(expression.getLiteral()+1)
         List<FederateCommon.Point> S = FederateKNN.privacyQuery(tableName, k + 1, queryPoint, expression.getUuid());
-        for (FederateCommon.Point p : S) {
-            System.out.println(p);
-        }
+        LogUtils.debug(FederateUtils.flatPointList(S));
+        List<FederateCommon.Point> candidateSet = new ArrayList<>();
+        candidateSet.addAll(S);
 
-        //step2 ------ 就搁着计算
+        // step2 ------ 就搁着计算
         // 对q和S里每一个点 求垂直平分线
         HashMap<FederateCommon.Point, Pair<Object, Double>> bisectorDict = computeBisector(queryPoint, S);
+        LogUtils.debug(bisectorDict.toString());
+
         // 计算所有垂直平分线的交点 : HashMap<Point, Triple<Point, Point, Integer>> intersectionSetDict = computeIntersections(bisectorDict);
         // 计算各个交点的level值
         HashMap<FederateCommon.Point, Triple<FederateCommon.Point, FederateCommon.Point, Integer>> intersectionSetDict = computeLevel(computeIntersections(bisectorDict), queryPoint, S);
         // 筛选交点中level<k的点
         List<FederateCommon.Point> res = legalIntersections(intersectionSetDict, k);
+        LogUtils.debug(FederateUtils.flatPointList(res));
+
         // 建立凸包
         List<FederateCommon.Point> CH = convexHull(res);
+        if (CH.size() > 2) {
+            CH.add(CH.get(0));
+            expression = expression.toBuilder().clearPolygon().setPolygon(FederateCommon.Polygon.newBuilder().addAllPoint(CH).build()).build();
+            candidateSet.addAll(FederatePolygonRangeQuery.privacyQuery(expression));
+        }
 
-        //step3 ------ 发CH到 silo 完成RkNN
-        expression = expression.toBuilder().clearPolygon().setPolygon(FederateCommon.Polygon.newBuilder().addAllPoint(CH).build()).build();
-        return FederatePolygonRangeQuery.privacyQuery(expression);
+        // step3 ------ 发CH到 silo 完成RkNN
+        List<FederateCommon.Point> pointResultSet = new ArrayList<>();
+        for (FederateCommon.Point point : candidateSet) {
+            Double radius = dis(queryPoint, point);
+            Integer count = FederateRangeCount.privacyQuery(tableName, radius, point, expression.getUuid());
+            if (count < k) {
+                pointResultSet.add(point);
+            }
+        }
+        LogUtils.debug("privacy RKNN query count:" + pointResultSet.size() + "\n" + FederateUtils.flatPointList(pointResultSet));
+        return pointResultSet;
     }
 
     /**
@@ -72,18 +112,19 @@ public class FederateRKNN {
      * @param S:         参考点集合
      * @return: query point 与 参考点集合S各个点的垂直平分线
      */
-    public static HashMap<FederateCommon.Point, Pair<Object, Double>> computeBisector(FederateCommon.Point queryPoint, List<FederateCommon.Point> S) {
+    public static HashMap<FederateCommon.Point, Pair<Object, Double>> computeBisector(FederateCommon.Point
+                                                                                              queryPoint, List<FederateCommon.Point> S) {
         HashMap<FederateCommon.Point, Pair<Object, Double>> bisectorDict = new HashMap<>();
 
-        //MyPoint q = new MyPoint(queryPoint.x(), queryPoint.y());
+        // MyPoint q = new MyPoint(queryPoint.x(), queryPoint.y());
 
         Object k, b;
 
         for (FederateCommon.Point s : S) {
-            if (doubleEqual(queryPoint.getLongitude(), s.getLongitude())) {  //垂直平分线平行于y轴
+            if (doubleEqual(queryPoint.getLongitude(), s.getLongitude())) {  // 垂直平分线平行于y轴
                 k = null;
                 b = (queryPoint.getLatitude() + s.getLatitude()) / 2;
-            } else if (doubleEqual(queryPoint.getLatitude(), s.getLatitude())) { //垂直平分线平行于x轴
+            } else if (doubleEqual(queryPoint.getLatitude(), s.getLatitude())) { // 垂直平分线平行于x轴
                 k = 0;
                 b = (queryPoint.getLongitude() + s.getLongitude()) / 2;
             } else {
@@ -100,7 +141,8 @@ public class FederateRKNN {
      * @param bisectorDict: 字典：<s: 垂直平分线>, s in S
      * @return: 字典：<垂直平分线交点, <p1, p2, 0>>, 其中p1和p2分别是垂直平分线l1和l2对应的参考点，这里的0是为了计算每个交点level值初始化
      */
-    public static HashMap<FederateCommon.Point, Triple<FederateCommon.Point, FederateCommon.Point, Integer>> computeIntersections(HashMap<FederateCommon.Point, Pair<Object, Double>> bisectorDict) {
+    public static HashMap<FederateCommon.Point, Triple<FederateCommon.Point, FederateCommon.Point, Integer>> computeIntersections
+    (HashMap<FederateCommon.Point, Pair<Object, Double>> bisectorDict) {
         HashMap<FederateCommon.Point, Triple<FederateCommon.Point, FederateCommon.Point, Integer>> intersectionSetDict = new HashMap<>();
         for (FederateCommon.Point p1 : bisectorDict.keySet()) {
             for (FederateCommon.Point p2 : bisectorDict.keySet()) {
@@ -121,19 +163,20 @@ public class FederateRKNN {
         return intersectionSetDict;
     }
 
-    public static HashMap<FederateCommon.Point, Triple<FederateCommon.Point, FederateCommon.Point, Integer>> computeLevel(
-            HashMap<FederateCommon.Point, Triple<FederateCommon.Point, FederateCommon.Point, Integer>> intersectionSetDict,
-            FederateCommon.Point queryPoint,
-            List<FederateCommon.Point> S) {
-        for (FederateCommon.Point p : intersectionSetDict.keySet()) {   //p是垂直平分线的交点,这条垂直平分线由p1和p2求得
+    public static HashMap<FederateCommon.Point, Triple<FederateCommon.Point, FederateCommon.Point, Integer>> computeLevel
+            (
+                    HashMap<FederateCommon.Point, Triple<FederateCommon.Point, FederateCommon.Point, Integer>> intersectionSetDict,
+                    FederateCommon.Point queryPoint,
+                    List<FederateCommon.Point> S) {
+        for (FederateCommon.Point p : intersectionSetDict.keySet()) {   // p是垂直平分线的交点,这条垂直平分线由p1和p2求得
             FederateCommon.Point p1 = intersectionSetDict.get(p).getLeft();
             FederateCommon.Point p2 = intersectionSetDict.get(p).getMiddle();
             int level = intersectionSetDict.get(p).getRight();
 
             for (FederateCommon.Point s : S) {
-                //交点p就是s和q的垂直平分线上的点
+                // 交点p就是s和q的垂直平分线上的点
                 if (!equals(p1, s) && !equals(p2, s)) {
-                    if (dis(p, s) < dis(p, queryPoint)) { //点在非q半平面，level值+1
+                    if (dis(p, s) < dis(p, queryPoint)) { // 点在非q半平面，level值+1
                         intersectionSetDict.put(p, Triple.of(p1, p2, level + 1));
                     }
                 }
@@ -177,7 +220,9 @@ public class FederateRKNN {
         }
     }
 
-    public static List<FederateCommon.Point> legalIntersections(HashMap<FederateCommon.Point, Triple<FederateCommon.Point, FederateCommon.Point, Integer>> intersectionSetDict, int k) {
+    public static List<FederateCommon.Point> legalIntersections
+            (HashMap<FederateCommon.Point, Triple<FederateCommon.Point, FederateCommon.Point, Integer>> intersectionSetDict,
+             int k) {
         List<FederateCommon.Point> res = new ArrayList<>();
         for (FederateCommon.Point p : intersectionSetDict.keySet()) {
             if (intersectionSetDict.get(p).getRight() < k) {
@@ -188,21 +233,6 @@ public class FederateRKNN {
     }
 
 
-    public static double dis(FederateCommon.Point p, FederateCommon.Point q) {
-        double longitude1 = p.getLongitude(), latitude1 = p.getLatitude(), longitude2 = q.getLongitude(), latitude2 = q.getLatitude();
-        double Lat1 = rad(latitude1); // 纬度
-        double Lat2 = rad(latitude2);
-        double a = Lat1 - Lat2;//两点纬度之差
-        double b = rad(longitude1) - rad(longitude2); //经度之差
-        double s = 2 * Math.asin(Math.sqrt(Math.pow(Math.sin(a / 2), 2) + Math.cos(Lat1) * Math.cos(Lat2) * Math.pow(Math.sin(b / 2), 2)));//计算两点距离的公式
-        s = s * 6378137.0;//弧长乘地球半径（半径为米）
-        s = Math.round(s * 10000d) / 10000d;//精确距离的数值
-        return s;
-    }
-
-    private static double rad(double d) {
-        return d * Math.PI / 180.00; //角度转换成弧度
-    }
     public static boolean equals(FederateCommon.Point p, FederateCommon.Point q) {
         return p.getLatitude() == q.getLatitude() && p.getLongitude() == q.getLongitude();
     }
@@ -214,13 +244,13 @@ public class FederateRKNN {
 
     public static double calculateBearingToPoint(double currentBearing, double currentX, double currentY,
                                                  double targetX, double targetY) {
-        //计算从根部点到目标点的向量的横坐标
+        // 计算从根部点到目标点的向量的横坐标
         double x = targetX - currentX;
-        //同上，计算向量的纵坐标
+        // 同上，计算向量的纵坐标
         double y = targetY - currentY;
-        //调用Math类下的atan2方法，计算向量所要偏转的正角度
+        // 调用Math类下的atan2方法，计算向量所要偏转的正角度
         double degree = 90 - currentBearing - Math.toDegrees(Math.atan2(y, x));
-        //如果角度为负，则转为正角
+        // 如果角度为负，则转为正角
         if (degree < 0) {
             degree += 360;
         }
@@ -228,35 +258,35 @@ public class FederateRKNN {
     }
 
     public static List<FederateCommon.Point> convexHull(List<FederateCommon.Point> points) {
-        //判断点的总数是否小于3，小于3则不能构成多边形
+        // 判断点的总数是否小于3，小于3则不能构成多边形
         if (points.size() < 3) {
             return points;
         }
-        //定义新的Set集合，其中不会有重复元素，符合我们的要求
+        // 定义新的Set集合，其中不会有重复元素，符合我们的要求
         List<FederateCommon.Point> set = new ArrayList<>();
         FederateCommon.Point xmin = FederateCommon.Point.newBuilder().setLongitude(Double.MAX_VALUE).setLatitude(Double.MAX_VALUE).build();
-        //运用for-each遍历的方式，在所有点中寻找最左的点
+        // 运用for-each遍历的方式，在所有点中寻找最左的点
         for (FederateCommon.Point item : points) {
             if (item.getLongitude() < xmin.getLongitude() || (item.getLongitude() == xmin.getLongitude() && item.getLatitude() < xmin.getLatitude())) {
                 xmin = item;
             }
         }
-        //设最左的点为初始起点
+        // 设最左的点为初始起点
         FederateCommon.Point nowPoint = xmin, tempPoint = xmin;
-        //初始化指向角度为0
+        // 初始化指向角度为0
         double nowAngle = 0, minAngle = 360, tempAngle;
         double distance;
         double maxdistance = 0;
-        //无差别地遍历所有的点
+        // 无差别地遍历所有的点
         do {
             set.add(tempPoint);
             //  遍历全部点，寻找下一个在凸包上的点
             for (FederateCommon.Point item : points) {
-                //当某一点不在点集之中或者该点为起始点
+                // 当某一点不在点集之中或者该点为起始点
                 if ((!set.contains(item) || item == xmin)) {
-                    //调用判断calculateBearingToPoint方法计算所需要偏转的角度
+                    // 调用判断calculateBearingToPoint方法计算所需要偏转的角度
                     tempAngle = calculateBearingToPoint(nowAngle, (int) nowPoint.getLongitude(), (int) nowPoint.getLatitude(), (int) item.getLongitude(), (int) item.getLatitude());
-                    //计算目标点与所在点之间的距离
+                    // 计算目标点与所在点之间的距离
                     distance = (item.getLongitude() - nowPoint.getLongitude()) * (item.getLongitude() - nowPoint.getLongitude()) + (item.getLatitude() - nowPoint.getLatitude()) * (item.getLatitude() - nowPoint.getLatitude());
                     /*如果某一点的偏转角比之前所找到的最小角度还要小
                       则该角度成为了最小偏转角
@@ -268,7 +298,7 @@ public class FederateRKNN {
                     }
                 }
             }
-            //遍历完所有点后，初始化判断指标，从刚刚找到的目标点再次出发，重复上述步骤
+            // 遍历完所有点后，初始化判断指标，从刚刚找到的目标点再次出发，重复上述步骤
             nowAngle = minAngle;
             minAngle = 360;
             nowPoint = tempPoint;
