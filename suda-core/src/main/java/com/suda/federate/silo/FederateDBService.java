@@ -116,7 +116,7 @@ public abstract class FederateDBService extends FederateGrpc.FederateImplBase {
 
         FederateService.UnionResponse resultResponse = UnionRequest2UnionResponse(request).toBuilder()
                 .clearPoint().addAllPoint(points).setIndex(finalNextIndexOfEndPoint).build();
-        if (finalNextIndexOfEndPoint + 1 == request.getEndpointsCount()) {
+        if (finalNextIndexOfEndPoint == request.getEndpointsCount()) {
             responseObserver.onNext(resultResponse);
             responseObserver.onCompleted();
         } else {
